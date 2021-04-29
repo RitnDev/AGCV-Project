@@ -36,17 +36,16 @@ public class AGCVController {
     @Autowired
     private IagcvService service;
     
-    private final String title = "AGCV - ";
     private final Link logout = new Link("Page principale", "logout");
     private final Link admin = new Link("Admin", "admin");
     
     
     // ID introuvable
-    @GetMapping("/{id}")
-    public String page405() {
-        System.out.println(">> CHEH !!!");
-        return "redirect:/logout";
-    }
+//    @GetMapping("/{id}")
+//    public String page405() {
+//        System.out.println(">> CHEH !!!");
+//        return "redirect:/logout";
+//    }
     
     
     
