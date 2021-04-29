@@ -1,0 +1,467 @@
+/*
+style.css
+---------
+*/
+
+
+
+/* Général ------------------------------------------------------------------------------------- */
+body, p {
+ font: normal 10pt verdana, helvetica, sans-serif;
+ background-color: #101720;
+ color: #8cbaff;
+}
+
+a { font-style: normal; color: #8cdeff; text-decoration: none;}
+a:hover {color: #c0edff;}
+
+
+.header {
+    /*position: absolute;*/
+    background: #e6e7e8;
+    padding: 10px;
+    top: 0;
+    left: 0;
+    right: 0;
+    color: #356ade;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.main-content {
+    padding: 10px;
+    font: normal 10pt verdana, helvetica, sans-serif;
+    background-color: #101720;
+    color: #8cbaff;
+}
+
+.footer {
+  font: normal 8pt verdana, helvetica, sans-serif;
+  color: #c0edff;
+  position: absolute;
+  padding: 5px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #0d0e16;
+  font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.footer-log {
+    font: normal 8pt verdana, helvetica, sans-serif;
+    color: #c0edff;
+    padding: 5px;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.img-background {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+/* Pour pop-up des formulaire ---------------------------------------------------------- */
+
+#bg-popup {
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+#bg-popup h3, p {
+    color: #101720;
+    background-color: #e6e7e8;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 25px;
+    margin:5px;
+}
+
+#bg-popup-action {
+    background-color: rgba(0, 0, 0, 0.9);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+#bg-popup-action h3, p {
+    color: #101720;
+    background-color: #e6e7e8;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 25px;
+    margin:5px;
+}
+
+
+.bg-popup-commande {
+    display: none;
+}
+.bg-popup-saison {
+    display: none;
+}
+.bg-popup-new-membre {
+    display: none;
+}
+.bg-popup-edit-membre {
+    display: none;
+}
+
+
+.popup-content-commande {
+    width: 650px;
+    height: 265px;
+    background-color: #e6e7e8;
+    opacity: 1;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 0 100px 1px #e6e7e880;
+}
+.popup-content-saison {
+    width: 500px;
+    height: 260px;
+    background-color: #e6e7e8;
+    opacity: 1;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 0 100px 1px #e6e7e880;
+}
+.popup-content-new-membre {
+    width: 380px;
+    height: 215px;
+    background-color: #e6e7e8;
+    opacity: 1;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 0 100px 1px #e6e7e880;
+}
+.popup-content-edit-membre {
+    width: 380px;
+    height: 215px;
+    background-color: #e6e7e8;
+    opacity: 1;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 0 100px 1px #e6e7e880;
+}
+
+
+/* animation d'ouverture / fermeture :      */
+#popup-content.open {
+  animation: open 0.5s forwards;
+}
+
+#popup-content.close {
+  animation: close 0.5s forwards;
+}
+
+@keyframes open {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+@keyframes close {
+  100% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+
+/* En-tÃªte de la popup :  */
+.button-close {
+    float: right;
+    display: block;
+    width: 30px;
+    border: 2px #e6e7e8 solid;
+    border-radius: 4px;
+    margin: 5px;
+}
+.button-close:hover {
+    transform: rotate(15deg);
+}
+
+
+
+/* 
+ -> Tableaux - popup 
+*/
+
+/* HEADER */ 
+
+table.popup-header {
+  border-collapse: collapse;
+  /*border: 1px black solid;*/
+  width: 100%; 
+}
+
+td.popup-header-titre, td.popup-header-close {
+  text-align: center;
+  /*border: 1px black solid;*/
+}
+
+td.popup-header-close {
+  width: 9%;
+}
+
+td.popup-header-titre {
+  padding-left: 45px;
+}
+
+tr.popup-header {
+  background-color: transparent
+}
+
+
+/* FORM */
+table.popup-form {
+  border-collapse: collapse;
+  /*border: 1px black solid;*/
+  border-radius: 12px;
+  width: 95%; 
+  text-align: left;
+  color: #101720;
+  background-color: #bbd5ea;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+}
+
+td.popup-form-label, td.popup-form-input {
+  padding: 8px;
+  padding-top: 12px;
+}
+
+td.popup-form-label {
+  padding-left: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  width:55%;
+}
+
+td.popup-form-submit {
+  text-align:center;
+  padding-top: 20px;
+  padding-bottom: 13px;
+}
+
+.popup-form-submit-button {
+  padding: 8px 10px;
+  min-width: 200px;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+  background-image: linear-gradient(to right, #1b4cb8,#18a5ff);
+  color: #fff;
+}
+
+.popup-form-submit-button:hover {
+  transform: translateY(-2px);
+}
+
+select#membre {
+  height: 22px;
+  width: 85%;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 10px 1px #356adeb0;
+}
+input#nbTubeCommande {
+  height: 20px;
+  width: 45px;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 20px 1px #356adeb0;
+}
+input#regler {
+  margin-left: 0;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 20px 1px #356ade;
+}
+
+select#membre:hover {
+  box-shadow: 0 0 20px 1px #1b4cb8;
+}
+input#nbTubeCommande:hover{
+  box-shadow: 0 0 20px 1px #1b4cb8;
+}
+input#regler:hover {
+  box-shadow: 0 0 20px 4px #1b4cb8;
+}
+
+
+
+
+/* menu de navigation -------------------------------------------------------------------------- */
+
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: #356ade;
+}
+
+/* Style the topnav links */
+.topnav a {
+  float: right;
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Navigation : lien des menus principaux */
+#topnav-link {
+    background-color: #1b4cb8;
+    color: #f2f2f2;
+    margin-left: 2px;
+}
+#topnav-link:hover {
+  background-color: #bbd0ff;
+  color: #000;
+}
+
+/* Navigation : Sous-menu */
+#topnav-menu {
+    float: left;
+    background-color: #8cbaff;
+    color: #101720;
+    margin-right: 2px;
+}
+#topnav-menu:hover{
+   background-color: #bdbdbd;
+}
+
+#topnav-menu-commande {
+    float: left;
+    background-color: #8cbaff;
+    color: #101720;
+    margin-right: 2px;
+}
+#topnav-menu-commande:hover{
+   background-color: #bdbdbd;
+}
+
+#topnav-menu-saison {
+    float: left;
+    background-color: #8cbaff;
+    color: #101720;
+    margin-right: 2px;
+}
+#topnav-menu-saison:hover{
+   background-color: #bdbdbd;
+}
+
+#topnav-menu-membre {
+    float: left;
+    background-color: #8cbaff;
+    color: #101720;
+    margin-right: 2px;
+}
+#topnav-menu-membre:hover{
+   background-color: #bdbdbd;
+}
+
+
+
+/* Navigation : Admin */
+#topnav-admin {
+    float: right;
+    background-color: #900;
+    color: #f2f2f2;
+    margin-left: 4px;
+}
+#topnav-admin:hover{
+    background-color: #bdbdbd;
+    color: #900;
+}
+
+
+
+/* Tableaux -------------------------------------------------------------------------------------*/
+
+.std-table {}
+
+.std-table table {
+  border-collapse: collapse;
+  color: black;
+  margin: auto;
+}
+
+.std-table th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+.std-table td {
+  border: 1px solid #ddd;
+}
+
+.std-table tr {
+  background-color: #f2f2f2;
+}
+
+.std-table th {
+  background-color: #0080ff;
+  color: white;
+}
+
+th.table-action {
+    background-color: #900;
+    color: white;
+}
+
+input#action-input{
+   border: none; 
+}
+
+input#action-input {
+  border: none;
+  outline: none;
+  font-style: normal;
+  color: #900;
+  text-decoration: none;
+}
+input#action-input:hover {
+  border: none;
+  outline: none;
+  font-style: normal;
+  color: #900;
+  text-decoration: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+td.table-action td.action-input {
+  padding:0;
+  border: none;
+  margin: 0;
+}
+
+td.table-action a {
+  font-style: normal;
+  color: #900; 
+  text-decoration: none;
+}
+td.table-action a:hover {
+  font-style: normal; 
+  color: #900; 
+  text-decoration: none;
+  text-decoration: underline;
+}
+
+

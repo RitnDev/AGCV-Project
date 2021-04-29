@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    
+    
+    <head th:fragment="headerFragment">
+        <title th:text="${pageTitle}">Template Title</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
+        <script type="text/javascript" th:src="@{/js/saison-popup.js}" charset="utf-8" defer></script>
+        <script type="text/javascript" th:src="@{/js/new-membre-popup.js}" charset="utf-8" defer></script>
+        <!--script type="text/javascript" th:src="@{/js/edit-membre-popup.js}" charset="utf-8" defer></script-->
+        <!-- https://www.youtube.com/watch?v=gLWIYk0Sd38 -->
+    </head>
+    
+
+    <body>
+        <!-- header section -->
+        <div th:replace="fragments/layout-header :: header"></div>
+      
+        <!-- content section -->
+        <div class="main-content">
+            <br/>
+            <div th:utext="${message}"> !</div><br/><br/>
+            
+            <div class="std-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Horodatage</th>
+                            <th>Prenom</th>
+                            <th>Nom</th>
+                            <th class="table-action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${listMembres.empty}">
+                            <td colspan="2">Aucun Membre créé</td>
+                        </tr>
+                        <tr th:each="membre : ${listMembres}">
+                            <td><span th:text="${membre.id}">ID</span></td>
+                            <td><span th:text="${membre.horodatage}">Horodatage</span></td>
+                            <td><span th:text="${membre.prenom}">Prenom</span></td>
+                            <td><span th:text="${membre.nom}">Nom</span></td>
+                            <td class="table-action">
+                                <table class="action-input">
+                                    <tr>
+                                        <td class="action-input">
+                                            <form action="#" th:action="@{/{id}(id=${membre.id})}" th:method="post">
+                                                <input type="hidden" name="_method" value="delete"/>
+                                                <input id="action-input" type="submit" value="Suppr"/>
+                                            </form>
+                                        </td><td class="action-input">|</td>
+                                        <td class="action-input">
+                                            <form action="#" th:action="@{/{id}(id=${membre.id})}" th:method="post">
+                                                <input id="action-input" type="submit" value="Edit"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        
+        </div>
+      
+        <!-- pop-up section -->
+        <div id="bg-popup" class="bg-popup-saison">
+            <div th:replace="fragments/layout-popup :: saison"/>
+        </div>
+        <div id="bg-popup" class="bg-popup-new-membre">
+            <div th:replace="fragments/layout-popup :: new-membre"/>
+        </div>
+       
+        <!-- footer section -->
+        <div th:replace="fragments/layout-footer :: footer"></div>
+                
+    </body>
+    
+</html>

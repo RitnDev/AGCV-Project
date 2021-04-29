@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <!--link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/-->
+    </head>
+    <body>
+        <span th:fragment="footer">
+            <img class="img-background" src="/images/fond/homme-bad.png"/>
+            <span class="footer">2021 - Créer par RitnDev.</span>
+            <span class="footer-log" th:if="${connect}" th:utext="${log}"/>
+        </span>
+    </body>
+</html>

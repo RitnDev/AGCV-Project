@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+        
+        <!-- ------------------------------------------ POPUP NOUVELLE COMMANDE -------------------------------------------------- -->
+        
+        <div th:fragment="commande">
+            <div id="popup-content" class="popup-content-commande">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Nouvelle Commande</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <img id="close-commande" class="button-close" src="/images/popup/button-close.png">
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/newCommande}" th:object="${newCommande}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="membre">Membre ayant commandé des tubes :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <select id="membre" th:field="*{membre}">
+                                <option th:each="m : ${Membres}" th:value="${m}" th:text="${m}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="nbTubeCommande">Nombre de tubes commandés :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="nbTubeCommande" type="number" min="1" th:value="*{nbTubeCommande}" th:field="*{nbTubeCommande}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="regler">La commande est-elle déjà réglée ?</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="regler" name="regler" type="checkbox"/>
+                                <input name="_regler" type="hidden" value="on" th:field="*{regler}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input class="popup-form-submit-button" type="submit" value="Créer la commande"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>
+        
+        <!-- ------------------------------------------ POPUP NOUVELLE SAISON -------------------------------------------------- -->
+        
+        <div th:fragment="saison">
+            <div id="popup-content" class="popup-content-saison">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Nouvelle Saison</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <img id="close-saison" class="button-close" src="/images/popup/button-close.png">
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/newSaison}" th:object="${newSaison}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="anneeDebut">Année de début de Saison :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="anneeDebut" type="number" th:value="*{annee_debut}" th:field="*{annee_debut}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="anneeFin">Année de fin de Saison :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="anneeFin" type="number" th:value="*{annee_fin}" th:field="*{annee_fin}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="budget">Budget prévisionnelle :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="budget" type="number" th:value="*{budget}" th:field="*{budget}" step="0.01" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input class="popup-form-submit-button" type="submit" value="Créer la Saison"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>
+        
+        
+        
+        <!-- ------------------------------------------ POPUP NOUVEAU MEMBRE -------------------------------------------------- -->
+        
+        <div th:fragment="new-membre">
+            <div id="popup-content" class="popup-content-new-membre">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Nouveau Membre</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <img id="close-membre" class="button-close" src="/images/popup/button-close.png">
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/newMembre}" th:object="${newMembre}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="prenom">Prénom :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="prenom" type="text" th:value="*{prenom}" th:field="*{prenom}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="nom">Nom :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input class="popup-form-submit-button" type="submit" value="Créer le membre"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>
+        
+    </body>
+</html>
+
+
+<!-- ------------------------------------------ POPUP EDITION MEMBRE -------------------------------------------------- -->
+        
+       <div th:fragment="edit-membre">
+            <div id="popup-content" class="popup-content-edit-membre">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Modifier le Membre</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <a th:href="admin" >
+                                <img id="close-membre" class="button-close" src="/images/popup/button-close.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/{id}(id=*{id})}" th:object="${editMembre}" th:method="post">
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="prenom">Prénom :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="prenom" type="text" th:value="*{prenom}" th:field="*{prenom}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="nom">Nom :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" name="_method" value="put"/>
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>
+        
+    </body>
+</html>

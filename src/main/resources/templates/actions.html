@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    
+    
+    <head th:fragment="headerFragment">
+        <title th:text="${pageTitle}">Template Title</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
+        <script type="text/javascript" th:src="@{/js/edit-membre-popup.js}" charset="utf-8" defer></script>
+    </head>
+
+
+    <body>
+     
+        <div th:replace="fragments/layout-header :: header">...</div>
+        
+        <!-- pop-up section -->
+        <div id="bg-popup-action" class="bg-popup-edit-membre">
+            <div th:replace="fragments/layout-popup :: edit-membre"/>
+        </div>
+      
+        <div th:replace="fragments/layout-footer :: footer"/>
+        
+        
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+
+                var numAction = [[${numAction}]];
+                if (numAction === 1){
+                    const popupEditMembre = document.querySelector(".popup-content-edit-membre");
+                    const bgEditMembre = document.querySelector('.bg-popup-edit-membre');
+                    bgEditMembre.style.display = 'flex';
+                    popupEditMembre.className = "popup-content-edit-membre open";
+                }
+            /*]]>*/
+        </script>
+        
+        
+        
+    </body>
+    
+</html>
