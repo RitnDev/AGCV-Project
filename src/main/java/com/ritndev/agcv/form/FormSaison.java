@@ -28,9 +28,8 @@ public class FormSaison {
        
     
     //Constructeur
-    public FormSaison(int annee_debut, int annee_fin, String budget) {
+    public FormSaison(int annee_debut, String budget) {
         this.annee_debut = annee_debut;
-        this.annee_fin = annee_fin;
         this.budget = budget;
     }
     
@@ -41,7 +40,7 @@ public class FormSaison {
     
     @Override
     public String toString() {
-        return String.valueOf(annee_debut) + " - " + String.valueOf(annee_fin);
+        return String.valueOf(annee_debut) + " - " + String.valueOf(annee_debut + 1);
     }
     
     

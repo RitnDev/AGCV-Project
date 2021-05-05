@@ -22,6 +22,8 @@
         <!-- content section -->
         <div class="main-content">
             <br/>
+            <div th:if="${reponse} != null" th:utext="${reponse}"></div>
+            <br/>
             <div th:utext="${message}"> !</div><br/><br/>
             
             <div class="std-table">

@@ -12,6 +12,7 @@ import com.ritndev.agcv.form.FormCommande;
 import com.ritndev.agcv.form.FormMembre;
 import com.ritndev.agcv.form.FormSaison;
 import com.ritndev.agcv.model.Membre;
+import com.ritndev.agcv.model.Saison;
 
 import com.ritndev.agcv.services.IagcvService;
 import com.ritndev.agcv.utils.WebUtils;
@@ -20,9 +21,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 
@@ -70,8 +71,7 @@ public class AGCVController {
         System.out.println(">> DELETE - MEMBRE");
         System.out.println("ID : " + id);
         
-        Membre delMembre = service.findByIdMembre(id);
-        service.supprMembre(delMembre);
+        service.supprMembre(id);
         
         return "redirect:/admin";
     }
@@ -160,10 +160,28 @@ public class AGCVController {
     
     //Création d'une nouvelle saison
     @PostMapping("/newSaison")
-    public String newSaison(@ModelAttribute FormSaison newSaison) {
+    public String newSaison(@ModelAttribute FormSaison newSaison, Model model) {
         System.out.println(">> POST");
         System.out.println("nom de la saison : " + newSaison.toString());
         System.out.println("Budget de la saison : " + newSaison.getBudget());
+        
+        String reponse = "-- Saison non créée --";
+        
+        if(newSaison != null 
+                && !"".equals(newSaison.toString())
+                && !"".equals(newSaison.getBudget())
+                ){
+            
+            Saison maSaison = new Saison(newSaison.toString(), Double.parseDouble(newSaison.getBudget()));
+            
+            System.out.println("Ma Saison : " + maSaison.getNom());
+            System.out.println("Budget previ de ma Saison : " + maSaison.getBudgetPrevisionnelle());
+            service.saveSaison(maSaison);
+            
+            reponse = "-- Saison créée avec succès --";
+        }
+        
+        model.addAttribute("reponse", reponse);
         
         return "redirect:/admin";
     }

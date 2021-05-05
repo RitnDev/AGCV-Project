@@ -27,7 +27,7 @@ public class Saison implements Serializable {
     //ID
     @Id
     @GeneratedValue
-    @Column(name = "membre_id", nullable = false)
+    @Column(name = "saison_id", nullable = false)
     private long id;
     public long getId() {return id;}
     public void setId(long id) {this.id = id;}
@@ -85,7 +85,14 @@ public class Saison implements Serializable {
     public void setListCommandes(List<Commande> listCommandes) {this.listCommandes = listCommandes;}
     
     
-        
+    //Constructeur
+    
+    public Saison(String nom, double budgetPrevisionnelle) {
+        this.nom = nom;
+        this.budgetPrevisionnelle = budgetPrevisionnelle;
+    }
+
+    
     
     /*
         --- Methodes ---
@@ -110,4 +117,6 @@ public class Saison implements Serializable {
         return coutCommande;
     }
     */
+
+    
 }

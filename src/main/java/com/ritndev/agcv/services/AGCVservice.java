@@ -47,7 +47,10 @@ public class AGCVservice implements IagcvService {
     @Override public Membre saveMembre(Membre newMembre) {return membreRep.save(newMembre);}
     @Override public List<Membre> listMembre() {return membreRep.findAll();}
     @Override public Membre findByIdMembre(Long id) {return membreRep.getOne(id);}
-    @Override public void supprMembre(Membre delMembre) {membreRep.delete(delMembre);}
+    @Override public void supprMembre(Long id) {
+        Membre m = membreRep.getOne(id);
+        membreRep.delete(m);
+    }
     @Override public void updateByIdMembre(Long id, Membre editMembre) {
         Membre m = membreRep.getOne(id);
         if(m != null) {
@@ -63,7 +66,10 @@ public class AGCVservice implements IagcvService {
     @Override public PrixTube savePrixTube (PrixTube newPrixTube) {return prixTubeRep.save(newPrixTube);}
     @Override public List<PrixTube> listPrixTube() {return prixTubeRep.findAll();}
     @Override public PrixTube findByIdPrixTube(Long id) {return prixTubeRep.getOne(id);}
-    @Override public void supprPrixTube(PrixTube delPrixTube) {prixTubeRep.delete(delPrixTube);}
+    @Override public void supprPrixTube(Long id) {
+        PrixTube pt = prixTubeRep.getOne(id);
+        prixTubeRep.delete(pt);
+    }
     @Override public void updateByIdPrixTube(Long id, PrixTube editPrixTube) {
         PrixTube pt = prixTubeRep.getOne(id);
         if(pt != null) {
@@ -81,7 +87,10 @@ public class AGCVservice implements IagcvService {
     @Override public Commande saveCommande(Commande newCommande) {return commandeRep.save(newCommande);}
     @Override public List<Commande> listCommande() {return commandeRep.findAll();}
     @Override public Commande findByIdCommande(Long id) {return commandeRep.getOne(id);}
-    @Override public void supprCommande(Commande delCommande) {commandeRep.delete(delCommande);}
+    @Override public void supprCommande(Long id) {
+        Commande c = commandeRep.getOne(id);
+        commandeRep.delete(c);
+    }
     @Override public void updateByIdCommande(Long id, Commande editCommande) {
         Commande c = commandeRep.getOne(id);
         if(c != null) {
@@ -99,7 +108,10 @@ public class AGCVservice implements IagcvService {
     @Override public Competition saveCompetition(Competition newCompetition) {return competitionRep.save(newCompetition);}
     @Override public List<Competition> listCompetition() {return competitionRep.findAll();}
     @Override public Competition findByIdCompetition(Long id) {return competitionRep.getOne(id);}
-    @Override public void supprCompetition(Competition delCompetition) {competitionRep.delete(delCompetition);}
+    @Override public void supprCompetition(Long id) {
+        Competition c = competitionRep.getOne(id);
+        competitionRep.delete(c);
+    }
     @Override public void updateByIdCompetition(Long id, Competition editCompetition) {
         Competition co = competitionRep.getOne(id);
         if(co != null) {
@@ -115,7 +127,10 @@ public class AGCVservice implements IagcvService {
     @Override public ConsoMois saveConsoMois(ConsoMois newConsoMois) {return consoMoisRep.save(newConsoMois);}
     @Override public List<ConsoMois> listConsoMois() {return consoMoisRep.findAll();}
     @Override public ConsoMois findByIdConsoMois(Long id) {return consoMoisRep.getOne(id);}
-    @Override public void supprConsoMois(ConsoMois delConsoMois) {consoMoisRep.delete(delConsoMois);}
+    @Override public void supprConsoMois(Long id) {
+        ConsoMois cm = consoMoisRep.getOne(id);
+        consoMoisRep.delete(cm);
+    }
     @Override public void updateByIdConsoMois(Long id, ConsoMois editConsoMois) {
         ConsoMois cm = consoMoisRep.getOne(id);
         if(cm != null) {
@@ -128,11 +143,14 @@ public class AGCVservice implements IagcvService {
         }
     }
 
-    
+
     // -------------------   FONCTIONS CONSO-MOIS ---------------------
     @Override public SacCompetition saveSacCompetition(SacCompetition newSacCompetition) {return sacCompetitionRep.save(newSacCompetition);}
     @Override public SacCompetition findByIdSacCompetition(Long id) {return sacCompetitionRep.getOne(id);}
-    @Override public void supprSacCompetition(SacCompetition delSacCompetition) {sacCompetitionRep.delete(delSacCompetition);}
+    @Override public void supprSacCompetition(Long id) {
+        SacCompetition sc = sacCompetitionRep.getOne(id);
+        sacCompetitionRep.delete(sc);
+    }
     @Override public void updateByIdSacCompetition(Long id, SacCompetition editSacCompetition) {
         SacCompetition sc = sacCompetitionRep.getOne(id);
         if(sc != null) {
@@ -142,12 +160,15 @@ public class AGCVservice implements IagcvService {
         }
     }
 
-    
+
     // -------------------   FONCTIONS SAISON ---------------------
     @Override public Saison saveSaison(Saison newSaison) {return saisonRep.save(newSaison);}
     @Override public List<Saison> listSaison() {return saisonRep.findAll();}
     @Override public Saison findByIdSaison(Long id) {return saisonRep.getOne(id);}
-    @Override public void supprSaison(Saison delSaison) {saisonRep.delete(delSaison);}
+    @Override public void supprSaison(Long id) {
+        Saison saison = saisonRep.getOne(id);
+        saisonRep.delete(saison);
+    }
     @Override public void updateByIdSaison(Long id, Saison editSaison) {
         Saison s = saisonRep.getOne(id);
         if(s != null) {
@@ -163,7 +184,10 @@ public class AGCVservice implements IagcvService {
     @Override public TypeVolant saveTypeVolant(TypeVolant newTypeVolant) {return typeVolantRep.save(newTypeVolant);}
     @Override public List<TypeVolant> listTypeVolant() {return typeVolantRep.findAll();}
     @Override public TypeVolant findByIdTypeVolant(Long id) {return typeVolantRep.getOne(id);}
-    @Override public void supprTypeVolant(TypeVolant delTypeVolant) {typeVolantRep.delete(delTypeVolant);}
+    @Override public void supprTypeVolant(Long id) {
+        TypeVolant tv = typeVolantRep.getOne(id);
+        typeVolantRep.delete(tv);
+    }
     @Override public void updateByIdTypeVolant(Long id, TypeVolant editTypeVolant) {
         TypeVolant tv = typeVolantRep.getOne(id);
         if(tv != null) {
