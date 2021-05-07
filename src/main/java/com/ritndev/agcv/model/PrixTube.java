@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 
 /**
@@ -14,47 +16,51 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author Ritn
  */
 @Entity
-@Table(name = "PRIX_TUBES")
+@Table(name = "PRIX_TUBE")
 public class PrixTube implements Serializable {
     
     //ID
     @Id
     @GeneratedValue
-    @Column(name = "prixtube_id", nullable = false)
+    @Column(name = "id", nullable = false)
+    @Getter @Setter
     private long id;
-    public long getId() {return id;}
-    public void setId(long id) {this.id = id;}
     
     //Horodatage
     @UpdateTimestamp
     @Column(name = "horodatage", nullable = false)
+    @Getter @Setter
     private Timestamp horodatage;
-    public Timestamp getHorodatage() {return horodatage;}
-    public void setHorodatage(Timestamp horodatage) {this.horodatage = horodatage;}
     
-    //Prix du tube (total)
-    @Column(name = "prix", nullable = false)
-    private double prix;
-    public double getPrix() {return prix;}
-    public void setPrix(double prix) {this.prix = prix;}
-    
-    //Prix du tube pour les membres
-    @Column(name = "prix_membre", nullable = false)
-    private double prixMembre;
-    public double getPrixMembre() {return prixMembre;}
-    public void setPrixMembre(double prixMembre) {this.prixMembre = prixMembre;}
+    //Id correspondant aux type tube
+    @Column(name = "idTypeTube", nullable = false)
+    @Getter @Setter
+    private long idTypeTube;
     
     //Marque du tube
     @Column(name = "marque")
+    @Getter @Setter
     private String marque;
-    public String getMarque() {return marque;}
-    public void setMarque(String marque) {this.marque = marque;}
     
-    //type de tube utilisé
-    @Column(name = "type_tube", nullable = false)
-    private String typeTube;
-    public String getTypeTube() {return typeTube;}
-    public void setTypeTube(String typeTube) {this.typeTube = typeTube;}
-     
+    //Prix d'achat
+    @Column(name = "prix", nullable = false)
+    @Getter @Setter
+    private double prix;
+    
+    //prix pour les membres
+    @Column(name = "prixMembre", nullable = false)
+    @Getter @Setter
+    private double prixMembre;
+    
+    //Si ce prix est toujours utilisé pour les commandes ?
+    @Column(name = "actif", nullable = false)
+    @Getter @Setter
+    private boolean actif;
+    
+    
+    
+    //Constructeur
+    public PrixTube() {}
+    
     
 }

@@ -13,22 +13,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class AGCVservice implements IagcvService {
     
-    @Autowired
-    CommandeRepository commandeRep;
-    @Autowired
-    CompetitionRepository competitionRep;
-    @Autowired
-    ConsoMoisRepository consoMoisRep;
-    @Autowired
-    MembreRepository membreRep;
-    @Autowired
-    PrixTubeRepository prixTubeRep;
-    @Autowired
-    SacCompetitionRepository sacCompetitionRep;
-    @Autowired
-    SaisonRepository saisonRep;
-    @Autowired
-    TypeVolantRepository typeVolantRep;
+    @Autowired CommandeRepository commandeRep;
+    @Autowired CompetitionRepository competitionRep;
+    @Autowired ConsoMoisRepository consoMoisRep;
+    @Autowired ConsoTubeRepository consoTubeRep;
+    @Autowired MainDataRepository mainDataRep;
+    @Autowired MembreRepository membreRep;
+    @Autowired PrixTubeRepository prixTubeRep;
+    @Autowired SaisonRepository saisonRep;
+    @Autowired StockCompetitionRepository stockCompetRep;
+    @Autowired TypeTubeRepository typeTubeRep;
+    
     
     
     // Initialisation des Repositories 
@@ -37,10 +32,11 @@ public class AGCVservice implements IagcvService {
     public void setConsoMoisRep (ConsoMoisRepository consoMoisRep) {this.consoMoisRep = consoMoisRep;}
     public void setMembreRepository (MembreRepository membreRep) {this.membreRep = membreRep;}
     public void setPrixTubeRep (PrixTubeRepository prixTubeRep) {this.prixTubeRep = prixTubeRep;}
-    public void setSacCompetitionRep (SacCompetitionRepository sacCompetitionRep) {this.sacCompetitionRep = sacCompetitionRep;}
+    public void setStockCompetitionRep (StockCompetitionRepository stockCompetitionRep) {this.stockCompetRep = stockCompetitionRep;}
     public void setSaisonRep (SaisonRepository saisonRep) {this.saisonRep = saisonRep;}
-    public void setTypeVolantRep (TypeVolantRepository typeVolantRep) {this.typeVolantRep = typeVolantRep;}
-
+    public void setConsoTubeRep (ConsoTubeRepository consoTubeRep) {this.consoTubeRep = consoTubeRep;}
+    public void setMainDataRep (MainDataRepository mainDataRep) {this.mainDataRep = mainDataRep;}
+    public void setTypeTubeRep (TypeTubeRepository typeTubeRep) {this.typeTubeRep = typeTubeRep;}
     
     
     // -------------------   FONCTIONS MEMBRES ---------------------
@@ -71,15 +67,7 @@ public class AGCVservice implements IagcvService {
         prixTubeRep.delete(pt);
     }
     @Override public void updateByIdPrixTube(Long id, PrixTube editPrixTube) {
-        PrixTube pt = prixTubeRep.getOne(id);
-        if(pt != null) {
-            pt.setMarque(editPrixTube.getMarque());
-            pt.setPrix(editPrixTube.getPrix());
-            pt.setPrixMembre(editPrixTube.getPrixMembre());
-            pt.setTypeTube(editPrixTube.getTypeTube());
-            
-            prixTubeRep.save(pt);
-        }
+        //WIP
     }
     
     
@@ -92,15 +80,7 @@ public class AGCVservice implements IagcvService {
         commandeRep.delete(c);
     }
     @Override public void updateByIdCommande(Long id, Commande editCommande) {
-        Commande c = commandeRep.getOne(id);
-        if(c != null) {
-            c.setMembre(editCommande.getMembre());
-            c.setNbTubeCommande(editCommande.getNbTubeCommande());
-            c.setPrixTube(editCommande.getPrixTube());
-            c.setRegler(editCommande.isRegler());
-            
-            commandeRep.save(c);
-        }
+        //WIP
     }
  
     
@@ -113,13 +93,7 @@ public class AGCVservice implements IagcvService {
         competitionRep.delete(c);
     }
     @Override public void updateByIdCompetition(Long id, Competition editCompetition) {
-        Competition co = competitionRep.getOne(id);
-        if(co != null) {
-            co.setNom(editCompetition.getNom());
-            co.setTubeUtilise(editCompetition.getTubeUtilise());
-            
-            competitionRep.save(co);
-        }
+        //WIP
     }
 
     
@@ -132,32 +106,19 @@ public class AGCVservice implements IagcvService {
         consoMoisRep.delete(cm);
     }
     @Override public void updateByIdConsoMois(Long id, ConsoMois editConsoMois) {
-        ConsoMois cm = consoMoisRep.getOne(id);
-        if(cm != null) {
-            cm.setNomMois(editConsoMois.getNomMois());
-            cm.setPrixTube(editConsoMois.getPrixTube());
-            cm.setTubeCommande(editConsoMois.getTubeCommande());
-            cm.setTubeUtilise(editConsoMois.getTubeUtilise());
-            
-            consoMoisRep.save(cm);
-        }
+        //WIP
     }
 
 
-    // -------------------   FONCTIONS CONSO-MOIS ---------------------
-    @Override public SacCompetition saveSacCompetition(SacCompetition newSacCompetition) {return sacCompetitionRep.save(newSacCompetition);}
-    @Override public SacCompetition findByIdSacCompetition(Long id) {return sacCompetitionRep.getOne(id);}
-    @Override public void supprSacCompetition(Long id) {
-        SacCompetition sc = sacCompetitionRep.getOne(id);
-        sacCompetitionRep.delete(sc);
+    // -------------------   FONCTIONS STOCK-COMPETITION ---------------------
+    @Override public StockCompetition saveStockCompetition(StockCompetition newStock) {return stockCompetRep.save(newStock);}
+    @Override public StockCompetition findByIdStockCompetition(Long id) {return stockCompetRep.getOne(id);}
+    @Override public void supprStockCompetition(Long id) {
+        StockCompetition sc = stockCompetRep.getOne(id);
+        stockCompetRep.delete(sc);
     }
-    @Override public void updateByIdSacCompetition(Long id, SacCompetition editSacCompetition) {
-        SacCompetition sc = sacCompetitionRep.getOne(id);
-        if(sc != null) {
-            sc.setNbTube(editSacCompetition.getNbTube());
-            
-            sacCompetitionRep.save(sc);
-        }
+    @Override public void updateByIdStockCompetition(Long id, StockCompetition editSacCompetition) {
+        //WIP
     }
 
 
@@ -170,34 +131,51 @@ public class AGCVservice implements IagcvService {
         saisonRep.delete(saison);
     }
     @Override public void updateByIdSaison(Long id, Saison editSaison) {
-        Saison s = saisonRep.getOne(id);
-        if(s != null) {
-            s.setNom(editSaison.getNom());
-            s.setBudgetPrevisionnelle(editSaison.getBudgetPrevisionnelle());
-            
-            saisonRep.save(s);
-        }
+        //WIP
     }
-   
+    @Override public Long lastIdSaison() {
+        //WIP
+        return -1L;
+    }
+    
     
     // -------------------   FONCTIONS TYPE-VOLANT ---------------------
-    @Override public TypeVolant saveTypeVolant(TypeVolant newTypeVolant) {return typeVolantRep.save(newTypeVolant);}
-    @Override public List<TypeVolant> listTypeVolant() {return typeVolantRep.findAll();}
-    @Override public TypeVolant findByIdTypeVolant(Long id) {return typeVolantRep.getOne(id);}
-    @Override public void supprTypeVolant(Long id) {
-        TypeVolant tv = typeVolantRep.getOne(id);
-        typeVolantRep.delete(tv);
+    @Override public ConsoTube saveConsoTube(ConsoTube newConsoTube) {return consoTubeRep.save(newConsoTube);}
+    @Override public List<ConsoTube> listConsoTube() {return consoTubeRep.findAll();}
+    @Override public ConsoTube findByIdConsoTube(Long id) {return consoTubeRep.getOne(id);}
+    @Override public void supprConsoTube(Long id) {
+        ConsoTube ct = consoTubeRep.getOne(id);
+        consoTubeRep.delete(ct);
     }
-    @Override public void updateByIdTypeVolant(Long id, TypeVolant editTypeVolant) {
-        TypeVolant tv = typeVolantRep.getOne(id);
-        if(tv != null) {
-            tv.setTypeTube(editTypeVolant.getTypeTube());
-            tv.setStockTubeInit(editTypeVolant.getStockTubeInit());
-            
-            typeVolantRep.save(tv);
-        }
+    @Override public void updateByIdConsoTube(Long id, ConsoTube editTypeVolant) {
+        //WIP
+    }
+
+    
+    // -------------------   FONCTIONS MAIN-DATA ---------------------
+    @Override public MainData saveMainData(MainData mainData) {return mainDataRep.save(mainData);}
+    @Override public MainData findByIdMainData(Long id) {return mainDataRep.getOne(id);}
+    @Override public void supprMainData(Long id) {
+        MainData data = mainDataRep.getOne(id);
+        mainDataRep.delete(data);
+    }
+    @Override public void updateByIdMainData(Long id, MainData editMainData) {
+        //WIP
+    }
+
+    
+    // -------------------   FONCTIONS TYPE-TUBES ---------------------
+    @Override public TypeTube saveTypeTube(TypeTube typeTube) {return typeTubeRep.save(typeTube);}
+    @Override public List<TypeTube> listTypeTube() {return typeTubeRep.findAll();}
+    @Override public TypeTube findByIdTypeTube(Long id) {return typeTubeRep.getOne(id);}
+    @Override public void supprTypeTube(Long id) {
+        TypeTube ct = typeTubeRep.getOne(id);
+        typeTubeRep.delete(ct);
+    }
+    @Override public void updateByIdTypeTube(Long id, TypeTube editTypeTube) {
+        //WIP
     }
     
-     
+    
     
 }

@@ -6,7 +6,6 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.stereotype.Controller;
 import com.ritndev.agcv.services.IagcvService;
@@ -32,7 +31,7 @@ public class MainController {
      
 //--------------------   Page Index   ----------------------------
     
-    @RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
+    @RequestMapping(value = { "/", "/index"}, method = RequestMethod.GET)
     public String index(Model model, Principal principal){
         PageIndex pageIndex = new PageIndex();
         return pageIndex.getPage(model, principal);
@@ -41,16 +40,17 @@ public class MainController {
     
 //--------------------   Page Admin   ---------------------------- 
     
-    @GetMapping("/admin")
+    @RequestMapping(value = { "/admin", "/newMembre", "/newSaison"}, method = RequestMethod.GET)
     public String admin(Model model, Principal principal){     
         PageAdmin pageAdmin = new PageAdmin();
+        model.addAttribute("test", null);
         return pageAdmin.getPage(model, principal, service);
     }
-   
+
     
 //--------------   Page Commande de tube des membres   ------------------
     
-    @RequestMapping(value = "/commandesMembres", method = RequestMethod.GET)
+    @RequestMapping(value = {"/commandesMembres", "/newCommande"}, method = RequestMethod.GET)
     public String commandesMembres(Model model, Principal principal){
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres();
         return pageCommandesMembres.getPage(model, principal, service);

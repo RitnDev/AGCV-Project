@@ -2,6 +2,7 @@ package com.ritndev.agcv.controller;
 
 
 import com.ritndev.agcv.classes.Link;
+import com.ritndev.agcv.classes.TypeReponse;
 import com.ritndev.agcv.form.ActionsTypes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import com.ritndev.agcv.form.FormMembre;
 import com.ritndev.agcv.form.FormSaison;
 import com.ritndev.agcv.model.Membre;
 import com.ritndev.agcv.model.Saison;
+import com.ritndev.agcv.pages.PageAdmin;
 
 import com.ritndev.agcv.services.IagcvService;
 import com.ritndev.agcv.utils.WebUtils;
@@ -23,7 +25,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 
@@ -52,7 +53,7 @@ public class AGCVController {
     
     //Création d'un nouveau membre
     @PostMapping("/newMembre")
-    public String newMembre(@ModelAttribute FormMembre newMembre) {
+    public String newMembre(@ModelAttribute FormMembre newMembre, Model model, Principal principal) {
         System.out.println(">> POST");
         System.out.println("Prenom : " + newMembre.getPrenom());
         System.out.println("Nom : " + newMembre.getNom());
@@ -60,7 +61,14 @@ public class AGCVController {
         Membre addMembre = new Membre(newMembre.getPrenom(),newMembre.getNom());
         service.saveMembre(addMembre);
         
-        return "redirect:/admin";
+        String reponse1 = "Membre : '" + addMembre.toString() + "' - créer avec succès";
+        String reponse2 = "Ceci est un test d'erreur !";
+          
+        PageAdmin pageAdmin = new PageAdmin();
+        pageAdmin.addReponse(TypeReponse.ADD, reponse1);
+        pageAdmin.addReponse(TypeReponse.ERROR, reponse2);
+        
+        return pageAdmin.getPage(model, principal, service);
     }
     
     
@@ -175,7 +183,7 @@ public class AGCVController {
             Saison maSaison = new Saison(newSaison.toString(), Double.parseDouble(newSaison.getBudget()));
             
             System.out.println("Ma Saison : " + maSaison.getNom());
-            System.out.println("Budget previ de ma Saison : " + maSaison.getBudgetPrevisionnelle());
+            System.out.println("Budget previ de ma Saison : " + maSaison.getBudget());
             service.saveSaison(maSaison);
             
             reponse = "-- Saison créée avec succès --";

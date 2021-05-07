@@ -16,8 +16,8 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author Ritn
  */
 @Entity
-@Table(name = "SAISON")
-public class Saison implements Serializable {
+@Table(name = "STOCK")
+public class StockCompetition implements Serializable {
     
     //ID
     @Id
@@ -32,23 +32,14 @@ public class Saison implements Serializable {
     @Getter @Setter
     private Timestamp horodatage;
     
-    //Nom de la saison (pour affichage dans les vues)
-    @Column(name = "nom", nullable = false)
+    //Stock pour les competition actuel
+    @Column(name = "stock", nullable = false)
     @Getter @Setter
-    private String nom;
-    
-    //Budget prévisionnel de cette saison
-    @Column(name = "budget", nullable = false)
-    @Getter @Setter
-    private double budget;
+    private int stock;
     
     
     //Constructeur
-    public Saison() {}
-
-    public Saison(String nom, double budget) {
-        this.nom = nom;
-        this.budget = budget;
-    }
+    public StockCompetition() {}
+    
     
 }

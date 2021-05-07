@@ -59,6 +59,15 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
                 
+        <!-- Autres outils -->
+        
+            <dependency>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                    <version>1.18.20</version>
+                    <scope>provided</scope>
+            </dependency>
+                
         <!-- _____________________________ Database  ____________________________ -->
                 <dependency>
 			<groupId>org.springframework.boot</groupId>

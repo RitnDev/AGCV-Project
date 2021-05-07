@@ -44,11 +44,11 @@ public interface IagcvService {
     public void supprConsoMois(Long id);
     public void updateByIdConsoMois(Long id, ConsoMois editConsoMois);
     
-    //Methode SacCompetition
-    public SacCompetition saveSacCompetition(SacCompetition newSacCompetition);
-    public SacCompetition findByIdSacCompetition(Long id);
-    public void supprSacCompetition(Long id);
-    public void updateByIdSacCompetition(Long id, SacCompetition editSacCompetition);
+    //Methode StockCompetition
+    public StockCompetition saveStockCompetition(StockCompetition newStock);
+    public StockCompetition findByIdStockCompetition(Long id);
+    public void supprStockCompetition(Long id);
+    public void updateByIdStockCompetition(Long id, StockCompetition editStock);
     
     //Methode Saison
     public Saison saveSaison(Saison newSaison);
@@ -56,12 +56,26 @@ public interface IagcvService {
     public Saison findByIdSaison(Long id);
     public void supprSaison(Long id);
     public void updateByIdSaison(Long id, Saison editSaison);
+    public Long lastIdSaison();
     
-    //Methode TypeVolant
-    public TypeVolant saveTypeVolant(TypeVolant TypeVolant);
-    public List<TypeVolant> listTypeVolant();
-    public TypeVolant findByIdTypeVolant(Long id);
-    public void supprTypeVolant(Long id);
-    public void updateByIdTypeVolant(Long id, TypeVolant editTypeVolant);
+    //Methode ConsoTube
+    public ConsoTube saveConsoTube(ConsoTube consoTube);
+    public List<ConsoTube> listConsoTube();
+    public ConsoTube findByIdConsoTube(Long id);
+    public void supprConsoTube(Long id);
+    public void updateByIdConsoTube(Long id, ConsoTube editConsoTube);
+    
+    //Methode MainData
+    public MainData saveMainData(MainData mainData);
+    public MainData findByIdMainData(Long id);
+    public void supprMainData(Long id);
+    public void updateByIdMainData(Long id, MainData editMainData);
+    
+    //Methode TypeTube
+    public TypeTube saveTypeTube(TypeTube typeTube);
+    public List<TypeTube> listTypeTube();
+    public TypeTube findByIdTypeTube(Long id);
+    public void supprTypeTube(Long id);
+    public void updateByIdTypeTube(Long id, TypeTube editTypeTube);
     
 }

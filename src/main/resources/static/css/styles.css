@@ -394,8 +394,6 @@ input#regler:hover {
 
 /* Tableaux -------------------------------------------------------------------------------------*/
 
-.std-table {}
-
 .std-table table {
   border-collapse: collapse;
   color: black;
@@ -462,6 +460,13 @@ td.table-action a:hover {
   color: #900; 
   text-decoration: none;
   text-decoration: underline;
+}
+
+
+.table-reponse table {
+  border-collapse: collapse;
+  color: black;
+  margin: auto;
 }
 
 

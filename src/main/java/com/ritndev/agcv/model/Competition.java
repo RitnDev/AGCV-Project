@@ -7,7 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 
 /**
@@ -15,38 +16,41 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author Ritn
  */
 @Entity
-@Table(name = "COMPETITIONS",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "SAISON_ID_UK", columnNames = {"saison_id"})
-        })
+@Table(name = "COMPETITION")
 public class Competition implements Serializable {
     
     //ID
     @Id
     @GeneratedValue
-    @Column(name = "compet_id", nullable = false)
+    @Column(name = "id", nullable = false)
+    @Getter @Setter
     private long id;
-    public long getId() {return id;}
-    public void setId(long id) {this.id = id;}
     
     //Horodatage
     @UpdateTimestamp
     @Column(name = "horodatage", nullable = false)
+    @Getter @Setter
     private Timestamp horodatage;
-    public Timestamp getHorodatage() {return horodatage;}
-    public void setHorodatage(Timestamp horodatage) {this.horodatage = horodatage;}
     
-    //Nom de la compétition
+    //id de la saison de cette competition
+    @Column(name = "idSaison", nullable = false)
+    @Getter @Setter
+    private long idSaison;
+    
+    //Nombre de tubes utilisés lors de cette competition
+    @Column(name = "nbTubesUtilises", nullable = false)
+    @Getter @Setter
+    private int nbTubesUtilises;
+    
+    //Nom de la competition
     @Column(name = "nom", nullable = false)
+    @Getter @Setter
     private String nom;
-    public String getNom() {return nom;}
-    public void setNom(String nom) {this.nom = nom;}
     
-    //Tube utilisés lors de la compétition
-    @Column(name = "tube_utilise", nullable = false)
-    private int tubeUtilise;
-    public int getTubeUtilise() {return tubeUtilise;}
-    public void setTubeUtilise(int tubeUtilise) {this.tubeUtilise = tubeUtilise;}
-
-       
+    
+    
+    //Constructeur
+    public Competition() {}
+    
+    
 }

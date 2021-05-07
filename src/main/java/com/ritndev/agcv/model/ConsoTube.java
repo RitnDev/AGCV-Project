@@ -16,8 +16,8 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author Ritn
  */
 @Entity
-@Table(name = "SAISON")
-public class Saison implements Serializable {
+@Table(name = "CONSO_TUBE")
+public class ConsoTube implements Serializable {
     
     //ID
     @Id
@@ -32,23 +32,25 @@ public class Saison implements Serializable {
     @Getter @Setter
     private Timestamp horodatage;
     
-    //Nom de la saison (pour affichage dans les vues)
-    @Column(name = "nom", nullable = false)
+    //id de la saison de cette consomation de tube
+    @Column(name = "idSaison", nullable = false)
     @Getter @Setter
-    private String nom;
+    private long idSaison;
     
-    //Budget prévisionnel de cette saison
-    @Column(name = "budget", nullable = false)
+    //id du type de tube de cette consomation de tube
+    @Column(name = "idTypeTube", nullable = false)
     @Getter @Setter
-    private double budget;
+    private long idTypeTube;
+    
+    //Nombre de tube avant consommation de volant (stock de départ)
+    @Column(name = "initTube", nullable = false)
+    @Getter @Setter
+    private int initTube;
+    
     
     
     //Constructeur
-    public Saison() {}
-
-    public Saison(String nom, double budget) {
-        this.nom = nom;
-        this.budget = budget;
-    }
+    public ConsoTube() {}
+    
     
 }

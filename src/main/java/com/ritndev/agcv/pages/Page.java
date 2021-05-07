@@ -1,9 +1,11 @@
 package com.ritndev.agcv.pages;
 
 import com.ritndev.agcv.classes.Link;
+import com.ritndev.agcv.classes.TypeReponse;
 import com.ritndev.agcv.utils.WebUtils;
 import java.security.Principal;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
@@ -50,9 +52,9 @@ public class Page {
     public void setAdminPage(boolean adminPage) {this.adminPage = adminPage;}
     
     //liste des différentes réponses à affichés suite à l'execution d'une methode : GET/POST/...
-    private List<String> reponses;
-    public List<String> getReponses() {return reponses;}
-    public void setReponses(List<String> reponses) {this.reponses = reponses;}
+    private Map<TypeReponse, String> reponses = new HashMap<>();;
+    public Map<TypeReponse, String> getReponses() {return reponses;}
+    public void setReponses(Map<TypeReponse, String> reponses) {this.reponses = reponses;}
     
     
     
@@ -77,8 +79,7 @@ public class Page {
         model.addAttribute("adminPage", getLinkAdminPage());
         model.addAttribute("menus", getMenu());
         model.addAttribute("links", getLinks());
-        
-        
+        model.addAttribute("reponses", getReponses());
         
         //Login page
         Boolean connect = false;
@@ -97,10 +98,10 @@ public class Page {
         
     
     //Ajouter une reponse à la liste des réponses
-    public void addReponse(String reponse){
-        reponses.add(reponse);
+    public void addReponse(TypeReponse tr, String reponse){
+        reponses.put(tr, reponse);
     }
-      
+    
     //Retourne le titre de la page
     String returnTitre(){
         return title + getPage();

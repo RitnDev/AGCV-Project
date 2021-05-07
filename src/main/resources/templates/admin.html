@@ -21,10 +21,21 @@
       
         <!-- content section -->
         <div class="main-content">
-            <br/>
-            <div th:if="${reponse} != null" th:utext="${reponse}"></div>
+            <div th:if="${!reponses.empty}">
+                <br/>
+                <table class="table-reponse">
+                    <tbody>
+                        <tr th:each="rep : ${reponses}">
+                            <td th:class="${'td-rep-'+rep.key}"><span th:text="${rep.value}">rep</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <br/>
             <div th:utext="${message}"> !</div><br/><br/>
+            <div th:if="${test}">
+                <span th:text="${test}">.</span>
+            </div>
             
             <div class="std-table">
                 <table>
@@ -39,7 +50,7 @@
                     </thead>
                     <tbody>
                         <tr th:if="${listMembres.empty}">
-                            <td colspan="2">Aucun Membre créé</td>
+                            <td colspan="5">Aucun Membre créé</td>
                         </tr>
                         <tr th:each="membre : ${listMembres}">
                             <td><span th:text="${membre.id}">ID</span></td>

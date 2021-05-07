@@ -1,5 +1,6 @@
 package com.ritndev.agcv.model;
 
+import com.ritndev.agcv.model.enumeration.NomMois;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.Column;
@@ -7,7 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 
 /**
@@ -15,66 +17,51 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author Ritn
  */
 @Entity
-@Table(name="CONSO_MOIS",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "TYPE_VOLANT_UK", columnNames = {"typevolant_id"})
-        })
+@Table(name = "CONSO_MOIS")
 public class ConsoMois implements Serializable {
     
     //ID
     @Id
     @GeneratedValue
-    @Column(name = "conso_id", nullable = false)
+    @Column(name = "id", nullable = false)
+    @Getter @Setter
     private long id;
-    public long getId() {return id;}
-    public void setId(long id) {this.id = id;}
     
     //Horodatage
     @UpdateTimestamp
     @Column(name = "horodatage", nullable = false)
+    @Getter @Setter
     private Timestamp horodatage;
-    public Timestamp getHorodatage() {return horodatage;}
-    public void setHorodatage(Timestamp horodatage) {this.horodatage = horodatage;}
     
-    @Column(name = "nom_mois", nullable = false)
-    private String nomMois;
-    public String getNomMois() {return nomMois;};
-    public void setNomMois(String nomMois) {this.nomMois = nomMois;};
+    //Nom du mois de cette consommation
+    @Column(name = "nom", nullable = false)
+    @Getter @Setter
+    private NomMois nom;
     
-    //Prix du tube pour ce mois ci
-    @Column(name = "prix_tube", nullable = false)
-    private double prixTube;
-    public double getPrixTube() {return prixTube;}
-    public void setPrixTube(double prixTube) {this.prixTube = prixTube;}
+    //id du prix tube utilises lors de ce mois-ci
+    @Column(name = "idPrixTube", nullable = false)
+    @Getter @Setter
+    private long idPrixTube;
     
-    //Nombre de tubes utilisés ce mois ci
-    @Column(name = "tube_utilise", nullable = false)
-    private int tubeUtilise;
-    public int getTubeUtilise() {return tubeUtilise;}
-    public void setTubeUtilise(int tubeUtilise) {this.tubeUtilise = tubeUtilise;}
+    //id de la reference à la conse de tube (type de tube utilise)
+    @Column(name = "idConsoTube", nullable = false)
+    @Getter @Setter
+    private long idConsoTube;
     
-    //Tube commandé par le club ce mois ci
-    @Column(name = "tube_commande", nullable = false)
-    private int tubeCommande;
-    public int getTubeCommande() {return tubeCommande;}
-    public void setTubeCommande(int tubeCommande) {this.tubeCommande = tubeCommande;}
+    //Nombre de tubes utilises ce mois-ci
+    @Column(name = "nbTubeUtilise", nullable = false)
+    @Getter @Setter
+    private int nbTubeUtilise;
     
-        
-    /*
-        --- Méthodes ---
-    */
+    //Nombre de tubes commandé ce mois-ci
+    @Column(name = "nbTubeCommande", nullable = false)
+    @Getter @Setter
+    private int nbTubeCommande;
     
     
-    //Renvoie le cout des tubes commandés pendant le mois
-    public double getCoutTubeCommande(){
-        return this.tubeCommande * this.prixTube;
-    }
     
-    
-    //Renvoie le cout des tubes commandés pendant le mois
-    public double getCoutTubeUtilise(){
-        return this.tubeUtilise * this.prixTube;
-    }
+    //Constructeur
+    public ConsoMois() {}
     
     
 }
