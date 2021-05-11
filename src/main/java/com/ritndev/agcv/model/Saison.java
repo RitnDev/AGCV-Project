@@ -32,10 +32,15 @@ public class Saison implements Serializable {
     @Getter @Setter
     private Timestamp horodatage;
     
-    //Nom de la saison (pour affichage dans les vues)
-    @Column(name = "nom", nullable = false)
+    //Annee de début de la saison
+    @Column(name = "anneeDebut", nullable = false)
     @Getter @Setter
-    private String nom;
+    private int anneeDebut;
+    
+    //Annee de fin de la saison
+    @Column(name = "anneeFin", nullable = false)
+    @Getter @Setter
+    private int anneeFin;
     
     //Budget prévisionnel de cette saison
     @Column(name = "budget", nullable = false)
@@ -46,9 +51,14 @@ public class Saison implements Serializable {
     //Constructeur
     public Saison() {}
 
-    public Saison(String nom, double budget) {
-        this.nom = nom;
+    public Saison(int anneeDebut, double budget) {
+        this.anneeDebut = anneeDebut;
+        this.anneeFin = anneeDebut + 1;
         this.budget = budget;
+    }
+    
+    @Override public String toString() {
+        return String.valueOf(anneeDebut) + " - " + String.valueOf(anneeFin);
     }
     
 }

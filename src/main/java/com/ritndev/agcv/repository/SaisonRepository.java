@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SaisonRepository extends JpaRepository<Saison, Long> {
-/*
+
     @Query(value = "SELECT COALESCE(max(saisonId),0) FROM saison", nativeQuery = true)
     public Long findLastId();
-*/
+
 }

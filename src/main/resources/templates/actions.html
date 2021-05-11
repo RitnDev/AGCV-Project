@@ -17,8 +17,11 @@
         <div th:replace="fragments/layout-header :: header">...</div>
         
         <!-- pop-up section -->
-        <div id="bg-popup-action" class="bg-popup-edit-membre">
+        <div th:if="${editMembre != null}" id="bg-popup-action" class="bg-popup-edit-membre">
             <div th:replace="fragments/layout-popup :: edit-membre"/>
+        </div>
+        <div th:if="${editData != null}" id="bg-popup-action" class="bg-popup-edit-data">
+            <div th:replace="fragments/layout-popup :: edit-data"/>
         </div>
       
         <div th:replace="fragments/layout-footer :: footer"/>
@@ -26,13 +29,22 @@
         
         <script th:inline="javascript">
             /*<![CDATA[*/
-
                 var numAction = [[${numAction}]];
-                if (numAction === 1){
-                    const popupEditMembre = document.querySelector(".popup-content-edit-membre");
-                    const bgEditMembre = document.querySelector('.bg-popup-edit-membre');
-                    bgEditMembre.style.display = 'flex';
-                    popupEditMembre.className = "popup-content-edit-membre open";
+                
+                switch(numAction) {
+                    case 1:
+                        const popupEditMembre = document.querySelector(".popup-content-edit-membre");
+                        const bgEditMembre = document.querySelector('.bg-popup-edit-membre');
+                        bgEditMembre.style.display = 'flex';
+                        popupEditMembre.className = "popup-content-edit-membre open";
+                        break;
+                    case 2:
+                        const popupEditData = document.querySelector(".popup-content-edit-data");
+                        const bgEditData = document.querySelector('.bg-popup-edit-data');
+                        bgEditData.style.display = 'flex';
+                        popupEditData.className = "popup-content-edit-data open";
+                        break;
+                    default:
                 }
             /*]]>*/
         </script>

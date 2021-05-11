@@ -5,6 +5,9 @@
  */
 package com.ritndev.agcv.form;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  *
  * @author Ritn
@@ -12,20 +15,11 @@ package com.ritndev.agcv.form;
 public class FormSaison {
     
     //Année de début de la saison
-    private int annee_debut;
-    public int getAnnee_debut() {return annee_debut;}
-    public void setAnnee_debut(int annee_debut) {this.annee_debut = annee_debut;}
-    
-    //Année de fin de la saison
-    private int annee_fin;
-    public int getAnnee_fin() {return annee_fin;}
-    public void setAnnee_fin(int annee_fin) {this.annee_fin = annee_fin;}
-    
+    @Getter @Setter private int annee_debut;
+
     //budget prévisionnelle de la saison
-    private String budget;
-    public String getBudget() {return budget;}
-    public void setBudget(String budget) {this.budget = budget;}
-       
+    @Getter @Setter private String budget;
+      
     
     //Constructeur
     public FormSaison(int annee_debut, String budget) {

@@ -19,10 +19,7 @@ public class PageHistoSaison extends Page{
         
         
         Link index = new Link("Page principale","index");
-        Link[] links = new Link[] {
-            index,
-        };
-        super.setLinks(links);
+        super.addLinks(index);
                 
     }
     

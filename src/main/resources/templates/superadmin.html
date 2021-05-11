@@ -8,10 +8,6 @@
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
-        <script type="text/javascript" th:src="@{/js/saison-popup.js}" charset="utf-8" defer></script>
-        <script type="text/javascript" th:src="@{/js/new-membre-popup.js}" charset="utf-8" defer></script>
-        <!--script type="text/javascript" th:src="@{/js/edit-membre-popup.js}" charset="utf-8" defer></script-->
-        <!-- https://www.youtube.com/watch?v=gLWIYk0Sd38 -->
     </head>
     
 
@@ -33,44 +29,43 @@
             </div>
             <br/>
             <div th:utext="${message}"> !</div><br/><br/>
-            <div th:if="${test}">
-                <span th:text="${test}">.</span>
-            </div>
             
             <div class="std-table">
                 <table>
                     <thead>
                         <tr>
-                            <th class="table-label" colspan="5">MEMBRES</th>
+                            <th class="table-label" colspan="6">MAIN DATA</td>
                         </tr>
                         <tr>
                             <th>ID</th>
                             <th>Horodatage</th>
-                            <th>Prenom</th>
-                            <th>Nom</th>
+                            <th>ID Saison</th>
+                            <th>ID Stock Compet</th>
+                            <th>Actif ?</th>
                             <th class="table-action">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:if="${listMembres.empty}">
-                            <td colspan="5">Aucun Membre créé</td>
+                        <tr th:if="${mainData.empty}">
+                            <td colspan="6">Aucune data créée</td>
                         </tr>
-                        <tr th:each="membre : ${listMembres}">
-                            <td><span th:text="${membre.id}">ID</span></td>
-                            <td><span th:text="${membre.horodatage}">Horodatage</span></td>
-                            <td><span th:text="${membre.prenom}">Prenom</span></td>
-                            <td><span th:text="${membre.nom}">Nom</span></td>
+                        <tr th:each="data : ${mainData}">
+                            <td><span th:text="${data.id}">ID</span></td>
+                            <td><span th:text="${data.horodatage}">Horodatage</span></td>
+                            <td><span th:text="${data.idSaison}">id_saison</span></td>
+                            <td><span th:text="${data.idStockCompet}">id_stock_compet</span></td>
+                            <td><span th:text="${data.actif}">actif</span></td>
                             <td class="table-action">
                                 <table class="action-input">
                                     <tr>
                                         <td class="action-input">
-                                            <form action="#" th:action="@{/membre/{id}(id=${membre.id})}" th:method="post">
+                                            <form action="#" th:action="@{/data/{id}(id=${data.id})}" th:method="post">
                                                 <input type="hidden" name="_method" value="delete"/>
                                                 <input id="action-input" type="submit" value="Suppr"/>
                                             </form>
                                         </td><td class="action-input">|</td>
                                         <td class="action-input">
-                                            <form action="#" th:action="@{/membre/{id}(id=${membre.id})}" th:method="post">
+                                            <form action="#" th:action="@{/data/{id}(id=${data.id})}" th:method="post">
                                                 <input id="action-input" type="submit" value="Edit"/>
                                             </form>
                                         </td>
@@ -81,16 +76,10 @@
                     </tbody>
                 </table>
             </div>
+
         
         </div>
-      
-        <!-- pop-up section -->
-        <div id="bg-popup" class="bg-popup-saison">
-            <div th:replace="fragments/layout-popup :: saison"/>
-        </div>
-        <div id="bg-popup" class="bg-popup-new-membre">
-            <div th:replace="fragments/layout-popup :: new-membre"/>
-        </div>
+
        
         <!-- footer section -->
         <div th:replace="fragments/layout-footer :: footer"></div>

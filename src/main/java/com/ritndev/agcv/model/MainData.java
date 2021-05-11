@@ -43,10 +43,27 @@ public class MainData implements Serializable {
     @Getter @Setter
     private long idStockCompet;
     
+    //ID du sstock de competition actuel
+    @Column(name = "actif", nullable = false)
+    @Getter @Setter
+    private boolean actif = true;
+    
     
     
     //Constructeur
     public MainData() {}
+    
+    public MainData(long id) {
+        this.id = id;
+    }
+
+    public MainData(long idSaison, long idStockCompet, boolean actif) {
+        this.idSaison = idSaison;
+        this.idStockCompet = idStockCompet;
+        this.actif = actif;
+    }
+    
+    
     
     
 }

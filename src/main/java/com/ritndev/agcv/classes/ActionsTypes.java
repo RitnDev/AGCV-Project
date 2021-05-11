@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.ritndev.agcv.form;
+package com.ritndev.agcv.classes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,10 +11,15 @@ public enum ActionsTypes {
     
     //ENUM
     
-    EDIT_MEMBRE(1);
-    
-    
-    
+    EDIT_MEMBRE(1),
+    EDIT_DATA(2),
+    EDIT_SAISON(3),
+    EDIT_COMMANDE(4),
+    EDIT_COMPETITION(5),
+    EDIT_PRIXTUBE(6),
+    EDIT_CONSOMOIS(7),
+    EDIT_STOCKCOMPET(8),
+    EDIT_TYPETUBE(9);
     
     
     

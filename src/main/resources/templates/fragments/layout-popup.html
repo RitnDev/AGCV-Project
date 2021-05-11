@@ -47,8 +47,7 @@
                                 <label for="regler">La commande est-elle déjà réglée ?</label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="regler" name="regler" type="checkbox"/>
-                                <input name="_regler" type="hidden" value="on" th:field="*{regler}" />
+                                <input id="regler" name="regler" type="checkbox" th:checked="*{regler}"/>
                             </td>
                         </tr>
                         <tr>
@@ -181,7 +180,7 @@
                     </tr>
                 </table>
                 
-                <form th:action="@{/{id}(id=*{id})}" th:object="${editMembre}" th:method="post">
+                <form th:action="@{/membre/{id}(id=*{id})}" th:object="${editMembre}" th:method="post">
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
@@ -213,6 +212,66 @@
                 
             </div>
         </div>
+
+
+<!-- ------------------------------------------ POPUP EDITION DATA -------------------------------------------------- -->
+        
+       <div th:fragment="edit-data">
+            <div id="popup-content" class="popup-content-edit-data">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Modifier la Main-Data</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <a th:href="superAdmin" >
+                                <img id="close-membre" class="button-close" src="/images/popup/button-close.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/data/{id}(id=*{id})}" th:object="${editData}" th:method="post">
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="id-saison">ID Saison :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="id-saison" type="number" min="0" th:value="*{idSaison}" th:field="*{idSaison}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="id-stock">ID Stock compet :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="id-stock" type="number" min="0" th:value="*{idStockCompet}" th:field="*{idStockCompet}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="actif">Main-Data actif ?</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="actif" name="actif" type="checkbox" th:checked="*{actif}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" name="_method" value="put"/>
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>
+
         
     </body>
 </html>

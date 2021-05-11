@@ -51,7 +51,7 @@ public interface IagcvService {
     public void updateByIdStockCompetition(Long id, StockCompetition editStock);
     
     //Methode Saison
-    public Saison saveSaison(Saison newSaison);
+    public long saveSaison(Saison newSaison);
     public List<Saison> listSaison();
     public Saison findByIdSaison(Long id);
     public void supprSaison(Long id);
@@ -66,10 +66,13 @@ public interface IagcvService {
     public void updateByIdConsoTube(Long id, ConsoTube editConsoTube);
     
     //Methode MainData
+    public boolean newMainData();
     public MainData saveMainData(MainData mainData);
+    public List<MainData> listMainData();
     public MainData findByIdMainData(Long id);
     public void supprMainData(Long id);
-    public void updateByIdMainData(Long id, MainData editMainData);
+    public boolean updateByIdMainData(Long id, MainData editMainData);
+    public MainData returnMainData();
     
     //Methode TypeTube
     public TypeTube saveTypeTube(TypeTube typeTube);
@@ -77,5 +80,7 @@ public interface IagcvService {
     public TypeTube findByIdTypeTube(Long id);
     public void supprTypeTube(Long id);
     public void updateByIdTypeTube(Long id, TypeTube editTypeTube);
+
+    
     
 }

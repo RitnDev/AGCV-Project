@@ -50,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/", "/index").permitAll()
             .antMatchers("/css/**", "/js/**", "/images/**").permitAll()     // Autorisations d'accés au ressources
             .antMatchers("/admin", "/admin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPADMIN")
+            .antMatchers("/superAdmin", "/newData").hasAnyAuthority("ROLE_SUPADMIN")
             .anyRequest().permitAll()
             .and()
         .exceptionHandling().accessDeniedPage("/403");

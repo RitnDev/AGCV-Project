@@ -1,7 +1,6 @@
 package com.ritndev.agcv.pages;
 
 import com.ritndev.agcv.classes.Link;
-
 import java.security.Principal;
 import org.springframework.ui.Model;
 
@@ -9,31 +8,28 @@ import org.springframework.ui.Model;
  *
  * @author Ritn
  */
-public class Page403 extends Page {
+public class PageActions extends Page{
     
-    
-    public Page403() {
-               
-        super.setPage("Page non accessible");
-        super.setLinkPage(new Link("Page non accessible", "403"));
-        super.setLinkAdminPage(new Link("Admin", "admin"));
+    public PageActions() {
                 
+        super.setPage("");
+        super.setLinkPage(new Link("","actions"));
+        
         Link logout = new Link("Page principale", "logout");
         super.addLinks(logout);
-                
+        
+        super.setLinkAdminPage(new Link("Admin", "admin"));
+          
     }
     
     
     public String getPage(Model model, Principal principal) {
-                
-        String message = "Vous n'avez pas acces à cette page.";
-        
+     
         // Add Attribute :
         model = getPageGenerique(model, principal);
-        model.addAttribute("message", message);
+        super.setTitlePage(model, "AGCV");
         
         return returnPage();
-        
     }
     
 }

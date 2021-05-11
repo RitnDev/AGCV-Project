@@ -67,7 +67,16 @@ public class AGCVservice implements IagcvService {
         prixTubeRep.delete(pt);
     }
     @Override public void updateByIdPrixTube(Long id, PrixTube editPrixTube) {
-        //WIP
+        PrixTube pt = prixTubeRep.getOne(id);
+        if(pt != null) {
+            pt.setMarque(editPrixTube.getMarque());
+            pt.setPrix(editPrixTube.getPrix());
+            pt.setPrixMembre(editPrixTube.getPrixMembre());
+            pt.setIdTypeTube(editPrixTube.getIdTypeTube());
+            pt.setActif(editPrixTube.isActif());
+            
+            prixTubeRep.save(pt);
+        }
     }
     
     
@@ -80,7 +89,16 @@ public class AGCVservice implements IagcvService {
         commandeRep.delete(c);
     }
     @Override public void updateByIdCommande(Long id, Commande editCommande) {
-        //WIP
+        Commande c = commandeRep.getOne(id);
+        if(c != null) {
+            c.setIdMembre(editCommande.getIdMembre());
+            c.setIdPrixTube(editCommande.getIdPrixTube());
+            c.setIdSaison(editCommande.getIdSaison());
+            c.setNbTubeCommande(editCommande.getNbTubeCommande());
+            c.setRegler(editCommande.isRegler());
+            
+            commandeRep.save(c);
+        }
     }
  
     
@@ -93,7 +111,14 @@ public class AGCVservice implements IagcvService {
         competitionRep.delete(c);
     }
     @Override public void updateByIdCompetition(Long id, Competition editCompetition) {
-        //WIP
+        Competition c = competitionRep.getOne(id);
+        if(c != null) {
+            c.setIdSaison(editCompetition.getIdSaison());
+            c.setNom(editCompetition.getNom());
+            c.setNbTubesUtilises(editCompetition.getNbTubesUtilises());
+            
+            competitionRep.save(c);
+        }
     }
 
     
@@ -106,7 +131,16 @@ public class AGCVservice implements IagcvService {
         consoMoisRep.delete(cm);
     }
     @Override public void updateByIdConsoMois(Long id, ConsoMois editConsoMois) {
-        //WIP
+        ConsoMois cm = consoMoisRep.getOne(id);
+        if(cm != null) {
+            cm.setIdConsoTube(editConsoMois.getIdConsoTube());
+            cm.setIdPrixTube(editConsoMois.getIdConsoTube());
+            cm.setNbTubeCommande(editConsoMois.getNbTubeCommande());
+            cm.setNbTubeUtilise(editConsoMois.getNbTubeUtilise());
+            cm.setNom(editConsoMois.getNom());
+                        
+            consoMoisRep.save(cm);
+        }
     }
 
 
@@ -117,13 +151,38 @@ public class AGCVservice implements IagcvService {
         StockCompetition sc = stockCompetRep.getOne(id);
         stockCompetRep.delete(sc);
     }
-    @Override public void updateByIdStockCompetition(Long id, StockCompetition editSacCompetition) {
-        //WIP
+    @Override public void updateByIdStockCompetition(Long id, StockCompetition editStockCompet) {
+        StockCompetition sc = stockCompetRep.getOne(id);
+        if(sc != null) {
+            sc.setStock(editStockCompet.getStock());
+            
+            stockCompetRep.save(sc);
+        }
     }
 
 
     // -------------------   FONCTIONS SAISON ---------------------
-    @Override public Saison saveSaison(Saison newSaison) {return saisonRep.save(newSaison);}
+    @Override public long saveSaison(Saison newSaison) {
+        
+        // Remplacer par un recherche par annee_debut
+        // Créer la methode dans le repository
+        long id = 0;  
+        boolean result = true;
+        List<Saison> saisons = saisonRep.findAll();
+        //Vérification que la saison n'existe pas déjà
+        for(Saison s : saisons) {
+            if (s.toString().equals(newSaison.toString())) {
+                result = false;
+            }
+        }
+        //On créée la saison si elle n'existe pas
+        if (result){
+            Saison s = saisonRep.save(newSaison);
+            id = s.getId();
+        }
+        
+        return id;
+    }
     @Override public List<Saison> listSaison() {return saisonRep.findAll();}
     @Override public Saison findByIdSaison(Long id) {return saisonRep.getOne(id);}
     @Override public void supprSaison(Long id) {
@@ -131,11 +190,17 @@ public class AGCVservice implements IagcvService {
         saisonRep.delete(saison);
     }
     @Override public void updateByIdSaison(Long id, Saison editSaison) {
-        //WIP
+        Saison saison = saisonRep.getOne(id);
+        if(saison != null) {
+            saison.setBudget(editSaison.getBudget());
+            saison.setAnneeDebut(editSaison.getAnneeDebut());
+            saison.setAnneeFin(editSaison.getAnneeDebut() + 1);
+            
+            saisonRep.save(saison);
+        }
     }
     @Override public Long lastIdSaison() {
-        //WIP
-        return -1L;
+        return saisonRep.findLastId();
     }
     
     
@@ -148,19 +213,94 @@ public class AGCVservice implements IagcvService {
         consoTubeRep.delete(ct);
     }
     @Override public void updateByIdConsoTube(Long id, ConsoTube editTypeVolant) {
-        //WIP
+        ConsoTube ct = consoTubeRep.getOne(id);
+        if(ct != null) {
+            ct.setIdSaison(editTypeVolant.getIdSaison());
+            ct.setIdTypeTube(editTypeVolant.getIdTypeTube());
+            ct.setInitTube(editTypeVolant.getInitTube());
+            
+            consoTubeRep.save(ct);
+        }
     }
 
     
     // -------------------   FONCTIONS MAIN-DATA ---------------------
+    @Override public boolean newMainData(){
+        boolean result = false;
+        List<MainData> data = mainDataRep.findAll();
+        if (data.isEmpty()){
+            //Si la liste est vide on peut créer une MainData
+            MainData main = new MainData();
+            mainDataRep.save(main);
+            result = true;
+        }else{
+            //Si elle n'est pas vide on doit vérifier si les datas sont inactive
+            boolean actif = false;
+            for(MainData d : data){
+                if(d.isActif()){
+                    actif = true;
+                }
+            }
+            if(!actif){
+                //Si elles sont toutes inactives ont peut créer une nouvelle MainData
+                MainData main = new MainData();
+                mainDataRep.save(main);
+                result = true;
+            }
+        }
+        return result;
+    }
     @Override public MainData saveMainData(MainData mainData) {return mainDataRep.save(mainData);}
+    @Override public List<MainData> listMainData() {return mainDataRep.findAll();}
     @Override public MainData findByIdMainData(Long id) {return mainDataRep.getOne(id);}
     @Override public void supprMainData(Long id) {
         MainData data = mainDataRep.getOne(id);
         mainDataRep.delete(data);
     }
-    @Override public void updateByIdMainData(Long id, MainData editMainData) {
-        //WIP
+    @Override public boolean updateByIdMainData(Long id, MainData editMainData) {
+        MainData md = mainDataRep.getOne(id);
+        boolean result = false;
+        if(md != null) {
+            md.setIdSaison(editMainData.getIdSaison());
+            md.setIdStockCompet(editMainData.getIdStockCompet());
+            
+            //Si on doit passer la data en actif alors qu'elle ne l'était pas avant
+            if(editMainData.isActif() == true && md.isActif() == false) {
+                List<MainData> data = mainDataRep.findAll();
+                //Si elle n'est pas vide on doit vérifier si les datas sont inactive
+                boolean actif = false;
+                for(MainData d : data){
+                    if(d.isActif() && (d.getId() != id)){
+                        actif = true;
+                    }
+                }
+                if(!actif){
+                    //Si elles sont toutes inactives on peut passer la data en actif
+                    md.setActif(editMainData.isActif());
+                    result = true;
+                }
+            }else{
+                md.setActif(editMainData.isActif());
+                result = true;
+            }
+                        
+            mainDataRep.save(md);
+        }
+        return result;
+    }
+    @Override public MainData returnMainData() {
+        List<MainData> data = mainDataRep.findAll();
+        MainData md = new MainData(0);
+        if (!data.isEmpty()){
+            //Si la liste est non vide on vérifi laquelle est active
+            for(MainData d : data){
+                if(d.isActif()){
+                    //on retourne la data active
+                    return d;
+                }
+            }
+        }
+        return md;
     }
 
     
@@ -173,7 +313,15 @@ public class AGCVservice implements IagcvService {
         typeTubeRep.delete(ct);
     }
     @Override public void updateByIdTypeTube(Long id, TypeTube editTypeTube) {
-        //WIP
+        TypeTube tb = typeTubeRep.getOne(id);
+        
+        if(tb != null) {
+            tb.setNom(editTypeTube.getNom());
+            tb.setCommande(editTypeTube.isCommande());
+            tb.setActif(editTypeTube.isActif());
+            
+            typeTubeRep.save(tb);
+        }
     }
     
     

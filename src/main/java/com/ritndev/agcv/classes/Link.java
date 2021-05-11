@@ -1,14 +1,18 @@
 package com.ritndev.agcv.classes;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  *
  * @author Ritn
  */
 public class Link {
     
-    private String texte;
-    private String href;
-    private String id;
+    @Getter @Setter private String texte;
+    @Getter @Setter private String href;
+    @Getter @Setter private String hid;
+    @Getter @Setter private boolean actif = true;
     
     
     //Constructeur
@@ -17,40 +21,20 @@ public class Link {
         this.href = href;
     }
     
-    public Link(String texte, String href, String id) {
+   
+    public Link(String texte, String href, String hid) {
         this.texte = texte;
         this.href = href;
-        this.id = id;
+        this.hid = hid;
     }
-
     
-    // Accesseurs
-    public String getTexte() {
-        return texte;
-    }
-
-    public void setTexte(String texte) {
+    public Link(String texte, String href, boolean actif) {
         this.texte = texte;
-    }
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
         this.href = href;
+        this.actif = actif;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
     
-    
-
     
     //-- toString
     @Override

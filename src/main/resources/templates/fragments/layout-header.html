@@ -14,16 +14,17 @@
                 
                 <!-- Lien vers les sous-menu de cette page -->
                 <th:block th:each="menu : ${menus}">
-                    <a th:id="${menu.id}" th:href="${menu.href}" th:utext="${menu.texte}"></a>
+                    <a th:id="${menu.hid}" th:href="${menu.href}" th:utext="${menu.texte}"></a>
                 </th:block>
                 
                 <!-- Activation du bouton d'accès à la page administrateur -->
                 <a id="topnav-admin" th:href="${adminPage.href}" th:if="${buttonAdmin}" th:text="${adminPage.texte}"></a>
-                
+                                  
                 <!-- Lien vers les autres pages de l'application -->
                 <th:block th:each="link : ${links}">
-                    <a id="topnav-link" th:href="${link.href}" th:utext="${link.texte}"></a>
+                    <a id="topnav-link" th:href="${link.href}" th:if="${link.actif}" th:utext="${link.texte}"></a>
                 </th:block>
+                
                 
             </div>
         </div>

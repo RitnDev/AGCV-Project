@@ -22,17 +22,14 @@ public class PageAdmin extends Page {
         super.setPage("Administrateur");
         super.setLinkPage(new Link("Admin", "admin"));
         super.setAdminPage(true);
+        super.setSuperAdminPage(true);
         super.setLinkAdminPage(new Link("Déconnexion", "logout"));
         
         Link index = new Link("Page principale","index");
         Link commandesMembres = new Link("Commandes tubes des membres","commandesMembres");
         
-        Link[] links = new Link[] {
-            commandesMembres,
-            index
-        };
-        super.setLinks(links);
-        
+        super.addLinks(commandesMembres);
+        super.addLinks(index);
         
         
         Link newSaison = new Link("Nouvelle saison", "#", "topnav-menu-saison");
@@ -57,12 +54,10 @@ public class PageAdmin extends Page {
         
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
-        int year1 = year + 1;
         
         FormMembre nouveauMembre = new FormMembre("","");
         FormSaison nouvelleSaison = new FormSaison();
         nouvelleSaison.setAnnee_debut(year);
-        nouvelleSaison.setAnnee_fin(year1);
         nouvelleSaison.setBudget("1000.00");
             
         String message = "Ici se trouve la page : ";

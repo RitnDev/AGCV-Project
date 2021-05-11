@@ -24,10 +24,7 @@ public class PageCommandesMembres extends Page{
         
         
         Link index = new Link("Page principale","index");
-        Link[] links = new Link[] {
-            index,
-        };
-        super.setLinks(links);
+        super.addLinks(index);
         
         
         Link newCommande = new Link("Nouvelle commande", "#", "topnav-menu-commande"); 

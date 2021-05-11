@@ -1,6 +1,7 @@
 package com.ritndev.agcv.controller;
 
 
+import com.ritndev.agcv.classes.Link;
 import org.springframework.ui.Model;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,17 @@ public class MainController {
     
 //--------------------   Page Admin   ---------------------------- 
     
-    @RequestMapping(value = { "/admin", "/newMembre", "/newSaison"}, method = RequestMethod.GET)
+    @RequestMapping(value = { "/admin", "/newMembre", "/newSaison", "*/admin"}, method = RequestMethod.GET)
     public String admin(Model model, Principal principal){     
         PageAdmin pageAdmin = new PageAdmin();
+        boolean connect = pageAdmin.returnUser(principal).equals("ritn");
+        Link pageSupAdmin = new Link("Super Admin", "superAdmin", connect);
+        pageAdmin.addLinks(pageSupAdmin);
         model.addAttribute("test", null);
         return pageAdmin.getPage(model, principal, service);
     }
 
+     
     
 //--------------   Page Commande de tube des membres   ------------------
     

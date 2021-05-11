@@ -19,11 +19,8 @@ public class PageIndex extends Page{
         
         
         Link commandesMembres = new Link("Commandes tubes des membres","commandesMembres");
-        Link[] links = new Link[] {
-            commandesMembres,
-        };
-        super.setLinks(links);
-        
+        super.addLinks(commandesMembres);
+       
         
         Link histoSaison = new Link("Historiques des saisons précédentes", "histoSaison", "topnav-menu");
         Link sacCompetition = new Link("Gestion du sac de compétition", "sacCompetition", "topnav-menu"); 

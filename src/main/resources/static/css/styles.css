@@ -154,6 +154,16 @@ a:hover {color: #c0edff;}
     box-shadow: 0 0 100px 1px #e6e7e880;
 }
 
+.popup-content-edit-data {
+    width: 450px;
+    height: 260px;
+    background-color: #e6e7e8;
+    opacity: 1;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 0 100px 1px #e6e7e880;
+}
+
 
 /* animation d'ouverture / fermeture :      */
 #popup-content.open {
@@ -336,46 +346,24 @@ input#regler:hover {
 }
 
 /* Navigation : Sous-menu */
-#topnav-menu {
+#topnav-menu,
+#topnav-menu-commande,
+#topnav-menu-saison,
+#topnav-menu-membre,
+#topnav-menu-data{
     float: left;
     background-color: #8cbaff;
     color: #101720;
     margin-right: 2px;
 }
-#topnav-menu:hover{
+
+#topnav-menu:hover,
+#topnav-menu-commande:hover,
+#topnav-menu-membre:hover,
+#topnav-menu-saison:hover,
+#topnav-menu-data:hover{
    background-color: #bdbdbd;
 }
-
-#topnav-menu-commande {
-    float: left;
-    background-color: #8cbaff;
-    color: #101720;
-    margin-right: 2px;
-}
-#topnav-menu-commande:hover{
-   background-color: #bdbdbd;
-}
-
-#topnav-menu-saison {
-    float: left;
-    background-color: #8cbaff;
-    color: #101720;
-    margin-right: 2px;
-}
-#topnav-menu-saison:hover{
-   background-color: #bdbdbd;
-}
-
-#topnav-menu-membre {
-    float: left;
-    background-color: #8cbaff;
-    color: #101720;
-    margin-right: 2px;
-}
-#topnav-menu-membre:hover{
-   background-color: #bdbdbd;
-}
-
 
 
 /* Navigation : Admin */
@@ -416,6 +404,12 @@ input#regler:hover {
 .std-table th {
   background-color: #0080ff;
   color: white;
+}
+
+th.table-label {
+    background-color: #007015;
+    color: white;
+    text-align: center;
 }
 
 th.table-action {
