@@ -81,6 +81,54 @@
                     </tbody>
                 </table>
             </div>
+            <br/> 
+            <br/> 
+            <div class="std-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="table-label" colspan="6">SAISONS</th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Horodatage</th>
+                            <th>Nom</th>
+                            <th>Budget</th>
+                            <th>Active</th>
+                            <th class="table-action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${listSaisons.empty}">
+                            <td colspan="6">Aucune Saison créé</td>
+                        </tr>
+                        <tr th:each="saison : ${listSaisons}">
+                            <td><span th:text="${saison.id}">ID</span></td>
+                            <td><span th:text="${saison.horodatage}">Horodatage</span></td>
+                            <td><span th:text="${saison.toString}">Nom</span></td>
+                            <td><span th:text="${saison.budget}">Budget</span></td>
+                            <td><span th:text="${saison.actuelle}">Active</span></td>
+                            <td class="table-action">
+                                <table class="action-input">
+                                    <tr>
+                                        <td class="action-input">
+                                            <form action="#" th:action="@{/saison/{id}(id=${saison.id})}" th:method="post">
+                                                <input type="hidden" name="_method" value="delete"/>
+                                                <input id="action-input" type="submit" value="Suppr"/>
+                                            </form>
+                                        </td><td class="action-input">|</td>
+                                        <td class="action-input">
+                                            <form action="#" th:action="@{/saison/{id}(id=${saison.id})}" th:method="post">
+                                                <input id="action-input" type="submit" value="Edit"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         
         </div>
       

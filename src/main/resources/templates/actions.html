@@ -8,7 +8,6 @@
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
-        <script type="text/javascript" th:src="@{/js/edit-membre-popup.js}" charset="utf-8" defer></script>
     </head>
 
 
@@ -22,6 +21,9 @@
         </div>
         <div th:if="${editData != null}" id="bg-popup-action" class="bg-popup-edit-data">
             <div th:replace="fragments/layout-popup :: edit-data"/>
+        </div>
+            <div th:if="${editSaison != null}" id="bg-popup-action" class="bg-popup-edit-saison">
+            <div th:replace="fragments/layout-popup :: edit-saison"/>
         </div>
       
         <div th:replace="fragments/layout-footer :: footer"/>
@@ -43,6 +45,12 @@
                         const bgEditData = document.querySelector('.bg-popup-edit-data');
                         bgEditData.style.display = 'flex';
                         popupEditData.className = "popup-content-edit-data open";
+                        break;
+                    case 3:
+                        const popupEditSaison = document.querySelector(".popup-content-edit-saison");
+                        const bgEditSaison = document.querySelector('.bg-popup-edit-saison');
+                        bgEditSaison.style.display = 'flex';
+                        popupEditSaison.className = "popup-content-edit-saison open";
                         break;
                     default:
                 }

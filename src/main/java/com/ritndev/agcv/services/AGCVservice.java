@@ -162,11 +162,18 @@ public class AGCVservice implements IagcvService {
 
 
     // -------------------   FONCTIONS SAISON ---------------------
-    @Override public long saveSaison(Saison newSaison) {
+    /*
+    Return : long resultVal : 
+                0 = Saison non créée car existe déjà.
+                1 = Saison créée mais pas mise à jour dans le Main-Data car non existant.
+                2 = Saison créée avec succès (mis à jour dans le main-data ok).
+    */
+    @Override public int saveSaison(Saison newSaison) {
         
         // Remplacer par un recherche par annee_debut
         // Créer la methode dans le repository
-        long id = 0;  
+        long id = 0;
+        int resultVal = 0; 
         boolean result = true;
         List<Saison> saisons = saisonRep.findAll();
         //Vérification que la saison n'existe pas déjà
@@ -181,25 +188,104 @@ public class AGCVservice implements IagcvService {
             id = s.getId();
         }
         
-        return id;
+        // -- MISE A JOUR MAIN-DATA --
+        
+        //Vérification que la saison na bien été créée
+        if (id>0) {
+            resultVal = 2; //Saison créée avec succès
+            if (saisonRep.getOne(id).isActuelle()){ //Est-ce la nouvelle saison actuelle ?
+                //Récupération de la Main-Data active (md)
+                MainData md = returnMainData();
+                //Vérification qu'il y a bien une main-data de créée
+                if(md.getId() == 0){
+                    resultVal = 1; //Pas de main-data créée (mise à jour non éffectuée)
+                }else{
+                    //Mise à jour de l'ancienne Saison enregistré dans main-data
+                    if (saisonRep.existsById(md.getIdSaison())){ // Vérifie que l'id existe en BDD
+                        //si existe on met à jour l'ancienne saison
+                        Saison sOld = saisonRep.getOne(md.getIdSaison());
+                        sOld.setActuelle(false); // Passage en saison non actuelle
+                        saisonRep.save(sOld);    //sauvegarde des modifications
+                        md.setIdSaison(id);      //mise à jour du main-data avec le nouvel ID saison
+                        mainDataRep.save(md);
+                    }else{
+                        md.setIdSaison(id);      //mise à jour du main-data avec le nouvel ID saison
+                        mainDataRep.save(md);
+                    }
+                }
+            }
+        }
+        
+        return resultVal;
     }
     @Override public List<Saison> listSaison() {return saisonRep.findAll();}
     @Override public Saison findByIdSaison(Long id) {return saisonRep.getOne(id);}
     @Override public void supprSaison(Long id) {
-        Saison saison = saisonRep.getOne(id);
-        saisonRep.delete(saison);
-    }
-    @Override public void updateByIdSaison(Long id, Saison editSaison) {
-        Saison saison = saisonRep.getOne(id);
-        if(saison != null) {
-            saison.setBudget(editSaison.getBudget());
-            saison.setAnneeDebut(editSaison.getAnneeDebut());
-            saison.setAnneeFin(editSaison.getAnneeDebut() + 1);
+        if (saisonRep.existsById(id)){
+            Saison saison = saisonRep.getOne(id);
+            boolean actif = saison.isActuelle();
+            saisonRep.delete(saison);
             
-            saisonRep.save(saison);
+            // Mise à jour du Main-Data (si la saison été actuelle)
+            if(actif){
+                MainData md = returnMainData();
+                if(md.getId()>0){
+                    //si c'est bien la saison actuelle qui est supprimée
+                    //on met à 0 l'idSaison du main-data
+                    if(id == md.getIdSaison()){
+                        md.setIdSaison(0);
+                        mainDataRep.save(md);
+                    }
+                }
+            }
         }
     }
+    @Override public int updateByIdSaison(Long id, Saison editSaison) {
+        int resultVal = 0; //mise à jour non effectuée
+        
+        if (saisonRep.existsById(id)){
+            
+            Saison saison = saisonRep.getOne(id);
+            saison.setBudget(editSaison.getBudget());
+            
+            boolean actif = saison.isActuelle();
+            saison.setActuelle(editSaison.isActuelle());
+            saisonRep.save(saison);
+            resultVal = 1; //Mise à jour effectuée (aucune mise à jour faite dans Main-data)
+            
+            System.out.println(">> (debug) Saison actif (Saison) : " + actif);
+            System.out.println(">> (debug) Saison actif (editSaison) : " + editSaison.isActuelle());
+            
+            // Mise à jour du Main-Data
+            if(actif != editSaison.isActuelle()){
+                if(actif){ //Si actif = true alors il va passer à false (et vice-versa)
+                    MainData md = returnMainData();
+                    if(md.getId()>0){
+                        //on met à 0 l'idSaison du main-data
+                        md.setIdSaison(0);
+                        mainDataRep.save(md);
+                        resultVal = 2; // mise à jour éffectue et désactivation de la saison dans main-data
+                    }
+                }else{
+                    MainData md = returnMainData();
+                    if(md.getId()>0){
+                        //on met à 0 l'idSaison du main-data
+                        Saison sOld = saisonRep.getOne(md.getIdSaison());
+                        sOld.setActuelle(false);
+                        saisonRep.save(sOld);
+                        md.setIdSaison(id);
+                        mainDataRep.save(md);
+                        resultVal = 3; // mise à jour éffectue et activation de la saison dans main-data
+                    }
+                }
+            }else{
+                resultVal = 4; // mise à jour du main-data non necessaire
+            }
+        }
+        return resultVal;
+    }
     @Override public Long lastIdSaison() {
+        //changer la fonction !!!
         return saisonRep.findLastId();
     }
     

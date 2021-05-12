@@ -24,30 +24,30 @@ public class MainData implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
-    @Getter @Setter
-    private long id;
+    @Getter @Setter private long id;
     
     //Horodatage
     @UpdateTimestamp
     @Column(name = "horodatage", nullable = false)
-    @Getter @Setter
-    private Timestamp horodatage;
+    @Getter @Setter private Timestamp horodatage;
     
     //ID de la Saison en cours
     @Column(name = "idSaison", nullable = false)
-    @Getter @Setter
-    private long idSaison;
+    @Getter @Setter private long idSaison;
 
     //ID du sstock de competition actuel
     @Column(name = "idStockCompet", nullable = false)
-    @Getter @Setter
-    private long idStockCompet;
+    @Getter @Setter private long idStockCompet;
+    
+    //Valeur du budget previsionnel par défaut
+    @Column(name = "budgetDefault", nullable = false)
+    @Getter @Setter private String budgetDefault;
+        
     
     //ID du sstock de competition actuel
     @Column(name = "actif", nullable = false)
-    @Getter @Setter
-    private boolean actif = true;
-    
+    @Getter @Setter private boolean actif = true;
+       
     
     
     //Constructeur
@@ -60,6 +60,7 @@ public class MainData implements Serializable {
     public MainData(long idSaison, long idStockCompet, boolean actif) {
         this.idSaison = idSaison;
         this.idStockCompet = idStockCompet;
+        this.budgetDefault = "1000.00";
         this.actif = actif;
     }
     

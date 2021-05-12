@@ -41,7 +41,7 @@ public class MainController {
     
 //--------------------   Page Admin   ---------------------------- 
     
-    @RequestMapping(value = { "/admin", "/newMembre", "/newSaison", "*/admin"}, method = RequestMethod.GET)
+    @RequestMapping(value = { "/admin", "/newMembre", "/newSaison"}, method = RequestMethod.GET)
     public String admin(Model model, Principal principal){     
         PageAdmin pageAdmin = new PageAdmin();
         boolean connect = pageAdmin.returnUser(principal).equals("ritn");

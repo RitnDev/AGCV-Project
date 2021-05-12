@@ -98,6 +98,14 @@
                             </td>
                         </tr>
                         <tr>
+                            <td class="popup-form-label">
+                                <label for="actuelle">Saison en cours ?</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="actuelle" name="actuelle" type="checkbox" th:checked="*{actuelle}"/>
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="2" class="popup-form-submit">
                                 <input class="popup-form-submit-button" type="submit" value="Créer la Saison"/>                            
                             </td>
@@ -109,6 +117,58 @@
                 
             </div>
         </div>
+        
+        <!-- ------------------------------------------ POPUP EDITION SAISON -------------------------------------------------- -->
+        
+        <div th:fragment="edit-saison">
+            <div id="popup-content" class="popup-content-edit-saison">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Modifier la Saison</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <a href="/admin" >
+                                <img id="close-saison" class="button-close" src="/images/popup/button-close.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/saison/{id}(id=*{id})}" th:object="${editSaison}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="budget">Budget prévisionnelle :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="budget" type="number" th:value="*{budget}" th:field="*{budget}" step="0.01" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="actuelle">Saison en cours ?</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="actuelle" name="actuelle" type="checkbox" th:checked="*{actuelle}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" name="_method" value="put"/>
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>
+        
         
         
         
@@ -173,7 +233,7 @@
                             <h3>Modifier le Membre</h3>
                         </td>
                         <td class="popup-header-close">
-                            <a th:href="admin" >
+                            <a href="/admin" >
                                 <img id="close-membre" class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>
@@ -224,7 +284,7 @@
                             <h3>Modifier la Main-Data</h3>
                         </td>
                         <td class="popup-header-close">
-                            <a th:href="superAdmin" >
+                            <a href="/superAdmin" >
                                 <img id="close-membre" class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>

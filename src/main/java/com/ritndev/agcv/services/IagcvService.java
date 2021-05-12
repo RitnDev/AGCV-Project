@@ -51,11 +51,11 @@ public interface IagcvService {
     public void updateByIdStockCompetition(Long id, StockCompetition editStock);
     
     //Methode Saison
-    public long saveSaison(Saison newSaison);
+    public int saveSaison(Saison newSaison);
     public List<Saison> listSaison();
     public Saison findByIdSaison(Long id);
     public void supprSaison(Long id);
-    public void updateByIdSaison(Long id, Saison editSaison);
+    public int updateByIdSaison(Long id, Saison editSaison);
     public Long lastIdSaison();
     
     //Methode ConsoTube

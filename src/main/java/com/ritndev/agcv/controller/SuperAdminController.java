@@ -33,7 +33,7 @@ public class SuperAdminController {
     
     
     //--------------------   Page Super Admin   ---------------------------- 
-    @RequestMapping(value = {"/superAdmin", "*/superAdmin"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/superAdmin"}, method = RequestMethod.GET)
     public String superAdmin(Model model, Principal principal){     
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
         return pageSuperAdmin.getPage(model, principal, service);

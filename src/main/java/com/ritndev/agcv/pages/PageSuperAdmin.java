@@ -19,13 +19,13 @@ public class PageSuperAdmin extends Page {
         super.setPage("Super Administrateur");
         super.setLinkPage(new Link("Super Admin", "superAdmin"));
         super.setAdminPage(true);
-        super.setLinkAdminPage(new Link("Déconnexion", "logout"));
+        super.setLinkAdminPage(new Link("Déconnexion", "/logout"));
         
-        Link index = new Link("Page principale","logout");
+        Link index = new Link("Retour page Admin","/admin");
         
         super.addLinks(index);
        
-        Link newData = new Link("Nouvelle DATA-MAIN", "/newData", "topnav-menu-data");
+        Link newData = new Link("Nouvelle MAIN-DATA", "/newData", "topnav-menu-data");
         
         Link[] menu = new Link[] {
             newData

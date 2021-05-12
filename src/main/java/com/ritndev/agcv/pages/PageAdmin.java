@@ -3,11 +3,9 @@ package com.ritndev.agcv.pages;
 import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.form.FormMembre;
 import com.ritndev.agcv.form.FormSaison;
-import com.ritndev.agcv.model.Membre;
 import com.ritndev.agcv.services.IagcvService;
 import java.security.Principal;
 import java.util.Calendar;
-import java.util.List;
 import org.springframework.ui.Model;
 
 /**
@@ -23,10 +21,10 @@ public class PageAdmin extends Page {
         super.setLinkPage(new Link("Admin", "admin"));
         super.setAdminPage(true);
         super.setSuperAdminPage(true);
-        super.setLinkAdminPage(new Link("Déconnexion", "logout"));
+        super.setLinkAdminPage(new Link("Déconnexion", "/logout"));
         
-        Link index = new Link("Page principale","index");
-        Link commandesMembres = new Link("Commandes tubes des membres","commandesMembres");
+        Link index = new Link("Page principale","/index");
+        Link commandesMembres = new Link("Commandes tubes des membres","/commandesMembres");
         
         super.addLinks(commandesMembres);
         super.addLinks(index);
@@ -47,28 +45,20 @@ public class PageAdmin extends Page {
     
     
     public String getPage(Model model, Principal principal, IagcvService service) {
-           
-        //liste des membres en BDD
-        List<Membre> listMembres = service.listMembre();
-        
-        
-        Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        
-        FormMembre nouveauMembre = new FormMembre("","");
-        FormSaison nouvelleSaison = new FormSaison();
-        nouvelleSaison.setAnnee_debut(year);
-        nouvelleSaison.setBudget("1000.00");
-            
+             
         String message = "Ici se trouve la page : ";
         message = message + getPage();
+        
+        String budget = service.returnMainData().getBudgetDefault();
         
         // Add Attribute :
         model = getPageGenerique(model, principal);
         model.addAttribute("message", message);
-        model.addAttribute("newMembre", nouveauMembre);
-        model.addAttribute("newSaison", nouvelleSaison);
-        model.addAttribute("listMembres", listMembres);
+        model.addAttribute("newMembre", new FormMembre("",""));
+        //Charge l'année en cours + Budget par défaut "1000" + saison active par defaut.
+        model.addAttribute("newSaison", new FormSaison(Calendar.getInstance().get(Calendar.YEAR),budget, true));
+        model.addAttribute("listMembres", service.listMembre());
+        model.addAttribute("listSaisons", service.listSaison());
         
         
         return returnPage();

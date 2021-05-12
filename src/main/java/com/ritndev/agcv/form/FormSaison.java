@@ -14,17 +14,30 @@ import lombok.Setter;
  */
 public class FormSaison {
     
+    //ID de la saison
+    @Getter @Setter private long id;
+    
     //Année de début de la saison
     @Getter @Setter private int annee_debut;
 
     //budget prévisionnelle de la saison
     @Getter @Setter private String budget;
-      
+    
+    //bEst-ce la saison actuelle ?
+    @Getter @Setter private boolean actuelle;
+    
     
     //Constructeur
-    public FormSaison(int annee_debut, String budget) {
+    public FormSaison(int annee_debut, String budget, boolean actuelle) {
         this.annee_debut = annee_debut;
         this.budget = budget;
+        this.actuelle = actuelle;
+    }
+    
+    public FormSaison(long id, String budget, boolean actuelle) {
+        this.id = id;
+        this.budget = budget;
+        this.actuelle = actuelle;
     }
     
     public FormSaison(){}

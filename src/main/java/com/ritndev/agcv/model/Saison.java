@@ -23,42 +23,57 @@ public class Saison implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
-    @Getter @Setter
-    private long id;
+    @Getter @Setter private long id;
     
     //Horodatage
     @UpdateTimestamp
     @Column(name = "horodatage", nullable = false)
-    @Getter @Setter
-    private Timestamp horodatage;
+    @Getter @Setter private Timestamp horodatage;
     
     //Annee de début de la saison
     @Column(name = "anneeDebut", nullable = false)
-    @Getter @Setter
-    private int anneeDebut;
+    @Getter @Setter private int anneeDebut;
     
     //Annee de fin de la saison
     @Column(name = "anneeFin", nullable = false)
-    @Getter @Setter
-    private int anneeFin;
+    @Getter @Setter private int anneeFin;
     
     //Budget prévisionnel de cette saison
     @Column(name = "budget", nullable = false)
-    @Getter @Setter
-    private double budget;
+    @Getter @Setter private double budget;
+    
+    //Est-ce la saison actuelle ?
+    @Column(name = "actuelle", nullable = false)
+    @Getter @Setter private boolean actuelle;
     
     
     //Constructeur
     public Saison() {}
 
-    public Saison(int anneeDebut, double budget) {
+    public Saison(int anneeDebut, double budget, boolean actuelle) {
         this.anneeDebut = anneeDebut;
         this.anneeFin = anneeDebut + 1;
         this.budget = budget;
+        this.actuelle = actuelle;
     }
+
+    public Saison(long id, double budget, boolean actuelle) {
+        this.id = id;
+        this.budget = budget;
+        this.actuelle = actuelle;
+    }
+    
+    
+    
     
     @Override public String toString() {
         return String.valueOf(anneeDebut) + " - " + String.valueOf(anneeFin);
+    }
+    
+    
+    //Renvoie le budget au format String
+    public String getBudgetString(){
+        return String.valueOf(budget);
     }
     
 }

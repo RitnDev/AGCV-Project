@@ -128,7 +128,7 @@ a:hover {color: #c0edff;}
 }
 .popup-content-saison {
     width: 500px;
-    height: 220px;
+    height: 260px;
     background-color: #e6e7e8;
     opacity: 1;
     border-radius: 4px;
@@ -157,6 +157,15 @@ a:hover {color: #c0edff;}
 .popup-content-edit-data {
     width: 450px;
     height: 260px;
+    background-color: #e6e7e8;
+    opacity: 1;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 0 100px 1px #e6e7e880;
+}
+.popup-content-edit-saison {
+    width: 500px;
+    height: 215px;
     background-color: #e6e7e8;
     opacity: 1;
     border-radius: 4px;

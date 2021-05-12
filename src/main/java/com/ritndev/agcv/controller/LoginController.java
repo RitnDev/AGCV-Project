@@ -3,10 +3,7 @@ package com.ritndev.agcv.controller;
 
 import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.pages.Page403;
-import com.ritndev.agcv.utils.WebUtils;
 import java.security.Principal;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,5 +40,6 @@ public class LoginController {
         Page403 page403 = new Page403();
         return page403.getPage(model, principal);
     }    
+    
     
 }
