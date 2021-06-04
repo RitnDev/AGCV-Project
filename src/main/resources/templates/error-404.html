@@ -12,15 +12,15 @@
     
 
     <body>
-        <div th:replace="fragments/layout-header :: header"/>
+        <div th:replace="fragments/layout-header :: header">...</div>
       
         <div class="main-content">
-            <br/>          
-            <div>Methode POST réussi !</div><br/>
-            <a href="index">Retour à la page d'accueil</a>
+            <br/>
+            <div>Erreur 404 : Page non trouvée !</div>
+            <!--div th:utext="${message}"> !</div-->
         </div>
       
-        <div th:replace="fragments/layout-footer :: footer"/>
+        <div th:replace="fragments/layout-footer :: footer">...</div>
     </body>
     
 </html>

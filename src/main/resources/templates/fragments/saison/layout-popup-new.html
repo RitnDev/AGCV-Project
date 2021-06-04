@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+<!-- ------------------------------------------ POPUP NOUVELLE SAISON -------------------------------------------------- -->
+        
+        <div th:fragment="saison">
+            <div id="popup-content" class="popup-content-saison">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Nouvelle Saison</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <img id="close-saison" class="button-close" src="/images/popup/button-close.png">
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/newSaison}" th:object="${newSaison}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="anneeDebut">Année de début de Saison :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="anneeDebut" type="number" th:value="*{annee_debut}" th:field="*{annee_debut}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="budget">Budget prévisionnelle :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="budget" type="number" th:value="*{budget}" th:field="*{budget}" step="0.01" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="actuelle">Saison en cours ?</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="actuelle" name="actuelle" type="checkbox" th:checked="*{actuelle}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input class="popup-form-submit-button" type="submit" value="Créer la Saison"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
+    </body>
+</html>

@@ -20,10 +20,10 @@ public class PageCommandesMembres extends Page{
         super.setPage("Commandes tubes des membres");
         super.setLinkPage(new Link("Commandes tubes des membres","commandesMembres"));
         super.setAdminPage(true);
-        super.setLinkAdminPage(new Link("Admin", "admin"));
+        super.setLinkAdminPage(new Link("Admin", "/admin"));
         
         
-        Link index = new Link("Page principale","index");
+        Link index = new Link("Page principale","/index");
         super.addLinks(index);
         
         

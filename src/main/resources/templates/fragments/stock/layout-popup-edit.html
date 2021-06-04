@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+<!-- ------------------------------------------ POPUP EDITION STOCK-COMPETITION -------------------------------------------------- -->
+        
+        <div th:fragment="stock">
+            <div id="popup-content" class="popup-content-edit-stock">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Modifier le Stock</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <a href="/superAdmin" >
+                                <img class="button-close" src="/images/popup/button-close.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/stock/{id}(id=*{id})}" th:object="${editStock}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="stock">Stock actuel :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="stock" type="number" th:value="*{stock}" th:field="*{stock}" min="0" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" name="_method" value="put"/>
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
+    </body>
+</html>

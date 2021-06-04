@@ -12,6 +12,7 @@ public class Link {
     @Getter @Setter private String texte;
     @Getter @Setter private String href;
     @Getter @Setter private String hid;
+    @Getter @Setter private String hclass;
     @Getter @Setter private boolean actif = true;
     
     
@@ -33,6 +34,14 @@ public class Link {
         this.href = href;
         this.actif = actif;
     }
+    
+    public Link(String hclass, String texte, String href, boolean actif) {
+        this.hclass = hclass;
+        this.texte = texte;
+        this.href = href;
+        this.actif = actif;
+    }
+    
 
     
     

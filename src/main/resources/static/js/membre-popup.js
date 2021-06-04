@@ -1,5 +1,5 @@
-const popupNewMembre = document.querySelector(".popup-content-new-membre");
-const bgNewMembre = document.querySelector('.bg-popup-new-membre');
+const popupNewMembre = document.querySelector(".popup-content-membre");
+const bgNewMembre = document.querySelector('.bg-popup-membre');
 const bpMenuNewMembre = document.getElementById('topnav-menu-membre');
 const bpCloseNewMembre = document.getElementById('close-membre');
 
@@ -7,11 +7,11 @@ const bpCloseNewMembre = document.getElementById('close-membre');
 //Fonctions :
 function openPopupNewMembre() {
     bgNewMembre.style.display = 'flex';
-    popupNewMembre.className = "popup-content-new-membre open";
+    popupNewMembre.className = "popup-content-membre open";
 };
 
 function closePopupNewMembre() {
-    popupNewMembre.className = "popup-content-new-membre close";
+    popupNewMembre.className = "popup-content-membre close";
     setTimeout(function(){bgNewMembre.style.display = 'none';}, 500);
 };
 

@@ -22,7 +22,7 @@
                                   
                 <!-- Lien vers les autres pages de l'application -->
                 <th:block th:each="link : ${links}">
-                    <a id="topnav-link" th:href="${link.href}" th:if="${link.actif}" th:utext="${link.texte}"></a>
+                    <a id="topnav-link" th:class="${link.hclass}" th:href="${link.href}" th:if="${link.actif}" th:utext="${link.texte}"></a>
                 </th:block>
                 
                 

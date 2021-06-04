@@ -23,23 +23,26 @@ public class StockCompetition implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
-    @Getter @Setter
-    private long id;
+    @Getter @Setter private long id;
     
     //Horodatage
     @UpdateTimestamp
     @Column(name = "horodatage", nullable = false)
-    @Getter @Setter
-    private Timestamp horodatage;
+    @Getter @Setter private Timestamp horodatage;
     
     //Stock pour les competition actuel
     @Column(name = "stock", nullable = false)
-    @Getter @Setter
-    private int stock;
-    
+    @Getter @Setter private int stock;
+        
     
     //Constructeur
-    public StockCompetition() {}
-    
-    
+    public StockCompetition() {
+        this.stock = 0;
+    }
+
+    public StockCompetition(long id, int stock) {
+        this.id = id;
+        this.stock = stock;
+    }
+   
 }

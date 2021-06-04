@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -50,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/", "/index").permitAll()
             .antMatchers("/css/**", "/js/**", "/images/**").permitAll()     // Autorisations d'accés au ressources
             .antMatchers("/admin", "/admin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPADMIN")
-            .antMatchers("/superAdmin", "/newData").hasAnyAuthority("ROLE_SUPADMIN")
+            .antMatchers("/superAdmin", "/newData", "/newUser", "/newStock").hasAnyAuthority("ROLE_SUPADMIN")
             .anyRequest().permitAll()
             .and()
         .exceptionHandling().accessDeniedPage("/403");
@@ -82,5 +83,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         db.setDataSource(dataSource);
         return db;
     }
+    
         
 }

@@ -9,8 +9,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
         <script type="text/javascript" th:src="@{/js/saison-popup.js}" charset="utf-8" defer></script>
-        <script type="text/javascript" th:src="@{/js/new-membre-popup.js}" charset="utf-8" defer></script>
-        <!--script type="text/javascript" th:src="@{/js/edit-membre-popup.js}" charset="utf-8" defer></script-->
+        <script type="text/javascript" th:src="@{/js/membre-popup.js}" charset="utf-8" defer></script>
         <!-- https://www.youtube.com/watch?v=gLWIYk0Sd38 -->
     </head>
     
@@ -134,10 +133,10 @@
       
         <!-- pop-up section -->
         <div id="bg-popup" class="bg-popup-saison">
-            <div th:replace="fragments/layout-popup :: saison"/>
+            <div th:replace="fragments/saison/layout-popup-new :: saison"/>
         </div>
-        <div id="bg-popup" class="bg-popup-new-membre">
-            <div th:replace="fragments/layout-popup :: new-membre"/>
+        <div id="bg-popup" class="bg-popup-membre">
+            <div th:replace="fragments/membre/layout-popup-new :: membre"/>
         </div>
        
         <!-- footer section -->

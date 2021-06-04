@@ -6,7 +6,7 @@
     <body>
         
         
-        <!-- ------------------------------------------ POPUP NOUVELLE COMMANDE -------------------------------------------------- -->
+<!-- ------------------------------------------ POPUP NOUVELLE COMMANDE -------------------------------------------------- -->
         
         <div th:fragment="commande">
             <div id="popup-content" class="popup-content-commande">
@@ -129,7 +129,7 @@
                         </td>
                         <td class="popup-header-close">
                             <a href="/admin" >
-                                <img id="close-saison" class="button-close" src="/images/popup/button-close.png">
+                                <img class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>
                     </tr>
@@ -174,8 +174,8 @@
         
         <!-- ------------------------------------------ POPUP NOUVEAU MEMBRE -------------------------------------------------- -->
         
-        <div th:fragment="new-membre">
-            <div id="popup-content" class="popup-content-new-membre">
+        <div th:fragment="membre">
+            <div id="popup-content" class="popup-content-membre">
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
@@ -219,9 +219,6 @@
             </div>
         </div>
         
-    </body>
-</html>
-
 
 <!-- ------------------------------------------ POPUP EDITION MEMBRE -------------------------------------------------- -->
         
@@ -234,7 +231,7 @@
                         </td>
                         <td class="popup-header-close">
                             <a href="/admin" >
-                                <img id="close-membre" class="button-close" src="/images/popup/button-close.png">
+                                <img class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>
                     </tr>
@@ -285,7 +282,7 @@
                         </td>
                         <td class="popup-header-close">
                             <a href="/superAdmin" >
-                                <img id="close-membre" class="button-close" src="/images/popup/button-close.png">
+                                <img class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>
                     </tr>
@@ -331,6 +328,332 @@
                 
             </div>
         </div>
+
+<!-- ------------------------------------------ POPUP NOUVEL UTILISATEUR -------------------------------------------------- -->
+        
+        <div th:fragment="user">
+            <div id="popup-content" class="popup-content-user">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Nouvel Utilisateur</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <img id="close-user" class="button-close" src="/images/popup/button-close.png">
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/newUser}" th:object="${newUser}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="identifiant">Identifiant :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="identifiant" type="text" th:value="*{identifiant}" th:field="*{identifiant}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="mdp">Mot de passe :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="mdp" type="password" th:value="*{mdp}" th:field="*{mdp}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="role">Role utilisateur :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <select id="role" th:field="*{roleId}">
+                                    <option th:each="role : ${roleList}" th:value="${role.roleId}" th:text="${role.roleName}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input class="popup-form-submit-button" type="submit" value="Créer l'utilisateur"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>
+<!-- ------------------------------------------ POPUP EDITION UTILISATEUR -------------------------------------------------- -->
+        
+       <div th:fragment="edit-user">
+            <div id="popup-content" class="popup-content-edit-user">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Modifier l'utilisateur</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <a href="/superAdmin" >
+                                <img class="button-close" src="/images/popup/button-close.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/user/{id}(id=*{id})}" th:object="${editUser}" th:method="post">
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label>Utilisateur :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <span th:text="*{identifiant}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="role">Role utilisateur :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <select id="role" th:field="*{roleId}">
+                                    <option th:each="role : ${roleList}" th:value="${role.roleId}" th:text="${role.roleName}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="actif">Utilisateur actif ?</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="actif" name="actif" type="checkbox" th:checked="*{actif}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" name="_method" value="put"/>
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>
+
+
+<!-- ------------------------------------------ POPUP EDITION : MOT DE PASSE utilisateur -------------------------------------------------- -->
+        
+       <div th:fragment="edit-mdp">
+            <div id="popup-content" class="popup-content-edit-mdp">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Modifier l'utilisateur</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <a href="/index" >
+                                <img class="button-close" src="/images/popup/button-close.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/mdp/{id}(id=*{id})}" th:object="${editUser}" th:method="post">
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label>Utilisateur :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <span th:text="*{identifiant}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="mdp">Mot de passe actuel :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="mdp" type="password" th:value="*{mdp}" th:field="*{mdp}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="newMdp">Nouveau mot de passe :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="newMdp" type="password" th:value="*{newMdp}" th:field="*{newMdp}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="confirmMdp">Confirmation du mot de passe :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="confirmMdp" type="password" th:value="*{confirmMdp}" th:field="*{confirmMdp}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" name="_method" value="put"/>
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>
+
+<!-- ------------------------------------------ POPUP EDITION STOCK-COMPETITION -------------------------------------------------- -->
+        
+        <div th:fragment="edit-stock">
+            <div id="popup-content" class="popup-content-edit-stock">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Modifier le Stock</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <a href="/superAdmin" >
+                                <img class="button-close" src="/images/popup/button-close.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/stock/{id}(id=*{id})}" th:object="${editStock}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="stock">Stock actuel :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="stock" type="number" th:value="*{stock}" th:field="*{stock}" min="0" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" name="_method" value="put"/>
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>
+
+<!-- ------------------------------------------ POPUP NOUVELLE COMPETITION -------------------------------------------------- -->
+        
+        <div th:fragment="competition">
+            <div id="popup-content" class="popup-content-competition">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Nouvelle Compétition</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <img id="close-competition" class="button-close" src="/images/popup/button-close.png">
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/newCompetition}" th:object="${newCompetition}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="nom">Nom de la competition</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="nbTubesUtilises">Nombre de tubes utilisés :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="nbTubesUtilises" type="number" min="1" th:value="*{nbTubesUtilises}" th:field="*{nbTubesUtilises}" />
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input class="popup-form-submit-button" type="submit" value="Créer la compétition"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>
+
+
+<!-- ------------------------------------------ POPUP MODIFICATION COMPETITION -------------------------------------------------- -->
+        
+        <div th:fragment="edit-compet">
+            <div id="popup-content" class="popup-content-edit-compet">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Modifier la compétition</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <a href="/sacCompetition" >
+                                <img class="button-close" src="/images/popup/button-close.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/compet/{id}(id=*{id})}" th:object="${editCompet}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="nom">Nom de la competition</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="nbTubesUtilises">Nombre de tubes utilisés :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="nbTubesUtilises" type="number" min="1" th:value="*{nbTubesUtilises}" th:field="*{nbTubesUtilises}" />
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input class="popup-form-submit-button" type="submit" value="Modifier la compétition"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>
+
 
         
     </body>

@@ -15,6 +15,16 @@
         <div th:replace="fragments/layout-header :: header"/>
       
         <div class="main-content">
+            <div th:if="${!reponses.empty}">
+                <br/>
+                <table class="table-reponse">
+                    <tbody>
+                        <tr th:each="rep : ${reponses}">
+                            <td th:class="${'td-rep-'+rep.key}"><span th:text="${rep.value}">rep</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <br/>
             <div th:utext="${message}"> !</div>
             

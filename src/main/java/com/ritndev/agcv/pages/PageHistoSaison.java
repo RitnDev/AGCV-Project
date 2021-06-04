@@ -15,10 +15,10 @@ public class PageHistoSaison extends Page{
         super.setPage("Historiques des saisons précédentes");
         super.setLinkPage(new Link("Historiques des saisons précédentes", "histoSaison", "topnav-menu"));
         super.setAdminPage(true);
-        super.setLinkAdminPage(new Link("Admin", "admin"));
+        super.setLinkAdminPage(new Link("Admin", "/admin"));
         
         
-        Link index = new Link("Page principale","index");
+        Link index = new Link("Page principale","/index");
         super.addLinks(index);
                 
     }

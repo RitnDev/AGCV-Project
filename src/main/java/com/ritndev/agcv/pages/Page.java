@@ -92,6 +92,7 @@ public class Page {
         String user = returnUser(principal);
         Boolean connect = !user.equals("");
   
+        model.addAttribute("userActif", user);
         model.addAttribute("log", "Connecté : " + user);
         model.addAttribute("connect", connect);
 

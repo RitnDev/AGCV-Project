@@ -2,55 +2,38 @@ package com.ritndev.agcv.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import lombok.Getter;
+import lombok.Setter;
  
 @Entity
-@Table(name = "User_Role", //
-        uniqueConstraints = { //
-                @UniqueConstraint(name = "USER_ROLE_UK", columnNames = { "User_Id", "Role_Id" }) })
+@Table(name = "User_Role")
 public class UserRole {
  
     @Id
     @GeneratedValue
     @Column(name = "Id", nullable = false)
-    private Long id;
+    @Getter @Setter private Long id;
     
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "User_Id", nullable = false)
-    private AppUser appUser;
+    @Getter @Setter private Long userId;
     
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Role_Id", nullable = false)
-    private AppRole appRole;
+    @Getter @Setter private Long roleId;
+
     
-    public Long getId() {
-        return id;
+    //Constructeur
+    public UserRole() {}
+
+    public UserRole(Long userId, Long roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
     }
- 
-    public void setId(Long id) {
-        this.id = id;
-    }
- 
-    public AppUser getAppUser() {
-        return appUser;
-    }
- 
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
-    }
- 
-    public AppRole getAppRole() {
-        return appRole;
-    }
- 
-    public void setAppRole(AppRole appRole) {
-        this.appRole = appRole;
-    }
-     
+    
+    
+    
+    
 }

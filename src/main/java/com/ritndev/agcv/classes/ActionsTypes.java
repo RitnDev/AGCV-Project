@@ -10,7 +10,6 @@ import java.util.Map;
 public enum ActionsTypes {
     
     //ENUM
-    
     EDIT_MEMBRE(1),
     EDIT_DATA(2),
     EDIT_SAISON(3),
@@ -18,8 +17,10 @@ public enum ActionsTypes {
     EDIT_COMPETITION(5),
     EDIT_PRIXTUBE(6),
     EDIT_CONSOMOIS(7),
-    EDIT_STOCKCOMPET(8),
-    EDIT_TYPETUBE(9);
+    EDIT_STOCK(8),
+    EDIT_TYPETUBE(9),
+    EDIT_USER(10),
+    EDIT_MDP(11);
     
     
     

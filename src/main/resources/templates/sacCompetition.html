@@ -8,15 +8,108 @@
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
+        <script type="text/javascript" th:src="@{/js/competition-popup.js}" charset="utf-8" defer></script>
     </head>
-    
+
 
     <body>
         <div th:replace="fragments/layout-header :: header">...</div>
       
+        <!-- content section -->
         <div class="main-content">
+            <div th:if="${!reponses.empty}">
+                <br/>
+                <table class="table-reponse">
+                    <tbody>
+                        <tr th:each="rep : ${reponses}">
+                            <td th:class="${'td-rep-'+rep.key}"><span th:text="${rep.value}">rep</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <br/>
-            <div th:utext="${message}"> !</div>
+            <div th:utext="${message}"> !</div><br/><br/>
+            
+            <!-- affichage du stock competiton actuel -->
+            <div class="std-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="table-label">Stock de compétition actuel</th>
+                        </tr>
+                        <tr th:if="${stock!=null}">
+                            <th>Stock</th>
+                            <th>Dernière modif</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${stock!=null}">
+                            <td th:text="${stock.stock}"></td>
+                            <td th:text="${stock.horodatage}"></td>
+                        </tr>
+                        <tr th:if="${stock==null}">
+                            <td colspan="2">Aucun stock de compétition créé</td>
+                        </tr>
+                        <tr th:if="${stock==null}">
+                            <td colspan="2">Contacter un administrateur pour le créer !</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><br/><br/>
+            
+            
+            <div class="std-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th th:if="${AdminConnect>=1}" class="table-label" colspan="5" th:text="${'COMPETITION DE LA SAISON '+saison.toString()}">Aucune Compétition créée</th>
+                            <th th:if="${AdminConnect==0}" class="table-label" colspan="4" th:text="${'COMPETITION DE LA SAISON '+saison.toString()}">Aucune Compétition créée</th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Horodatage</th>
+                            <th>Nom de la compétition</th>
+                            <th>Nbs de tubes utilisés</th>
+                            <th th:if="${AdminConnect>=1}" class="table-action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${listCompet.empty}">
+                            <td th:if="${AdminConnect>=1}" colspan="5">Aucune Compétition créée</td>
+                            <td th:if="${AdminConnect==0}" colspan="4">Aucune Compétition créée</td>
+                        </tr>
+                        <tr th:each="compet : ${listCompet}">
+                            <td><span th:text="${compet.id}">ID</span></td>
+                            <td><span th:text="${compet.horodatage}">Horodatage</span></td>
+                            <td><span th:text="${compet.nom}">nom</span></td>
+                            <td><span th:text="${compet.nbTubesUtilises}">nbTubesUtilises</span></td>
+                            <td  th:if="${AdminConnect>=1}" class="table-action">
+                                <table class="action-input">
+                                    <tr>
+                                        <td th:if="${AdminConnect>=1}" class="action-input">
+                                            <form action="#" th:action="@{/compet/{id}(id=${compet.id})}" th:method="post">
+                                                <input type="hidden" name="_method" value="delete"/>
+                                                <input id="action-input" type="submit" value="Suppr"/>
+                                            </form>
+                                        </td><td th:if="${AdminConnect==2}" class="action-input">|</td>
+                                        <td th:if="${AdminConnect==2}" class="action-input">
+                                            <form action="#" th:action="@{/compet/{id}(id=${compet.id})}" th:method="post">
+                                                <input id="action-input" type="submit" value="Edit"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                    
+        </div>
+        
+        <!-- pop-up section -->
+        <div id="bg-popup" class="bg-popup-competition">
+            <div th:replace="fragments/competition/layout-popup-new :: compet"/>
         </div>
       
         <div th:replace="fragments/layout-footer :: footer">...</div>

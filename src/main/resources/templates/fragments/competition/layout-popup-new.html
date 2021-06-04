@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+<!-- ------------------------------------------ POPUP NOUVELLE COMPETITION -------------------------------------------------- -->
+        
+        <div th:fragment="compet">
+            <div id="popup-content" class="popup-content-competition">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Nouvelle Compétition</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <img id="close-competition" class="button-close" src="/images/popup/button-close.png">
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/newCompetition}" th:object="${newCompetition}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="nom">Nom de la competition</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="nbTubesUtilises">Nombre de tubes utilisés :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="nbTubesUtilises" type="number" min="1" th:value="*{nbTubesUtilises}" th:field="*{nbTubesUtilises}" />
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input class="popup-form-submit-button" type="submit" value="Créer la compétition"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
+    </body>
+</html>

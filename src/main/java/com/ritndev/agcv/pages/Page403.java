@@ -16,9 +16,9 @@ public class Page403 extends Page {
                
         super.setPage("Page non accessible");
         super.setLinkPage(new Link("Page non accessible", "403"));
-        super.setLinkAdminPage(new Link("Admin", "admin"));
+        super.setLinkAdminPage(new Link("Admin", "/admin"));
                 
-        Link logout = new Link("Page principale", "logout");
+        Link logout = new Link("Page principale", "/logout");
         super.addLinks(logout);
                 
     }

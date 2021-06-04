@@ -6,58 +6,37 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import lombok.Getter;
+import lombok.Setter;
  
 @Entity
-@Table(name = "APP_USER", //
-        uniqueConstraints = { //
-                @UniqueConstraint(name = "APP_USER_UK", columnNames = "USER_NAME") })
+@Table(name = "APP_USER")
 public class AppUser implements Serializable {
  
     @Id
     @GeneratedValue
     @Column(name = "USER_ID", nullable = false)
-    private Long userId;
+    @Getter @Setter private Long userId;
  
     @Column(name = "USER_NAME", length = 36, nullable = false)
-    private String userName;
+    @Getter @Setter private String userName;
  
     @Column(name = "ENCRYPTED_PASSWORD", length = 128, nullable = false)
-    private String encrytedPassword;
+    @Getter @Setter private String encrytedPassword;
  
     @Column(name = "ENABLED", length = 1, nullable = false)
-    private boolean enabled;
- 
-    public Long getUserId() {
-        return userId;
-    }
- 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
- 
-    public String getUserName() {
-        return userName;
-    }
- 
-    public void setUserName(String userName) {
+    @Getter @Setter private boolean enabled;
+
+    
+    //Constructeur
+    public AppUser(){}
+    
+    public AppUser(String userName, String encrytedPassword) {
         this.userName = userName;
-    }
- 
-    public String getEncrytedPassword() {
-        return encrytedPassword;
-    }
- 
-    public void setEncrytedPassword(String encrytedPassword) {
         this.encrytedPassword = encrytedPassword;
+        this.enabled = true;
     }
  
-    public boolean isEnabled() {
-        return enabled;
-    }
  
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
  
 }

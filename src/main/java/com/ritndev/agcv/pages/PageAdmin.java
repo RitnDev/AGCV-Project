@@ -3,6 +3,7 @@ package com.ritndev.agcv.pages;
 import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.form.FormMembre;
 import com.ritndev.agcv.form.FormSaison;
+import com.ritndev.agcv.services.IUserService;
 import com.ritndev.agcv.services.IagcvService;
 import java.security.Principal;
 import java.util.Calendar;
@@ -18,15 +19,12 @@ public class PageAdmin extends Page {
     public PageAdmin() {
         
         super.setPage("Administrateur");
-        super.setLinkPage(new Link("Admin", "admin"));
+        super.setLinkPage(new Link("Admin", "/admin"));
         super.setAdminPage(true);
         super.setSuperAdminPage(true);
         super.setLinkAdminPage(new Link("Déconnexion", "/logout"));
         
         Link index = new Link("Page principale","/index");
-        Link commandesMembres = new Link("Commandes tubes des membres","/commandesMembres");
-        
-        super.addLinks(commandesMembres);
         super.addLinks(index);
         
         
@@ -43,8 +41,7 @@ public class PageAdmin extends Page {
 
       
     
-    
-    public String getPage(Model model, Principal principal, IagcvService service) {
+    public String getPage(Model model, Principal principal, IagcvService service, IUserService userService) {
              
         String message = "Ici se trouve la page : ";
         message = message + getPage();
@@ -60,6 +57,9 @@ public class PageAdmin extends Page {
         model.addAttribute("listMembres", service.listMembre());
         model.addAttribute("listSaisons", service.listSaison());
         
+        boolean connect = userService.findRoleByUsername(super.returnUser(principal)).equals("ROLE_SUPADMIN");
+        Link pageSupAdmin = new Link("supAdmin", "Super Admin", "/superAdmin", connect);
+        super.addLinks(pageSupAdmin);
         
         return returnPage();
         

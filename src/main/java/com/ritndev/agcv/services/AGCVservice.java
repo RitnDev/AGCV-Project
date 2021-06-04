@@ -1,5 +1,6 @@
 package com.ritndev.agcv.services;
 
+import com.ritndev.agcv.form.*;
 import com.ritndev.agcv.model.*;
 import com.ritndev.agcv.repository.*;
 import java.util.List;
@@ -40,15 +41,17 @@ public class AGCVservice implements IagcvService {
     
     
     // -------------------   FONCTIONS MEMBRES ---------------------
-    @Override public Membre saveMembre(Membre newMembre) {return membreRep.save(newMembre);}
+    @Override public Membre saveMembre(FormMembre newMembre) {
+        return membreRep.save(new Membre(newMembre.getPrenom(), newMembre.getNom()));
+    }
     @Override public List<Membre> listMembre() {return membreRep.findAll();}
     @Override public Membre findByIdMembre(Long id) {return membreRep.getOne(id);}
     @Override public void supprMembre(Long id) {
         Membre m = membreRep.getOne(id);
         membreRep.delete(m);
     }
-    @Override public void updateByIdMembre(Long id, Membre editMembre) {
-        Membre m = membreRep.getOne(id);
+    @Override public void updateByIdMembre(FormMembre editMembre) {
+        Membre m = membreRep.getOne(editMembre.getId());
         if(m != null) {
             m.setNom(editMembre.getNom());
             m.setPrenom(editMembre.getPrenom());
@@ -61,13 +64,25 @@ public class AGCVservice implements IagcvService {
     // -------------------   FONCTIONS PRIX-TUBES ---------------------
     @Override public PrixTube savePrixTube (PrixTube newPrixTube) {return prixTubeRep.save(newPrixTube);}
     @Override public List<PrixTube> listPrixTube() {return prixTubeRep.findAll();}
-    @Override public PrixTube findByIdPrixTube(Long id) {return prixTubeRep.getOne(id);}
+    @Override public PrixTube findByIdPrixTube(Long id) {
+        if (prixTubeRep.existsById(id)){
+            return prixTubeRep.getOne(id);
+        }else{
+            return null;
+        }   
+    }
     @Override public void supprPrixTube(Long id) {
-        PrixTube pt = prixTubeRep.getOne(id);
-        prixTubeRep.delete(pt);
+        if (prixTubeRep.existsById(id)){
+            PrixTube pt = prixTubeRep.getOne(id);
+            prixTubeRep.delete(pt);
+        }    
     }
     @Override public void updateByIdPrixTube(Long id, PrixTube editPrixTube) {
-        PrixTube pt = prixTubeRep.getOne(id);
+        PrixTube pt = null;
+        if (prixTubeRep.existsById(id)){
+            pt = prixTubeRep.getOne(id);
+        }
+
         if(pt != null) {
             pt.setMarque(editPrixTube.getMarque());
             pt.setPrix(editPrixTube.getPrix());
@@ -103,22 +118,57 @@ public class AGCVservice implements IagcvService {
  
     
     // -------------------   FONCTIONS COMPETITION ---------------------
-    @Override public Competition saveCompetition(Competition newCompetition) {return competitionRep.save(newCompetition);}
-    @Override public List<Competition> listCompetition() {return competitionRep.findAll();}
-    @Override public Competition findByIdCompetition(Long id) {return competitionRep.getOne(id);}
-    @Override public void supprCompetition(Long id) {
-        Competition c = competitionRep.getOne(id);
-        competitionRep.delete(c);
+    @Override public int saveCompetition(FormCompet newCompet) {
+        int resultVal = 0;
+        //Récupération de la Main-Data active (md)
+        MainData md = returnMainData();
+        //Vérification qu'il y a bien une main-data de créée
+        if(md.getId() != 0){
+            if (md.getIdSaison()>0) {
+                if (newCompet != null
+                && newCompet.getNbTubesUtilises() != 0
+                && !newCompet.getNom().equals(""))
+                    competitionRep.save(new Competition(md.getIdSaison(), newCompet.getNbTubesUtilises(), newCompet.getNom()));
+                    resultVal = 3;
+            }else{
+                resultVal = 2; // pas de saison active actuellement.
+            }
+        }else{
+            resultVal = 1; // Pas de main-data créée.
+        }
+        return resultVal;
     }
-    @Override public void updateByIdCompetition(Long id, Competition editCompetition) {
-        Competition c = competitionRep.getOne(id);
-        if(c != null) {
-            c.setIdSaison(editCompetition.getIdSaison());
-            c.setNom(editCompetition.getNom());
-            c.setNbTubesUtilises(editCompetition.getNbTubesUtilises());
+    @Override public List<Competition> listCompetitionBySaison(Long idSaison) {
+        return competitionRep.findByIdSaison(idSaison);
+    }
+    @Override public Competition findByIdCompetition(Long id) {
+        if(competitionRep.existsById(id)){
+            return competitionRep.getOne(id);
+        }else{
+            return null;
+        }
+    }
+    @Override public int supprCompetition(Long id) {
+        int resultVal = 0;
+        if(competitionRep.existsById(id)){
+            Competition c = competitionRep.getOne(id);
+            competitionRep.delete(c);
+            resultVal = 1;
+        }
+        return resultVal;
+    }
+    @Override public int updateCompetition(FormCompet editCompet) {
+        int resultVal = 0;
+        if(competitionRep.existsById(editCompet.getId())){
+            Competition c = competitionRep.getOne(editCompet.getId());
+            c.setNom(editCompet.getNom());
+            c.setNbTubesUtilises(editCompet.getNbTubesUtilises());
             
             competitionRep.save(c);
+            resultVal = 1;
         }
+               
+        return resultVal;
     }
 
     
@@ -145,21 +195,66 @@ public class AGCVservice implements IagcvService {
 
 
     // -------------------   FONCTIONS STOCK-COMPETITION ---------------------
-    @Override public StockCompetition saveStockCompetition(StockCompetition newStock) {return stockCompetRep.save(newStock);}
-    @Override public StockCompetition findByIdStockCompetition(Long id) {return stockCompetRep.getOne(id);}
-    @Override public void supprStockCompetition(Long id) {
-        StockCompetition sc = stockCompetRep.getOne(id);
-        stockCompetRep.delete(sc);
-    }
-    @Override public void updateByIdStockCompetition(Long id, StockCompetition editStockCompet) {
-        StockCompetition sc = stockCompetRep.getOne(id);
-        if(sc != null) {
-            sc.setStock(editStockCompet.getStock());
+    @Override public int newStock() {
+        int resultVal = 0;
+        if (stockCompetRep.findAll().isEmpty()){
+            Long id = stockCompetRep.save(new StockCompetition()).getId();
             
-            stockCompetRep.save(sc);
+            // ----- MISE A JOUR MAIN-DATA -----
+            
+                MainData md = returnMainData();
+                //Vérification qu'il y a bien une main-data de créée
+                if(md.getId() == 0){
+                    resultVal = 1; //Pas de main-data créée (mise à jour non éffectuée) 
+                }else{
+                    md.setIdStockCompet(id);
+                    mainDataRep.save(md);
+                    resultVal = 2;      //mise à jour de la main-data ok
+                }   
+        }
+        return resultVal;
+    }
+    @Override public List<StockCompetition> listStock() {
+        return stockCompetRep.findAll();
+    }
+    @Override public StockCompetition findByIdStock(Long id) {
+        if (stockCompetRep.existsById(id)){
+            return stockCompetRep.getOne(id);
+        }else{
+            return null;
         }
     }
-
+    @Override public int supprStock(Long id) {
+        int resultVal = 0;
+        if (stockCompetRep.existsById(id)){
+            StockCompetition sc = stockCompetRep.getOne(id);
+            stockCompetRep.delete(sc);
+            
+            // ----- MISE A JOUR MAIN-DATA -----
+            
+                MainData md = returnMainData();
+                //Vérification qu'il y a bien une main-data de créée
+                if(md.getId() == 0){
+                    resultVal = 1; //Pas de main-data créée (mise à jour non éffectuée) 
+                }else{
+                    md.setIdStockCompet(0);
+                    mainDataRep.save(md);
+                    resultVal = 2;      //mise à jour de la main-data ok
+                }
+        }
+        return resultVal;
+    }
+    @Override public int updateStock(FormStock editStockCompet) {
+        int resultVal = 0;
+        if (stockCompetRep.existsById(editStockCompet.getId())){
+            StockCompetition sc = stockCompetRep.getOne(editStockCompet.getId());
+            sc.setStock(editStockCompet.getStock());   
+            stockCompetRep.save(sc);
+            resultVal = 1;
+        }
+        return resultVal;
+    }
+    
 
     // -------------------   FONCTIONS SAISON ---------------------
     /*
@@ -168,54 +263,51 @@ public class AGCVservice implements IagcvService {
                 1 = Saison créée mais pas mise à jour dans le Main-Data car non existant.
                 2 = Saison créée avec succès (mis à jour dans le main-data ok).
     */
-    @Override public int saveSaison(Saison newSaison) {
+    @Override public int saveSaison(FormSaison newSaison) {
         
-        // Remplacer par un recherche par annee_debut
-        // Créer la methode dans le repository
-        long id = 0;
+        
         int resultVal = 0; 
-        boolean result = true;
-        List<Saison> saisons = saisonRep.findAll();
-        //Vérification que la saison n'existe pas déjà
-        for(Saison s : saisons) {
-            if (s.toString().equals(newSaison.toString())) {
-                result = false;
+        
+        if(newSaison != null 
+                && !"".equals(newSaison.toString())
+                && !"".equals(newSaison.getBudget())
+                ){
+            
+            long id = 0;
+            //On créée la saison si elle n'existe pas
+            if (!saisonRep.existsByAnneeDebut(newSaison.getAnnee_debut())) {
+                Saison s = saisonRep.save(new Saison(newSaison.getAnnee_debut(), newSaison.getBudgetDouble(), newSaison.isActuelle()));
+                id = s.getId();
             }
-        }
-        //On créée la saison si elle n'existe pas
-        if (result){
-            Saison s = saisonRep.save(newSaison);
-            id = s.getId();
-        }
-        
-        // -- MISE A JOUR MAIN-DATA --
-        
-        //Vérification que la saison na bien été créée
-        if (id>0) {
-            resultVal = 2; //Saison créée avec succès
-            if (saisonRep.getOne(id).isActuelle()){ //Est-ce la nouvelle saison actuelle ?
-                //Récupération de la Main-Data active (md)
-                MainData md = returnMainData();
-                //Vérification qu'il y a bien une main-data de créée
-                if(md.getId() == 0){
-                    resultVal = 1; //Pas de main-data créée (mise à jour non éffectuée)
-                }else{
-                    //Mise à jour de l'ancienne Saison enregistré dans main-data
-                    if (saisonRep.existsById(md.getIdSaison())){ // Vérifie que l'id existe en BDD
-                        //si existe on met à jour l'ancienne saison
-                        Saison sOld = saisonRep.getOne(md.getIdSaison());
-                        sOld.setActuelle(false); // Passage en saison non actuelle
-                        saisonRep.save(sOld);    //sauvegarde des modifications
-                        md.setIdSaison(id);      //mise à jour du main-data avec le nouvel ID saison
-                        mainDataRep.save(md);
+
+            // ----- MISE A JOUR MAIN-DATA -----
+
+            //Vérification que la saison na bien été créée
+            if (id>0) {
+                resultVal = 2; //Saison créée avec succès
+                if (saisonRep.getOne(id).isActuelle()){ //Est-ce la nouvelle saison actuelle ?
+                    //Récupération de la Main-Data active (md)
+                    MainData md = returnMainData();
+                    //Vérification qu'il y a bien une main-data de créée
+                    if(md.getId() == 0){
+                        resultVal = 1; //Pas de main-data créée (mise à jour non éffectuée)
                     }else{
-                        md.setIdSaison(id);      //mise à jour du main-data avec le nouvel ID saison
-                        mainDataRep.save(md);
+                        //Mise à jour de l'ancienne Saison enregistré dans main-data
+                        if (saisonRep.existsById(md.getIdSaison())){ // Vérifie que l'id existe en BDD
+                            //si existe on met à jour l'ancienne saison
+                            Saison sOld = saisonRep.getOne(md.getIdSaison());
+                            sOld.setActuelle(false); // Passage en saison non actuelle
+                            saisonRep.save(sOld);    //sauvegarde des modifications
+                            md.setIdSaison(id);      //mise à jour du main-data avec le nouvel ID saison
+                            mainDataRep.save(md);
+                        }else{
+                            md.setIdSaison(id);      //mise à jour du main-data avec le nouvel ID saison
+                            mainDataRep.save(md);
+                        }
                     }
                 }
             }
         }
-        
         return resultVal;
     }
     @Override public List<Saison> listSaison() {return saisonRep.findAll();}
@@ -240,46 +332,64 @@ public class AGCVservice implements IagcvService {
             }
         }
     }
-    @Override public int updateByIdSaison(Long id, Saison editSaison) {
+    @Override public int updateSaison(FormSaison editSaison) {
         int resultVal = 0; //mise à jour non effectuée
         
-        if (saisonRep.existsById(id)){
-            
-            Saison saison = saisonRep.getOne(id);
-            saison.setBudget(editSaison.getBudget());
-            
-            boolean actif = saison.isActuelle();
-            saison.setActuelle(editSaison.isActuelle());
-            saisonRep.save(saison);
-            resultVal = 1; //Mise à jour effectuée (aucune mise à jour faite dans Main-data)
-            
-            System.out.println(">> (debug) Saison actif (Saison) : " + actif);
-            System.out.println(">> (debug) Saison actif (editSaison) : " + editSaison.isActuelle());
-            
-            // Mise à jour du Main-Data
-            if(actif != editSaison.isActuelle()){
-                if(actif){ //Si actif = true alors il va passer à false (et vice-versa)
-                    MainData md = returnMainData();
-                    if(md.getId()>0){
-                        //on met à 0 l'idSaison du main-data
-                        md.setIdSaison(0);
-                        mainDataRep.save(md);
-                        resultVal = 2; // mise à jour éffectue et désactivation de la saison dans main-data
+        if(editSaison != null 
+                && !"".equals(editSaison.getBudget())
+                ){
+        
+            //Vérifi que la saison existe en base
+            if (saisonRep.existsById(editSaison.getId())){
+
+                //On récupère la saison et modifie les attributs concernés
+                System.out.println(">> (debug) ID Saison edit : " + editSaison.getId());
+                Saison saison = saisonRep.getOne(editSaison.getId());
+                saison.setBudget(editSaison.getBudgetDouble());
+
+                //On save si la saison est l'actuelle avant changement
+                boolean actif = saison.isActuelle(); //La saison modifié est elle active ?
+                saison.setActuelle(editSaison.isActuelle());
+                saisonRep.save(saison);
+                resultVal = 1; //Mise à jour effectuée (aucune mise à jour faite dans Main-data)
+               
+                // --- Mise à jour du Main-Data ---
+                
+                //La saison a-t-elle changé d'état (actuelle)
+                if(actif != editSaison.isActuelle()){
+                    //Si actif = true alors il va passer à false (et vice-versa)
+                    if(actif){ 
+                        
+                        // MAIN DATA : ID SAISON PASSE à 0
+                        MainData md = returnMainData();
+                        if(md.getId()>0){
+                            //on met à 0 l'idSaison du main-data
+                            md.setIdSaison(0);
+                            mainDataRep.save(md);
+                            resultVal = 2; // mise à jour éffectue et désactivation de la saison dans main-data
+                        }
+                        
+                    }else{
+                        
+                        //MAIN DATA : ID SAISON CHANGE
+                        MainData md = returnMainData();
+                        if(md.getId()>0){ 
+                            //Vérification que l'ID SAISON du Main-data n'est pas à 0    
+                            if(md.getIdSaison()!=0){
+                                //Récupération de l'ancienn saison active pour la passer inactive
+                                Saison sOld = saisonRep.getOne(md.getIdSaison());
+                                sOld.setActuelle(false);    
+                                saisonRep.save(sOld);
+                            }
+                            //On inscrit la nouvelle ID_saison dans le main-data
+                            md.setIdSaison(editSaison.getId());
+                            mainDataRep.save(md);
+                            resultVal = 3; // mise à jour éffectue et activation de la saison dans main-data
+                        }                   
                     }
                 }else{
-                    MainData md = returnMainData();
-                    if(md.getId()>0){
-                        //on met à 0 l'idSaison du main-data
-                        Saison sOld = saisonRep.getOne(md.getIdSaison());
-                        sOld.setActuelle(false);
-                        saisonRep.save(sOld);
-                        md.setIdSaison(id);
-                        mainDataRep.save(md);
-                        resultVal = 3; // mise à jour éffectue et activation de la saison dans main-data
-                    }
+                    resultVal = 4; // mise à jour du main-data non necessaire
                 }
-            }else{
-                resultVal = 4; // mise à jour du main-data non necessaire
             }
         }
         return resultVal;
@@ -343,10 +453,10 @@ public class AGCVservice implements IagcvService {
         MainData data = mainDataRep.getOne(id);
         mainDataRep.delete(data);
     }
-    @Override public boolean updateByIdMainData(Long id, MainData editMainData) {
-        MainData md = mainDataRep.getOne(id);
+    @Override public boolean updateMainData(FormData editMainData) {
         boolean result = false;
-        if(md != null) {
+        if(mainDataRep.existsById(editMainData.getId())) {
+            MainData md = mainDataRep.getOne(editMainData.getId());
             md.setIdSaison(editMainData.getIdSaison());
             md.setIdStockCompet(editMainData.getIdStockCompet());
             
@@ -356,7 +466,7 @@ public class AGCVservice implements IagcvService {
                 //Si elle n'est pas vide on doit vérifier si les datas sont inactive
                 boolean actif = false;
                 for(MainData d : data){
-                    if(d.isActif() && (d.getId() != id)){
+                    if(d.isActif() && (d.getId() != editMainData.getId())){
                         actif = true;
                     }
                 }
@@ -382,7 +492,7 @@ public class AGCVservice implements IagcvService {
             for(MainData d : data){
                 if(d.isActif()){
                     //on retourne la data active
-                    return d;
+                    md = d;
                 }
             }
         }
@@ -409,6 +519,8 @@ public class AGCVservice implements IagcvService {
             typeTubeRep.save(tb);
         }
     }
+
+    
     
     
     

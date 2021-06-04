@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+<!-- ------------------------------------------ POPUP NOUVEL UTILISATEUR -------------------------------------------------- -->
+        
+        <div th:fragment="user">
+            <div id="popup-content" class="popup-content-user">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Nouvel Utilisateur</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <img id="close-user" class="button-close" src="/images/popup/button-close.png">
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/newUser}" th:object="${newUser}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="identifiant">Identifiant :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="identifiant" type="text" th:value="*{identifiant}" th:field="*{identifiant}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="mdp">Mot de passe :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="mdp" type="password" th:value="*{mdp}" th:field="*{mdp}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="role">Role utilisateur :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <select id="role" th:field="*{roleId}">
+                                    <option th:each="role : ${roleList}" th:value="${role.roleId}" th:text="${role.roleName}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input class="popup-form-submit-button" type="submit" value="Créer l'utilisateur"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
+    </body>
+</html>

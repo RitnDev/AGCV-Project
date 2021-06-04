@@ -1,5 +1,6 @@
 package com.ritndev.agcv.services;
 
+import com.ritndev.agcv.form.*;
 import com.ritndev.agcv.model.*;
 import java.util.List;
 
@@ -10,11 +11,11 @@ import java.util.List;
 public interface IagcvService {
     
     //Methode Membres :
-    public Membre saveMembre(Membre newMembre);
+    public Membre saveMembre(FormMembre newMembre);
     public List<Membre> listMembre();
     public Membre findByIdMembre(Long id);
     public void supprMembre(Long id);
-    public void updateByIdMembre(Long id, Membre editMembre);
+    public void updateByIdMembre(FormMembre editMembre);
     
     //Methode PrixTube
     public PrixTube savePrixTube(PrixTube newPrixTube);
@@ -31,11 +32,11 @@ public interface IagcvService {
     public void updateByIdCommande(Long id, Commande editCommande);
     
     //Methode Competition
-    public Competition saveCompetition(Competition newCompetition);
-    public List<Competition> listCompetition();
+    public int saveCompetition(FormCompet newCompet);
+    public List<Competition> listCompetitionBySaison(Long idSaison);
     public Competition findByIdCompetition(Long id);
-    public void supprCompetition(Long id);
-    public void updateByIdCompetition(Long id, Competition editCompetition);
+    public int supprCompetition(Long id);
+    public int updateCompetition(FormCompet editCompet);
     
     //Methode ConsoMois
     public ConsoMois saveConsoMois(ConsoMois newConsoMois);
@@ -45,18 +46,20 @@ public interface IagcvService {
     public void updateByIdConsoMois(Long id, ConsoMois editConsoMois);
     
     //Methode StockCompetition
-    public StockCompetition saveStockCompetition(StockCompetition newStock);
-    public StockCompetition findByIdStockCompetition(Long id);
-    public void supprStockCompetition(Long id);
-    public void updateByIdStockCompetition(Long id, StockCompetition editStock);
+    public int newStock();
+    public List<StockCompetition> listStock();
+    public StockCompetition findByIdStock(Long id);
+    public int supprStock(Long id);
+    public int updateStock(FormStock editStock);
     
     //Methode Saison
-    public int saveSaison(Saison newSaison);
+    public int saveSaison(FormSaison newSaison);
     public List<Saison> listSaison();
     public Saison findByIdSaison(Long id);
     public void supprSaison(Long id);
-    public int updateByIdSaison(Long id, Saison editSaison);
+    public int updateSaison(FormSaison editSaison);
     public Long lastIdSaison();
+    
     
     //Methode ConsoTube
     public ConsoTube saveConsoTube(ConsoTube consoTube);
@@ -71,7 +74,7 @@ public interface IagcvService {
     public List<MainData> listMainData();
     public MainData findByIdMainData(Long id);
     public void supprMainData(Long id);
-    public boolean updateByIdMainData(Long id, MainData editMainData);
+    public boolean updateMainData(FormData editMainData);
     public MainData returnMainData();
     
     //Methode TypeTube

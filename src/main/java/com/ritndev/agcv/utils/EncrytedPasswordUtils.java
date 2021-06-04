@@ -16,6 +16,7 @@ public class EncrytedPasswordUtils{
         return encoder.encode(password);
     }
     
+       
 
 
     public static void main(String[] args) {

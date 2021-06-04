@@ -15,22 +15,24 @@ public class PageIndex extends Page{
         super.setPage("Consommation de tubes sur la saison");
         super.setLinkPage(new Link("Page principale","index"));
         super.setAdminPage(true);
-        super.setLinkAdminPage(new Link("Admin", "admin"));
+        super.setLinkAdminPage(new Link("Admin", "/admin"));
         
         
-        Link commandesMembres = new Link("Commandes tubes des membres","commandesMembres");
+        Link commandesMembres = new Link("Commandes tubes des membres","/commandesMembres");
+        Link histoSaison = new Link("Historiques des saisons précédentes", "/histoSaison");//, "topnav-menu");
+        Link sacCompetition = new Link("Gestion du stock de compétition", "/sacCompetition");//, "topnav-menu"); 
+        
         super.addLinks(commandesMembres);
-       
+        super.addLinks(sacCompetition);
+        super.addLinks(histoSaison);
         
-        Link histoSaison = new Link("Historiques des saisons précédentes", "histoSaison", "topnav-menu");
-        Link sacCompetition = new Link("Gestion du sac de compétition", "sacCompetition", "topnav-menu"); 
-        
+        /*
         Link[] menu = new Link[] {
             histoSaison,
             sacCompetition
         };
         super.setMenu(menu);
-        
+        */
     }
     
     

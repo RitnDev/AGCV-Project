@@ -35,7 +35,7 @@ public class LoginController {
     
 //---------------   Page non accessible (403)  ---------------------------- 
     
-    @RequestMapping(value = {"/403", "/{id}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/403"}, method = RequestMethod.GET)
     public String page403(Model model, Principal principal){
         Page403 page403 = new Page403();
         return page403.getPage(model, principal);

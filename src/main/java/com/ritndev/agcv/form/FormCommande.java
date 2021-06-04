@@ -1,6 +1,7 @@
 package com.ritndev.agcv.form;
 
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -11,19 +12,14 @@ import java.util.List;
 public class FormCommande {
     
     //Membre qui commande des tubes
-    private String membre;
-    public String getMembre() {return membre;}
-    public void setMembre(String membre) {this.membre = membre;}
+    @Getter @Setter private String membre;
     
     //Nombres de tubes commandés
-    private int nbTubeCommande;
-    public int getNbTubeCommande() {return nbTubeCommande;}
-    public void setNbTubeCommande(int nbTubeCommande) {this.nbTubeCommande = nbTubeCommande;}
+    @Getter @Setter private int nbTubeCommande;
     
     //La facture est-elle déjà réglée ?
-    private boolean regler;
-    public boolean isRegler() {return regler;}
-    public void setRegler(boolean regler) {this.regler = regler;}
+    @Getter @Setter private boolean regler;
+
 
     
     //Constructeur

@@ -35,7 +35,6 @@ a:hover {color: #c0edff;}
 }
 
 .footer {
-  font: normal 8pt verdana, helvetica, sans-serif;
   color: #c0edff;
   position: absolute;
   padding: 5px;
@@ -43,17 +42,24 @@ a:hover {color: #c0edff;}
   left: 0;
   right: 0;
   background: #0d0e16;
-  font-family: 'Montserrat Alternates', sans-serif;
+  font: normal 8pt 'Montserrat Alternates', sans-serif;
 }
 
-.footer-log {
-    font: normal 8pt verdana, helvetica, sans-serif;
+input.footer-log {
+    border: none;
+    outline: none;
+    font-style: normal;
     color: #c0edff;
+    text-decoration: none;
+    background-color:transparent;
     padding: 5px;
     bottom: 0;
     right: 0;
     position: absolute;
-    font-family: 'Montserrat Alternates', sans-serif;
+    font: normal 8pt 'Montserrat Alternates', sans-serif;
+}
+input.footer-log:hover {
+    text-decoration: underline;
 }
 
 .img-background {
@@ -106,73 +112,87 @@ a:hover {color: #c0edff;}
 .bg-popup-commande {
     display: none;
 }
+.bg-popup-competition {
+    display: none;
+}
 .bg-popup-saison {
     display: none;
 }
-.bg-popup-new-membre {
+.bg-popup-user {
     display: none;
 }
-.bg-popup-edit-membre {
+.bg-popup-membre {
     display: none;
+}
+
+.popup-content-edit-user, 
+.popup-content-edit-saison,
+.popup-content-edit-data,
+.popup-content-edit-stock,
+.popup-content-edit-mdp,
+.popup-content-edit-membre,
+.popup-content-edit-compet,
+.popup-content-membre,
+.popup-content-user,
+.popup-content-saison,
+.popup-content-competition,
+.popup-content-commande {
+    background-color: #e6e7e8;
+    opacity: 1;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 0 100px 1px #e6e7e880;
 }
 
 
 .popup-content-commande {
     width: 650px;
     height: 265px;
-    background-color: #e6e7e8;
-    opacity: 1;
-    border-radius: 4px;
-    text-align: center;
-    box-shadow: 0 0 100px 1px #e6e7e880;
 }
-.popup-content-saison {
+.popup-content-competition {
+    width: 430px;
+    height: 220px;
+}
+.popup-content-edit-compet {
+    width: 430px;
+    height: 220px;
+}
+.popup-content-edit-user {
+    width: 380px;
+    height: 250px;
+}
+.popup-content-user {
     width: 500px;
     height: 260px;
-    background-color: #e6e7e8;
-    opacity: 1;
-    border-radius: 4px;
-    text-align: center;
-    box-shadow: 0 0 100px 1px #e6e7e880;
 }
-.popup-content-new-membre {
+.popup-content-edit-mdp {
+    width: 500px;
+    height: 295px;
+}
+.popup-content-membre {
     width: 380px;
     height: 215px;
-    background-color: #e6e7e8;
-    opacity: 1;
-    border-radius: 4px;
-    text-align: center;
-    box-shadow: 0 0 100px 1px #e6e7e880;
 }
 .popup-content-edit-membre {
     width: 380px;
     height: 215px;
-    background-color: #e6e7e8;
-    opacity: 1;
-    border-radius: 4px;
-    text-align: center;
-    box-shadow: 0 0 100px 1px #e6e7e880;
 }
-
 .popup-content-edit-data {
     width: 450px;
     height: 260px;
-    background-color: #e6e7e8;
-    opacity: 1;
-    border-radius: 4px;
-    text-align: center;
-    box-shadow: 0 0 100px 1px #e6e7e880;
+}
+.popup-content-saison {
+    width: 500px;
+    height: 260px;
 }
 .popup-content-edit-saison {
     width: 500px;
     height: 215px;
-    background-color: #e6e7e8;
-    opacity: 1;
-    border-radius: 4px;
-    text-align: center;
-    box-shadow: 0 0 100px 1px #e6e7e880;
 }
-
+.popup-content-edit-stock {
+    width: 360px;
+    height: 180px;
+}
 
 /* animation d'ouverture / fermeture :      */
 #popup-content.open {
@@ -354,11 +374,24 @@ input#regler:hover {
   color: #000;
 }
 
+#topnav-link.supAdmin {
+  background-color:#c6ab13;
+  color: #f2f2f2;
+}
+#topnav-link.supAdmin:hover {
+  background-color:#fff9bb;
+  color: #000;
+}
+
+
 /* Navigation : Sous-menu */
 #topnav-menu,
 #topnav-menu-commande,
 #topnav-menu-saison,
 #topnav-menu-membre,
+#topnav-menu-user,
+#topnav-menu-compet,
+#topnav-menu-stock,
 #topnav-menu-data{
     float: left;
     background-color: #8cbaff;
@@ -370,6 +403,9 @@ input#regler:hover {
 #topnav-menu-commande:hover,
 #topnav-menu-membre:hover,
 #topnav-menu-saison:hover,
+#topnav-menu-user:hover,
+#topnav-menu-compet:hover,
+#topnav-menu-stock:hover,
 #topnav-menu-data:hover{
    background-color: #bdbdbd;
 }

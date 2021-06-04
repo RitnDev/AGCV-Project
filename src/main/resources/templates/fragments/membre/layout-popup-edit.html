@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+<!-- ------------------------------------------ POPUP EDITION MEMBRE -------------------------------------------------- -->
+        
+       <div th:fragment="membre">
+            <div id="popup-content" class="popup-content-edit-membre">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Modifier le Membre</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <a href="/admin" >
+                                <img class="button-close" src="/images/popup/button-close.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/membre/{id}(id=*{id})}" th:object="${editMembre}" th:method="post">
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="prenom">Prénom :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="prenom" type="text" th:value="*{prenom}" th:field="*{prenom}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="nom">Nom :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" name="_method" value="put"/>
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
+    </body>
+</html>

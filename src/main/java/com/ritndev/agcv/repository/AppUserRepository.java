@@ -1,33 +1,18 @@
 package com.ritndev.agcv.repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
- 
 import com.ritndev.agcv.model.AppUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
- 
+
+/**
+ *
+ * @author Ritn
+ */
 @Repository
-@Transactional
-public class AppUserRepository {
- 
-    @Autowired
-    private EntityManager entityManager;
- 
-    public AppUser findUserAccount(String userName) {
-        try {
-            String sql = "Select e from " + AppUser.class.getName() + " e " //
-                    + " Where e.userName = :userName ";
- 
-            Query query = entityManager.createQuery(sql, AppUser.class);
-            query.setParameter("userName", userName);
- 
-            return (AppUser) query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
-    }
- 
+public interface AppUserRepository extends JpaRepository<AppUser, Long> {
+
+    public AppUser findByUserId(Long UserId);
+    public AppUser findByUserName(String userName);
+    public boolean existsByUserName(String userName);
+    
 }

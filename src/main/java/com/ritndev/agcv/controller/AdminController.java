@@ -8,12 +8,14 @@ import com.ritndev.agcv.model.Membre;
 import com.ritndev.agcv.model.Saison;
 import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.pages.PageAdmin;
+import com.ritndev.agcv.services.IUserService;
 import com.ritndev.agcv.services.IagcvService;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,8 +28,20 @@ import org.springframework.web.bind.annotation.PutMapping;
 @Controller
 public class AdminController {
     
-    @Autowired
-    private IagcvService service;
+    @Autowired private IagcvService service;
+    @Autowired private IUserService userService;
+    
+    
+    //--------------------   Page Admin   ---------------------------- 
+    
+    @GetMapping(value = { "/admin", "/newMembre", "/newSaison"})
+    public String admin(Model model, Principal principal){     
+        PageAdmin pageAdmin = new PageAdmin();
+        model.addAttribute("test", null);
+        return pageAdmin.getPage(model, principal, service, userService);
+    } 
+    
+    
     
     
 // ----------------------------------- PARTIE MEMBRE ------------------------------------- //
@@ -40,17 +54,16 @@ public class AdminController {
         System.out.println("Prenom : " + newMembre.getPrenom());
         System.out.println("Nom : " + newMembre.getNom());
         
-        Membre addMembre = new Membre(newMembre.getPrenom(),newMembre.getNom());
-        service.saveMembre(addMembre);
+        service.saveMembre(newMembre);
         
-        String reponse1 = "Membre : '" + addMembre.toString() + "' - créer avec succès";
+        String reponse = "Membre : '" + newMembre.toString() + "' - créer avec succès";
         String reponse2 = "Ceci est un test d'erreur !";
           
         PageAdmin pageAdmin = new PageAdmin();
-        pageAdmin.addReponse(TypeReponse.ADD, reponse1);
+        pageAdmin.addReponse(TypeReponse.ADD, reponse);
         pageAdmin.addReponse(TypeReponse.ERROR, reponse2);
         
-        return pageAdmin.getPage(model, principal, service);
+        return pageAdmin.getPage(model, principal, service, userService);
     }
     
     
@@ -68,7 +81,7 @@ public class AdminController {
         PageAdmin pageAdmin = new PageAdmin();
         pageAdmin.addReponse(TypeReponse.REMOVE, reponse1);
         
-        return pageAdmin.getPage(model, principal, service);
+        return pageAdmin.getPage(model, principal, service, userService);
     }
     
     //Modifier un membre
@@ -80,17 +93,14 @@ public class AdminController {
         System.out.println("Prenom : " + putMembre.getPrenom());
         System.out.println("Nom : " + putMembre.getNom());
         
-        Long id = putMembre.getId();
-        Membre editMembre = new Membre(putMembre.getPrenom(), putMembre.getNom());
+        service.updateByIdMembre(putMembre);
         
-        service.updateByIdMembre(id, editMembre);
-        
-        String reponse1 = "Membre : '" + editMembre.toString() + "' - modifié avec succès";
+        String reponse1 = "Membre : '" + putMembre.toString() + "' - modifié avec succès";
         
         PageAdmin pageAdmin = new PageAdmin();
         pageAdmin.addReponse(TypeReponse.EDIT, reponse1);
         
-        return pageAdmin.getPage(model, principal, service);
+        return pageAdmin.getPage(model, principal, service, userService);
 
     }
     
@@ -134,38 +144,26 @@ public class AdminController {
         
         String reponse = "-- Saison non créée --";
         TypeReponse tr = TypeReponse.ERROR;
-        
         PageAdmin pageAdmin = new PageAdmin();
         
-        if(newSaison != null 
-                && !"".equals(newSaison.toString())
-                && !"".equals(newSaison.getBudget())
-                ){
-            
-            Saison maSaison = new Saison(newSaison.getAnnee_debut(), newSaison.getBudgetDouble(), newSaison.isActuelle());
-            
-            System.out.println(">> Ma Saison : " + maSaison.toString());
-            System.out.println(">> Budget previ de ma Saison : " + maSaison.getBudget());
-            System.out.println(">> Saison actuelle : " + maSaison.isActuelle());
-            int result = service.saveSaison(maSaison);
-            
-            switch(result){
-                case 1 -> {
-                    reponse = "-- Saison créée avec succès --";
-                    tr = TypeReponse.ADD;
-                    pageAdmin.addReponse(TypeReponse.ERROR, "DATA non mise à jour !");
-                }
-                case 2 -> {
-                    reponse = "-- Saison créée avec succès --";
-                    tr = TypeReponse.ADD;
-                }
-                default -> reponse = "Cette saison existe déjà !";
-            }
-        }
+        int result = service.saveSaison(newSaison);
         
+        switch(result){
+            case 1 -> {
+                reponse = "-- Saison créée avec succès --";
+                tr = TypeReponse.ADD;
+                pageAdmin.addReponse(TypeReponse.ERROR, "DATA non mise à jour !");
+            }
+            case 2 -> {
+                reponse = "-- Saison créée avec succès --";
+                tr = TypeReponse.ADD;
+            }
+            default -> reponse = "Cette saison existe déjà !";
+        }
+
         pageAdmin.addReponse(tr, reponse);
         
-        return pageAdmin.getPage(model, principal, service);
+        return pageAdmin.getPage(model, principal, service, userService);
     }
     
     
@@ -183,7 +181,7 @@ public class AdminController {
         PageAdmin pageAdmin = new PageAdmin();
         pageAdmin.addReponse(TypeReponse.REMOVE, reponse);
         
-        return pageAdmin.getPage(model, principal, service);
+        return pageAdmin.getPage(model, principal, service, userService);
     }
     
     
@@ -218,45 +216,35 @@ public class AdminController {
         TypeReponse tr = TypeReponse.ERROR;
         
         PageAdmin pageAdmin = new PageAdmin();
-        
-        if(putSaison != null 
-                && !"".equals(putSaison.getBudget())
-                ){
-            
-            Long id = putSaison.getId();
-            Saison maSaison = new Saison(putSaison.getId(), putSaison.getBudgetDouble(), putSaison.isActuelle());
-            
-            int result = service.updateByIdSaison(id, maSaison);
-            
-            switch (result) {
-                case 1 -> {
-                    reponse = "Saison modifiée avec succès";
-                    tr = TypeReponse.EDIT;
-                    pageAdmin.addReponse(TypeReponse.ERROR, "DATA non mise à jour !");
-                }
-                case 2 -> {
-                    reponse = "Saison modifiée avec succès";
-                    tr = TypeReponse.EDIT;
-                    pageAdmin.addReponse(TypeReponse.INFO, "DATA mise à jour, plus aucune saison n'est active !");
-                }
-                case 3 -> {
-                    reponse = "Saison modifié avec succès";
-                    tr = TypeReponse.EDIT;
-                    pageAdmin.addReponse(TypeReponse.SUCCESS, "DATA mise à jour, cette saison est maintenant l'actuelle !");
-                }
-                case 4 -> {
-                    reponse = "Saison modifié avec succès";
-                    tr = TypeReponse.EDIT;
-                }
-                default -> tr = TypeReponse.ERROR;
+          
+        int result = service.updateSaison(putSaison);
+
+        switch (result) {
+            case 1 -> {
+                reponse = "Saison modifiée avec succès";
+                tr = TypeReponse.EDIT;
+                pageAdmin.addReponse(TypeReponse.ERROR, "DATA non mise à jour !");
             }
-            
+            case 2 -> {
+                reponse = "Saison modifiée avec succès";
+                tr = TypeReponse.EDIT;
+                pageAdmin.addReponse(TypeReponse.INFO, "DATA mise à jour, plus aucune saison n'est active !");
+            }
+            case 3 -> {
+                reponse = "Saison modifié avec succès";
+                tr = TypeReponse.EDIT;
+                pageAdmin.addReponse(TypeReponse.SUCCESS, "DATA mise à jour, cette saison est maintenant l'actuelle !");
+            }
+            case 4 -> {
+                reponse = "Saison modifié avec succès";
+                tr = TypeReponse.EDIT;
+            }
+            default -> tr = TypeReponse.ERROR;
         }
-                
-        
+          
         pageAdmin.addReponse(tr, reponse);
         
-        return pageAdmin.getPage(model, principal, service);
+        return pageAdmin.getPage(model, principal, service, userService);
 
     }
     

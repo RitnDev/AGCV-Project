@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
+        <script type="text/javascript" th:src="@{/js/new-user-popup.js}" charset="utf-8" defer></script>
     </head>
     
 
@@ -76,11 +77,104 @@
                     </tbody>
                 </table>
             </div>
+            <br/>
+            <br/>
+            <div class="std-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="table-label" colspan="5">UTILISATEURS</td>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Identifiant</th>
+                            <th>Rôle</th>
+                            <th>Actif ?</th>
+                            <th class="table-action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${userList.empty}">
+                            <td colspan="5">Aucun compte utilisateur créée</td>
+                        </tr>
+                        <tr th:each="user : ${userList}">
+                            <td><span th:text="${user.userId}">ID</span></td>
+                            <td><span th:text="${user.userName}">Identifiant</span></td>
+                            <td><span th:text="${userRoleList.get(user.userId)}">Rôle</span></td>
+                            <td><span th:text="${user.enabled}">actif</span></td>
+                            <td class="table-action">
+                                <table class="action-input">
+                                    <tr>
+                                        <td class="action-input">
+                                            <form action="#" th:action="@{/user/{id}(id=${user.userId})}" th:method="post">
+                                                <input type="hidden" name="_method" value="delete"/>
+                                                <input id="action-input" type="submit" value="Suppr"/>
+                                            </form>
+                                        </td><td class="action-input">|</td>
+                                        <td class="action-input">
+                                            <form action="#" th:action="@{/user/{id}(id=${user.userId})}" th:method="post">
+                                                <input id="action-input" type="submit" value="Edit"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br/>
+            <br/>
+            <div class="std-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="table-label" colspan="4">STOCK COMPETITION</td>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>horodatage</th>
+                            <th>stock</th>
+                            <th class="table-action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${stockList.empty}">
+                            <td colspan="4">Aucun stock créé</td>
+                        </tr>
+                        <tr th:each="stock : ${stockList}">
+                            <td><span th:text="${stock.id}">ID</span></td>
+                            <td><span th:text="${stock.horodatage}">horodatage</span></td>
+                            <td><span th:text="${stock.stock}">Stock</span></td>
+                            <td class="table-action">
+                                <table class="action-input">
+                                    <tr>
+                                        <td class="action-input">
+                                            <form action="#" th:action="@{/stock/{id}(id=${stock.id})}" th:method="post">
+                                                <input type="hidden" name="_method" value="delete"/>
+                                                <input id="action-input" type="submit" value="Suppr"/>
+                                            </form>
+                                        </td><td class="action-input">|</td>
+                                        <td class="action-input">
+                                            <form action="#" th:action="@{/stock/{id}(id=${stock.id})}" th:method="post">
+                                                <input id="action-input" type="submit" value="Edit"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        
         </div>
 
-       
+        <!-- pop-up section -->
+        <div id="bg-popup" class="bg-popup-user">
+            <div th:replace="fragments/user/layout-popup-new :: user"/>
+        </div>
+        
         <!-- footer section -->
         <div th:replace="fragments/layout-footer :: footer"></div>
                 

@@ -23,34 +23,37 @@ public class Competition implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
-    @Getter @Setter
-    private long id;
+    @Getter @Setter private long id;
     
     //Horodatage
     @UpdateTimestamp
     @Column(name = "horodatage", nullable = false)
-    @Getter @Setter
-    private Timestamp horodatage;
+    @Getter @Setter private Timestamp horodatage;
     
     //id de la saison de cette competition
     @Column(name = "idSaison", nullable = false)
-    @Getter @Setter
-    private long idSaison;
+    @Getter @Setter private long idSaison;
     
     //Nombre de tubes utilisés lors de cette competition
     @Column(name = "nbTubesUtilises", nullable = false)
-    @Getter @Setter
-    private int nbTubesUtilises;
+    @Getter @Setter private int nbTubesUtilises;
     
     //Nom de la competition
     @Column(name = "nom", nullable = false)
-    @Getter @Setter
-    private String nom;
+    @Getter @Setter private String nom;
     
     
     
     //Constructeur
     public Competition() {}
+
+    public Competition(long idSaison, int nbTubesUtilises, String nom) {
+        this.idSaison = idSaison;
+        this.nbTubesUtilises = nbTubesUtilises;
+        this.nom = nom;
+    }
+    
+    
     
     
 }

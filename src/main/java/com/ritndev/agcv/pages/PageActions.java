@@ -15,10 +15,10 @@ public class PageActions extends Page{
         super.setPage("");
         super.setLinkPage(new Link("","actions"));
         
-        Link logout = new Link("Page principale", "logout");
+        Link logout = new Link("Page principale", "/logout");
         super.addLinks(logout);
         
-        super.setLinkAdminPage(new Link("Admin", "admin"));
+        super.setLinkAdminPage(new Link("Admin", "/admin"));
           
     }
     

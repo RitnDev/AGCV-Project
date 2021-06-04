@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+<!-- ------------------------------------------ POPUP EDITION UTILISATEUR -------------------------------------------------- -->
+        
+       <div th:fragment="user">
+            <div id="popup-content" class="popup-content-edit-user">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Modifier l'utilisateur</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <a href="/superAdmin" >
+                                <img class="button-close" src="/images/popup/button-close.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/user/{id}(id=*{id})}" th:object="${editUser}" th:method="post">
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label>Utilisateur :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <span th:text="*{identifiant}"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="role">Role utilisateur :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <select id="role" th:field="*{roleId}">
+                                    <option th:each="role : ${roleList}" th:value="${role.roleId}" th:text="${role.roleName}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="actif">Utilisateur actif ?</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="actif" name="actif" type="checkbox" th:checked="*{actif}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" name="_method" value="put"/>
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
+    </body>
+</html>

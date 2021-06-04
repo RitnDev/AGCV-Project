@@ -17,13 +17,25 @@
         
         <!-- pop-up section -->
         <div th:if="${editMembre != null}" id="bg-popup-action" class="bg-popup-edit-membre">
-            <div th:replace="fragments/layout-popup :: edit-membre"/>
+            <div th:replace="fragments/membre/layout-popup-edit :: membre"/>
         </div>
         <div th:if="${editData != null}" id="bg-popup-action" class="bg-popup-edit-data">
-            <div th:replace="fragments/layout-popup :: edit-data"/>
+            <div th:replace="fragments/data/layout-popup-edit :: data"/>
         </div>
-            <div th:if="${editSaison != null}" id="bg-popup-action" class="bg-popup-edit-saison">
-            <div th:replace="fragments/layout-popup :: edit-saison"/>
+        <div th:if="${editSaison != null}" id="bg-popup-action" class="bg-popup-edit-saison">
+            <div th:replace="fragments/saison/layout-popup-edit :: saison"/>
+        </div>
+        <div th:if="${editUser != null}" id="bg-popup-action" class="bg-popup-edit-user">
+            <div th:replace="fragments/user/layout-popup-edit :: user"/>
+        </div>
+        <div th:if="${editUser != null}" id="bg-popup-action" class="bg-popup-edit-mdp">
+            <div th:replace="fragments/user/layout-popup-edit-mdp :: mdp"/>
+        </div>
+        <div th:if="${editStock != null}" id="bg-popup-action" class="bg-popup-edit-stock">
+            <div th:replace="fragments/stock/layout-popup-edit :: stock"/>
+        </div>
+        <div th:if="${editCompet != null}" id="bg-popup-action" class="bg-popup-edit-compet">
+            <div th:replace="fragments/competition/layout-popup-edit :: compet"/>
         </div>
       
         <div th:replace="fragments/layout-footer :: footer"/>
@@ -51,6 +63,30 @@
                         const bgEditSaison = document.querySelector('.bg-popup-edit-saison');
                         bgEditSaison.style.display = 'flex';
                         popupEditSaison.className = "popup-content-edit-saison open";
+                        break;
+                    case 5:
+                        const popupEditCompet = document.querySelector(".popup-content-edit-compet");
+                        const bgEditCompet = document.querySelector('.bg-popup-edit-compet');
+                        bgEditCompet.style.display = 'flex';
+                        popupEditCompet.className = "popup-content-edit-compet open";
+                        break;
+                    case 8:
+                        const popupEditStock = document.querySelector(".popup-content-edit-stock");
+                        const bgEditStock = document.querySelector('.bg-popup-edit-stock');
+                        bgEditStock.style.display = 'flex';
+                        popupEditStock.className = "popup-content-edit-stock open";
+                        break;
+                    case 10:
+                        const popupEditUser = document.querySelector(".popup-content-edit-user");
+                        const bgEditUser = document.querySelector('.bg-popup-edit-user');
+                        bgEditUser.style.display = 'flex';
+                        popupEditUser.className = "popup-content-edit-user open";
+                        break;
+                    case 11:
+                        const popupEditMdp = document.querySelector(".popup-content-edit-mdp");
+                        const bgEditMdp = document.querySelector('.bg-popup-edit-mdp');
+                        bgEditMdp.style.display = 'flex';
+                        popupEditMdp.className = "popup-content-edit-mdp open";
                         break;
                     default:
                 }

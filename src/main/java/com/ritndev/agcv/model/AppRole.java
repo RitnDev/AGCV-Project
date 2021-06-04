@@ -6,35 +6,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import lombok.Getter;
+import lombok.Setter;
  
 @Entity
-@Table(name = "APP_ROLE", //
-        uniqueConstraints = { //
-                @UniqueConstraint(name = "APP_ROLE_UK", columnNames = "ROLE_NAME") })
+@Table(name = "APP_ROLE")
 public class AppRole {
      
     @Id
     @GeneratedValue
     @Column(name = "ROLE_ID", nullable = false)
-    private Long roleId;
+    @Getter @Setter private Long roleId;
  
     @Column(name = "ROLE_NAME", length = 30, nullable = false)
-    private String roleName;
- 
-    public Long getRoleId() {
-        return roleId;
-    }
- 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
- 
-    public String getRoleName() {
-        return roleName;
-    }
- 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-     
+    @Getter @Setter private String roleName;
+      
 }
