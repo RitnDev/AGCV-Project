@@ -10,17 +10,50 @@ import java.util.Map;
 public enum ActionsTypes {
     
     //ENUM
-    EDIT_MEMBRE(1),
-    EDIT_DATA(2),
-    EDIT_SAISON(3),
-    EDIT_COMMANDE(4),
-    EDIT_COMPETITION(5),
-    EDIT_PRIXTUBE(6),
-    EDIT_CONSOMOIS(7),
-    EDIT_STOCK(8),
-    EDIT_TYPETUBE(9),
-    EDIT_USER(10),
-    EDIT_MDP(11);
+    EDIT_MEMBRE(1){
+        @Override  
+        public String toString() {return "membre";}; 
+    },
+    EDIT_DATA(2){
+        @Override  
+        public String toString() {return "data";}; 
+    },
+    EDIT_SAISON(3){
+        @Override  
+        public String toString() {return "saison";}; 
+    },
+    EDIT_COMMANDE(4){
+        @Override  
+        public String toString() {return "commande";}; 
+    },
+    EDIT_COMPETITION(5){
+        @Override  
+        public String toString() {return "compet";}; 
+    },
+    EDIT_PRIXTUBE(6){
+        @Override  
+        public String toString() {return "prixtube";}; 
+    },
+    EDIT_CONSOMOIS(7){
+        @Override  
+        public String toString() {return "consomois";}; 
+    },
+    EDIT_STOCK(8){
+        @Override  
+        public String toString() {return "stock";}; 
+    },
+    EDIT_TYPETUBE(9){
+        @Override  
+        public String toString() {return "typetube";}; 
+    },
+    EDIT_USER(10){
+        @Override  
+        public String toString() {return "user";}; 
+    },
+    EDIT_MDP(11){
+        @Override  
+        public String toString() {return "mdp";}; 
+    };
     
     
     

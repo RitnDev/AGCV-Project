@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+<!-- ------------------------------------------ POPUP MODIFICATION PRIX-TUBE -------------------------------------------------- -->
+        
+        <div th:fragment="prixtube">
+            <div id="popup-content" class="popup-content-edit-prixtube">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Modifier le prix du tube</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <a href="/admin" >
+                                <img class="button-close" src="/images/popup/button-close.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/prixtube/{id}(id=*{id})}" th:object="${editPrixTube}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="marque">Marque du tube</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="marque" type="text" th:value="*{marque}" th:field="*{marque}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="prix">Prix du tube :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="prix" type="number" th:value="*{prix}" th:field="*{prix}" step="0.01" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="prixMembre">Prix du tube pour les membres :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="prixMembre" type="number" th:value="*{prixMembre}" th:field="*{prixMembre}" step="0.01" />
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" name="_method" value="put"/>
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
+    </body>
+</html>

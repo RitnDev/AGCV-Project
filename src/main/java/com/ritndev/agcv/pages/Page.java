@@ -7,7 +7,11 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
@@ -24,45 +28,37 @@ public class Page {
     
     
     //Nom de la page
+    @Getter @Setter
     private String page;
-    public String getPage() {return page;}
-    public void setPage(String page) {this.page = page;}
     
     //lien de la page
+    @Getter @Setter
     private Link linkPage;
-    public Link getLinkPage() {return linkPage;}
-    public void setLinkPage(Link linkPage) {this.linkPage = linkPage;}
     
     //lien vers la page Admin
+    @Getter @Setter
     private Link linkAdminPage;
-    public Link getLinkAdminPage() {return linkAdminPage;}
-    public void setLinkAdminPage(Link linkAdminPage) {this.linkAdminPage = linkAdminPage;}
     
     //Listes des liens vers les autres pages (menu)
+    @Getter @Setter
     private List<Link> links = new ArrayList<>();
-    public List<Link> getLinks() {return links;}
-    public void setLinks(List<Link> links) {this.links = links;}
     
     //Listes des menus vers les autres pages (menu)
+    @Getter @Setter
     private Link[] menu;
-    public Link[] getMenu() {return menu;}
-    public void setMenu(Link[] menu) {this.menu = menu;}
     
     //La page est elle une page admin ?
+    @Getter @Setter
     private boolean adminPage = false;
-    public boolean isAdminPage() {return adminPage;}
-    public void setAdminPage(boolean adminPage) {this.adminPage = adminPage;}
     
     //liste des différentes réponses à affichés suite à l'execution d'une methode : GET/POST/...
+    @Getter @Setter
     private Map<TypeReponse, String> reponses = new HashMap<>();;
-    public Map<TypeReponse, String> getReponses() {return reponses;}
-    public void setReponses(Map<TypeReponse, String> reponses) {this.reponses = reponses;}
     
     //Y a-t-il un lien vers la page super admin ?
+    @Getter @Setter
     private boolean superAdminPage = false;
-    public boolean isSuperAdminPage() {return superAdminPage;}
-    public void setSuperAdminPage(boolean superAdminPage) {this.superAdminPage = superAdminPage;}
-     
+
     
     //Constructeur
     public Page() {}
@@ -115,6 +111,51 @@ public class Page {
     public void addReponse(TypeReponse tr, String reponse){
         reponses.put(tr, reponse);
     }
+    
+    public void addReponse(MessageSource messageSource, String modelName, String methodeName, int result) {
+        String strResult = "error";
+        TypeReponse tr = TypeReponse.OTHER;
+        
+        switch (methodeName) {
+            case "create" : tr = TypeReponse.ADD;
+            case "remove" : tr = TypeReponse.REMOVE;
+            case "edit" : tr = TypeReponse.EDIT;
+            case "info" : tr = TypeReponse.INFO;
+        }
+        
+        switch (result) {
+            default : {
+                //Erreur lors de l'execution
+                strResult = "error";
+                tr = TypeReponse.ERROR;
+                break;
+            }
+            case 1 : {
+                //Impossible de créer à cause d'un autre élément qui rentre en conflit.
+                strResult = "error1";
+                tr = TypeReponse.ERROR;
+                break;
+            }
+            case 2 : {
+                strResult = "success";
+                break;
+            } //Reussite !
+            
+            //Autres réponses possible dans certain cas :
+            case 3 : {
+                strResult = "result3";
+                tr = TypeReponse.INFO;
+                break;
+            }          
+            case 4 : {
+                strResult = "result4";
+                break;
+            }
+        }
+        
+        reponses.put(tr, messageSource.getMessage("reponse." + modelName + "." + methodeName + "." + strResult, null, Locale.FRENCH));
+    }
+    
     
     public void addLinks(Link link) {
         links.add(link);

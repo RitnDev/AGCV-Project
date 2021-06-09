@@ -23,6 +23,8 @@ public class FormMembre {
     
     
     // Constructeur
+    public FormMembre(){}
+    
     public FormMembre(String prenom, String nom) {
         this.prenom = prenom;
         this.nom = nom;
@@ -33,9 +35,7 @@ public class FormMembre {
         this.prenom = prenom;
         this.nom = nom;
     }
-    
-    public FormMembre() {}
-    
+       
     
     
     

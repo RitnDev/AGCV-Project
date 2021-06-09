@@ -11,18 +11,18 @@ import java.util.List;
 public interface IagcvService {
     
     //Methode Membres :
-    public Membre saveMembre(FormMembre newMembre);
+    public int saveMembre(FormMembre newMembre);
     public List<Membre> listMembre();
     public Membre findByIdMembre(Long id);
-    public void supprMembre(Long id);
-    public void updateByIdMembre(FormMembre editMembre);
+    public int supprMembre(Long id);
+    public int updateMembre(FormMembre editMembre);
     
     //Methode PrixTube
-    public PrixTube savePrixTube(PrixTube newPrixTube);
+    public int savePrixTube(FormPrixTube newPrixTube);
     public List<PrixTube> listPrixTube();
-    public PrixTube findByIdPrixTube(Long id);
-    public void supprPrixTube(Long id);
-    public void updateByIdPrixTube(Long id, PrixTube editPrixTube);
+    public FormPrixTube findByIdPrixTube(Long id);
+    public int supprPrixTube(Long id);
+    public int updatePrixTube(FormPrixTube editPrixTube);
     
     //Methode Commande
     public Commande saveCommande(Commande newCommande);
@@ -56,7 +56,7 @@ public interface IagcvService {
     public int saveSaison(FormSaison newSaison);
     public List<Saison> listSaison();
     public Saison findByIdSaison(Long id);
-    public void supprSaison(Long id);
+    public int supprSaison(Long id);
     public int updateSaison(FormSaison editSaison);
     public Long lastIdSaison();
     
@@ -69,20 +69,19 @@ public interface IagcvService {
     public void updateByIdConsoTube(Long id, ConsoTube editConsoTube);
     
     //Methode MainData
-    public boolean newMainData();
-    public MainData saveMainData(MainData mainData);
+    public int newMainData();
     public List<MainData> listMainData();
     public MainData findByIdMainData(Long id);
-    public void supprMainData(Long id);
-    public boolean updateMainData(FormData editMainData);
+    public int supprMainData(Long id);
+    public int updateMainData(FormData editMainData);
     public MainData returnMainData();
     
     //Methode TypeTube
-    public TypeTube saveTypeTube(TypeTube typeTube);
+    public int saveTypeTube(FormTypeTube formTypeTube);
     public List<TypeTube> listTypeTube();
     public TypeTube findByIdTypeTube(Long id);
-    public void supprTypeTube(Long id);
-    public void updateByIdTypeTube(Long id, TypeTube editTypeTube);
+    public int supprTypeTube(Long id);
+    public int updateTypeTube(FormTypeTube editTypeTube);
 
     
     

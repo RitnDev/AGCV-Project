@@ -17,6 +17,7 @@ import com.ritndev.agcv.classes.TypeReponse;
 import com.ritndev.agcv.form.FormCompet;
 import com.ritndev.agcv.model.Competition;
 import com.ritndev.agcv.pages.PageSacCompetition;
+import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 
@@ -28,43 +29,18 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 @Controller
 public class StockCompetController {
     
-    @Autowired
-    private IagcvService service;
-    @Autowired
-    private IUserService userService;
+    @Autowired private IagcvService service;
+    @Autowired private IUserService userService;
+    @Autowired private MessageSource messageSource;
     
     
     //Création d'une nouvelle commande de membre
     @PostMapping("/newCompetition")
     public String newCompetition(@ModelAttribute FormCompet newCompetition, Model model, Principal principal) {
-        
-        System.out.println(">> POST");
-        System.out.println("Nom de la competition : " + newCompetition.getNom());
-        System.out.println("Nombre de tubes utilisés : " + newCompetition.getNbTubesUtilises());
-        
         int result = service.saveCompetition(newCompetition);
-        String reponse = "Compétition non créée.";
-        TypeReponse tr = TypeReponse.ERROR;
         
         PageSacCompetition pageSacCompetition = new PageSacCompetition(); 
-        
-        switch (result) {
-            case 1 -> {
-                reponse = "Compétition non créée.";
-                pageSacCompetition.addReponse(TypeReponse.ERROR, "Aucun MAIN-DATA créée.");
-            }
-            case 2 -> {
-                reponse = "Compétition non créée.";
-                pageSacCompetition.addReponse(TypeReponse.ERROR, "Aucune saison active actuellement.");
-            }
-            case 3 -> {
-                reponse = "Compétition : '" + newCompetition.toString() + "' - créer avec succès";
-                tr = TypeReponse.ADD;
-            }
-            default -> tr = TypeReponse.ERROR;
-        }
-         
-        pageSacCompetition.addReponse(tr, reponse);
+        pageSacCompetition.addReponse(messageSource, "compet", "create", result);
         
         return pageSacCompetition.getPage(model, principal, service, userService);
     }
@@ -74,25 +50,10 @@ public class StockCompetController {
     //Supprimer un membre
     @DeleteMapping("/compet/{id}")
     public String supprCompet(@PathVariable(value = "id") Long id, Model model, Principal principal) {
-        
-        System.out.println(">> DELETE - COMPETITION");
-        System.out.println("ID : " + id);
-        
         int result = service.supprCompetition(id);
-        String reponse = "Compétition non supprimée";
-        TypeReponse tr = TypeReponse.ERROR;
-        
+         
         PageSacCompetition pageSacCompetition = new PageSacCompetition(); 
-        
-        switch (result) {
-            case 1 -> {
-                reponse = "Compétition supprimée avec succès !";
-                tr = TypeReponse.REMOVE;
-            }
-            default -> tr = TypeReponse.ERROR;
-        }
-
-        pageSacCompetition.addReponse(tr, reponse);
+        pageSacCompetition.addReponse(messageSource, "compet", "remove", result);
         
         return pageSacCompetition.getPage(model, principal, service, userService);
     }
@@ -101,31 +62,13 @@ public class StockCompetController {
     
     //Modifier une competition
     @PutMapping("/compet/{id}")
-    public String editCompet(@ModelAttribute FormCompet putCompet, Model model, Principal principal) {
-        
-        System.out.println(">> PUT - EDIT COMPETITION");
-        System.out.println("ID : " + putCompet.getId());
-        System.out.println("Nbr tubes utilisés : " + putCompet.getNbTubesUtilises());
-        System.out.println("Nom : " + putCompet.getNom());
-        
+    public String editCompet(@ModelAttribute FormCompet putCompet, Model model, Principal principal) { 
         int result = service.updateCompetition(putCompet);
-        String reponse = "Compétition non modifiée";
-        TypeReponse tr = TypeReponse.ERROR;
-        
-        PageSacCompetition pageSacCompetition = new PageSacCompetition(); 
-        
-        switch (result) {
-            case 1 -> {
-                reponse = "Compétition modifiée avec succès !";
-                tr = TypeReponse.EDIT;
-            }
-            default -> tr = TypeReponse.ERROR;
-        }
 
-        pageSacCompetition.addReponse(tr, reponse);
+        PageSacCompetition pageSacCompetition = new PageSacCompetition(); 
+        pageSacCompetition.addReponse(messageSource, "compet", "edit", result);
         
         return pageSacCompetition.getPage(model, principal, service, userService);
-
     }
     
     
@@ -141,7 +84,7 @@ public class StockCompetController {
         Competition editCompet = service.findByIdCompetition(id);
         FormCompet formCompet = new FormCompet(id, editCompet.getNbTubesUtilises(), editCompet.getNom());
         model.addAttribute("editCompet", formCompet);
-        model.addAttribute("numAction", ActionsTypes.EDIT_COMPETITION.getValue());
+        model.addAttribute("numAction", ActionsTypes.EDIT_COMPETITION.toString());
         
         PageActions pageAction = new PageActions();
         return pageAction.returnPage();

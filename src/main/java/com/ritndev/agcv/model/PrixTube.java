@@ -61,6 +61,29 @@ public class PrixTube implements Serializable {
     
     //Constructeur
     public PrixTube() {}
+
+    public PrixTube(String marque, double prix, double prixMembre, long idTypeTube, boolean actif) {
+        this.idTypeTube = idTypeTube;
+        this.marque = marque;
+        this.prix = prix;
+        this.prixMembre = prixMembre;
+        this.actif = actif;
+    }
+    
+    
+    /*
+        Methodes
+    */
+    
+    //Renvoie le prix au format String
+    public String getPrixString(){
+        return String.valueOf(prix);
+    }
+    
+    //Renvoie le prix au format String
+    public String getPrixMembreString(){
+        return String.valueOf(prixMembre);
+    }
     
     
 }

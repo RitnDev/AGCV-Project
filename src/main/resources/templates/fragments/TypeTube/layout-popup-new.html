@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+<!-- ------------------------------------------ POPUP NOUVEAU TYPE-TUBE -------------------------------------------------- -->
+        
+        <div th:fragment="typetube">
+            <div id="popup-content" class="popup-content-typetube">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Nouveau type de tube</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <img id="close-typetube" class="button-close" src="/images/popup/button-close.png">
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/newTypeTube}" th:object="${newTypeTube}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="nom">Nom du type de tube :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="commande">Ce type peut-il être sujet à des commandes membre ?</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="commande" name="commande" type="checkbox" th:checked="*{commande}"/>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input class="popup-form-submit-button" type="submit" value="Créer le type de tube"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
+    </body>
+</html>

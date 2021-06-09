@@ -37,6 +37,12 @@
         <div th:if="${editCompet != null}" id="bg-popup-action" class="bg-popup-edit-compet">
             <div th:replace="fragments/competition/layout-popup-edit :: compet"/>
         </div>
+        <div th:if="${editTypeTube != null}" id="bg-popup-action" class="bg-popup-edit-typetube">
+            <div th:replace="fragments/TypeTube/layout-popup-edit :: typetube"/>
+        </div>
+        <div th:if="${editPrixTube != null}" id="bg-popup-action" class="bg-popup-edit-prixtube">
+            <div th:replace="fragments/PrixTube/layout-popup-edit :: prixtube"/>
+        </div>
       
         <div th:replace="fragments/layout-footer :: footer"/>
         
@@ -44,52 +50,12 @@
         <script th:inline="javascript">
             /*<![CDATA[*/
                 var numAction = [[${numAction}]];
-                
-                switch(numAction) {
-                    case 1:
-                        const popupEditMembre = document.querySelector(".popup-content-edit-membre");
-                        const bgEditMembre = document.querySelector('.bg-popup-edit-membre');
-                        bgEditMembre.style.display = 'flex';
-                        popupEditMembre.className = "popup-content-edit-membre open";
-                        break;
-                    case 2:
-                        const popupEditData = document.querySelector(".popup-content-edit-data");
-                        const bgEditData = document.querySelector('.bg-popup-edit-data');
-                        bgEditData.style.display = 'flex';
-                        popupEditData.className = "popup-content-edit-data open";
-                        break;
-                    case 3:
-                        const popupEditSaison = document.querySelector(".popup-content-edit-saison");
-                        const bgEditSaison = document.querySelector('.bg-popup-edit-saison');
-                        bgEditSaison.style.display = 'flex';
-                        popupEditSaison.className = "popup-content-edit-saison open";
-                        break;
-                    case 5:
-                        const popupEditCompet = document.querySelector(".popup-content-edit-compet");
-                        const bgEditCompet = document.querySelector('.bg-popup-edit-compet');
-                        bgEditCompet.style.display = 'flex';
-                        popupEditCompet.className = "popup-content-edit-compet open";
-                        break;
-                    case 8:
-                        const popupEditStock = document.querySelector(".popup-content-edit-stock");
-                        const bgEditStock = document.querySelector('.bg-popup-edit-stock');
-                        bgEditStock.style.display = 'flex';
-                        popupEditStock.className = "popup-content-edit-stock open";
-                        break;
-                    case 10:
-                        const popupEditUser = document.querySelector(".popup-content-edit-user");
-                        const bgEditUser = document.querySelector('.bg-popup-edit-user');
-                        bgEditUser.style.display = 'flex';
-                        popupEditUser.className = "popup-content-edit-user open";
-                        break;
-                    case 11:
-                        const popupEditMdp = document.querySelector(".popup-content-edit-mdp");
-                        const bgEditMdp = document.querySelector('.bg-popup-edit-mdp');
-                        bgEditMdp.style.display = 'flex';
-                        popupEditMdp.className = "popup-content-edit-mdp open";
-                        break;
-                    default:
-                }
+                                
+                const popupEdit = document.querySelector(".popup-content-edit-" + numAction.toString());
+                const bgEdit = document.querySelector('.bg-popup-edit-' + numAction.toString());
+                bgEdit.style.display = 'flex';
+                popupEdit.className = "popup-content-edit-" + numAction.toString() + " open";
+                    
             /*]]>*/
         </script>
         

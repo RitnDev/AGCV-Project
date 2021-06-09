@@ -109,21 +109,16 @@ input.footer-log:hover {
 }
 
 
-.bg-popup-commande {
+.bg-popup-commande,
+.bg-popup-typetube,
+.bg-popup-prixtube,
+.bg-popup-membre,
+.bg-popup-user,
+.bg-popup-saison,
+.bg-popup-competition{
     display: none;
 }
-.bg-popup-competition {
-    display: none;
-}
-.bg-popup-saison {
-    display: none;
-}
-.bg-popup-user {
-    display: none;
-}
-.bg-popup-membre {
-    display: none;
-}
+ 
 
 .popup-content-edit-user, 
 .popup-content-edit-saison,
@@ -132,6 +127,10 @@ input.footer-log:hover {
 .popup-content-edit-mdp,
 .popup-content-edit-membre,
 .popup-content-edit-compet,
+.popup-content-edit-typetube,
+.popup-content-edit-prixtube,
+.popup-content-typetube,
+.popup-content-prixtube,
 .popup-content-membre,
 .popup-content-user,
 .popup-content-saison,
@@ -156,6 +155,22 @@ input.footer-log:hover {
 .popup-content-edit-compet {
     width: 430px;
     height: 220px;
+}
+.popup-content-typetube {
+    width: 800px;
+    height: 215px;
+}
+.popup-content-edit-typetube {
+    width: 800px;
+    height: 250px;
+}
+.popup-content-prixtube {
+    width: 500px;
+    height: 295px;
+}
+.popup-content-edit-prixtube {
+    width: 500px;
+    height: 295px;
 }
 .popup-content-edit-user {
     width: 380px;
@@ -392,6 +407,8 @@ input#regler:hover {
 #topnav-menu-user,
 #topnav-menu-compet,
 #topnav-menu-stock,
+#topnav-menu-typetube,
+#topnav-menu-prixtube,
 #topnav-menu-data{
     float: left;
     background-color: #8cbaff;
@@ -406,6 +423,8 @@ input#regler:hover {
 #topnav-menu-user:hover,
 #topnav-menu-compet:hover,
 #topnav-menu-stock:hover,
+#topnav-menu-typetube:hover,
+#topnav-menu-prixtube:hover,
 #topnav-menu-data:hover{
    background-color: #bdbdbd;
 }
@@ -426,6 +445,11 @@ input#regler:hover {
 
 
 /* Tableaux -------------------------------------------------------------------------------------*/
+
+.table-su-1 table {
+    text-align: center;
+    margin: auto;
+}
 
 .std-table table {
   border-collapse: collapse;

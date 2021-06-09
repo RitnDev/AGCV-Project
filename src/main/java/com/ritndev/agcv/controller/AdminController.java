@@ -3,6 +3,7 @@ package com.ritndev.agcv.controller;
 import com.ritndev.agcv.classes.ActionsTypes;
 import com.ritndev.agcv.classes.TypeReponse;
 import com.ritndev.agcv.form.FormMembre;
+import com.ritndev.agcv.form.FormPrixTube;
 import com.ritndev.agcv.form.FormSaison;
 import com.ritndev.agcv.model.Membre;
 import com.ritndev.agcv.model.Saison;
@@ -12,6 +13,7 @@ import com.ritndev.agcv.services.IUserService;
 import com.ritndev.agcv.services.IagcvService;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,14 +32,15 @@ public class AdminController {
     
     @Autowired private IagcvService service;
     @Autowired private IUserService userService;
+    @Autowired private MessageSource messageSource;
+    
     
     
     //--------------------   Page Admin   ---------------------------- 
     
-    @GetMapping(value = { "/admin", "/newMembre", "/newSaison"})
+    @GetMapping(value = { "/admin", "/newMembre", "/newSaison", "/newPrixTube"})
     public String admin(Model model, Principal principal){     
         PageAdmin pageAdmin = new PageAdmin();
-        model.addAttribute("test", null);
         return pageAdmin.getPage(model, principal, service, userService);
     } 
     
@@ -50,58 +53,35 @@ public class AdminController {
     //Création d'un nouveau membre
     @PostMapping("/newMembre")
     public String newMembre(@ModelAttribute FormMembre newMembre, Model model, Principal principal) {
-        System.out.println(">> POST");
-        System.out.println("Prenom : " + newMembre.getPrenom());
-        System.out.println("Nom : " + newMembre.getNom());
-        
-        service.saveMembre(newMembre);
-        
-        String reponse = "Membre : '" + newMembre.toString() + "' - créer avec succès";
-        String reponse2 = "Ceci est un test d'erreur !";
-          
+        int result = service.saveMembre(newMembre);
+                          
         PageAdmin pageAdmin = new PageAdmin();
-        pageAdmin.addReponse(TypeReponse.ADD, reponse);
-        pageAdmin.addReponse(TypeReponse.ERROR, reponse2);
-        
+        pageAdmin.addReponse(messageSource, "membre", "create", result);
+    
         return pageAdmin.getPage(model, principal, service, userService);
     }
     
     
     //Supprimer un membre
     @DeleteMapping("/membre/{id}")
-    public String supprMembre(@PathVariable(value = "id") Long id, Model model, Principal principal) {
-        
-        System.out.println(">> DELETE - MEMBRE");
-        System.out.println("ID : " + id);
-        
-        service.supprMembre(id);
-        
-        String reponse1 = "Membre supprimé avec succès";
-        
+    public String supprMembre(@PathVariable(value = "id") Long id, Model model, Principal principal) {       
+        int result = service.supprMembre(id);
+
         PageAdmin pageAdmin = new PageAdmin();
-        pageAdmin.addReponse(TypeReponse.REMOVE, reponse1);
+        pageAdmin.addReponse(messageSource, "membre", "remove", result);
         
         return pageAdmin.getPage(model, principal, service, userService);
     }
     
     //Modifier un membre
     @PutMapping("/membre/{id}")
-    public String editMembre(@ModelAttribute FormMembre putMembre, Model model, Principal principal) {
-        
-        System.out.println(">> PUT - EDIT MEMBRE");
-        System.out.println("ID : " + putMembre.getId());
-        System.out.println("Prenom : " + putMembre.getPrenom());
-        System.out.println("Nom : " + putMembre.getNom());
-        
-        service.updateByIdMembre(putMembre);
-        
-        String reponse1 = "Membre : '" + putMembre.toString() + "' - modifié avec succès";
+    public String editMembre(@ModelAttribute FormMembre putMembre, Model model, Principal principal) {   
+        int result = service.updateMembre(putMembre);
         
         PageAdmin pageAdmin = new PageAdmin();
-        pageAdmin.addReponse(TypeReponse.EDIT, reponse1);
+        pageAdmin.addReponse(messageSource, "membre", "edit", result);
         
         return pageAdmin.getPage(model, principal, service, userService);
-
     }
     
     
@@ -117,7 +97,7 @@ public class AdminController {
         Membre editMembre = service.findByIdMembre(id);
         FormMembre formMembre = new FormMembre(id, editMembre.getPrenom(), editMembre.getNom());
         model.addAttribute("editMembre", formMembre);
-        model.addAttribute("numAction", ActionsTypes.EDIT_MEMBRE.getValue());
+        model.addAttribute("numAction", ActionsTypes.EDIT_MEMBRE.toString());
                 
         PageActions pageAction = new PageActions();
         return pageAction.returnPage();
@@ -135,33 +115,10 @@ public class AdminController {
     //Création d'une nouvelle saison
     @PostMapping("/newSaison")
     public String newSaison(@ModelAttribute FormSaison newSaison, Model model, Principal principal) {
-        System.out.println("--------------------------------");
-        System.out.println(">> POST");
-        System.out.println(">> nom de la saison : " + newSaison.toString());
-        System.out.println(">> Budget de la saison : " + newSaison.getBudget());
-        System.out.println(">> Saison actuelle : " + newSaison.isActuelle());
-        System.out.println("--------------------------------");
-        
-        String reponse = "-- Saison non créée --";
-        TypeReponse tr = TypeReponse.ERROR;
-        PageAdmin pageAdmin = new PageAdmin();
-        
         int result = service.saveSaison(newSaison);
         
-        switch(result){
-            case 1 -> {
-                reponse = "-- Saison créée avec succès --";
-                tr = TypeReponse.ADD;
-                pageAdmin.addReponse(TypeReponse.ERROR, "DATA non mise à jour !");
-            }
-            case 2 -> {
-                reponse = "-- Saison créée avec succès --";
-                tr = TypeReponse.ADD;
-            }
-            default -> reponse = "Cette saison existe déjà !";
-        }
-
-        pageAdmin.addReponse(tr, reponse);
+        PageAdmin pageAdmin = new PageAdmin();
+        pageAdmin.addReponse(messageSource, "saison", "create", result);
         
         return pageAdmin.getPage(model, principal, service, userService);
     }
@@ -170,22 +127,16 @@ public class AdminController {
     //Supprimer une saison
     @DeleteMapping("/saison/{id}")
     public String supprSaison(@PathVariable(value = "id") Long id, Model model, Principal principal) {
-        
-        System.out.println(">> DELETE - SAISON");
-        System.out.println("ID : " + id);
-        
-        service.supprSaison(id);
-        
-        String reponse = "Saison supprimé avec succès";
-        
+        int result = service.supprSaison(id);
+       
         PageAdmin pageAdmin = new PageAdmin();
-        pageAdmin.addReponse(TypeReponse.REMOVE, reponse);
+        pageAdmin.addReponse(messageSource, "saison", "remove", result);
         
         return pageAdmin.getPage(model, principal, service, userService);
     }
     
     
-    //Lancer la modification d'un membre
+    //Lancer la modification d'une saison
     @PostMapping("/saison/{id}")
     public String getSaison(@PathVariable Long id, Model model, Principal principal) {
         
@@ -196,56 +147,82 @@ public class AdminController {
         Saison editSaison = service.findByIdSaison(id);
         FormSaison formSaison = new FormSaison(id, editSaison.getBudgetString(), editSaison.isActuelle());
         model.addAttribute("editSaison", formSaison);
-        model.addAttribute("numAction", ActionsTypes.EDIT_SAISON.getValue());
+        model.addAttribute("numAction", ActionsTypes.EDIT_SAISON.toString());
                 
         PageActions pageAction = new PageActions();
         return pageAction.returnPage();
     }
     
     
-    //Modifier un membre
+    //Modifier une saison
     @PutMapping("/saison/{id}")
     public String editSaison(@ModelAttribute FormSaison putSaison, Model model, Principal principal) {
-        System.out.println("--------------------------------");
-        System.out.println(">> PUT - EDIT SAISON");
-        System.out.println(">> Budget de la saison : " + putSaison.getBudget());
-        System.out.println(">> Saison actuelle : " + putSaison.isActuelle());
-        System.out.println("--------------------------------");
-        
-        String reponse = "La saison n'a pas pus être modifié !";
-        TypeReponse tr = TypeReponse.ERROR;
+        int result = service.updateSaison(putSaison);
         
         PageAdmin pageAdmin = new PageAdmin();
-          
-        int result = service.updateSaison(putSaison);
-
-        switch (result) {
-            case 1 -> {
-                reponse = "Saison modifiée avec succès";
-                tr = TypeReponse.EDIT;
-                pageAdmin.addReponse(TypeReponse.ERROR, "DATA non mise à jour !");
-            }
-            case 2 -> {
-                reponse = "Saison modifiée avec succès";
-                tr = TypeReponse.EDIT;
-                pageAdmin.addReponse(TypeReponse.INFO, "DATA mise à jour, plus aucune saison n'est active !");
-            }
-            case 3 -> {
-                reponse = "Saison modifié avec succès";
-                tr = TypeReponse.EDIT;
-                pageAdmin.addReponse(TypeReponse.SUCCESS, "DATA mise à jour, cette saison est maintenant l'actuelle !");
-            }
-            case 4 -> {
-                reponse = "Saison modifié avec succès";
-                tr = TypeReponse.EDIT;
-            }
-            default -> tr = TypeReponse.ERROR;
-        }
-          
-        pageAdmin.addReponse(tr, reponse);
+        pageAdmin.addReponse(messageSource, "saison", "edit", result);
         
         return pageAdmin.getPage(model, principal, service, userService);
 
     }
+    
+    
+    
+    // ----------------------------------- PARTIE PRIX-TUBES ------------------------------------- //
+    
+    
+    //Création d'un nouveau prix-tube
+    @PostMapping("/newPrixTube")
+    public String newPrixTube(@ModelAttribute FormPrixTube newPrixTube, Model model, Principal principal) {
+        PageAdmin pageAdmin = new PageAdmin();
+        
+        int result = service.savePrixTube(newPrixTube);
+        System.out.println(">> result : " + result);
+        pageAdmin.addReponse(messageSource, "prixtube", "create", result);
+        
+        return pageAdmin.getPage(model, principal, service, userService);
+    }
+    
+    
+    //Supprimer un prix-tube
+    @DeleteMapping("/prixtube/{id}")
+    public String supprPrixTube(@PathVariable(value = "id") Long id, Model model, Principal principal) {  
+        int result = service.supprPrixTube(id);
+        
+        PageAdmin pageAdmin = new PageAdmin();
+        pageAdmin.addReponse(messageSource, "prixtube", "remove", result);
+        
+        return pageAdmin.getPage(model, principal, service, userService);
+    }
+    
+    
+    //Lancer la modification d'un prix-tube
+    @PostMapping("/prixtube/{id}")
+    public String getPrixTube(@PathVariable Long id, Model model, Principal principal) {     
+        System.out.println(">> POST - EDIT PRIX-TUBE");
+        System.out.println(">> ID : " + id);
+        
+        //Recupération du membre à modifier :        
+        model.addAttribute("editPrixTube", service.findByIdPrixTube(id));
+        model.addAttribute("numAction", ActionsTypes.EDIT_PRIXTUBE.toString());
+                
+        PageActions pageAction = new PageActions();
+        return pageAction.returnPage();
+    }
+    
+    
+    //Modifier un prix-tube
+    @PutMapping("/prixtube/{id}")
+    public String editPrixTube(@ModelAttribute FormPrixTube putPrixTube, Model model, Principal principal) {
+        int result = service.updatePrixTube(putPrixTube);
+        
+        PageAdmin pageAdmin = new PageAdmin();
+        pageAdmin.addReponse(messageSource, "prixtube", "edit", result);
+        
+        return pageAdmin.getPage(model, principal, service, userService);
+    }
+    
+    
+    
     
 }

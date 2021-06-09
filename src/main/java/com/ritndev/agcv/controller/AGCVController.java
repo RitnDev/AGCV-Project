@@ -18,7 +18,7 @@ import com.ritndev.agcv.pages.PageIndex;
 import com.ritndev.agcv.services.IUserService;
 import com.ritndev.agcv.services.IagcvService;
 import com.ritndev.agcv.classes.ActionsTypes;
-import com.ritndev.agcv.classes.TypeReponse;
+import org.springframework.context.MessageSource;
 
 
 
@@ -29,11 +29,9 @@ import com.ritndev.agcv.classes.TypeReponse;
 @Controller
 public class AGCVController {
     
-    @Autowired
-    private IagcvService service;
-    @Autowired
-    private IUserService userService;
-    
+    @Autowired private IagcvService service;
+    @Autowired private IUserService userService;
+    @Autowired private MessageSource messageSource;
     
     //Création d'une nouvelle commande de membre
     @PostMapping("/newCommande")
@@ -51,7 +49,7 @@ public class AGCVController {
     
     
     //Lancer la modification d'un utilisateur
-    @PostMapping("/{username}")
+    @PostMapping("/mdp/{username}")
     public String getUsername(@PathVariable String username, Model model, Principal principal) {
         
         System.out.println(">> POST - EDIT USER");
@@ -62,7 +60,7 @@ public class AGCVController {
         FormUser formUser = new FormUser(editUser.getUserId(), editUser.getUserName());
 
         model.addAttribute("editUser", formUser);
-        model.addAttribute("numAction", ActionsTypes.EDIT_MDP.getValue());
+        model.addAttribute("numAction", ActionsTypes.EDIT_MDP.toString());
                 
         PageActions pageAction = new PageActions();
         return pageAction.returnPage();
@@ -78,22 +76,9 @@ public class AGCVController {
         
         //Modification du mot de passe utilisateur :
         int result = userService.updateMdpUser(putUser);
-        
-        String reponse = "-- Mot de passe non modifié --";
-        TypeReponse tr = TypeReponse.ERROR;
-
-        switch (result) {
-            case 1 -> reponse = "-- Mot de passe actuel incorrect --";
-            case 2 -> reponse = "-- Nouveau mot de passe et confirmation ne corresponde pas --";
-            case 3 -> {
-                reponse = "-- Mot de passe modifié avec succès --";
-                tr = TypeReponse.EDIT;
-            }
-            default -> tr = TypeReponse.ERROR;
-        }
-        
+                
         PageIndex pageIndex = new PageIndex();
-        pageIndex.addReponse(tr, reponse);
+        pageIndex.addReponse(messageSource, "mdp", "edit", result);
         
         return pageIndex.getPage(model, principal);
         

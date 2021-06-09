@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+<!-- ------------------------------------------ POPUP NOUVEAU PRIX-TUBE -------------------------------------------------- -->
+        
+        <div th:fragment="prixtube">
+            <div id="popup-content" class="popup-content-prixtube">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Nouveau prix de tube</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <img id="close-prixtube" class="button-close" src="/images/popup/button-close.png">
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/newPrixTube}" th:object="${newPrixTube}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="TypeTube">Type de tube :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <select id="TypeTube" th:field="*{idTypeTube}">
+                                <option th:each="t : ${TypeTubes}" th:value="${t.id}" th:text="${t.nom}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="marque">Marque du tube</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="marque" type="text" th:value="*{marque}" th:field="*{marque}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="prix">Prix du tube :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="prix" type="number" th:value="*{prix}" th:field="*{prix}" step="0.01" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="prixMembre">Prix du tube pour les membres :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="prixMembre" type="number" th:value="*{prixMembre}" th:field="*{prixMembre}" step="0.01" />
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input class="popup-form-submit-button" type="submit" value="Créer le prix du tube"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
+    </body>
+</html>

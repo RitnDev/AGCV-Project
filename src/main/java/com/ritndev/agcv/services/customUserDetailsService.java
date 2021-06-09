@@ -77,7 +77,7 @@ public class customUserDetailsService implements UserDetailsService, IUserServic
             && !appUserRep.existsByUserName(newUser.getIdentifiant())) {
                 AppUser au = appUserRep.save(new AppUser(newUser.getIdentifiant(),EncrytedPasswordUtils.encrytePassword(newUser.getMdp())));
                 userRoleRep.save(new UserRole(au.getUserId(), newUser.getRoleId()));
-                resultVal = 1; //Utilisateur enregistré avec son role
+                resultVal = 2; //Utilisateur enregistré avec son role
         }
         return resultVal;
     }
@@ -95,10 +95,12 @@ public class customUserDetailsService implements UserDetailsService, IUserServic
     
     //Supprime un utilisateur par son ID
     @Override public int supprUser(Long id) {
-        int resultVal = 0;
+        int resultVal = 0; //error
         if (appUserRep.existsById(id)) {
+            resultVal = 1; //cet utilisateur ne peut etre supprimé
             if(!appUserRep.getOne(id).getUserName().equals("ritn")){
-              appUserRep.deleteById(id);  
+              appUserRep.deleteById(id); 
+              resultVal = 2; //Suppression reussie
             }
         }
         return resultVal;
@@ -108,20 +110,18 @@ public class customUserDetailsService implements UserDetailsService, IUserServic
     @Override public int updateUser(FormUser editUser) {
         int resultVal = 0; //erreur lors de la mise à jour
         if (appUserRep.existsById(editUser.getId())) {
-            AppUser appUser = appUserRep.getOne(editUser.getId());
             
-            //Identifiant different de "ritn" pour modification.
-            if(!appUser.getUserName().equals("ritn")){
-                appUser.setEnabled(editUser.isActif());
-                appUserRep.save(appUser);
-                resultVal = resultVal + 1; //mise à jour de l'utilisateur ok.
-                UserRole userRole = userRoleRep.findByUserId(editUser.getId());
-                if (!Objects.equals(userRole.getRoleId(), editUser.getRoleId())) {
-                    userRole.setRoleId(editUser.getRoleId());
-                    userRoleRep.save(userRole);
-                    resultVal = resultVal + 1; //mise à jour du role utilisateur ok
-                }
-            }  
+            AppUser appUser = appUserRep.getOne(editUser.getId());
+            appUser.setEnabled(editUser.isActif());
+            appUserRep.save(appUser);
+            resultVal = 2; //mise à jour de l'utilisateur ok.
+            
+            UserRole userRole = userRoleRep.findByUserId(editUser.getId());
+            if (!Objects.equals(userRole.getRoleId(), editUser.getRoleId())) {
+                userRole.setRoleId(editUser.getRoleId());
+                userRoleRep.save(userRole);
+                resultVal = 4; //mise à jour du role utilisateur ok
+            }
         }
         return resultVal;
     }
@@ -138,12 +138,12 @@ public class customUserDetailsService implements UserDetailsService, IUserServic
                     if (editUser.getNewMdp().equals(editUser.getConfirmMdp())){
                         appUser.setEncrytedPassword(encoder.encode(editUser.getNewMdp()));
                         appUserRep.save(appUser);
-                        resultVal = 3; // Mot de passe modifier avec succès
+                        resultVal = 2; // Mot de passe modifier avec succès
                     }else{
-                        resultVal = 2; //Le nouveau mot de passe ne correspond pas avec la confirmation.
+                        resultVal = 3; //Le nouveau mot de passe ne correspond pas avec la confirmation.
                     }
                 }else{
-                    resultVal = 1; //Mot de passe actuelle ne correspond pas
+                    resultVal = 1; //Mot de passe actuel ne correspond pas
                 }
             }
         }

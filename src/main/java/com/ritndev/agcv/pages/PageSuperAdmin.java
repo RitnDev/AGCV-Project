@@ -1,11 +1,13 @@
 package com.ritndev.agcv.pages;
 
 import com.ritndev.agcv.classes.Link;
+import com.ritndev.agcv.form.FormTypeTube;
 import com.ritndev.agcv.form.FormUser;
 import com.ritndev.agcv.model.AppRole;
 import com.ritndev.agcv.model.AppUser;
 import com.ritndev.agcv.model.MainData;
 import com.ritndev.agcv.model.StockCompetition;
+import com.ritndev.agcv.model.TypeTube;
 import com.ritndev.agcv.services.IUserService;
 import com.ritndev.agcv.services.IagcvService;
 import java.security.Principal;
@@ -35,11 +37,13 @@ public class PageSuperAdmin extends Page {
         Link newData = new Link("Nouvelle MAIN-DATA", "/newData", "topnav-menu-data");
         Link newUser = new Link("Nouvel utilisateur", "#", "topnav-menu-user");
         Link newStock = new Link("Nouveau stock de competition", "/newStock", "topnav-menu-data");
+        Link newTypeTube = new Link("Nouveau Type de tube", "#", "topnav-menu-typetube");
         
         Link[] menu = new Link[] {
             newData,
             newUser,
-            newStock
+            newStock,
+            newTypeTube
         };
         super.setMenu(menu);
         
@@ -56,6 +60,7 @@ public class PageSuperAdmin extends Page {
         List<AppUser> userList = userService.listUser();
         List<AppRole> roleList = userService.listRole();
         List<StockCompetition> stockList = service.listStock();
+        List<TypeTube> typeTubeList = service.listTypeTube();
 
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userList){
@@ -69,9 +74,11 @@ public class PageSuperAdmin extends Page {
         model.addAttribute("userList", userList);
         model.addAttribute("stockList", stockList);
         model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("typeTubeList", typeTubeList);
         model.addAttribute("newUser", new FormUser());
+        model.addAttribute("newTypeTube", new FormTypeTube());
         model.addAttribute("roleList", roleList);
-                
+        
         return returnPage();
         
     }

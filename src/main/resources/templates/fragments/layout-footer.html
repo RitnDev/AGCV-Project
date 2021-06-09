@@ -9,7 +9,7 @@
             <span class="footer">2021 - Créer par RitnDev.</span>
             <!--span class="footer-log" th:if="${connect}" th:utext="${log}"/-->
             
-            <form action="#" th:if="${connect}" th:action="@{/{username}(username=${userActif})}" th:method="post">
+            <form action="#" th:if="${connect}" th:action="@{/mdp/{username}(username=${userActif})}" th:method="post">
                 <input class="footer-log" type="submit" th:value="${log}"/>
             </form>
             

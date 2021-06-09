@@ -10,6 +10,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
         <script type="text/javascript" th:src="@{/js/saison-popup.js}" charset="utf-8" defer></script>
         <script type="text/javascript" th:src="@{/js/membre-popup.js}" charset="utf-8" defer></script>
+        <script type="text/javascript" th:src="@{/js/prixtube-popup.js}" charset="utf-8" defer></script>
         <!-- https://www.youtube.com/watch?v=gLWIYk0Sd38 -->
     </head>
     
@@ -137,6 +138,9 @@
         </div>
         <div id="bg-popup" class="bg-popup-membre">
             <div th:replace="fragments/membre/layout-popup-new :: membre"/>
+        </div>
+        <div id="bg-popup" class="bg-popup-prixtube">
+            <div th:replace="fragments/PrixTube/layout-popup-new :: prixtube"/>
         </div>
        
         <!-- footer section -->
