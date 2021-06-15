@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        
+<!-- ------------------------------------------ POPUP NOUVEAU TYPE-TUBE -------------------------------------------------- -->
+        
+        <div th:fragment="typevolant">
+            <div id="popup-content" class="popup-content-typevolant">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3>Nouveau type de volant</h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <img id="close-typevolant" class="button-close" src="/images/popup/button-close.png">
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/newTypeVolant}" th:object="${newTypeVolant}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="idTypeTube">Type de Tube :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <select id="idTypeTube" th:field="*{idTypeTube}">
+                                <option th:each="t : ${typeTubeList}" th:value="${t.id}" th:text="${t.nom}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="initTube">Init nb tubes :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="initTube" type="number" th:value="*{initTube}" th:field="*{initTube}" min="0" />
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input class="popup-form-submit-button" type="submit" value="Créer le type de volant"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
+    </body>
+</html>

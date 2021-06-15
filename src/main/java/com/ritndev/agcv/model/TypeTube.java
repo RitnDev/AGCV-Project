@@ -16,7 +16,7 @@ import org.hibernate.annotations.UpdateTimestamp;
  *
  * @author Ritn
  */
-@Entity
+@Entity(name = "type_tube")
 @Table(name = "TYPE_TUBE")
 public class TypeTube implements Serializable {
     

@@ -129,7 +129,61 @@
                     </tbody>
                 </table>
             </div>
-        
+            </br>
+            </br>
+            <div class="std-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="table-label" colspan="8">PRIX TUBES</th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Horodatage</th>
+                            <th>Marque</th>
+                            <th>Type de tube</th>
+                            <th>Prix d'achat</th>
+                            <th>Prix membre</th>
+                            <th>Actif ?</th>
+                            <th class="table-action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${listPrixTubes.empty}">
+                            <td colspan="8">Aucun prix tube créé</td>
+                        </tr>
+                        <tr th:each="prixTube : ${listPrixTubes}">
+                            <td><span th:text="${prixTube.id}">ID</span></td>
+                            <td><span th:text="${prixTube.horodatage}">Horodatage</span></td>
+                            <td><span th:text="${prixTube.marque}">Marque</span></td>
+                            <td><span th:text="${prixTube.getTypeTubeName(typeTubes)}">Type de tube</span></td>
+                            <td><span th:text="${prixTube.prix}">Prix</span></td>
+                            <td><span th:text="${prixTube.prixMembre}">Prix membre</span></td>
+                            <td><span th:text="${prixTube.actif}">actif</span></td>
+                            <td class="table-action">
+                                <table class="action-input">
+                                    <tr>
+                                        <td class="action-input">
+                                            <form action="#" th:action="@{/prixtube/{id}(id=${prixTube.id})}" th:method="post">
+                                                <input type="hidden" name="_method" value="delete"/>
+                                                <input id="action-input" type="submit" value="Suppr"/>
+                                            </form>
+                                        </td><td class="action-input">|</td>
+                                        <td class="action-input">
+                                            <form action="#" th:action="@{/prixtube/{id}(id=${prixTube.id})}" th:method="post">
+                                                <input id="action-input" type="submit" value="Edit"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br/> 
+            <br/>
+            
         </div>
       
         <!-- pop-up section -->

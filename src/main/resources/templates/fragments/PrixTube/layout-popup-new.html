@@ -29,7 +29,7 @@
                             </td>
                             <td class="popup-form-input">
                                 <select id="TypeTube" th:field="*{idTypeTube}">
-                                <option th:each="t : ${TypeTubes}" th:value="${t.id}" th:text="${t.nom}"></option>
+                                <option th:each="t : ${typeTubes}" th:value="${t.id}" th:text="${t.nom}"></option>
                                 </select>
                             </td>
                         </tr>

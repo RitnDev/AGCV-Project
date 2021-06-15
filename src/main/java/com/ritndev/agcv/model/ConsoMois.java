@@ -3,6 +3,7 @@ package com.ritndev.agcv.model;
 import com.ritndev.agcv.model.enumeration.NomMois;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class ConsoMois implements Serializable {
     //Nom du mois de cette consommation
     @Column(name = "nom", nullable = false)
     @Getter @Setter
-    private NomMois nom;
+    private String nom;
     
     //id du prix tube utilises lors de ce mois-ci
     @Column(name = "idPrixTube", nullable = false)
@@ -44,9 +45,9 @@ public class ConsoMois implements Serializable {
     private long idPrixTube;
     
     //id de la reference à la conse de tube (type de tube utilise)
-    @Column(name = "idConsoTube", nullable = false)
+    @Column(name = "idTypeVolant", nullable = false)
     @Getter @Setter
-    private long idConsoTube;
+    private long idTypeVolant;
     
     //Nombre de tubes utilises ce mois-ci
     @Column(name = "nbTubeUtilise", nullable = false)
@@ -62,6 +63,42 @@ public class ConsoMois implements Serializable {
     
     //Constructeur
     public ConsoMois() {}
+
+    public ConsoMois(String nom, long idPrixTube, long idTypeVolant, int nbTubeUtilise, int nbTubeCommande) {
+        this.nom = nom;
+        this.idPrixTube = idPrixTube;
+        this.idTypeVolant = idTypeVolant;
+        this.nbTubeUtilise = nbTubeUtilise;
+        this.nbTubeCommande = nbTubeCommande;
+    }
+    
+    
+    
+    /*
+        Methodes
+    */
+    
+    //Renvoie le nom du type de tube
+    public String getTypeVolantName(List<TypeVolant> typeVolants, List<TypeTube> typeTubes) {
+        String strResult = "";
+        for (TypeVolant tv : typeVolants){
+            if(tv.getId()==idTypeVolant){
+                strResult = tv.getTypeTubeName(typeTubes);
+            }
+        }
+        return strResult;
+    }
+    
+    //Renvoie le nom du type de tube
+    public String getPrixTubePrix(List<PrixTube> prixTubes) {
+        String strResult = "";
+        for (PrixTube pt : prixTubes){
+            if(pt.getId()==idPrixTube){
+                strResult = pt.getPrixString();
+            }
+        }
+        return strResult;
+    }
     
     
 }

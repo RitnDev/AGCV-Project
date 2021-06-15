@@ -28,8 +28,8 @@
                                 <label for="membre">Membre ayant commandé des tubes :</label>
                             </td>
                             <td class="popup-form-input">
-                                <select id="membre" th:field="*{membre}">
-                                <option th:each="m : ${Membres}" th:value="${m}" th:text="${m}"></option>
+                                <select id="membre" th:field="*{idMembre}">
+                                <option th:each="m : ${Membres}" th:value="${m.id}" th:text="${m.toString()}"></option>
                                 </select>
                             </td>
                         </tr>

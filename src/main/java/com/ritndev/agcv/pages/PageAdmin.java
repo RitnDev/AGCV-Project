@@ -31,12 +31,12 @@ public class PageAdmin extends Page {
         
         Link newSaison = new Link("Nouvelle saison", "#", "topnav-menu-saison");
         Link newMembre = new Link("Nouveau membre", "#", "topnav-menu-membre"); 
-        Link newMPrixTube = new Link("Nouveau prix de tube", "#", "topnav-menu-prixtube"); 
+        Link newPrixTube = new Link("Nouveau prix de tube", "#", "topnav-menu-prixtube"); 
         
         Link[] menu = new Link[] {
             newSaison,
             newMembre,
-            newMPrixTube
+            newPrixTube
         };
         super.setMenu(menu);
                
@@ -60,7 +60,8 @@ public class PageAdmin extends Page {
         model.addAttribute("newSaison", new FormSaison(Calendar.getInstance().get(Calendar.YEAR),budget, true));
         model.addAttribute("listMembres", service.listMembre());
         model.addAttribute("listSaisons", service.listSaison());
-        model.addAttribute("TypeTubes", service.listTypeTube());
+        model.addAttribute("listPrixTubes", service.listPrixTube());
+        model.addAttribute("typeTubes", service.listTypeTube());
         
         
         boolean connect = userService.findRoleByUsername(super.returnUser(principal)).equals("ROLE_SUPADMIN");

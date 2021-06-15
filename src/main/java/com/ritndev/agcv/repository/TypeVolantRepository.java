@@ -1,6 +1,6 @@
 package com.ritndev.agcv.repository;
 
-import com.ritndev.agcv.model.ConsoTube;
+import com.ritndev.agcv.model.TypeVolant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  * @author Ritn
  */
 @Repository
-public interface ConsoTubeRepository extends JpaRepository<ConsoTube, Long> {
+public interface TypeVolantRepository extends JpaRepository<TypeVolant, Long> {
     
 }

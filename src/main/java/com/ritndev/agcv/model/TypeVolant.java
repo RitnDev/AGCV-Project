@@ -2,6 +2,7 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +17,8 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author Ritn
  */
 @Entity
-@Table(name = "CONSO_TUBE")
-public class ConsoTube implements Serializable {
+@Table(name = "TYPE_VOLANT")
+public class TypeVolant implements Serializable {
     
     //ID
     @Id
@@ -50,7 +51,39 @@ public class ConsoTube implements Serializable {
     
     
     //Constructeur
-    public ConsoTube() {}
+    public TypeVolant() {}
+
+    public TypeVolant(long idSaison, long idTypeTube, int initTube) {
+        this.idSaison = idSaison;
+        this.idTypeTube = idTypeTube;
+        this.initTube = initTube;
+    }
     
+        
+    /*
+        Methodes
+    */
+    
+    //Renvoie le nom de la saison
+    public String getSaisonName(List<Saison> saisons) {
+        String strResult = "";
+        for (Saison s : saisons){
+            if(s.getId()==idSaison){
+                strResult = s.toString();
+            }
+        }
+        return strResult;
+    }
+    
+    //Renvoie le nom du type de tube
+    public String getTypeTubeName(List<TypeTube> typeTubes) {
+        String strResult = "";
+        for (TypeTube tt : typeTubes){
+            if(tt.getId()==idTypeTube){
+                strResult = tt.getNom();
+            }
+        }
+        return strResult;
+    }
     
 }

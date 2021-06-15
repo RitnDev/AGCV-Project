@@ -10,6 +10,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
         <script type="text/javascript" th:src="@{/js/new-user-popup.js}" charset="utf-8" defer></script>
         <script type="text/javascript" th:src="@{/js/typetube-popup.js}" charset="utf-8" defer></script>
+        <script type="text/javascript" th:src="@{/js/typevolant-popup.js}" charset="utf-8" defer></script>
+        <script type="text/javascript" th:src="@{/js/consomois-popup.js}" charset="utf-8" defer></script>
     </head>
     
 
@@ -45,7 +47,7 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Horodatage</th>
-                                            <th>ID Saison</th>
+                                            <th>Saison</th>
                                             <th>ID Stock Compet</th>
                                             <th>Actif ?</th>
                                             <th class="table-action">Action</th>
@@ -58,7 +60,7 @@
                                         <tr th:each="data : ${mainData}">
                                             <td><span th:text="${data.id}">ID</span></td>
                                             <td><span th:text="${data.horodatage}">Horodatage</span></td>
-                                            <td><span th:text="${data.idSaison}">id_saison</span></td>
+                                            <td><span  th:text="${data.getSaisonName(saisons)}" th:title="${'id='+data.idSaison}">id_saison</span></td>
                                             <td><span th:text="${data.idStockCompet}">id_stock_compet</span></td>
                                             <td><span th:text="${data.actif}">actif</span></td>
                                             <td class="table-action">
@@ -139,100 +141,229 @@
             <br/>
             <br/>
                         
-            
-            <div class="std-table">
+            <div class="table-su-1">
                 <table>
-                    <thead>
-                        <tr>
-                            <th class="table-label" colspan="5">UTILISATEURS</td>
-                        </tr>
-                        <tr>
-                            <th>ID</th>
-                            <th>Identifiant</th>
-                            <th>Rôle</th>
-                            <th>Actif ?</th>
-                            <th class="table-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:if="${userList.empty}">
-                            <td colspan="5">Aucun compte utilisateur créée</td>
-                        </tr>
-                        <tr th:each="user : ${userList}">
-                            <td><span th:text="${user.userId}">ID</span></td>
-                            <td><span th:text="${user.userName}">Identifiant</span></td>
-                            <td><span th:text="${userRoleList.get(user.userId)}">Rôle</span></td>
-                            <td><span th:text="${user.enabled}">actif</span></td>
-                            <td class="table-action">
-                                <table class="action-input">
-                                    <tr>
-                                        <td class="action-input">
-                                            <form action="#" th:action="@{/user/{id}(id=${user.userId})}" th:method="post">
-                                                <input type="hidden" name="_method" value="delete"/>
-                                                <input id="action-input" type="submit" value="Suppr"/>
-                                            </form>
-                                        </td><td class="action-input">|</td>
-                                        <td class="action-input">
-                                            <form action="#" th:action="@{/user/{id}(id=${user.userId})}" th:method="post">
-                                                <input id="action-input" type="submit" value="Edit"/>
-                                            </form>
-                                        </td>
-                                    </tr>
+                    <tr>
+                        <td>
+                            
+                            <div class="std-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="table-label" colspan="5">UTILISATEURS</td>
+                                        </tr>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Identifiant</th>
+                                            <th>Rôle</th>
+                                            <th>Actif ?</th>
+                                            <th class="table-action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:if="${userList.empty}">
+                                            <td colspan="5">Aucun compte utilisateur créée</td>
+                                        </tr>
+                                        <tr th:each="user : ${userList}">
+                                            <td><span th:text="${user.userId}">ID</span></td>
+                                            <td><span th:text="${user.userName}">Identifiant</span></td>
+                                            <td><span th:text="${userRoleList.get(user.userId)}">Rôle</span></td>
+                                            <td><span th:text="${user.enabled}">actif</span></td>
+                                            <td class="table-action">
+                                                <table class="action-input">
+                                                    <tr>
+                                                        <td class="action-input">
+                                                            <form action="#" th:action="@{/user/{id}(id=${user.userId})}" th:method="post">
+                                                                <input type="hidden" name="_method" value="delete"/>
+                                                                <input id="action-input" type="submit" value="Suppr"/>
+                                                            </form>
+                                                        </td><td class="action-input">|</td>
+                                                        <td class="action-input">
+                                                            <form action="#" th:action="@{/user/{id}(id=${user.userId})}" th:method="post">
+                                                                <input id="action-input" type="submit" value="Edit"/>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                            </div>
+            
+                        </td>
+                        <td></td>
+                        <td>
+                            
+                            <div class="std-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="table-label" colspan="8">CONSO MOIS</td>
+                                        </tr>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Horodatage</th>
+                                            <th>Nom</th>
+                                            <th>Prix du tube</th>
+                                            <th>type de tube</th>
+                                            <th>Nb tubes utilisés</th>
+                                            <th>Nb tubes commandés</th>
+                                            <th class="table-action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:if="${consoMoisList.empty}">
+                                            <td colspan="8">Aucune consos mois créé</td>
+                                        </tr>
+                                        <tr th:each="consoMois : ${consoMoisList}">
+                                            <td><span th:text="${consoMois.id}">ID</span></td>
+                                            <td><span th:text="${consoMois.horodatage}">Horodatage</span></td>
+                                            <td><span th:text="${consoMois.nom}">nom</span></td>
+                                            <td><span th:text="${consoMois.getPrixTubePrix(prixTubeList)}">prixtube</span></td>
+                                            <td><span th:text="${consoMois.getTypeVolantName(typeVolantList, typeTubeList)}">typetube</span></td>
+                                            <td><span th:text="${consoMois.nbTubeUtilise}">nbTubeUtilise</span></td>
+                                            <td><span th:text="${consoMois.nbTubeCommande}">nbTubeCommande</span></td>
+                                            <td class="table-action">
+                                                <table class="action-input">
+                                                    <tr>
+                                                        <td class="action-input">
+                                                            <form action="#" th:action="@{/consomois/{id}(id=${consoMois.id})}" th:method="post">
+                                                                <input type="hidden" name="_method" value="delete"/>
+                                                                <input id="action-input" type="submit" value="Suppr"/>
+                                                            </form>
+                                                        </td><td class="action-input">|</td>
+                                                        <td class="action-input">
+                                                            <form action="#" th:action="@{/consomois/{id}(id=${consoMois.id})}" th:method="post">
+                                                                <input id="action-input" type="submit" value="Edit"/>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </td>
+                    </tr>
+                </table>                
+            </div> 
+            
+            
             <br/>
             <br/>
             
-            <div class="std-table">
+            
+            <div class="table-su-1">
                 <table>
-                    <thead>
-                        <tr>
-                            <th class="table-label" colspan="6">TYPES TUBE</td>
-                        </tr>
-                        <tr>
-                            <th>ID</th>
-                            <th>Horodatage</th>
-                            <th>Nom</th>
-                            <th>Commande</th>
-                            <th>Actif ?</th>
-                            <th class="table-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:if="${typeTubeList.empty}">
-                            <td colspan="6">Aucun type de tube créé</td>
-                        </tr>
-                        <tr th:each="typeTube : ${typeTubeList}">
-                            <td><span th:text="${typeTube.id}">ID</span></td>
-                            <td><span th:text="${typeTube.horodatage}">Horodatage</span></td>
-                            <td><span th:text="${typeTube.nom}">nom</span></td>
-                            <td><span th:text="${typeTube.commande}">commande</span></td>
-                            <td><span th:text="${typeTube.actif}">actif</span></td>
-                            <td class="table-action">
-                                <table class="action-input">
-                                    <tr>
-                                        <td class="action-input">
-                                            <form action="#" th:action="@{/typetube/{id}(id=${typeTube.id})}" th:method="post">
-                                                <input type="hidden" name="_method" value="delete"/>
-                                                <input id="action-input" type="submit" value="Suppr"/>
-                                            </form>
-                                        </td><td class="action-input">|</td>
-                                        <td class="action-input">
-                                            <form action="#" th:action="@{/typetube/{id}(id=${typeTube.id})}" th:method="post">
-                                                <input id="action-input" type="submit" value="Edit"/>
-                                            </form>
-                                        </td>
-                                    </tr>
+                    <tr>
+                        <td>
+                            
+                            <div class="std-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="table-label" colspan="6">TYPES TUBE</td>
+                                        </tr>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Horodatage</th>
+                                            <th>Nom</th>
+                                            <th>Commande</th>
+                                            <th>Actif ?</th>
+                                            <th class="table-action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:if="${typeTubeList.empty}">
+                                            <td colspan="6">Aucun type de tube créé</td>
+                                        </tr>
+                                        <tr th:each="typeTube : ${typeTubeList}">
+                                            <td><span th:text="${typeTube.id}">ID</span></td>
+                                            <td><span th:text="${typeTube.horodatage}">Horodatage</span></td>
+                                            <td><span th:text="${typeTube.nom}">nom</span></td>
+                                            <td><span th:text="${typeTube.commande}">commande</span></td>
+                                            <td><span th:text="${typeTube.actif}">actif</span></td>
+                                            <td class="table-action">
+                                                <table class="action-input">
+                                                    <tr>
+                                                        <td class="action-input">
+                                                            <form action="#" th:action="@{/typetube/{id}(id=${typeTube.id})}" th:method="post">
+                                                                <input type="hidden" name="_method" value="delete"/>
+                                                                <input id="action-input" type="submit" value="Suppr"/>
+                                                            </form>
+                                                        </td><td class="action-input">|</td>
+                                                        <td class="action-input">
+                                                            <form action="#" th:action="@{/typetube/{id}(id=${typeTube.id})}" th:method="post">
+                                                                <input id="action-input" type="submit" value="Edit"/>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                            </div>
+                            
+                        </td>
+                        <td></td>
+                        <td>
+                            
+                            <div class="std-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="table-label" colspan="6">TYPES VOLANTS</td>
+                                        </tr>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Horodatage</th>
+                                            <th>Saison</th>
+                                            <th>Type de tube</th>
+                                            <th>init tubes</th>
+                                            <th class="table-action">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:if="${typeVolantList.empty}">
+                                            <td colspan="6">Aucun type de volant créé</td>
+                                        </tr>
+                                        <tr th:each="typeVolant : ${typeVolantList}">
+                                            <td><span th:text="${typeVolant.id}">ID</span></td>
+                                            <td><span th:text="${typeVolant.horodatage}">Horodatage</span></td>
+                                            <td><span th:text="${typeVolant.getSaisonName(saisons)}">saison</span></td>
+                                            <td><span th:text="${typeVolant.getTypeTubeName(typeTubeList)}">typetube</span></td>
+                                            <td><span th:text="${typeVolant.initTube}">initTube</span></td>
+                                            <td class="table-action">
+                                                <table class="action-input">
+                                                    <tr>
+                                                        <td class="action-input">
+                                                            <form action="#" th:action="@{/typevolant/{id}(id=${typeVolant.id})}" th:method="post">
+                                                                <input type="hidden" name="_method" value="delete"/>
+                                                                <input id="action-input" type="submit" value="Suppr"/>
+                                                            </form>
+                                                        </td><td class="action-input">|</td>
+                                                        <td class="action-input">
+                                                            <form action="#" th:action="@{/typevolant/{id}(id=${typeVolant.id})}" th:method="post">
+                                                                <input id="action-input" type="submit" value="Edit"/>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </td>
+                    </tr>
+                </table>                
+            </div> 
+            
             <br/>
             <br/>
 
@@ -244,6 +375,12 @@
         </div>
         <div id="bg-popup" class="bg-popup-typetube">
             <div th:replace="fragments/TypeTube/layout-popup-new :: typetube"/>
+        </div>
+        <div id="bg-popup" class="bg-popup-typevolant">
+            <div th:replace="fragments/TypeVolant/layout-popup-new :: typevolant"/>
+        </div>
+        <div id="bg-popup" class="bg-popup-consomois">
+            <div th:replace="fragments/ConsoMois/layout-popup-new :: consomois"/>
         </div>
         
         <!-- footer section -->

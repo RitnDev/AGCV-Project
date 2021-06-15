@@ -40,8 +40,17 @@
         <div th:if="${editTypeTube != null}" id="bg-popup-action" class="bg-popup-edit-typetube">
             <div th:replace="fragments/TypeTube/layout-popup-edit :: typetube"/>
         </div>
+        <div th:if="${editTypeVolant != null}" id="bg-popup-action" class="bg-popup-edit-typevolant">
+            <div th:replace="fragments/TypeVolant/layout-popup-edit :: typevolant"/>
+        </div>
         <div th:if="${editPrixTube != null}" id="bg-popup-action" class="bg-popup-edit-prixtube">
             <div th:replace="fragments/PrixTube/layout-popup-edit :: prixtube"/>
+        </div>
+        <div th:if="${editConsoMois != null}" id="bg-popup-action" class="bg-popup-edit-consomois">
+            <div th:replace="fragments/ConsoMois/layout-popup-edit :: consomois"/>
+        </div>
+        <div th:if="${editCommande != null}" id="bg-popup-action" class="bg-popup-edit-commande">
+            <div th:replace="fragments/commande/layout-popup-edit :: commande"/>
         </div>
       
         <div th:replace="fragments/layout-footer :: footer"/>

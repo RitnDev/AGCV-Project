@@ -23,13 +23,14 @@ public interface IagcvService {
     public FormPrixTube findByIdPrixTube(Long id);
     public int supprPrixTube(Long id);
     public int updatePrixTube(FormPrixTube editPrixTube);
+    public PrixTube findLastPrixTubeCompet();
     
     //Methode Commande
-    public Commande saveCommande(Commande newCommande);
+    public int saveCommande(FormCommande newCommande);
     public List<Commande> listCommande();
     public Commande findByIdCommande(Long id);
-    public void supprCommande(Long id);
-    public void updateByIdCommande(Long id, Commande editCommande);
+    public int supprCommande(Long id);
+    public int updateCommande(FormCommande editCommande);
     
     //Methode Competition
     public int saveCompetition(FormCompet newCompet);
@@ -39,11 +40,11 @@ public interface IagcvService {
     public int updateCompetition(FormCompet editCompet);
     
     //Methode ConsoMois
-    public ConsoMois saveConsoMois(ConsoMois newConsoMois);
+    public int saveConsoMois(FormConsoMois newConsoMois);
     public List<ConsoMois> listConsoMois();
     public ConsoMois findByIdConsoMois(Long id);
-    public void supprConsoMois(Long id);
-    public void updateByIdConsoMois(Long id, ConsoMois editConsoMois);
+    public int supprConsoMois(Long id);
+    public int updateConsoMois(FormConsoMois editConsoMois);
     
     //Methode StockCompetition
     public int newStock();
@@ -61,12 +62,12 @@ public interface IagcvService {
     public Long lastIdSaison();
     
     
-    //Methode ConsoTube
-    public ConsoTube saveConsoTube(ConsoTube consoTube);
-    public List<ConsoTube> listConsoTube();
-    public ConsoTube findByIdConsoTube(Long id);
-    public void supprConsoTube(Long id);
-    public void updateByIdConsoTube(Long id, ConsoTube editConsoTube);
+    //Methode TypeVolant
+    public int saveTypeVolant(FormTypeVolant newTypeVolant);
+    public List<TypeVolant> listTypeVolant();
+    public TypeVolant findByIdTypeVolant(Long id);
+    public int supprTypeVolant(Long id);
+    public int updateTypeVolant(FormTypeVolant editTypeVolant);
     
     //Methode MainData
     public int newMainData();

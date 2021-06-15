@@ -1,18 +1,18 @@
 package com.ritndev.agcv.pages;
 
 import com.ritndev.agcv.classes.Link;
+import com.ritndev.agcv.form.FormConsoMois;
 import com.ritndev.agcv.form.FormTypeTube;
+import com.ritndev.agcv.form.FormTypeVolant;
 import com.ritndev.agcv.form.FormUser;
-import com.ritndev.agcv.model.AppRole;
 import com.ritndev.agcv.model.AppUser;
-import com.ritndev.agcv.model.MainData;
-import com.ritndev.agcv.model.StockCompetition;
-import com.ritndev.agcv.model.TypeTube;
+import com.ritndev.agcv.model.enumeration.NomMois;
 import com.ritndev.agcv.services.IUserService;
 import com.ritndev.agcv.services.IagcvService;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.springframework.ui.Model;
 
@@ -38,12 +38,16 @@ public class PageSuperAdmin extends Page {
         Link newUser = new Link("Nouvel utilisateur", "#", "topnav-menu-user");
         Link newStock = new Link("Nouveau stock de competition", "/newStock", "topnav-menu-data");
         Link newTypeTube = new Link("Nouveau Type de tube", "#", "topnav-menu-typetube");
+        Link newTypeVolant = new Link("Nouveau type de volant", "#", "topnav-menu-typevolant"); 
+        Link newConsoMois = new Link("Nouveau conso mois", "#", "topnav-menu-consomois");
         
         Link[] menu = new Link[] {
             newData,
             newUser,
             newStock,
-            newTypeTube
+            newTypeTube,
+            newTypeVolant,
+            newConsoMois
         };
         super.setMenu(menu);
         
@@ -55,29 +59,30 @@ public class PageSuperAdmin extends Page {
     
         String message = "Ici se trouve la page : ";
         message = message + getPage();
-        
-        List<MainData> mainData = service.listMainData();
-        List<AppUser> userList = userService.listUser();
-        List<AppRole> roleList = userService.listRole();
-        List<StockCompetition> stockList = service.listStock();
-        List<TypeTube> typeTubeList = service.listTypeTube();
-
+ 
         Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : userList){
+        for (AppUser user : userService.listUser()){
            userRoleList.put(user.getUserId(), formatRole(userService.findRoleByUsername(user.getUserName())));
         }
         
         // Add Attribute :
         model = getPageGenerique(model, principal);
         model.addAttribute("message", message);
-        model.addAttribute("mainData", mainData);
-        model.addAttribute("userList", userList);
-        model.addAttribute("stockList", stockList);
+        model.addAttribute("mainData", service.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", service.listStock());
         model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("typeTubeList", typeTubeList);
+        model.addAttribute("typeTubeList", service.listTypeTube());
+        model.addAttribute("prixTubeList", service.listPrixTube());
+        model.addAttribute("typeVolantList", service.listTypeVolant());
+        model.addAttribute("consoMoisList", service.listConsoMois());
         model.addAttribute("newUser", new FormUser());
         model.addAttribute("newTypeTube", new FormTypeTube());
-        model.addAttribute("roleList", roleList);
+        model.addAttribute("newTypeVolant", new FormTypeVolant());
+        model.addAttribute("newConsoMois", new FormConsoMois());
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("saisons", service.listSaison());
+        model.addAttribute("nomMois", new ArrayList<>(Arrays.asList(NomMois.values())));
         
         return returnPage();
         

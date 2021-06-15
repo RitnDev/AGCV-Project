@@ -53,6 +53,10 @@ public enum ActionsTypes {
     EDIT_MDP(11){
         @Override  
         public String toString() {return "mdp";}; 
+    },
+    EDIT_TYPEVOLANT(12){
+        @Override  
+        public String toString() {return "typevolant";}; 
     };
     
     

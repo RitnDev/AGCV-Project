@@ -1,16 +1,19 @@
 package com.ritndev.agcv.controller;
 
 import com.ritndev.agcv.classes.ActionsTypes;
-import com.ritndev.agcv.classes.TypeReponse;
+import com.ritndev.agcv.form.FormConsoMois;
 import com.ritndev.agcv.form.FormData;
 import com.ritndev.agcv.form.FormStock;
 import com.ritndev.agcv.form.FormTypeTube;
+import com.ritndev.agcv.form.FormTypeVolant;
 import com.ritndev.agcv.form.FormUser;
 import com.ritndev.agcv.model.AppRole;
 import com.ritndev.agcv.model.AppUser;
+import com.ritndev.agcv.model.ConsoMois;
 import com.ritndev.agcv.model.MainData;
 import com.ritndev.agcv.model.StockCompetition;
 import com.ritndev.agcv.model.TypeTube;
+import com.ritndev.agcv.model.TypeVolant;
 import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.pages.PageSuperAdmin;
 import com.ritndev.agcv.services.IagcvService;
@@ -223,6 +226,131 @@ public class SuperAdminController {
                 
         return pageSuperAdmin.getPage(model, principal, service, userService);
     }
+    
+
+// ---------------------------- TYPE VOLANT -------------------------------------  
+    
+    
+    //Creation d'une nouvelle Type-Tube
+    @PostMapping("/newTypeVolant")
+    public String newTypeVolant(@ModelAttribute FormTypeVolant newTypeVolant, Model model, Principal principal) {
+        int result = service.saveTypeVolant(newTypeVolant);
+        
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        pageSuperAdmin.addReponse(messageSource, "typevolant", "create", result);
+        
+        return pageSuperAdmin.getPage(model, principal, service, userService);
+    }
+    
+    
+    
+    //Supprimer une Type-Tube
+    @DeleteMapping("/typevolant/{id}")
+    public String supprTypeVolant(@PathVariable(value = "id") Long id, Model model, Principal principal) {
+        int result = service.supprTypeVolant(id);
+        
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        pageSuperAdmin.addReponse(messageSource, "typevolant", "remove", result);
+        
+        return pageSuperAdmin.getPage(model, principal, service, userService);
+    }
+    
+    
+    //Lancer la modification d'une Type-Tube
+    @PostMapping("/typevolant/{id}")
+    public String getTypeVolant(@PathVariable Long id, Model model, Principal principal) {
+        
+        System.out.println(">> POST - EDIT TYPE VOLANT");
+        System.out.println(">> ID : " + id);
+        
+        //Recupération de la DATA à modifier :
+        TypeVolant editTypeVolant = service.findByIdTypeVolant(id);
+        FormTypeVolant formTypeVolant = new FormTypeVolant(id, 
+                                            editTypeVolant.getIdTypeTube(), 
+                                            editTypeVolant.getInitTube());
+         
+        model.addAttribute("editTypeVolant", formTypeVolant);
+        model.addAttribute("typeTubeList", service.listTypeTube());
+        model.addAttribute("numAction", ActionsTypes.EDIT_TYPEVOLANT.toString());
+                
+        PageActions pageAction = new PageActions();
+        return pageAction.returnPage();
+    }
+    
+    
+    //Modifier une Type-Tube
+    @PutMapping("/typevolant/{id}")
+    public String editTypeVolant(@ModelAttribute FormTypeVolant putTypeVolant, Model model, Principal principal) {
+        int result = service.updateTypeVolant(putTypeVolant);
+        
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();     
+        pageSuperAdmin.addReponse(messageSource, "typevolant", "remove", result);
+                
+        return pageSuperAdmin.getPage(model, principal, service, userService);
+    }
+  
+    
+    
+// ---------------------------- CONSO MOIS -------------------------------------  
+    
+    
+    //Creation d'une nouvelle Type-Tube
+    @PostMapping("/newConsoMois")
+    public String newConsoMois(@ModelAttribute FormConsoMois newConsoMois, Model model, Principal principal) {
+        int result = service.saveConsoMois(newConsoMois);
+        
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        pageSuperAdmin.addReponse(messageSource, "consomois", "create", result);
+        
+        return pageSuperAdmin.getPage(model, principal, service, userService);
+    }
+    
+    
+    
+    //Supprimer une Type-Tube
+    @DeleteMapping("/consomois/{id}")
+    public String supprConsoMois(@PathVariable(value = "id") Long id, Model model, Principal principal) {
+        int result = service.supprConsoMois(id);
+        
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        pageSuperAdmin.addReponse(messageSource, "consomois", "remove", result);
+        
+        return pageSuperAdmin.getPage(model, principal, service, userService);
+    }
+    
+    
+    //Lancer la modification d'une Type-Tube
+    @PostMapping("/consomois/{id}")
+    public String getConsoMois(@PathVariable Long id, Model model, Principal principal) {
+        
+        System.out.println(">> POST - EDIT CONSO MOIS");
+        System.out.println(">> ID : " + id);
+        
+        //Recupération de la DATA à modifier :
+        ConsoMois editConsoMois = service.findByIdConsoMois(id);
+        FormConsoMois formConsoMois = new FormConsoMois(id,
+                                    editConsoMois.getNbTubeUtilise(),
+                                    editConsoMois.getNbTubeCommande());
+         
+        model.addAttribute("editConsoMois", formConsoMois);
+        model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS.toString());
+                
+        PageActions pageAction = new PageActions();
+        return pageAction.returnPage();
+    }
+    
+    
+    //Modifier une Type-Tube
+    @PutMapping("/consomois/{id}")
+    public String editConsoMois(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
+        int result = service.updateConsoMois(putConsoMois);
+        
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();     
+        pageSuperAdmin.addReponse(messageSource, "consomois", "remove", result);
+                
+        return pageSuperAdmin.getPage(model, principal, service, userService);
+    } 
+    
     
     
 // ---------------------------- UTILISATEURS ------------------------------------- 

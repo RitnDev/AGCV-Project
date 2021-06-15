@@ -2,6 +2,7 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -64,6 +65,20 @@ public class MainData implements Serializable {
         this.actif = actif;
     }
     
+    
+    /*
+        Methodes
+    */
+    
+    public String getSaisonName(List<Saison> saisons) {
+        String strResult = "";
+        for (Saison s : saisons){
+            if(s.getId()==idSaison){
+                strResult = s.toString();
+            }
+        }
+        return strResult;
+    }
     
     
     

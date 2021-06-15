@@ -2,6 +2,7 @@ package com.ritndev.agcv.services;
 
 import com.ritndev.agcv.form.*;
 import com.ritndev.agcv.model.*;
+import com.ritndev.agcv.model.enumeration.NomTypeTube;
 import com.ritndev.agcv.repository.*;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class AGCVservice implements IagcvService {
     @Autowired CommandeRepository commandeRep;
     @Autowired CompetitionRepository competitionRep;
     @Autowired ConsoMoisRepository consoMoisRep;
-    @Autowired ConsoTubeRepository consoTubeRep;
+    @Autowired TypeVolantRepository typeVolantRep;
     @Autowired MainDataRepository mainDataRep;
     @Autowired MembreRepository membreRep;
     @Autowired PrixTubeRepository prixTubeRep;
@@ -35,7 +36,7 @@ public class AGCVservice implements IagcvService {
     public void setPrixTubeRep (PrixTubeRepository prixTubeRep) {this.prixTubeRep = prixTubeRep;}
     public void setStockCompetitionRep (StockCompetitionRepository stockCompetitionRep) {this.stockCompetRep = stockCompetitionRep;}
     public void setSaisonRep (SaisonRepository saisonRep) {this.saisonRep = saisonRep;}
-    public void setConsoTubeRep (ConsoTubeRepository consoTubeRep) {this.consoTubeRep = consoTubeRep;}
+    public void setTypeVolantRep (TypeVolantRepository typeVolantRep) {this.typeVolantRep = typeVolantRep;}
     public void setMainDataRep (MainDataRepository mainDataRep) {this.mainDataRep = mainDataRep;}
     public void setTypeTubeRep (TypeTubeRepository typeTubeRep) {this.typeTubeRep = typeTubeRep;}
     
@@ -100,12 +101,11 @@ public class AGCVservice implements IagcvService {
     @Override public List<PrixTube> listPrixTube() {return prixTubeRep.findAll();}
     @Override public FormPrixTube findByIdPrixTube(Long id) {
         if (prixTubeRep.existsById(id)){
-            FormPrixTube formPrixTube = new FormPrixTube(id, 
-                                prixTubeRep.getOne(id).getMarque(),
-                                prixTubeRep.getOne(id).getPrixString(),
-                                prixTubeRep.getOne(id).getPrixMembreString(),
-                                prixTubeRep.getOne(id).isActif());
-            return formPrixTube;
+            return new FormPrixTube(id,
+                    prixTubeRep.getOne(id).getMarque(),
+                    prixTubeRep.getOne(id).getPrixString(),
+                    prixTubeRep.getOne(id).getPrixMembreString(),
+                    prixTubeRep.getOne(id).isActif());
         }else{
             return null;
         }   
@@ -137,27 +137,73 @@ public class AGCVservice implements IagcvService {
         }
         return resultVal;
     }
+    @Override public PrixTube findLastPrixTubeCompet() {
+        long id = 0;
+        List<TypeTube> listTypeTube = typeTubeRep.findByNom(NomTypeTube.COMPETITION.toString());
+        
+        if (!listTypeTube.isEmpty()){
+            id = listTypeTube.get(listTypeTube.size()-1).getId();
+            System.out.println(">> id_type_tube : " + id);
+        }
+         
+        if (id!=0){
+            List<PrixTube> listPrixTube = prixTubeRep.findByIdTypeTube(id);
+            if (!listPrixTube.isEmpty()){
+                return listPrixTube.get(listPrixTube.size()-1);
+            }else{
+                return null;
+            }
+        }else{
+            return null;
+        }        
+    }
     
     
     // -------------------   FONCTIONS COMMANDES ---------------------
-    @Override public Commande saveCommande(Commande newCommande) {return commandeRep.save(newCommande);}
-    @Override public List<Commande> listCommande() {return commandeRep.findAll();}
-    @Override public Commande findByIdCommande(Long id) {return commandeRep.getOne(id);}
-    @Override public void supprCommande(Long id) {
-        Commande c = commandeRep.getOne(id);
-        commandeRep.delete(c);
+    @Override public int saveCommande(FormCommande newCommande) {
+        int resultVal = 0;
+        
+        Commande c = commandeRep.save(new Commande(
+                                        returnMainData().getIdSaison(), 
+                                        findLastPrixTubeCompet().getId(),
+                                        newCommande.getIdMembre(), 
+                                        newCommande.getNbTubeCommande(), 
+                                        newCommande.isRegler()));
+        if(c!=null) resultVal = 2;
+        
+        return resultVal;
     }
-    @Override public void updateByIdCommande(Long id, Commande editCommande) {
-        Commande c = commandeRep.getOne(id);
-        if(c != null) {
-            c.setIdMembre(editCommande.getIdMembre());
-            c.setIdPrixTube(editCommande.getIdPrixTube());
-            c.setIdSaison(editCommande.getIdSaison());
-            c.setNbTubeCommande(editCommande.getNbTubeCommande());
-            c.setRegler(editCommande.isRegler());
-            
-            commandeRep.save(c);
+    @Override public List<Commande> listCommande() {return commandeRep.findAll();}
+    @Override public Commande findByIdCommande(Long id) {
+        if (commandeRep.existsById(id)){
+            return commandeRep.getOne(id);
+        }else{
+            return null;
         }
+    }
+    @Override public int supprCommande(Long id) {
+        int resultVal = 0;
+        if (commandeRep.existsById(id)){
+            commandeRep.delete(commandeRep.getOne(id));
+            resultVal = 2;
+        }else{
+            resultVal = 1;
+        }
+        return resultVal;
+    }
+    @Override public int updateCommande(FormCommande editCommande) {
+        int resultVal = 0;
+        if (commandeRep.existsById(editCommande.getId())){
+            Commande c = commandeRep.getOne(editCommande.getId());
+            
+            c.setRegler(editCommande.isRegler());
+            commandeRep.save(c);
+            
+            resultVal = 2;
+        }else{
+            resultVal = 1;
+        }
+        return resultVal;
     }
  
     
@@ -221,24 +267,52 @@ public class AGCVservice implements IagcvService {
 
     
     // -------------------   FONCTIONS CONSO-MOIS ---------------------
-    @Override public ConsoMois saveConsoMois(ConsoMois newConsoMois) {return consoMoisRep.save(newConsoMois);}
-    @Override public List<ConsoMois> listConsoMois() {return consoMoisRep.findAll();}
-    @Override public ConsoMois findByIdConsoMois(Long id) {return consoMoisRep.getOne(id);}
-    @Override public void supprConsoMois(Long id) {
-        ConsoMois cm = consoMoisRep.getOne(id);
-        consoMoisRep.delete(cm);
+    @Override public int saveConsoMois(FormConsoMois newConsoMois) {
+        int resultVal = 0;
+        if(!newConsoMois.getNom().equals("")
+            && newConsoMois.getIdPrixTube()!=0
+            && newConsoMois.getIdTypeVolant()!=0){
+            ConsoMois cm = consoMoisRep.save(new ConsoMois(
+                    newConsoMois.getNom(),
+                    newConsoMois.getIdPrixTube(),
+                    newConsoMois.getIdTypeVolant(),
+                    newConsoMois.getNbTubeUtilise(),
+                    newConsoMois.getNbTubeCommande()));
+            if(cm!=null) resultVal = 2;
+        }
+        return resultVal;
     }
-    @Override public void updateByIdConsoMois(Long id, ConsoMois editConsoMois) {
-        ConsoMois cm = consoMoisRep.getOne(id);
-        if(cm != null) {
-            cm.setIdConsoTube(editConsoMois.getIdConsoTube());
-            cm.setIdPrixTube(editConsoMois.getIdConsoTube());
+    @Override public List<ConsoMois> listConsoMois() {return consoMoisRep.findAll();}
+    @Override public ConsoMois findByIdConsoMois(Long id) {
+        if(consoMoisRep.existsById(id)){
+            return consoMoisRep.getOne(id);
+        }else{
+            return null;
+        }
+    }
+    @Override public int supprConsoMois(Long id) {
+        int resultVal = 0;
+        if(consoMoisRep.existsById(id)){
+            consoMoisRep.delete(consoMoisRep.getOne(id));
+            resultVal = 2;
+        }else{
+            resultVal = 1;
+        }
+        return resultVal;
+    }
+    @Override public int updateConsoMois(FormConsoMois editConsoMois) {
+        int resultVal = 0;
+        if(consoMoisRep.existsById(editConsoMois.getId())){
+            ConsoMois cm = consoMoisRep.getOne(editConsoMois.getId());
             cm.setNbTubeCommande(editConsoMois.getNbTubeCommande());
             cm.setNbTubeUtilise(editConsoMois.getNbTubeUtilise());
-            cm.setNom(editConsoMois.getNom());
-                        
-            consoMoisRep.save(cm);
+            
+            consoMoisRep.save(cm); 
+            resultVal = 2;
+        }else{
+            resultVal = 1;
         }
+        return resultVal;
     }
 
 
@@ -463,22 +537,47 @@ public class AGCVservice implements IagcvService {
     
     
     // -------------------   FONCTIONS TYPE-VOLANT ---------------------
-    @Override public ConsoTube saveConsoTube(ConsoTube newConsoTube) {return consoTubeRep.save(newConsoTube);}
-    @Override public List<ConsoTube> listConsoTube() {return consoTubeRep.findAll();}
-    @Override public ConsoTube findByIdConsoTube(Long id) {return consoTubeRep.getOne(id);}
-    @Override public void supprConsoTube(Long id) {
-        ConsoTube ct = consoTubeRep.getOne(id);
-        consoTubeRep.delete(ct);
+    @Override public int saveTypeVolant(FormTypeVolant newTypeVolant) {
+        int resultVal = 0;
+            TypeVolant t = typeVolantRep.save(new TypeVolant(returnMainData().getIdSaison(), 
+                                                newTypeVolant.getIdTypeTube(), 
+                                                newTypeVolant.getInitTube()));
+            if(t!=null){
+                resultVal = 2;
+            }
+        return resultVal;
     }
-    @Override public void updateByIdConsoTube(Long id, ConsoTube editTypeVolant) {
-        ConsoTube ct = consoTubeRep.getOne(id);
-        if(ct != null) {
-            ct.setIdSaison(editTypeVolant.getIdSaison());
-            ct.setIdTypeTube(editTypeVolant.getIdTypeTube());
-            ct.setInitTube(editTypeVolant.getInitTube());
-            
-            consoTubeRep.save(ct);
+    @Override public List<TypeVolant> listTypeVolant() {return typeVolantRep.findAll();}
+    @Override public TypeVolant findByIdTypeVolant(Long id) {
+        if (typeVolantRep.existsById(id)){
+            return typeVolantRep.getOne(id);
+        }else{
+            return null;
         }
+    }
+    @Override public int supprTypeVolant(Long id) {
+        int resultVal = 0;
+        if (typeVolantRep.existsById(id)){     
+            typeVolantRep.delete(typeVolantRep.getOne(id));
+            resultVal = 2;
+        }else{
+            resultVal = 1;
+        }
+        return resultVal;
+    }
+    @Override public int updateTypeVolant(FormTypeVolant editTypeVolant) {
+        int resultVal = 0;
+        if (typeVolantRep.existsById(editTypeVolant.getId())){  
+            TypeVolant ct = typeVolantRep.getOne(editTypeVolant.getId());
+                ct.setIdTypeTube(editTypeVolant.getIdTypeTube());
+                ct.setInitTube(editTypeVolant.getInitTube());
+
+                typeVolantRep.save(ct);
+            resultVal = 2;
+        }else{
+            resultVal = 1;
+        }
+        return resultVal;
     }
 
     

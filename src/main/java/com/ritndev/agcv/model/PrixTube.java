@@ -2,6 +2,7 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import org.hibernate.annotations.UpdateTimestamp;
  *
  * @author Ritn
  */
-@Entity
+@Entity(name = "prix_tube")
 @Table(name = "PRIX_TUBE")
 public class PrixTube implements Serializable {
     
@@ -84,6 +85,26 @@ public class PrixTube implements Serializable {
     public String getPrixMembreString(){
         return String.valueOf(prixMembre);
     }
+    
+    //Renvoie le nom du type de tube
+    public String getTypeTubeName(List<TypeTube> typeTubes) {
+        String strResult = "";
+        for (TypeTube tt : typeTubes){
+            if(tt.getId()==idTypeTube){
+                strResult = tt.getNom();
+            }
+        }
+        return strResult;
+    }
+
+    @Override
+    public String toString() {
+        return prix + " | " + prixMembre;
+    }
+    
+    
+    
+    
     
     
 }

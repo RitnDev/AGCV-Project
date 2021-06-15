@@ -17,11 +17,81 @@
         <div th:replace="fragments/layout-header :: header"/>
       
         <div class="main-content">
+            <div th:if="${!reponses.empty}">
+                <br/>
+                <table class="table-reponse">
+                    <tbody>
+                        <tr th:each="rep : ${reponses}">
+                            <td th:class="${'td-rep-'+rep.key}"><span th:text="${rep.value}">rep</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <br/>
-            <div th:utext="${message}"> !</div>
-
+            <div th:utext="${message}"> !</div><br/><br/>
+            
+            <div class="std-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="table-label" colspan="10">COMMANDES</th>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Date de la commande</th>
+                            <th>Dernière MaJ de la commande</th>
+                            <th>Saison</th>
+                            <th>Membre</th>
+                            <th title="club | membre">Prix du tube</th>
+                            <th>Nb de tubes commandés</th>
+                            <th title="Nb tubes commandés x Prix tube (membre)">Prix de la commande</th>
+                            <th>Réglée ?</th>
+                            <th class="table-action">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${Commandes.empty}">
+                            <td colspan="10">Aucune Commande créée</td>
+                        </tr>
+                        <tr th:each="commande : ${Commandes}">
+                            <td><span th:text="${commande.id}">ID</span></td>
+                            <td><span th:text="${commande.dateCrea}">dateCrea</span></td>
+                            <td><span th:text="${commande.horodatage}">Horodatage</span></td>
+                            <td><span th:text="${commande.getSaisonName(saisonList)}">Saison</span></td>
+                            <td><span th:text="${commande.getMembreName(Membres)}">Membre</span></td>
+                            <td title="prix club | prix membre"><span th:text="${commande.getPrixTube(prixTubeList)}">prixTube</span></td>
+                            <td><span th:text="${commande.nbTubeCommande}">nbTubesCommandes</span></td>
+                            <td th:title="${commande.nbTubeCommande + ' x ' + commande.getPrixTubeMembre(prixTubeList)}">
+                                <span th:text="${commande.getPrixCommande(prixTubeList)}">prixCommande</span>
+                            </td>
+                            <td><span th:text="${commande.getRegler()}">régler</span></td>
+                            <td class="table-action">
+                                <table class="action-input">
+                                    <tr>
+                                        <td class="action-input">
+                                            <form action="#" th:action="@{/commande/{id}(id=${commande.id})}" th:method="post">
+                                                <input type="hidden" name="_method" value="delete"/>
+                                                <input id="action-input" type="submit" value="Suppr"/>
+                                            </form>
+                                        </td><td class="action-input">|</td>
+                                        <td class="action-input">
+                                            <form action="#" th:action="@{/commande/{id}(id=${commande.id})}" th:method="post">
+                                                <input id="action-input" type="submit" value="Edit"/>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            
+            
         </div>
-      
+        
+        
         <!-- pop-up section -->
         <div id="bg-popup" class="bg-popup-commande">
             <div th:replace="fragments/commande/layout-popup-new :: commande"/>

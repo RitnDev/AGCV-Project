@@ -2,6 +2,7 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -61,13 +62,92 @@ public class Commande implements Serializable {
     
     //la commande est-elle réglée ?
     @Column(name = "regler", nullable = false)
-    @Getter @Setter
+    @Setter
     private boolean regler;
+    public boolean isRegler() {return regler;}
     
     
     
     //Constructeur
     public Commande() {}
+
+    public Commande(long idSaison, long idPrixTube, long idMembre, int nbTubeCommande, boolean regler) {
+        this.idSaison = idSaison;
+        this.idPrixTube = idPrixTube;
+        this.idMembre = idMembre;
+        this.nbTubeCommande = nbTubeCommande;
+        this.regler = regler;
+    }
+ 
     
-        
+    /*
+        Methodes
+    */
+    
+    public String getRegler() {
+        String strResult = "Non";
+        if(regler) strResult = "Oui";
+        return strResult;
+    }
+    
+    public String getSaisonName(List<Saison> saisons) {
+        String strResult = "";
+        for (Saison s : saisons){
+            if(s.getId()==idSaison){
+                strResult = s.toString();
+            }
+        }
+        return strResult;
+    }
+    
+    public String getMembreName(List<Membre> membres) {
+        String strResult = "";
+        for (Membre m : membres){
+            if(m.getId()==idMembre){
+                strResult = m.toString();
+            }
+        }
+        return strResult;
+    }
+    
+    public String getPrixTube(List<PrixTube> prixTubes) {
+        String strResult = "";
+        for (PrixTube pt : prixTubes){
+            if(pt.getId()==idPrixTube){
+                strResult = pt.toString();
+            }
+        }
+        return strResult;
+    }
+    
+    public String getPrixTubeClub(List<PrixTube> prixTubes) {
+        String strResult = "";
+        for (PrixTube pt : prixTubes){
+            if(pt.getId()==idPrixTube){
+                strResult = pt.getPrixString();
+            }
+        }
+        return strResult;
+    }
+    public String getPrixTubeMembre(List<PrixTube> prixTubes) {
+        String strResult = "";
+        for (PrixTube pt : prixTubes){
+            if(pt.getId()==idPrixTube){
+                strResult = pt.getPrixMembreString();
+            }
+        }
+        return strResult;
+    }
+    
+    public double getPrixCommande(List<PrixTube> prixTubes) {
+        double dbResult = nbTubeCommande;
+        for (PrixTube pt : prixTubes){
+            if(pt.getId()==idPrixTube){
+                dbResult = dbResult * pt.getPrixMembre();
+            }
+        }
+        return dbResult;
+    }
+    
+    
 }

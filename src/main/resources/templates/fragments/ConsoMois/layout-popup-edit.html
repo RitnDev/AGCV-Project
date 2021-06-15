@@ -5,34 +5,43 @@
     </head>
     <body>
         
-<!-- ------------------------------------------ POPUP MODIFICATION COMMANDE -------------------------------------------------- -->
+<!-- ------------------------------------------ POPUP MODIFICATION COMPETITION -------------------------------------------------- -->
         
-        <div th:fragment="commande">
-            <div id="popup-content" class="popup-content-edit-commande">
+        <div th:fragment="consomois">
+            <div id="popup-content" class="popup-content-edit-consomois">
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Modifier la Commande</h3>
+                            <h3>Modifier le Conso Mois</h3>
                         </td>
                         <td class="popup-header-close">
-                            <a href="/commandesMembres" >
+                            <a href="/superAdmin" >
                                 <img class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>
                     </tr>
                 </table>
                 
-                <form th:action="@{/commande/{id}(id=*{id})}" th:object="${editCommande}" method="post">
+                <form th:action="@{/consomois/{id}(id=*{id})}" th:object="${editConsoMois}" method="post">
                         
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="regler">La commande est-elle déjà réglée ?</label>
+                                <label for="nbTubeUtilise">Nb tubes utilisés :</label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="regler" name="regler" type="checkbox" th:checked="*{regler}"/>
+                                <input id="nbTubeUtilise" type="number" th:value="*{nbTubeUtilise}" th:field="*{nbTubeUtilise}" min="0" />
                             </td>
                         </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="nbTubeCommande">Nb tubes commandés :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="nbTubeCommande" type="number" th:value="*{nbTubeCommande}" th:field="*{nbTubeCommande}" min="0" />
+                            </td>
+                        </tr>
+                        
                         <tr>
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>

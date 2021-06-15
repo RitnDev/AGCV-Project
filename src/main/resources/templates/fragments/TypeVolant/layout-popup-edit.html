@@ -5,34 +5,45 @@
     </head>
     <body>
         
-<!-- ------------------------------------------ POPUP MODIFICATION COMMANDE -------------------------------------------------- -->
+<!-- ------------------------------------------ POPUP MODIFICATION COMPETITION -------------------------------------------------- -->
         
-        <div th:fragment="commande">
-            <div id="popup-content" class="popup-content-edit-commande">
+        <div th:fragment="typevolant">
+            <div id="popup-content" class="popup-content-edit-typevolant">
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Modifier la Commande</h3>
+                            <h3>Modifier le type de tube</h3>
                         </td>
                         <td class="popup-header-close">
-                            <a href="/commandesMembres" >
+                            <a href="/superAdmin" >
                                 <img class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>
                     </tr>
                 </table>
                 
-                <form th:action="@{/commande/{id}(id=*{id})}" th:object="${editCommande}" method="post">
+                <form th:action="@{/typevolant/{id}(id=*{id})}" th:object="${editTypeVolant}" method="post">
                         
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="regler">La commande est-elle déjà réglée ?</label>
+                                <label for="idTypeTube">Type de Tube :</label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="regler" name="regler" type="checkbox" th:checked="*{regler}"/>
+                                <select id="idTypeTube" th:field="*{idTypeTube}">
+                                <option th:each="tt : ${typeTubeList}" th:value="${tt.id}" th:text="${tt.nom}"></option>
+                                </select>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="initTube">Init nb tubes :</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="initTube" type="number" th:value="*{initTube}" th:field="*{initTube}" min="0" />
+                            </td>
+                        </tr>
+                        
                         <tr>
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>

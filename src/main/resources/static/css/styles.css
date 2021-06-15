@@ -111,6 +111,8 @@ input.footer-log:hover {
 
 .bg-popup-commande,
 .bg-popup-typetube,
+.bg-popup-typevolant,
+.bg-popup-consomois,
 .bg-popup-prixtube,
 .bg-popup-membre,
 .bg-popup-user,
@@ -128,8 +130,13 @@ input.footer-log:hover {
 .popup-content-edit-membre,
 .popup-content-edit-compet,
 .popup-content-edit-typetube,
+.popup-content-edit-typevolant,
+.popup-content-edit-consomois,
 .popup-content-edit-prixtube,
+.popup-content-edit-commande,
 .popup-content-typetube,
+.popup-content-typevolant,
+.popup-content-consomois,
 .popup-content-prixtube,
 .popup-content-membre,
 .popup-content-user,
@@ -148,12 +155,32 @@ input.footer-log:hover {
     width: 650px;
     height: 265px;
 }
+.popup-content-edit-commande {
+    width: 525px;
+    height: 175px;
+}
 .popup-content-competition {
     width: 430px;
     height: 220px;
 }
 .popup-content-edit-compet {
     width: 430px;
+    height: 220px;
+}
+.popup-content-typevolant {
+    width: 430px;
+    height: 215px;
+}
+.popup-content-edit-typevolant {
+    width: 430px;
+    height: 215px;
+}
+.popup-content-consomois {
+    width: 420px;
+    height: 335px;
+}
+.popup-content-edit-consomois {
+    width: 420px;
     height: 220px;
 }
 .popup-content-typetube {
@@ -166,7 +193,7 @@ input.footer-log:hover {
 }
 .popup-content-prixtube {
     width: 500px;
-    height: 295px;
+    height: 260px;
 }
 .popup-content-edit-prixtube {
     width: 500px;
@@ -407,6 +434,8 @@ input#regler:hover {
 #topnav-menu-user,
 #topnav-menu-compet,
 #topnav-menu-stock,
+#topnav-menu-typevolant,
+#topnav-menu-consomois,
 #topnav-menu-typetube,
 #topnav-menu-prixtube,
 #topnav-menu-data{
@@ -424,6 +453,8 @@ input#regler:hover {
 #topnav-menu-compet:hover,
 #topnav-menu-stock:hover,
 #topnav-menu-typetube:hover,
+#topnav-menu-typevolant:hover,
+#topnav-menu-consomois:hover,
 #topnav-menu-prixtube:hover,
 #topnav-menu-data:hover{
    background-color: #bdbdbd;

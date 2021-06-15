@@ -1,7 +1,6 @@
 package com.ritndev.agcv.controller;
 
 import com.ritndev.agcv.classes.ActionsTypes;
-import com.ritndev.agcv.classes.TypeReponse;
 import com.ritndev.agcv.form.FormMembre;
 import com.ritndev.agcv.form.FormPrixTube;
 import com.ritndev.agcv.form.FormSaison;

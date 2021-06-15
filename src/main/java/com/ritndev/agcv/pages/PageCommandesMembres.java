@@ -38,22 +38,17 @@ public class PageCommandesMembres extends Page{
     
     public String getPage(Model model, Principal principal, IagcvService service) {
      
-        // recupérer la listes des membre en BDD.
-        List<String> listMembres = new ArrayList<>();
-        for(Membre m : service.listMembre()) {
-            listMembres.add(m.toString());
-        }
-                
-        FormCommande nouvelleCommande = new FormCommande("", 1, false);
-                
         String message = "Ici se trouve la page : ";
         message = message + getPage();
         
         // Add Attribute :
         model = getPageGenerique(model, principal);
         model.addAttribute("message", message);
-        model.addAttribute("newCommande", nouvelleCommande);
-        model.addAttribute("Membres", listMembres);
+        model.addAttribute("newCommande", new FormCommande());
+        model.addAttribute("Membres", service.listMembre());
+        model.addAttribute("Commandes", service.listCommande());
+        model.addAttribute("prixTubeList", service.listPrixTube());
+        model.addAttribute("saisonList", service.listSaison());
         
         return returnPage();
         
