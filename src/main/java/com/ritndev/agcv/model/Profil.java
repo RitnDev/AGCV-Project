@@ -1,12 +1,13 @@
 package com.ritndev.agcv.model;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,10 +16,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 /**
  *
  * @author Ritn
+ * Class test du OneToOne
  */
 @Entity
-@Table(name = "STOCK")
-public class StockCompetition implements Serializable {
+@Table(name = "PROFIL")
+public class Profil {
     
     //ID
     @Id
@@ -31,27 +33,23 @@ public class StockCompetition implements Serializable {
     @Column(name = "horodatage", nullable = false)
     @Getter @Setter private Timestamp horodatage;
     
-    //Stock pour les competition actuel
-    @Column(name = "stock", nullable = false)
-    @Getter @Setter private int stock;
+    //Pseudo
+    @Column(name = "pseudo", nullable = false)
+    @Getter @Setter private String pseudo;
+    
+    //Membre
+    @OneToOne 
+    @JoinColumn(name="idMembre", nullable=false )
+    //@Column(name = "idMembre")
+    @Getter @Setter private Membre idMembre;
+
+    public Profil() {
+    }
+
+    public Profil(String pseudo, Membre idMembre) {
+        this.pseudo = pseudo;
+        this.idMembre = idMembre;
+    }
+    
         
-    
-    //Constructeur
-    public StockCompetition() {
-        this.stock = 0;
-    }
-
-    public StockCompetition(long id, int stock) {
-        this.id = id;
-        this.stock = stock;
-    }
-
-    @Override
-    public String toString() {
-        return "StockCompetition{" + "id=" + id + '}';
-    }
-   
-    
-    
-    
 }

@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Getter;
@@ -22,7 +23,7 @@ public class TypeTube implements Serializable {
     
     //ID
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     @Getter @Setter
     private long id;
@@ -36,12 +37,7 @@ public class TypeTube implements Serializable {
     @Column(name = "nom", nullable = false)
     @Getter @Setter
     private String nom;
-    
-    //Est-ce que ce type de tube est encore utilisé ?
-    @Column(name = "actif", nullable = false)
-    @Getter @Setter
-    private boolean actif;
-    
+        
     //Est-ce que ce type de tube est commandable pour les membres ?
     @Column(name = "commande", nullable = false)
     @Getter @Setter
@@ -51,17 +47,14 @@ public class TypeTube implements Serializable {
     //Constructeur
     public TypeTube() {}
 
-    public TypeTube(String nom, boolean actif, boolean commande) {
+    public TypeTube(String nom, boolean commande) {
         this.nom = nom;
-        this.actif = actif;
         this.commande = commande;
     }
        
-    
-    public TypeTube(long id, String nom, boolean actif, boolean commande) {
+    public TypeTube(long id, String nom, boolean commande) {
         this.id = id;
         this.nom = nom;
-        this.actif = actif;
         this.commande = commande;
     }
 

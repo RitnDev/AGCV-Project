@@ -2,10 +2,14 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +25,7 @@ public class Saison implements Serializable {
     
     //ID
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     @Getter @Setter private long id;
     
@@ -47,6 +51,22 @@ public class Saison implements Serializable {
     @Getter @Setter private boolean actuelle;
     
     
+    
+    //Liste des commandes de la saison
+    @OneToMany(targetEntity=Commande.class, mappedBy="idSaison")
+    @Getter @Setter private List<Commande> commandes = new ArrayList<>();
+    
+    //Liste des competitions de la saison
+    @OneToMany(targetEntity=Competition.class, mappedBy="idSaison")
+    @Getter @Setter private List<Competition> competitions = new ArrayList<>();
+    
+    //Les types volants de la saison
+    @OneToMany(targetEntity=TypeVolant.class, mappedBy="idSaison")
+    @Getter @Setter private List<TypeVolant> typeVolants = new ArrayList<>();
+    
+    
+    
+    
     //Constructeur
     public Saison() {}
 
@@ -62,12 +82,16 @@ public class Saison implements Serializable {
         this.budget = budget;
         this.actuelle = actuelle;
     }
-    
+  
     
     
     
     @Override public String toString() {
-        return String.valueOf(anneeDebut) + " - " + String.valueOf(anneeFin);
+        String strResult = "";
+        if(anneeDebut>0){
+            strResult = String.valueOf(anneeDebut) + " - " + String.valueOf(anneeFin);
+        }
+        return strResult;
     }
     
     

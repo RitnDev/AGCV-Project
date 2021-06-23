@@ -46,7 +46,7 @@
                                 <label for="prix">Prix du tube :</label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="prix" type="number" th:value="*{prix}" th:field="*{prix}" step="0.01" />
+                                <input id="prix" type="number" th:value="*{prix}" th:field="*{prix}" step="0.01" min="0.01" />
                             </td>
                         </tr>
                         <tr>
@@ -54,7 +54,7 @@
                                 <label for="prixMembre">Prix du tube pour les membres :</label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="prixMembre" type="number" th:value="*{prixMembre}" th:field="*{prixMembre}" step="0.01" />
+                                <input id="prixMembre" type="number" th:value="*{prixMembre}" th:field="*{prixMembre}" step="0.01" min="0.00" />
                             </td>
                         </tr>
                         

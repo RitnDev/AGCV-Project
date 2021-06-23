@@ -27,15 +27,7 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="nom">Nom du type de tube :</label>
-                            </td>
-                            <td class="popup-form-input">
-                                <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="popup-form-label">
-                                <label for="commande">Ce type peut-il être sujet à des commandes membre ?</label>
+                                <label for="commande">Ce type de tube peut-il être sujet à des commandes membre ?</label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="commande" name="commande" type="checkbox" th:checked="*{commande}"/>
@@ -43,7 +35,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="actif">Ce type est-il actif ?</label>
+                                <label for="actif">Ce type de tube est-il actif ?</label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="actif" name="actif" type="checkbox" th:checked="*{actif}"/>

@@ -16,12 +16,10 @@ public class FormCommande {
     private long id;
    
     //id du prix tube correspondant à cette commande
-    @Getter @Setter
-    private long idPrixTube;
+    @Getter @Setter private long idPrixTube;
     
     //id du membre qui commande
-    @Getter @Setter
-    private long idMembre;
+    @Getter @Setter private long idMembre;
     
     //Nombres de tubes commandés
     @Getter @Setter private int nbTubeCommande;

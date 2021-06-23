@@ -1,7 +1,6 @@
 package com.ritndev.agcv.repository;
 
 import com.ritndev.agcv.model.TypeTube;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository; 
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,7 +10,8 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface TypeTubeRepository extends JpaRepository<TypeTube, Long> {
     
-    @Query("select tt from type_tube tt where tt.nom = ?1")
-    public List<TypeTube> findByNom(String nom);
-    
+    /*
+    @Query("SELECT tt FROM type_tube tt WHERE tt.nom = ?1 LIMIT 1")
+    public TypeTube findByNom(String nom);
+    */
 }

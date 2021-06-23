@@ -61,15 +61,12 @@ public class PageAdmin extends Page {
         model.addAttribute("listMembres", service.listMembre());
         model.addAttribute("listSaisons", service.listSaison());
         model.addAttribute("listPrixTubes", service.listPrixTube());
-        model.addAttribute("typeTubes", service.listTypeTube());
-        
+        model.addAttribute("typeTubes", service.listDataTypeTube());
         
         boolean connect = userService.findRoleByUsername(super.returnUser(principal)).equals("ROLE_SUPADMIN");
         Link pageSupAdmin = new Link("supAdmin", "Super Admin", "/superAdmin", connect);
         super.addLinks(pageSupAdmin);
         
         return returnPage();
-        
     }
-    
 }

@@ -28,12 +28,14 @@
                                 <label for="nom">Nom du type de tube :</label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
+                                <select id="nom" th:field="*{nom}">
+                                <option th:each="ntt : ${nomTypeTubes}" th:value="${ntt}" th:text="${ntt}"></option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="commande">Ce type peut-il être sujet à des commandes membre ?</label>
+                                <label for="commande">Ce type de tube peut-il être sujet à des commandes membre ?</label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="commande" name="commande" type="checkbox" th:checked="*{commande}"/>

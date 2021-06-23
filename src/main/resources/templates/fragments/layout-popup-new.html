@@ -5,46 +5,45 @@
     </head>
     <body>
         
-<!-- ------------------------------------------ POPUP NOUVEAU TYPE-TUBE -------------------------------------------------- -->
+<!-- ------------------------------------------ POPUP NOUVEAU PROFIL -------------------------------------------------- -->
         
-        <div th:fragment="typevolant">
-            <div id="popup-content" class="popup-content-typevolant">
+        <div th:fragment="profil">
+            <div id="popup-content" class="popup-content-profil">
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Nouveau type de volant</h3>
+                            <h3>Nouveau Profil</h3>
                         </td>
                         <td class="popup-header-close">
-                            <img id="close-typevolant" class="button-close" src="/images/popup/button-close.png">
+                            <img id="close-commande" class="button-close" src="/images/popup/button-close.png">
                         </td>
                     </tr>
                 </table>
                 
-                <form th:action="@{/newTypeVolant}" th:object="${newTypeVolant}" method="post">
+                <form th:action="@{/newProfil}" th:object="${newProfil}" method="post">
                         
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="idTypeTube">Type de Tube :</label>
+                                <label for="membre">Membre lié au profil :</label>
                             </td>
                             <td class="popup-form-input">
-                                <select id="idTypeTube" th:field="*{idTypeTube}">
-                                <option th:each="t : ${typeTubeList}" th:value="${t.id}" th:text="${t.toString()}"></option>
+                                <select id="membre" th:field="*{idMembre}">
+                                <option th:each="m : ${listMembres}" th:value="${m.id}" th:text="${m.toString()}"></option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="initTube">Init nb tubes :</label>
+                                <label for="pseudo">Pseudo du profil :</label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="initTube" type="number" th:value="*{initTube}" th:field="*{initTube}" min="0" />
+                                <input id="pseudo" type="text" th:value="*{pseudo}" th:field="*{pseudo}" />
                             </td>
                         </tr>
-                        
                         <tr>
                             <td colspan="2" class="popup-form-submit">
-                                <input class="popup-form-submit-button" type="submit" value="Créer le type de volant"/>                            
+                                <input class="popup-form-submit-button" type="submit" value="Créer le profil"/>                            
                             </td>
                         </tr>
                         

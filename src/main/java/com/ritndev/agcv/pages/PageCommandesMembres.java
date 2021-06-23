@@ -2,11 +2,8 @@ package com.ritndev.agcv.pages;
 
 import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.form.FormCommande;
-import com.ritndev.agcv.model.Membre;
 import com.ritndev.agcv.services.IagcvService;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.ui.Model;
 
 /**

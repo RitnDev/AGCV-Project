@@ -6,7 +6,10 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +26,7 @@ public class Commande implements Serializable {
     
     //ID
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     @Getter @Setter
     private long id;
@@ -41,9 +44,9 @@ public class Commande implements Serializable {
     private Timestamp dateCrea;
     
     //id de la saison de cette commande
-    @Column(name = "idSaison", nullable = false)
-    @Getter @Setter
-    private long idSaison;
+    @OneToOne
+    @JoinColumn(name = "idSaison", nullable = false)
+    @Getter @Setter private Saison idSaison;
     
     //id du prix tube correspondant à cette commande
     @Column(name = "idPrixTube", nullable = false)
@@ -51,9 +54,10 @@ public class Commande implements Serializable {
     private long idPrixTube;
     
     //id du membre qui commande
-    @Column(name = "idMembre", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "idMembre", nullable = false)
     @Getter @Setter
-    private long idMembre;
+    private Membre idMembre;
     
     //Nombre de tubes commandés lors de cette commande
     @Column(name = "nbTubeCommande", nullable = false)
@@ -71,7 +75,7 @@ public class Commande implements Serializable {
     //Constructeur
     public Commande() {}
 
-    public Commande(long idSaison, long idPrixTube, long idMembre, int nbTubeCommande, boolean regler) {
+    public Commande(Saison idSaison, long idPrixTube, Membre idMembre, int nbTubeCommande, boolean regler) {
         this.idSaison = idSaison;
         this.idPrixTube = idPrixTube;
         this.idMembre = idMembre;
@@ -89,27 +93,7 @@ public class Commande implements Serializable {
         if(regler) strResult = "Oui";
         return strResult;
     }
-    
-    public String getSaisonName(List<Saison> saisons) {
-        String strResult = "";
-        for (Saison s : saisons){
-            if(s.getId()==idSaison){
-                strResult = s.toString();
-            }
-        }
-        return strResult;
-    }
-    
-    public String getMembreName(List<Membre> membres) {
-        String strResult = "";
-        for (Membre m : membres){
-            if(m.getId()==idMembre){
-                strResult = m.toString();
-            }
-        }
-        return strResult;
-    }
-    
+            
     public String getPrixTube(List<PrixTube> prixTubes) {
         String strResult = "";
         for (PrixTube pt : prixTubes){

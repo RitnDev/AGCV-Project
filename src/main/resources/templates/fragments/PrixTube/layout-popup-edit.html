@@ -49,12 +49,19 @@
                                 <input id="prixMembre" type="number" th:value="*{prixMembre}" th:field="*{prixMembre}" step="0.01" />
                             </td>
                         </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="actif">Ce prix de tube est-il actif ?</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="actif" name="actif" type="checkbox" th:checked="*{actif}"/>
+                            </td>
+                        </tr>
                         
                         <tr>
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
-                                <input type="hidden" th:value="*{actif}" th:field="*{actif}" />
                                 <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
                             </td>
                         </tr>

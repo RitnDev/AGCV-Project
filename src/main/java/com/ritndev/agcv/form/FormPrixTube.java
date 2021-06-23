@@ -49,12 +49,20 @@ public class FormPrixTube {
     
     //Renvoie le prix au format double
     public double getPrixDouble() {
-        return Double.valueOf(prix);
+        if (!prix.equals("")){
+            return Double.valueOf(prix);
+        }else{
+            return 0.00;
+        }
     }
     
     //Renvoie le prixMembre au format double
     public double getPrixMembreDouble() {
-        return Double.valueOf(prixMembre);
+        if (!prixMembre.equals("")){
+            return Double.valueOf(prixMembre);
+        }else{
+            return 0.00;
+        }
     }
     
 }

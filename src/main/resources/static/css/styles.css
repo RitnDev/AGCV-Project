@@ -109,6 +109,7 @@ input.footer-log:hover {
 }
 
 
+.bg-popup-profil,
 .bg-popup-commande,
 .bg-popup-typetube,
 .bg-popup-typevolant,
@@ -134,6 +135,7 @@ input.footer-log:hover {
 .popup-content-edit-consomois,
 .popup-content-edit-prixtube,
 .popup-content-edit-commande,
+.popup-content-profil,
 .popup-content-typetube,
 .popup-content-typevolant,
 .popup-content-consomois,
@@ -151,9 +153,13 @@ input.footer-log:hover {
 }
 
 
-.popup-content-commande {
+.popup-content-profil {
     width: 650px;
     height: 265px;
+}
+.popup-content-commande {
+    width: 650px;
+    height: 300px;
 }
 .popup-content-edit-commande {
     width: 525px;
@@ -184,16 +190,16 @@ input.footer-log:hover {
     height: 220px;
 }
 .popup-content-typetube {
-    width: 800px;
-    height: 215px;
+    width: 500px;
+    height: 225px;
 }
 .popup-content-edit-typetube {
-    width: 800px;
-    height: 250px;
+    width: 500px;
+    height: 225px;
 }
 .popup-content-prixtube {
     width: 500px;
-    height: 260px;
+    height: 295px;
 }
 .popup-content-edit-prixtube {
     width: 500px;
@@ -428,6 +434,7 @@ input#regler:hover {
 
 /* Navigation : Sous-menu */
 #topnav-menu,
+#topnav-menu-profil,
 #topnav-menu-commande,
 #topnav-menu-saison,
 #topnav-menu-membre,
@@ -446,6 +453,7 @@ input#regler:hover {
 }
 
 #topnav-menu:hover,
+#topnav-menu-profil:hover,
 #topnav-menu-commande:hover,
 #topnav-menu-membre:hover,
 #topnav-menu-saison:hover,

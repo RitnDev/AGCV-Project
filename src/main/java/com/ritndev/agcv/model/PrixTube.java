@@ -2,11 +2,16 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +27,7 @@ public class PrixTube implements Serializable {
     
     //ID
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     @Getter @Setter
     private long id;
@@ -33,10 +38,11 @@ public class PrixTube implements Serializable {
     @Getter @Setter
     private Timestamp horodatage;
     
-    //Id correspondant aux type tube
-    @Column(name = "idTypeTube", nullable = false)
+    //id du type de tube de ce prix tube
+    @OneToOne
+    @JoinColumn(name = "idTypeTube", nullable = false)
     @Getter @Setter
-    private long idTypeTube;
+    private TypeTube idTypeTube;
     
     //Marque du tube
     @Column(name = "marque")
@@ -59,11 +65,17 @@ public class PrixTube implements Serializable {
     private boolean actif;
     
     
+    //Les types volants de la saison
+    @OneToMany(targetEntity=ConsoMois.class, mappedBy="idPrixTube")
+    @Getter @Setter private List<ConsoMois> consommationsMois = new ArrayList<>();
+    
+    
+    
     
     //Constructeur
     public PrixTube() {}
 
-    public PrixTube(String marque, double prix, double prixMembre, long idTypeTube, boolean actif) {
+    public PrixTube(String marque, double prix, double prixMembre, TypeTube idTypeTube, boolean actif) {
         this.idTypeTube = idTypeTube;
         this.marque = marque;
         this.prix = prix;
@@ -86,24 +98,20 @@ public class PrixTube implements Serializable {
         return String.valueOf(prixMembre);
     }
     
-    //Renvoie le nom du type de tube
-    public String getTypeTubeName(List<TypeTube> typeTubes) {
-        String strResult = "";
-        for (TypeTube tt : typeTubes){
-            if(tt.getId()==idTypeTube){
-                strResult = tt.getNom();
-            }
-        }
-        return strResult;
-    }
-
-    @Override
-    public String toString() {
+    //Pour les commentaire de tableau
+    public String getPrixComment(){
         return prix + " | " + prixMembre;
     }
+       
     
-    
-    
+    @Override
+    public String toString() {
+        if (!marque.equals("")){
+            return idTypeTube.toString() + " (" + marque +")";
+        }else{
+            return idTypeTube.toString();
+        }
+    }
     
     
     

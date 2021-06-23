@@ -13,7 +13,6 @@ import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.services.IUserService;
 import com.ritndev.agcv.services.IagcvService;
 import com.ritndev.agcv.classes.ActionsTypes;
-import com.ritndev.agcv.classes.TypeReponse;
 import com.ritndev.agcv.form.FormCompet;
 import com.ritndev.agcv.model.Competition;
 import com.ritndev.agcv.pages.PageSacCompetition;

@@ -26,18 +26,22 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="id-saison">ID Saison :</label>
+                                <label for="id-saison">Saison :</label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="id-saison" type="number" min="0" th:value="*{idSaison}" th:field="*{idSaison}" />
+                                <select id="id-saison" th:field="*{idSaison}">
+                                <option th:each="saison : ${listSaison}" th:value="${saison.id}" th:text="${saison.toString()}"></option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="id-stock">ID Stock compet :</label>
+                                <label for="id-stock">Stock compet :</label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="id-stock" type="number" min="0" th:value="*{idStockCompet}" th:field="*{idStockCompet}" />
+                                <select id="id-stock" th:field="*{idStockCompet}">
+                                <option th:each="stock : ${listStock}" th:value="${stock.id}" th:text="${stock.toString()}"></option>
+                                </select>
                             </td>
                         </tr>
                         <tr>

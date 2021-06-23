@@ -23,7 +23,6 @@ public interface IagcvService {
     public FormPrixTube findByIdPrixTube(Long id);
     public int supprPrixTube(Long id);
     public int updatePrixTube(FormPrixTube editPrixTube);
-    public PrixTube findLastPrixTubeCompet();
     
     //Methode Commande
     public int saveCommande(FormCommande newCommande);
@@ -34,7 +33,6 @@ public interface IagcvService {
     
     //Methode Competition
     public int saveCompetition(FormCompet newCompet);
-    public List<Competition> listCompetitionBySaison(Long idSaison);
     public Competition findByIdCompetition(Long id);
     public int supprCompetition(Long id);
     public int updateCompetition(FormCompet editCompet);
@@ -59,7 +57,6 @@ public interface IagcvService {
     public Saison findByIdSaison(Long id);
     public int supprSaison(Long id);
     public int updateSaison(FormSaison editSaison);
-    public Long lastIdSaison();
     
     
     //Methode TypeVolant
@@ -80,6 +77,7 @@ public interface IagcvService {
     //Methode TypeTube
     public int saveTypeTube(FormTypeTube formTypeTube);
     public List<TypeTube> listTypeTube();
+    public List<TypeTube> listDataTypeTube();
     public TypeTube findByIdTypeTube(Long id);
     public int supprTypeTube(Long id);
     public int updateTypeTube(FormTypeTube editTypeTube);

@@ -99,10 +99,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:if="${listSaisons.empty}">
+                        <tr th:if="${listSaisons.size()==1}">
                             <td colspan="6">Aucune Saison créé</td>
                         </tr>
-                        <tr th:each="saison : ${listSaisons}">
+                        <tr th:each="saison : ${listSaisons}" th:if="${saison.id!=1}">
                             <td><span th:text="${saison.id}">ID</span></td>
                             <td><span th:text="${saison.horodatage}">Horodatage</span></td>
                             <td><span th:text="${saison.toString}">Nom</span></td>
@@ -156,7 +156,7 @@
                             <td><span th:text="${prixTube.id}">ID</span></td>
                             <td><span th:text="${prixTube.horodatage}">Horodatage</span></td>
                             <td><span th:text="${prixTube.marque}">Marque</span></td>
-                            <td><span th:text="${prixTube.getTypeTubeName(typeTubes)}">Type de tube</span></td>
+                            <td><span th:text="${prixTube.idTypeTube}">Type de tube</span></td>
                             <td><span th:text="${prixTube.prix}">Prix</span></td>
                             <td><span th:text="${prixTube.prixMembre}">Prix membre</span></td>
                             <td><span th:text="${prixTube.actif}">actif</span></td>

@@ -46,8 +46,8 @@ public class PageSacCompetition extends Page {
         message = message + "Ici sera affiché la liste des compétition de la saison. ";
         message = message + "Il sera possible de faire le restockage du stock de compétition.";
         
-        Saison saisonActuelle = service.findByIdSaison(service.returnMainData().getIdSaison());
-        StockCompetition stockActuel = service.findByIdStock(service.returnMainData().getIdStockCompet());
+        Saison saisonActuelle = service.returnMainData().getIdSaison();
+        StockCompetition stockActuel = service.returnMainData().getIdStockCompet();
         
         int AdminConnect = 0;
         
@@ -65,7 +65,7 @@ public class PageSacCompetition extends Page {
         model.addAttribute("newCompetition", new FormCompet());
         model.addAttribute("saison", saisonActuelle);
         model.addAttribute("stock", stockActuel);
-        model.addAttribute("listCompet", service.listCompetitionBySaison(saisonActuelle.getId()));
+        model.addAttribute("listCompet", saisonActuelle.getCompetitions());
         
         return returnPage();
         

@@ -2,11 +2,16 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +27,7 @@ public class TypeVolant implements Serializable {
     
     //ID
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     @Getter @Setter
     private long id;
@@ -34,14 +39,12 @@ public class TypeVolant implements Serializable {
     private Timestamp horodatage;
     
     //id de la saison de cette consomation de tube
-    @Column(name = "idSaison", nullable = false)
-    @Getter @Setter
-    private long idSaison;
+    @OneToOne @JoinColumn(name = "idSaison", nullable = false)
+    @Getter @Setter private Saison idSaison;
     
     //id du type de tube de cette consomation de tube
-    @Column(name = "idTypeTube", nullable = false)
-    @Getter @Setter
-    private long idTypeTube;
+    @OneToOne @JoinColumn(name = "idTypeTube", nullable = false)
+    @Getter @Setter private TypeTube idTypeTube;
     
     //Nombre de tube avant consommation de volant (stock de départ)
     @Column(name = "initTube", nullable = false)
@@ -50,40 +53,20 @@ public class TypeVolant implements Serializable {
     
     
     
+    //Les types volants de la saison
+    @OneToMany(targetEntity=ConsoMois.class, mappedBy="idTypeVolant")
+    @Getter @Setter private List<ConsoMois> consommationsMois = new ArrayList<>();
+    
+    
+    
+    
     //Constructeur
     public TypeVolant() {}
 
-    public TypeVolant(long idSaison, long idTypeTube, int initTube) {
+    public TypeVolant(Saison idSaison, TypeTube idTypeTube, int initTube) {
         this.idSaison = idSaison;
         this.idTypeTube = idTypeTube;
         this.initTube = initTube;
     }
-    
-        
-    /*
-        Methodes
-    */
-    
-    //Renvoie le nom de la saison
-    public String getSaisonName(List<Saison> saisons) {
-        String strResult = "";
-        for (Saison s : saisons){
-            if(s.getId()==idSaison){
-                strResult = s.toString();
-            }
-        }
-        return strResult;
-    }
-    
-    //Renvoie le nom du type de tube
-    public String getTypeTubeName(List<TypeTube> typeTubes) {
-        String strResult = "";
-        for (TypeTube tt : typeTubes){
-            if(tt.getId()==idTypeTube){
-                strResult = tt.getNom();
-            }
-        }
-        return strResult;
-    }
-    
+   
 }

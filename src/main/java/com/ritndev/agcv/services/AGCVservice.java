@@ -2,8 +2,8 @@ package com.ritndev.agcv.services;
 
 import com.ritndev.agcv.form.*;
 import com.ritndev.agcv.model.*;
-import com.ritndev.agcv.model.enumeration.NomTypeTube;
 import com.ritndev.agcv.repository.*;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,8 +60,11 @@ public class AGCVservice implements IagcvService {
         int resultVal = 0;
         if (membreRep.existsById(id)){
             Membre m = membreRep.getOne(id);
-            membreRep.delete(m);
-            resultVal = 2;
+            //vérifie que la liste des commandes est vide avant de supprimer le membre
+            if(m.getCommandes().isEmpty()){
+                membreRep.delete(m);
+                resultVal = 2;
+            }
         }else{
             resultVal = 1;
         }
@@ -88,11 +91,11 @@ public class AGCVservice implements IagcvService {
         if (newPrixTube != null
         && newPrixTube.getIdTypeTube()>0
         && newPrixTube.getPrixDouble()>0
-        && newPrixTube.getPrixMembreDouble()>0){
+        && newPrixTube.getPrixMembreDouble()>=0){
             prixTubeRep.save(new PrixTube(newPrixTube.getMarque(),
                                             newPrixTube.getPrixDouble(), 
                                             newPrixTube.getPrixMembreDouble(),
-                                            newPrixTube.getIdTypeTube(),
+                                            typeTubeRep.getOne(newPrixTube.getIdTypeTube()),
                                             true));
             resultVal = 2;
         }
@@ -137,26 +140,7 @@ public class AGCVservice implements IagcvService {
         }
         return resultVal;
     }
-    @Override public PrixTube findLastPrixTubeCompet() {
-        long id = 0;
-        List<TypeTube> listTypeTube = typeTubeRep.findByNom(NomTypeTube.COMPETITION.toString());
-        
-        if (!listTypeTube.isEmpty()){
-            id = listTypeTube.get(listTypeTube.size()-1).getId();
-            System.out.println(">> id_type_tube : " + id);
-        }
-         
-        if (id!=0){
-            List<PrixTube> listPrixTube = prixTubeRep.findByIdTypeTube(id);
-            if (!listPrixTube.isEmpty()){
-                return listPrixTube.get(listPrixTube.size()-1);
-            }else{
-                return null;
-            }
-        }else{
-            return null;
-        }        
-    }
+    
     
     
     // -------------------   FONCTIONS COMMANDES ---------------------
@@ -165,8 +149,8 @@ public class AGCVservice implements IagcvService {
         
         Commande c = commandeRep.save(new Commande(
                                         returnMainData().getIdSaison(), 
-                                        findLastPrixTubeCompet().getId(),
-                                        newCommande.getIdMembre(), 
+                                        newCommande.getIdPrixTube(),
+                                        membreRep.getOne(newCommande.getIdMembre()), 
                                         newCommande.getNbTubeCommande(), 
                                         newCommande.isRegler()));
         if(c!=null) resultVal = 2;
@@ -214,7 +198,8 @@ public class AGCVservice implements IagcvService {
         MainData md = returnMainData();
         //Vérification qu'il y a bien une main-data de créée
         if(md.getId() != 0){
-            if (md.getIdSaison()>0) {
+            if (md.getIdSaison()!=null) {
+            //if (md.getIdSaison()>0) {
                 if (newCompet != null
                 && newCompet.getNbTubesUtilises() != 0
                 && !newCompet.getNom().equals("")){
@@ -228,9 +213,6 @@ public class AGCVservice implements IagcvService {
             resultVal = 1; // Pas de main-data créée.
         }
         return resultVal;
-    }
-    @Override public List<Competition> listCompetitionBySaison(Long idSaison) {
-        return competitionRep.findByIdSaison(idSaison);
     }
     @Override public Competition findByIdCompetition(Long id) {
         if(competitionRep.existsById(id)){
@@ -274,8 +256,8 @@ public class AGCVservice implements IagcvService {
             && newConsoMois.getIdTypeVolant()!=0){
             ConsoMois cm = consoMoisRep.save(new ConsoMois(
                     newConsoMois.getNom(),
-                    newConsoMois.getIdPrixTube(),
-                    newConsoMois.getIdTypeVolant(),
+                    prixTubeRep.getOne(newConsoMois.getIdPrixTube()),
+                    typeVolantRep.getOne(newConsoMois.getIdTypeVolant()),
                     newConsoMois.getNbTubeUtilise(),
                     newConsoMois.getNbTubeCommande()));
             if(cm!=null) resultVal = 2;
@@ -329,7 +311,7 @@ public class AGCVservice implements IagcvService {
                     resultVal = 1; //Pas de main-data créée
                 }else{
                     Long id = stockCompetRep.save(new StockCompetition()).getId();
-                    md.setIdStockCompet(id);
+                    md.setIdStockCompet(stockCompetRep.getOne(id));
                     mainDataRep.save(md);
                     resultVal = 2;      //mise à jour de la main-data ok et nouveau stock
                 }   
@@ -348,17 +330,20 @@ public class AGCVservice implements IagcvService {
     }
     @Override public int supprStock(Long id) {
         int resultVal = 0;
-        if (stockCompetRep.existsById(id)){
-               
-            // ----- MISE A JOUR MAIN-DATA -----
-            for (MainData d : mainDataRep.findByIdStockCompet(id)){
-                d.setIdStockCompet(0);
-                mainDataRep.save(d);
+        if (id!=1){
+            if (stockCompetRep.existsById(id)){
+
+                // ----- MISE A JOUR MAIN-DATA -----
+                for (MainData d : mainDataRep.findByIdStockCompet(id)){
+                    Long st = 1L;
+                    d.setIdStockCompet(stockCompetRep.getOne(st));
+                    mainDataRep.save(d);
+                }
+                stockCompetRep.delete(stockCompetRep.getOne(id));
+                resultVal = 2;
+            }else{
+                resultVal = 1;
             }
-            stockCompetRep.delete(stockCompetRep.getOne(id));
-            resultVal = 2;
-        }else{
-            resultVal = 1;
         }
         return resultVal;
     }
@@ -393,37 +378,51 @@ public class AGCVservice implements IagcvService {
                 && !"".equals(newSaison.toString())
                 && !"".equals(newSaison.getBudget())
                 ){
-            // ----- MISE A JOUR MAIN-DATA -----
+            
+            if (!saisonRep.existsByAnneeDebut(newSaison.getAnnee_debut())) {
+                Saison sNew = saisonRep.save(new Saison(newSaison.getAnnee_debut(), newSaison.getBudgetDouble(), newSaison.isActuelle()));
+                resultVal = 2;
+                
+                if (sNew.isActuelle()){
+                    
+                    // ----- MISE A JOUR MAIN-DATA -----
 
-            //Récupération de la Main-Data active (md)
-            MainData md = returnMainData();
-            //Vérification qu'il y a bien une main-data de créée
-            if(md.getId() == 0){
-                resultVal = 1; //Pas de main-data créée !
-            }else{
-                //On créée la saison si elle n'existe pas
-                if (!saisonRep.existsByAnneeDebut(newSaison.getAnnee_debut())) {
-                    Saison s = saisonRep.save(new Saison(newSaison.getAnnee_debut(), newSaison.getBudgetDouble(), newSaison.isActuelle()));
-                    long id = s.getId();
+                    //Récupération de la Main-Data active (md)
+                    MainData md = returnMainData();
                     
-                    //Mise à jour de l'ancienne Saison enregistré dans main-data
-                    if (saisonRep.existsById(md.getIdSaison())){ // Vérifie que l'id existe en BDD
-                        //si existe on met à jour l'ancienne saison
-                        Saison sOld = saisonRep.getOne(md.getIdSaison());
-                        sOld.setActuelle(false); // Passage en saison non actuelle
-                        saisonRep.save(sOld);    //sauvegarde des modifications
-                        md.setIdSaison(id);      //mise à jour du main-data avec le nouvel ID saison
+                    //Vérification qu'il y a bien une main-data de créée
+                    if(md.getId() == 0){
+                        //Création d'un Main-Data et enregistrement de la saison
+                        newMainData();
+                        md = returnMainData();
+                        md.setIdSaison(sNew);
                         mainDataRep.save(md);
-                        resultVal = 4;
+                        resultVal = 1;
                     }else{
-                        md.setIdSaison(id);      //mise à jour du main-data avec le nouvel ID saison
-                        mainDataRep.save(md);
-                        resultVal = 2;
+                        if(md.getIdSaison().getId()==1){
+                            //On enregistre la nouvelle saison comme actuelle
+                            md.setIdSaison(sNew);
+                            mainDataRep.save(md);
+                            resultVal = 4;
+                        }else{
+                            if (saisonRep.existsById(md.getIdSaison().getId())){
+                                Saison sOld = md.getIdSaison();
+                                sOld.setActuelle(false); // Passage en saison non actuelle
+                                saisonRep.save(sOld);    //sauvegarde des modifications
+                                md.setIdSaison(sNew);      //mise à jour du main-data avec la nouvelle saison
+                                mainDataRep.save(md);
+                                resultVal = 4;
+                            }else{
+                                //On enregistre la nouvelle saison comme actuelle
+                                md.setIdSaison(sNew);
+                                mainDataRep.save(md);
+                                resultVal = 4;
+                            }    
+                        }
                     }
-                    
-                }else{
-                    resultVal = 3; //Saison existe déjà (année de début)
-                }
+                } 
+            }else{
+                resultVal = 3; //Saison existe déjà (année de début)
             }
         }
         return resultVal;
@@ -438,28 +437,29 @@ public class AGCVservice implements IagcvService {
     }
     @Override public int supprSaison(Long id) {
         int resultVal = 0;
-        if (saisonRep.existsById(id)){
-            Saison saison = saisonRep.getOne(id);
-            boolean actif = saison.isActuelle();
-            saisonRep.delete(saison);
-            resultVal = 2;
-            
-            // Mise à jour du Main-Data (si la saison été actuelle)
-            if(actif){
+        
+        if(id!=1){
+            if (saisonRep.existsById(id)){
+                Saison saison = saisonRep.getOne(id);
+                
+                // Mise à jour du Main-Data (si la saison été actuelle)
                 MainData md = returnMainData();
                 if(md.getId()>0){
-                    //si c'est bien la saison actuelle qui est supprimée
-                    //on met à 0 l'idSaison du main-data
-                    if(id == md.getIdSaison()){
-                        md.setIdSaison(0);
-                        mainDataRep.save(md);
-                        resultVal = 3; //Plus de saison ative en Main-data
+                    if(id == md.getIdSaison().getId()){
+                        Long saison0 = 1L;
+                        md.setIdSaison(saisonRep.getOne(saison0));
+                        saisonRep.delete(saison);
+                        resultVal = 3;
+                    }else{
+                        saisonRep.delete(saison);
+                        resultVal = 2;
                     }
                 }
+                
+            }else{
+                resultVal = 1; //Cette saison n'existe pas en BDD.
             }
-        }else{
-            resultVal = 1; //Cette saison n'existe pas en BDD.
-        }
+        }       
         return resultVal;
     }
     
@@ -502,7 +502,7 @@ public class AGCVservice implements IagcvService {
                         MainData md = returnMainData();
                         if(md.getId()>0){
                             //on met à 0 l'idSaison du main-data
-                            md.setIdSaison(0);
+                            md.setIdSaison(null);
                             mainDataRep.save(md);
                             resultVal = 3; // mise à jour éffectue et désactivation de la saison dans main-data
                         }
@@ -513,14 +513,16 @@ public class AGCVservice implements IagcvService {
                         MainData md = returnMainData();
                         if(md.getId()>0){ 
                             //Vérification que l'ID SAISON du Main-data n'est pas à 0    
-                            if(md.getIdSaison()!=0){
+                            if(md.getIdSaison()!=null){
                                 //Récupération de l'ancienn saison active pour la passer inactive
-                                Saison sOld = saisonRep.getOne(md.getIdSaison());
-                                sOld.setActuelle(false);    
+                                Saison sOld = md.getIdSaison();
+                                if (sOld.getId()!=0){
+                                    sOld.setActuelle(false);  
+                                }
                                 saisonRep.save(sOld);
                             }
                             //On inscrit la nouvelle ID_saison dans le main-data
-                            md.setIdSaison(editSaison.getId());
+                            md.setIdSaison(saison);
                             mainDataRep.save(md);
                             resultVal = 4; // mise à jour éffectue et activation de la saison dans main-data
                         }                   
@@ -530,17 +532,14 @@ public class AGCVservice implements IagcvService {
         }
         return resultVal;
     }
-    @Override public Long lastIdSaison() {
-        //changer la fonction !!!
-        return saisonRep.findLastId();
-    }
     
     
     // -------------------   FONCTIONS TYPE-VOLANT ---------------------
     @Override public int saveTypeVolant(FormTypeVolant newTypeVolant) {
         int resultVal = 0;
-            TypeVolant t = typeVolantRep.save(new TypeVolant(returnMainData().getIdSaison(), 
-                                                newTypeVolant.getIdTypeTube(), 
+            TypeVolant t = typeVolantRep.save(new TypeVolant(
+                                                returnMainData().getIdSaison(), 
+                                                typeTubeRep.getOne(newTypeVolant.getIdTypeTube()), 
                                                 newTypeVolant.getInitTube()));
             if(t!=null){
                 resultVal = 2;
@@ -569,7 +568,7 @@ public class AGCVservice implements IagcvService {
         int resultVal = 0;
         if (typeVolantRep.existsById(editTypeVolant.getId())){  
             TypeVolant ct = typeVolantRep.getOne(editTypeVolant.getId());
-                ct.setIdTypeTube(editTypeVolant.getIdTypeTube());
+                ct.setIdTypeTube(typeTubeRep.getOne(editTypeVolant.getIdTypeTube()));
                 ct.setInitTube(editTypeVolant.getInitTube());
 
                 typeVolantRep.save(ct);
@@ -593,14 +592,20 @@ public class AGCVservice implements IagcvService {
         return resultVal;
     }
     @Override public List<MainData> listMainData() {return mainDataRep.findAll();}
-    @Override public MainData findByIdMainData(Long id) {return mainDataRep.getOne(id);}
+    @Override public MainData findByIdMainData(Long id) {
+        if (mainDataRep.existsById(id)){
+            return mainDataRep.getOne(id);
+        }else{
+            return null;
+        }
+    }
     @Override public int supprMainData(Long id) {
         int resultVal = 0;
         if(mainDataRep.existsById(id)) {
             resultVal = 3;
             MainData md = mainDataRep.getOne(id);
-            if (md.getIdSaison()==0 
-            && md.getIdStockCompet()==0){
+            if (md.getIdSaison().getId()==1
+            && md.getIdStockCompet().getId()==1){
                 mainDataRep.delete(md);
                 resultVal = 2;  
             }
@@ -616,8 +621,24 @@ public class AGCVservice implements IagcvService {
         if(mainDataRep.existsById(editMainData.getId())) {
             //Récupération de la data et mise à jour de l'ID Saison/Stock
             MainData md = mainDataRep.getOne(editMainData.getId());
-            md.setIdSaison(editMainData.getIdSaison());
-            md.setIdStockCompet(editMainData.getIdStockCompet());
+            
+            //Passe la saison selectionné en active
+            Saison sNew = saisonRep.getOne(editMainData.getIdSaison());
+            sNew.setActuelle(true);
+            saisonRep.save(sNew);
+            
+            //Passe toutes les saisons en non active
+            for(Saison s : listSaison()){
+                if(s.getId()>1){
+                    if(s.getId()!=sNew.getId()){
+                        s.setActuelle(false);
+                        saisonRep.save(s);
+                    }
+                }
+            }
+            
+            md.setIdSaison(sNew);
+            md.setIdStockCompet(stockCompetRep.getOne(editMainData.getIdStockCompet()));
             resultVal = 2;//mise à jour de la main-data
             
             
@@ -663,38 +684,103 @@ public class AGCVservice implements IagcvService {
         int resultVal = 0;
         if(formTypeTube != null
         && !formTypeTube.getNom().equals("")) {
-            typeTubeRep.save(new TypeTube(formTypeTube.getNom(), true, formTypeTube.isCommande()));
-            resultVal = 2;
+            
+            // MAIN DATA
+            MainData md = returnMainData();
+            if(md.getId()>0){
+                TypeTube tt = typeTubeRep.save(new TypeTube(formTypeTube.getNom(), formTypeTube.isCommande()));
+                changeIdTTMainData(md, tt.getNom(), tt.getId());
+                mainDataRep.save(md);
+                resultVal = 2; // mise à jour du main-data et creation du Type-Tube ok !
+            }else{
+                resultVal = 1; //Pas de main-data !
+            }
+            
         }else{
-            resultVal = 1;
+            resultVal = 3; //Champs incorrect !
         }
         return resultVal;
     }
     @Override public List<TypeTube> listTypeTube() {return typeTubeRep.findAll();}
-    @Override public TypeTube findByIdTypeTube(Long id) {return typeTubeRep.getOne(id);}
+    
+    @Override public List<TypeTube> listDataTypeTube() {
+        List<TypeTube> typeTubes = new ArrayList<>();
+        
+        MainData md = returnMainData();
+        if(md.getId()>0){
+            if (typeTubeRep.existsById(md.getIdTTPlastique().getId())){
+                typeTubes.add(md.getIdTTPlastique());
+            }
+            if (typeTubeRep.existsById(md.getIdTTEntrainement().getId())){
+                typeTubes.add(md.getIdTTEntrainement());
+            }
+            if (typeTubeRep.existsById(md.getIdTTCompetition().getId())){
+                typeTubes.add(md.getIdTTCompetition());
+            }
+        }
+        return typeTubes;
+    }
+    @Override public TypeTube findByIdTypeTube(Long id) {
+        if (typeTubeRep.existsById(id)){
+            return typeTubeRep.getOne(id);
+        }else{
+            return null;
+        }
+    }
     @Override public int supprTypeTube(Long id) {
         int resultVal = 0; //Suppression non OK
         if(typeTubeRep.existsById(id)){ //Verification que l'id existe en BDD
-            typeTubeRep.delete(typeTubeRep.getOne(id));
-            resultVal = 2; //Suppression OK
+            
+            MainData md = returnMainData();
+            if(md.getId()>0){
+                String nomTypeTube = typeTubeRep.getOne(id).getNom();
+                typeTubeRep.delete(typeTubeRep.getOne(id));
+                long value = 1;
+                
+                switch(nomTypeTube){
+                    case "Plastique" ->{
+                        if(md.getIdTTPlastique().getId()==id){
+                            changeIdTTMainData(md, nomTypeTube, value);
+                            mainDataRep.save(md);
+                        }
+                    }
+                    case "Entrainement" ->{
+                        if(md.getIdTTEntrainement().getId()==id){
+                            changeIdTTMainData(md, nomTypeTube, value);
+                            mainDataRep.save(md);
+                        }
+                    }
+                    case "Compétition" ->{
+                        if(md.getIdTTCompetition().getId()==id){
+                            changeIdTTMainData(md, nomTypeTube, value);
+                            mainDataRep.save(md);
+                        }
+                    }
+                }
+                resultVal = 2; // mise à jour du main-data et supprression du Type-Tube ok !
+            }else{
+                resultVal = 3; //Pas de main-data !
+            }
+                        
         }else{
-            resultVal = 1;
+            resultVal = 1; //Le Type-Tube ne se trouve pas en BDD
         }     
         return resultVal;
     }
     @Override public int updateTypeTube(FormTypeTube editTypeTube) {
         int resultVal = 0; //Modification non OK
         if(typeTubeRep.existsById(editTypeTube.getId())){ //Verification que l'id existe en BDD
-            TypeTube tb = typeTubeRep.getOne(editTypeTube.getId());
-
-            if (!editTypeTube.getNom().equals("")){ //Vérification que le nom est pas vide
-                tb.setNom(editTypeTube.getNom());
+            
+            MainData md = returnMainData();
+            if(md.getId()>0){
+                TypeTube tb = typeTubeRep.getOne(editTypeTube.getId());
                 tb.setCommande(editTypeTube.isCommande());
-                tb.setActif(editTypeTube.isActif());
-
                 typeTubeRep.save(tb);
-                resultVal = 2; //Modification OK
+                resultVal = 2; // mise à jour du Type-Tube ok !
+            }else{
+                resultVal = 3; //Pas de main-data !
             }
+
         }else{
             resultVal = 1;
         }
@@ -703,6 +789,14 @@ public class AGCVservice implements IagcvService {
 
     
     
+    //Change l'ID Type Tube selon le du type Tube
+    private void changeIdTTMainData(MainData md, String nom, Long id){
+        switch (nom){
+            case "Plastique" ->     md.setIdTTPlastique(typeTubeRep.getOne(id));
+            case "Entrainement" ->  md.setIdTTEntrainement(typeTubeRep.getOne(id));
+            case "Compétition" ->   md.setIdTTCompetition(typeTubeRep.getOne(id));
+        }
+    }
     
     
 }

@@ -42,26 +42,32 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th class="table-label" colspan="6">MAIN DATA</td>
+                                            <th class="table-label" colspan="9">MAIN DATA</td>
                                         </tr>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Horodatage</th>
-                                            <th>Saison</th>
+                                            <th title="Saison en cours">Saison</th>
                                             <th>ID Stock Compet</th>
+                                            <th>Budget par défaut</th>
+                                            <th title="ID du Type de tube Plastique">ID Plastique</th>
+                                            <th title="ID du Type de tube Entrainement">ID Entrainement</th>
+                                            <th title="ID du Type de tube Compétition">ID  Compétition</th>
                                             <th>Actif ?</th>
                                             <th class="table-action">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr th:if="${mainData.empty}">
-                                            <td colspan="6">Aucune data créée</td>
+                                            <td colspan="9">Aucune data créée</td>
                                         </tr>
                                         <tr th:each="data : ${mainData}">
                                             <td><span th:text="${data.id}">ID</span></td>
-                                            <td><span th:text="${data.horodatage}">Horodatage</span></td>
-                                            <td><span  th:text="${data.getSaisonName(saisons)}" th:title="${'id='+data.idSaison}">id_saison</span></td>
-                                            <td><span th:text="${data.idStockCompet}">id_stock_compet</span></td>
+                                            <td><span th:text="${data.idSaison.toString()}" th:title="${'id='+data.idSaison.id}">id_saison</span></td>
+                                            <td><span th:text="${data.idStockCompet.id}">id_stock_compet</span></td>
+                                            <td><span th:text="${data.budgetDefault}">budget</span></td>
+                                            <td><span th:text="${data.idTTPlastique}" th:title="${'id='+data.idTTPlastique.id}">idTTPlastique</span></td>
+                                            <td><span th:text="${data.idTTEntrainement}" th:title="${'id='+data.idTTEntrainement.id}">idTTEntrainement</span></td>
+                                            <td><span th:text="${data.idTTCompetition}" th:title="${'id='+data.idTTCompetition.id}">idTTCompetition</span></td>
                                             <td><span th:text="${data.actif}">actif</span></td>
                                             <td class="table-action">
                                                 <table class="action-input">
@@ -103,10 +109,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:if="${stockList.empty}">
+                                        <tr th:if="${stockList.size()==1}">
                                             <td colspan="4">Aucun stock créé</td>
                                         </tr>
-                                        <tr th:each="stock : ${stockList}">
+                                        <tr th:each="stock : ${stockList}" th:if="${stock.id!=1}">
                                             <td><span th:text="${stock.id}">ID</span></td>
                                             <td><span th:text="${stock.horodatage}">horodatage</span></td>
                                             <td><span th:text="${stock.stock}">Stock</span></td>
@@ -220,8 +226,8 @@
                                             <td><span th:text="${consoMois.id}">ID</span></td>
                                             <td><span th:text="${consoMois.horodatage}">Horodatage</span></td>
                                             <td><span th:text="${consoMois.nom}">nom</span></td>
-                                            <td><span th:text="${consoMois.getPrixTubePrix(prixTubeList)}">prixtube</span></td>
-                                            <td><span th:text="${consoMois.getTypeVolantName(typeVolantList, typeTubeList)}">typetube</span></td>
+                                            <td><span th:text="${consoMois.idPrixTube}">prixtube</span></td>
+                                            <td><span th:text="${consoMois.idTypeVolant.idTypeTube}">typetube</span></td>
                                             <td><span th:text="${consoMois.nbTubeUtilise}">nbTubeUtilise</span></td>
                                             <td><span th:text="${consoMois.nbTubeCommande}">nbTubeCommande</span></td>
                                             <td class="table-action">
@@ -265,27 +271,25 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th class="table-label" colspan="6">TYPES TUBE</td>
+                                            <th class="table-label" colspan="5">TYPES TUBE</td>
                                         </tr>
                                         <tr>
                                             <th>ID</th>
                                             <th>Horodatage</th>
                                             <th>Nom</th>
                                             <th>Commande</th>
-                                            <th>Actif ?</th>
                                             <th class="table-action">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr th:if="${typeTubeList.empty}">
-                                            <td colspan="6">Aucun type de tube créé</td>
+                                            <td colspan="5">Aucun type de tube créé</td>
                                         </tr>
                                         <tr th:each="typeTube : ${typeTubeList}">
                                             <td><span th:text="${typeTube.id}">ID</span></td>
                                             <td><span th:text="${typeTube.horodatage}">Horodatage</span></td>
                                             <td><span th:text="${typeTube.nom}">nom</span></td>
                                             <td><span th:text="${typeTube.commande}">commande</span></td>
-                                            <td><span th:text="${typeTube.actif}">actif</span></td>
                                             <td class="table-action">
                                                 <table class="action-input">
                                                     <tr>
@@ -334,8 +338,8 @@
                                         <tr th:each="typeVolant : ${typeVolantList}">
                                             <td><span th:text="${typeVolant.id}">ID</span></td>
                                             <td><span th:text="${typeVolant.horodatage}">Horodatage</span></td>
-                                            <td><span th:text="${typeVolant.getSaisonName(saisons)}">saison</span></td>
-                                            <td><span th:text="${typeVolant.getTypeTubeName(typeTubeList)}">typetube</span></td>
+                                            <td><span th:text="${typeVolant.idSaison}">saison</span></td>
+                                            <td><span th:text="${typeVolant.idTypeTube}">typetube</span></td>
                                             <td><span th:text="${typeVolant.initTube}">initTube</span></td>
                                             <td class="table-action">
                                                 <table class="action-input">

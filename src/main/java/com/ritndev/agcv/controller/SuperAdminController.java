@@ -86,9 +86,11 @@ public class SuperAdminController {
         
         //Recupération de la DATA à modifier :
         MainData editData = service.findByIdMainData(id);
-        FormData formData = new FormData(id, editData.getIdSaison(), editData.getIdStockCompet(), editData.isActif());
+        FormData formData = new FormData(id, editData.getIdSaison().getId(), editData.getIdStockCompet().getId(), editData.isActif());
         model.addAttribute("editData", formData);
         model.addAttribute("numAction", ActionsTypes.EDIT_DATA.toString());
+        model.addAttribute("listSaison", service.listSaison());
+        model.addAttribute("listStock", service.listStock());
                 
         PageActions pageAction = new PageActions();
         return pageAction.returnPage();
@@ -206,7 +208,7 @@ public class SuperAdminController {
         
         //Recupération de la DATA à modifier :
         TypeTube editTypeTube = service.findByIdTypeTube(id);
-        FormTypeTube formTypeTube = new FormTypeTube(id, editTypeTube.getNom(), editTypeTube.isActif(), editTypeTube.isCommande());
+        FormTypeTube formTypeTube = new FormTypeTube(id, editTypeTube.getNom(), editTypeTube.isCommande());
          
         model.addAttribute("editTypeTube", formTypeTube);
         model.addAttribute("numAction", ActionsTypes.EDIT_TYPETUBE.toString());
@@ -266,7 +268,7 @@ public class SuperAdminController {
         //Recupération de la DATA à modifier :
         TypeVolant editTypeVolant = service.findByIdTypeVolant(id);
         FormTypeVolant formTypeVolant = new FormTypeVolant(id, 
-                                            editTypeVolant.getIdTypeTube(), 
+                                            editTypeVolant.getIdTypeTube().getId(), 
                                             editTypeVolant.getInitTube());
          
         model.addAttribute("editTypeVolant", formTypeVolant);

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    
+    
+    <head th:fragment="headerFragment">
+        <title th:text="${pageTitle}">Template Title</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
+        <script type="text/javascript" th:src="@{/js/profil-popup.js}" charset="utf-8" defer></script>
+    </head>
+    
+
+    <body>
+        <div th:replace="fragments/layout-header :: header"/>
+      
+        <div class="main-content">
+            <div th:if="${!reponses.empty}">
+                <br/>
+                <table class="table-reponse">
+                    <tbody>
+                        <tr th:each="rep : ${reponses}">
+                            <td th:class="${'td-rep-'+rep.key}"><span th:text="${rep.value}">rep</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br/>
+            
+                <div class="std-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="table-label" colspan="6">PROFIL</td>
+                            </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>horodatage</th>
+                                <th>pseudo</th>
+                                <th>Prénom</th>
+                                <th>Nom</th>
+                                <th class="table-action">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${listProfils.empty}">
+                                <td colspan="6">Aucun profil créé</td>
+                            </tr>
+                            <tr th:each="profil : ${listProfils}">
+                                <td><span th:text="${profil.id}">ID</span></td>
+                                <td><span th:text="${profil.horodatage}">horodatage</span></td>
+                                <td><span th:text="${profil.pseudo}">Pseudo</span></td>
+                                <td><span th:text="${profil.idMembre.prenom}"></span></td>
+                                <td><span th:text="${profil.idMembre.nom}"></span></td>
+                                <td class="table-action">
+                                    <table class="action-input">
+                                        <tr>
+                                            <td class="action-input">
+                                                <form action="#" th:action="@{/profil/{id}(id=${profil.id})}" th:method="post">
+                                                    <input type="hidden" name="_method" value="delete"/>
+                                                    <input id="action-input" type="submit" value="Suppr"/>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            
+        </div>
+      
+        
+        <!-- pop-up section -->
+        <div id="bg-popup" class="bg-popup-profil">
+            <div th:replace="fragments/layout-popup-new :: profil"/>
+        </div>
+        
+        <div th:replace="fragments/layout-footer :: footer"/>
+    </body>
+    
+</html>

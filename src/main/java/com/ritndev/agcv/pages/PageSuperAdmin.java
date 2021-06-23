@@ -7,12 +7,14 @@ import com.ritndev.agcv.form.FormTypeVolant;
 import com.ritndev.agcv.form.FormUser;
 import com.ritndev.agcv.model.AppUser;
 import com.ritndev.agcv.model.enumeration.NomMois;
+import com.ritndev.agcv.model.enumeration.NomTypeTube;
 import com.ritndev.agcv.services.IUserService;
 import com.ritndev.agcv.services.IagcvService;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.ui.Model;
 
@@ -65,6 +67,7 @@ public class PageSuperAdmin extends Page {
            userRoleList.put(user.getUserId(), formatRole(userService.findRoleByUsername(user.getUserName())));
         }
         
+        
         // Add Attribute :
         model = getPageGenerique(model, principal);
         model.addAttribute("message", message);
@@ -72,7 +75,7 @@ public class PageSuperAdmin extends Page {
         model.addAttribute("userList", userService.listUser());
         model.addAttribute("stockList", service.listStock());
         model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("typeTubeList", service.listTypeTube());
+        model.addAttribute("typeTubeList", service.listDataTypeTube());
         model.addAttribute("prixTubeList", service.listPrixTube());
         model.addAttribute("typeVolantList", service.listTypeVolant());
         model.addAttribute("consoMoisList", service.listConsoMois());
@@ -83,9 +86,9 @@ public class PageSuperAdmin extends Page {
         model.addAttribute("roleList", userService.listRole());
         model.addAttribute("saisons", service.listSaison());
         model.addAttribute("nomMois", new ArrayList<>(Arrays.asList(NomMois.values())));
+        model.addAttribute("nomTypeTubes", new ArrayList<>(Arrays.asList(NomTypeTube.values())));
         
         return returnPage();
-        
     }
     
     

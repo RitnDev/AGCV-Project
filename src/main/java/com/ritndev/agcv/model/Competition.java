@@ -5,7 +5,10 @@ import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +24,7 @@ public class Competition implements Serializable {
     
     //ID
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     @Getter @Setter private long id;
     
@@ -31,8 +34,9 @@ public class Competition implements Serializable {
     @Getter @Setter private Timestamp horodatage;
     
     //id de la saison de cette competition
-    @Column(name = "idSaison", nullable = false)
-    @Getter @Setter private long idSaison;
+    @OneToOne
+    @JoinColumn(name = "idSaison", nullable = false)
+    @Getter @Setter private Saison idSaison;
     
     //Nombre de tubes utilisés lors de cette competition
     @Column(name = "nbTubesUtilises", nullable = false)
@@ -47,7 +51,7 @@ public class Competition implements Serializable {
     //Constructeur
     public Competition() {}
 
-    public Competition(long idSaison, int nbTubesUtilises, String nom) {
+    public Competition(Saison idSaison, int nbTubesUtilises, String nom) {
         this.idSaison = idSaison;
         this.nbTubesUtilises = nbTubesUtilises;
         this.nom = nom;

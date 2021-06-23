@@ -25,6 +25,16 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
+                                <label for="idPrixTube">Quel Tube vous commandés ?</label>
+                            </td>
+                            <td class="popup-form-input">
+                                <select id="idPrixTube" th:field="*{idPrixTube}">
+                                <option th:each="pt : ${prixTubeList}" th:if="${pt.actif && pt.idTypeTube.commande}" th:value="${pt.id}" th:text="${pt.toString()}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
                                 <label for="membre">Membre ayant commandé des tubes :</label>
                             </td>
                             <td class="popup-form-input">
