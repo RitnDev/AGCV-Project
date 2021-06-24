@@ -2,6 +2,7 @@ package com.ritndev.agcv.services;
 
 import com.ritndev.agcv.form.*;
 import com.ritndev.agcv.model.*;
+import com.ritndev.agcv.model.enumeration.NomMois;
 import com.ritndev.agcv.repository.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +93,11 @@ public class AGCVservice implements IagcvService {
         && newPrixTube.getIdTypeTube()>0
         && newPrixTube.getPrixDouble()>0
         && newPrixTube.getPrixMembreDouble()>=0){
+            
+            TypeTube tt = typeTubeRep.getOne(newPrixTube.getIdTypeTube());
+            PrixTube ptOld = tt.getPrixTubeActif();
+            ptOld.setActif(false);
+            prixTubeRep.save(ptOld);
             prixTubeRep.save(new PrixTube(newPrixTube.getMarque(),
                                             newPrixTube.getPrixDouble(), 
                                             newPrixTube.getPrixMembreDouble(),
@@ -102,6 +108,16 @@ public class AGCVservice implements IagcvService {
         return resultVal;
     }
     @Override public List<PrixTube> listPrixTube() {return prixTubeRep.findAll();}
+    @Override public List<PrixTube> ListPrixTubeName(String nom){
+        List<PrixTube> prixTubes = prixTubeRep.findAll();
+        List<PrixTube> prixTubeName = new ArrayList<>();
+        for(PrixTube pt : prixTubes){
+            if(pt.getIdTypeTube().getNom().equals(nom)){
+                prixTubeName.add(pt);
+            }
+        }
+        return prixTubeName;
+    }
     @Override public FormPrixTube findByIdPrixTube(Long id) {
         if (prixTubeRep.existsById(id)){
             return new FormPrixTube(id,
@@ -116,8 +132,20 @@ public class AGCVservice implements IagcvService {
     @Override public int supprPrixTube(Long id) {
         int resultVal = 0;
         if (prixTubeRep.existsById(id)){
-            prixTubeRep.delete(prixTubeRep.getOne(id));
-            resultVal = 2;
+            PrixTube pt = prixTubeRep.getOne(id);
+            if (!pt.isActif() || !pt.isDefaut()){
+                TypeTube tt = pt.getIdTypeTube();
+                prixTubeRep.delete(pt);
+                
+                //Activation de la donnée par défaut
+                for(PrixTube ptDefaut : tt.getPrixTubes()){
+                    if(ptDefaut.isDefaut()){
+                        ptDefaut.setActif(true);
+                        prixTubeRep.save(ptDefaut);
+                    }
+                }
+                resultVal = 2;
+            }
         }else{
             resultVal = 1;
         } 
@@ -127,6 +155,15 @@ public class AGCVservice implements IagcvService {
         int resultVal = 0;// erreur de modification
         if (prixTubeRep.existsById(editPrixTube.getId())){
             PrixTube pt = prixTubeRep.getOne(editPrixTube.getId());
+            
+            TypeTube tt = pt.getIdTypeTube();
+            
+            if(pt.isActif() == false && editPrixTube.isActif() == true){
+                //Activation de la donnée par défaut
+                PrixTube ptActif = tt.getPrixTubeActif();
+                ptActif.setActif(false);
+                prixTubeRep.save(ptActif);
+            }
             
             pt.setMarque(editPrixTube.getMarque());
             pt.setPrix(editPrixTube.getPrixDouble());
@@ -425,6 +462,9 @@ public class AGCVservice implements IagcvService {
                 resultVal = 3; //Saison existe déjà (année de début)
             }
         }
+        if(resultVal==4){
+            createTypeVolant();
+        }
         return resultVal;
     }
     @Override public List<Saison> listSaison() {return saisonRep.findAll();}
@@ -543,6 +583,7 @@ public class AGCVservice implements IagcvService {
                                                 newTypeVolant.getInitTube()));
             if(t!=null){
                 resultVal = 2;
+                createConsoMois(t);
             }
         return resultVal;
     }
@@ -796,6 +837,114 @@ public class AGCVservice implements IagcvService {
             case "Entrainement" ->  md.setIdTTEntrainement(typeTubeRep.getOne(id));
             case "Compétition" ->   md.setIdTTCompetition(typeTubeRep.getOne(id));
         }
+    }
+
+    
+    
+    private int createTypeVolant() {
+        int resultVal = 4;
+        
+        int result = 1000 + saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTPlastique().getId()));
+//        if (result==122){
+//            resultVal = resultVal + 1000;
+//        }else{
+//            return resultVal + result;
+//        }
+        result = result + 1000 + saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTEntrainement().getId()));
+//        if (result==122){
+//            resultVal = resultVal + 1000;
+//        }else{
+//            return resultVal + result;
+//        }
+        result = result + 1000 + saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTCompetition().getId()));
+//        if (result==122){
+//            resultVal = resultVal + 1000;
+//        }else{
+//            return resultVal + result;
+//        }
+        System.out.println(">> result = " + result);
+        return resultVal;
+    }
+
+    private int createConsoMois(TypeVolant idTypeVolant) {
+        int resultVal = 2;
+        PrixTube idPrixTube = idTypeVolant.getIdTypeTube().getPrixTubeActif();
+        
+        int result = saveConsoMois(new FormConsoMois(NomMois.AOUT.toString(), idPrixTube.getId(), idTypeVolant.getId(), 0));
+//        if (result==2){
+//            resultVal = resultVal + 10;
+//        }else{
+//            return resultVal;
+//        }
+        result = result + saveConsoMois(new FormConsoMois(NomMois.SEPTEMBRE.toString(), idPrixTube.getId(), idTypeVolant.getId(), 0));
+//        if (result==2){
+//            resultVal = resultVal + 10;
+//        }else{
+//            return resultVal;
+//        }
+        result = result + saveConsoMois(new FormConsoMois(NomMois.OCTOBRE.toString(), idPrixTube.getId(), idTypeVolant.getId(), 0));
+//        if (result==2){
+//            resultVal = resultVal + 10;
+//        }else{
+//            return resultVal;
+//        }
+        result = result + saveConsoMois(new FormConsoMois(NomMois.NOVEMBRE.toString(), idPrixTube.getId(), idTypeVolant.getId(), 0));
+//        if (result==2){
+//            resultVal = resultVal + 10;
+//        }else{
+//            return resultVal;
+//        }
+        result = result + saveConsoMois(new FormConsoMois(NomMois.DECEMBRE.toString(), idPrixTube.getId(), idTypeVolant.getId(), 0));
+//        if (result==2){
+//            resultVal = resultVal + 10;
+//        }else{
+//            return resultVal;
+//        }
+        result = result + saveConsoMois(new FormConsoMois(NomMois.JANVIER.toString(), idPrixTube.getId(), idTypeVolant.getId(), 0));
+//        if (result==2){
+//            resultVal = resultVal + 10;
+//        }else{
+//            return resultVal;
+//        }
+        result = result + saveConsoMois(new FormConsoMois(NomMois.FEVRIER.toString(), idPrixTube.getId(), idTypeVolant.getId(), 0));
+//        if (result==2){
+//            resultVal = resultVal + 10;
+//        }else{
+//            return resultVal;
+//        }
+        result = result + saveConsoMois(new FormConsoMois(NomMois.MARS.toString(), idPrixTube.getId(), idTypeVolant.getId(), 0));
+//        if (result==2){
+//            resultVal = resultVal + 10;
+//        }else{
+//            return resultVal;
+//        }
+        result = result + saveConsoMois(new FormConsoMois(NomMois.AVRIL.toString(), idPrixTube.getId(), idTypeVolant.getId(), 0));
+//        if (result==2){
+//            resultVal = resultVal + 10;
+//        }else{
+//            return resultVal;
+//        }
+        result = result + saveConsoMois(new FormConsoMois(NomMois.MAI.toString(), idPrixTube.getId(), idTypeVolant.getId(), 0));
+//        if (result==2){
+//            resultVal = resultVal + 10;
+//        }else{
+//            return resultVal;
+//        }
+        result = result + saveConsoMois(new FormConsoMois(NomMois.JUIN.toString(), idPrixTube.getId(), idTypeVolant.getId(), 0));
+//        if (result==2){
+//            resultVal = resultVal + 10;
+//        }else{
+//            return resultVal;
+//        }
+        result = result + saveConsoMois(new FormConsoMois(NomMois.JUILLET.toString(), idPrixTube.getId(), idTypeVolant.getId(), 0));
+//        if (result==2){
+//            resultVal = resultVal + 10;
+//        }else{
+//            return resultVal;
+//        }
+        resultVal = 100 + (result/2);
+
+        return resultVal;
     }
     
     

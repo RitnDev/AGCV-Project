@@ -20,6 +20,7 @@ public interface IagcvService {
     //Methode PrixTube
     public int savePrixTube(FormPrixTube newPrixTube);
     public List<PrixTube> listPrixTube();
+    public List<PrixTube> ListPrixTubeName(String nom);
     public FormPrixTube findByIdPrixTube(Long id);
     public int supprPrixTube(Long id);
     public int updatePrixTube(FormPrixTube editPrixTube);

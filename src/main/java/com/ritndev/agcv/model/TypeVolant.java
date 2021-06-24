@@ -69,4 +69,12 @@ public class TypeVolant implements Serializable {
         this.initTube = initTube;
     }
    
+    
+    /*
+        Méthodes
+    */
+    public String getNomTypeTube(){
+        return idTypeTube.getNom();
+    }
+    
 }

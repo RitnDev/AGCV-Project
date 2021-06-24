@@ -135,13 +135,12 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="table-label" colspan="8">PRIX TUBES</th>
+                            <th class="table-label" colspan="7">PRIX TUBES</th>
                         </tr>
                         <tr>
                             <th>ID</th>
-                            <th>Horodatage</th>
-                            <th>Marque</th>
                             <th>Type de tube</th>
+                            <th>Marque</th>
                             <th>Prix d'achat</th>
                             <th>Prix membre</th>
                             <th>Actif ?</th>
@@ -150,13 +149,12 @@
                     </thead>
                     <tbody>
                         <tr th:if="${listPrixTubes.empty}">
-                            <td colspan="8">Aucun prix tube créé</td>
+                            <td colspan="7">Aucun prix tube créé</td>
                         </tr>
-                        <tr th:each="prixTube : ${listPrixTubes}">
+                        <tr th:each="prixTube : ${listPrixTubes}" th:if="${!prixTube.defaut}">
                             <td><span th:text="${prixTube.id}">ID</span></td>
-                            <td><span th:text="${prixTube.horodatage}">Horodatage</span></td>
-                            <td><span th:text="${prixTube.marque}">Marque</span></td>
                             <td><span th:text="${prixTube.idTypeTube}">Type de tube</span></td>
+                            <td><span th:text="${prixTube.marque}">Marque</span></td>
                             <td><span th:text="${prixTube.prix}">Prix</span></td>
                             <td><span th:text="${prixTube.prixMembre}">Prix membre</span></td>
                             <td><span th:text="${prixTube.actif}">actif</span></td>

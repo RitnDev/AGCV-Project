@@ -26,6 +26,11 @@ public class FormTypeVolant {
 
     public FormTypeVolant() {}
 
+    public FormTypeVolant(int initTube, long idTypeTube) {
+        this.idTypeTube = idTypeTube;
+        this.initTube = initTube;
+    }
+    
     public FormTypeVolant(long id, long idTypeTube, int initTube) {
         this.id = id;
         this.idTypeTube = idTypeTube;

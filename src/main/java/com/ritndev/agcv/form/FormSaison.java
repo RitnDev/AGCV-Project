@@ -23,8 +23,9 @@ public class FormSaison {
     //budget prévisionnelle de la saison
     @Getter @Setter private String budget;
     
-    //bEst-ce la saison actuelle ?
+    //Est-ce la saison actuelle ?
     @Getter @Setter private boolean actuelle;
+    
     
     
     //Constructeur
@@ -41,8 +42,8 @@ public class FormSaison {
     }
     
     public FormSaison(){}
-    
-    
+
+  
     
     
     @Override

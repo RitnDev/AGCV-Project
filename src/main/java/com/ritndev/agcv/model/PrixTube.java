@@ -64,6 +64,11 @@ public class PrixTube implements Serializable {
     @Getter @Setter
     private boolean actif;
     
+    //Donnée par défaut
+    @Column(name = "defaut", nullable = false)
+    @Getter @Setter
+    private boolean defaut;
+    
     
     //Les types volants de la saison
     @OneToMany(targetEntity=ConsoMois.class, mappedBy="idPrixTube")
@@ -81,6 +86,7 @@ public class PrixTube implements Serializable {
         this.prix = prix;
         this.prixMembre = prixMembre;
         this.actif = actif;
+        this.defaut = false;
     }
     
     
@@ -107,9 +113,9 @@ public class PrixTube implements Serializable {
     @Override
     public String toString() {
         if (!marque.equals("")){
-            return idTypeTube.toString() + " (" + marque +")";
+            return "[" + idTypeTube.toString() + "] '" +  marque + "' (" + getPrixString() + ")";
         }else{
-            return idTypeTube.toString();
+            return "[" + idTypeTube.toString() + "] (" + getPrixString() + ")";
         }
     }
     

@@ -115,10 +115,10 @@ public class AdminController {
     @PostMapping("/newSaison")
     public String newSaison(@ModelAttribute FormSaison newSaison, Model model, Principal principal) {
         int result = service.saveSaison(newSaison);
-        
+
         PageAdmin pageAdmin = new PageAdmin();
         pageAdmin.addReponse(messageSource, "saison", "create", result);
-        
+
         return pageAdmin.getPage(model, principal, service, userService);
     }
     
@@ -220,8 +220,5 @@ public class AdminController {
         
         return pageAdmin.getPage(model, principal, service, userService);
     }
-    
-    
-    
     
 }

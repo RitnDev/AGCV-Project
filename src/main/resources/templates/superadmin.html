@@ -109,10 +109,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:if="${stockList.size()==1}">
+                                        <tr th:if="${stockList.empty}">
                                             <td colspan="4">Aucun stock créé</td>
                                         </tr>
-                                        <tr th:each="stock : ${stockList}" th:if="${stock.id!=1}">
+                                        <tr th:each="stock : ${stockList}">
                                             <td><span th:text="${stock.id}">ID</span></td>
                                             <td><span th:text="${stock.horodatage}">horodatage</span></td>
                                             <td><span th:text="${stock.stock}">Stock</span></td>
@@ -226,7 +226,7 @@
                                             <td><span th:text="${consoMois.id}">ID</span></td>
                                             <td><span th:text="${consoMois.horodatage}">Horodatage</span></td>
                                             <td><span th:text="${consoMois.nom}">nom</span></td>
-                                            <td><span th:text="${consoMois.idPrixTube}">prixtube</span></td>
+                                            <td><span th:text="${consoMois.idPrixTube.prix}">prix</span></td>
                                             <td><span th:text="${consoMois.idTypeVolant.idTypeTube}">typetube</span></td>
                                             <td><span th:text="${consoMois.nbTubeUtilise}">nbTubeUtilise</span></td>
                                             <td><span th:text="${consoMois.nbTubeCommande}">nbTubeCommande</span></td>

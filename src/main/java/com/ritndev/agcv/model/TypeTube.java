@@ -2,11 +2,14 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +47,12 @@ public class TypeTube implements Serializable {
     private boolean commande;
     
     
+    //Liste des PrixTube lié à ce TypeTube
+    @OneToMany(targetEntity=PrixTube.class, mappedBy="idTypeTube")
+    @Getter @Setter private List<PrixTube> prixTubes = new ArrayList<>();
+    
+    
+    
     //Constructeur
     public TypeTube() {}
 
@@ -63,6 +72,20 @@ public class TypeTube implements Serializable {
     @Override
     public String toString() {
         return nom;
+    }
+    
+    
+    /*
+        Methodes
+    */
+    
+    public PrixTube getPrixTubeActif() {
+        for(PrixTube pt : prixTubes){
+            if(pt.isActif()){
+                return pt;
+            }
+        }
+        return null;
     }
     
     

@@ -2,7 +2,6 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -89,5 +88,20 @@ public class MainData implements Serializable {
         Methodes
     */
    
+    public TypeTube getTypeTubeName(String nom){
+        switch(nom){
+            case "Plastique" -> {
+                return idTTPlastique;
+            }
+            case "Entrainement" -> {
+                return idTTPlastique;
+            }
+            case "Compétition" -> {
+                return idTTPlastique;
+            }
+        }
+        return null;
+    }
+    
     
 }

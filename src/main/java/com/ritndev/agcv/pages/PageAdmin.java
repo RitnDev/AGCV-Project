@@ -1,13 +1,17 @@
 package com.ritndev.agcv.pages;
 
 import com.ritndev.agcv.classes.Link;
+import com.ritndev.agcv.classes.TypeReponse;
 import com.ritndev.agcv.form.FormMembre;
 import com.ritndev.agcv.form.FormPrixTube;
 import com.ritndev.agcv.form.FormSaison;
+import com.ritndev.agcv.model.enumeration.NomTypeTube;
 import com.ritndev.agcv.services.IUserService;
 import com.ritndev.agcv.services.IagcvService;
 import java.security.Principal;
 import java.util.Calendar;
+import java.util.Locale;
+import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 
 /**
@@ -42,7 +46,25 @@ public class PageAdmin extends Page {
                
     }
 
-      
+    
+    
+    @Override public void addReponse(MessageSource messageSource, String modelName, String methodeName, int result) {
+        String strResult = "error";
+        TypeReponse tr = TypeReponse.OTHER;
+        
+        if(result<=4){
+            super.addReponse(messageSource, modelName, methodeName, result);
+        }else{
+            if(result==3004){
+                strResult = "3004";
+                tr = TypeReponse.ADD;
+                super.getReponses().put(tr, messageSource.getMessage("reponse." + modelName + "." + methodeName + "." + strResult, null, Locale.FRENCH));
+            }
+        }
+    }
+    
+    
+    
     
     public String getPage(Model model, Principal principal, IagcvService service, IUserService userService) {
              
@@ -61,6 +83,9 @@ public class PageAdmin extends Page {
         model.addAttribute("listMembres", service.listMembre());
         model.addAttribute("listSaisons", service.listSaison());
         model.addAttribute("listPrixTubes", service.listPrixTube());
+        model.addAttribute("prixPlastiques", service.ListPrixTubeName(NomTypeTube.PLASTIQUE.toString()));
+        model.addAttribute("prixEntrainements", service.ListPrixTubeName(NomTypeTube.ENTRAINEMENT.toString()));
+        model.addAttribute("prixCompetitions", service.ListPrixTubeName(NomTypeTube.COMPETITION.toString()));
         model.addAttribute("typeTubes", service.listDataTypeTube());
         
         boolean connect = userService.findRoleByUsername(super.returnUser(principal)).equals("ROLE_SUPADMIN");
