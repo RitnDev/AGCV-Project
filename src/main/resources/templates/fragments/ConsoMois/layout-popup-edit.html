@@ -7,15 +7,15 @@
         
 <!-- ------------------------------------------ POPUP MODIFICATION COMPETITION -------------------------------------------------- -->
         
-        <div th:fragment="consomois">
+        <div th:fragment="consomois-prix">
             <div id="popup-content" class="popup-content-edit-consomois">
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Modifier le Conso Mois</h3>
+                            <h3>Nouveau prix du tube</h3>
                         </td>
                         <td class="popup-header-close">
-                            <a href="/superAdmin" >
+                            <a href="/index">
                                 <img class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>
@@ -27,18 +27,20 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="nbTubeUtilise">Nb tubes utilisés :</label>
+                                <label for="prixTube">Prix du tube :</label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="nbTubeUtilise" type="number" th:value="*{nbTubeUtilise}" th:field="*{nbTubeUtilise}" min="0" />
+                                <select id="prixTube" th:field="*{idPrixTube}">
+                                <option th:each="pt : ${listPrixTubes}" th:value="${pt.id}" th:text="${pt.toString()}"></option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="nbTubeCommande">Nb tubes commandés :</label>
+                                <label for="suivant">Faut-il changer ce prix pour les mois suivants ?</label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="nbTubeCommande" type="number" th:value="*{nbTubeCommande}" th:field="*{nbTubeCommande}" min="0" />
+                                <input id="suivant" name="suivant" type="checkbox" th:checked="*{suivant}"/>
                             </td>
                         </tr>
                         
@@ -46,6 +48,7 @@
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                                <input type="hidden" th:value="*{nom}" th:field="*{nom}" />
                                 <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
                             </td>
                         </tr>

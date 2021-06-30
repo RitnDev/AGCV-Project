@@ -31,6 +31,10 @@ public class FormConsoMois {
     @Getter @Setter
     private int nbTubeCommande;
     
+    //Nombre de tubes commandé ce mois-ci
+    @Getter @Setter
+    private boolean suivant;
+    
     
     //Constructeur
 
@@ -60,6 +64,13 @@ public class FormConsoMois {
         this.idTypeVolant = idTypeVolant;
         this.nbTubeUtilise = nbTubeUtilise;
     }
+
+    public FormConsoMois(long id, String nom, long idPrixTube) {
+        this.id = id;
+        this.nom = nom;
+        this.idPrixTube = idPrixTube;
+    }
+    
     
     
     

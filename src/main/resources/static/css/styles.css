@@ -186,8 +186,8 @@ input.footer-log:hover {
     height: 335px;
 }
 .popup-content-edit-consomois {
-    width: 420px;
-    height: 220px;
+    width: 520px;
+    height: 230px;
 }
 .popup-content-typetube {
     width: 500px;
@@ -230,12 +230,12 @@ input.footer-log:hover {
     height: 260px;
 }
 .popup-content-saison {
-    width: 700px;
-    height: 420px;
+    width: 500px;
+    height: 255px;
 }
 .popup-content-edit-saison {
     width: 500px;
-    height: 215px;
+    height: 180px;
 }
 .popup-content-edit-stock {
     width: 360px;
@@ -330,6 +330,7 @@ table.popup-form {
 td.popup-form-label, td.popup-form-input {
   padding: 8px;
   padding-top: 12px;
+  text-align: left;
 }
 
 td.popup-form-label {
@@ -483,7 +484,7 @@ input#regler:hover {
 
 
 
-/* Tableaux -------------------------------------------------------------------------------------*/
+/* -------  Tableaux -------------------------------------------------------------------------- */
 
 .table-su-1 table {
     text-align: center;
@@ -496,8 +497,12 @@ input#regler:hover {
   margin: auto;
 }
 
+table.std-table-index{
+  margin-left: 300px;
+}
+
 .std-table th, td {
-  text-align: left;
+  text-align: center;
   padding: 8px;
 }
 
@@ -514,15 +519,194 @@ input#regler:hover {
   color: white;
 }
 
+
+
 th.table-label {
     background-color: #007015;
     color: white;
     text-align: center;
 }
 
+th.table-th-index {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 14px;
+    background-color: #101720;
+    border-style: none solid none solid;
+    border-right-color: #101720;
+    border-left-color: #101720;
+}
+th.table-th-utilise {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 14px;
+    background-color: #d5d5d5;
+    border-style: none solid none solid;
+    border-right-color: #afafaf;
+    border-left-color: #101720;
+    color: black;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+}
+th.table-th-commande {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 14px;
+    background-color: #d5d5d5;
+    border-style: none none none solid;
+    border-left-color: #d5d5d5;
+    color: black;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+}
+th.table-th-prix {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 14px;
+    background-color: #d5d5d5;
+    border-style: none solid solid solid;
+    border-width: 0 medium 1px medium;
+    border-right-color: #101720;
+    border-left-color: #afafaf;
+    border-bottom-color: white;
+    color: black;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+}
+
+th.table-label-index {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 18px;
+    background-color: #007015;
+    color: white;
+    text-align: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-style: none solid none solid;
+    border-color: #007015;
+    border-right-color: #101720;
+    padding-top: 4px; 
+    padding-bottom: 4px;
+
+}
+
 th.table-action {
     background-color: #900;
     color: white;
+}
+
+th.table-tv{
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 15px;
+    border-style: none solid none solid;
+    border-top-color: #0080ff;
+    border-right-color: #101720;
+    border-bottom-color: #0080ff;
+    border-left-color: #0080ff;
+    padding-top: 4px; 
+    padding-bottom: 4px;
+}
+
+th.table-tv-label {
+    background-color: white;
+    color: #0080ff;
+    border-style: solid;
+    border-color: #d5d5d5;
+}
+
+th.table-tv-empty{
+    background-color: #101720;
+    border-style: none solid none solid;
+    border-top-color: #101720;
+    border-right-color: #101720;
+    border-bottom-color: #101720;
+    border-left-color: #101720;
+}
+td.table-tv-empty{
+    background-color: #101720;
+    border: none;
+}
+
+
+th.table-tv-empty1 {
+    background-color: #d5d5d5;
+    border-style: solid;
+    border-color: #d5d5d5;
+}
+tr.table-tv-empty {
+    background-color: #101720;
+    height: 2px;
+}
+
+
+th.table-tv-mois,
+td.table-tv-mois{
+    border-style: none solid solid solid;
+    border-width: 0 medium 1px medium;
+    border-right-color: #101720;
+    border-left-color: #101720;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+    width:110px;
+}
+
+th.table-tv-nbu,
+td.table-tv-nbu {
+    border-style: none solid solid none;
+    border-width: 1px;
+    border-right-color: #afafaf;
+    width: 30px;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+}
+th.table-tv-cu,
+td.table-tv-cu {
+    border-style: none solid solid none;
+    border-width: 0 medium 1px 1px;
+    border-right-color: #afafaf;
+    width: 60px;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+}
+th.table-tv-nbc,
+td.table-tv-nbc {
+    border-style: none solid solid none;
+    border-width: 1px;
+    border-right-color: #afafaf;
+    width: 30px;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+}
+th.table-tv-cc,
+td.table-tv-cc {
+    border-style: none solid solid none;
+    border-width: 0 medium 1px 1px;
+    border-right-color: #afafaf;
+    width: 60px;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+}
+
+td.table-tv-prix {
+    border-style: none solid solid solid;
+    border-width: 0 medium 1px medium;
+    border-right-color: #101720;
+    border-left-color: #afafaf;
+    border-bottom-color: #ddd;
+    color: black;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+}
+
+
+input.table-tv-nbu,
+input.table-tv-nbc,
+input.table-tv-prix {
+  font: normal 10pt verdana, helvetica, sans-serif;
+  border: none; 
+  padding: 0;
+  outline: none;
+  font-style: normal;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 input#action-input{

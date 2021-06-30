@@ -70,5 +70,26 @@ public class ConsoMois implements Serializable {
         this.nbTubeUtilise = nbTubeUtilise;
         this.nbTubeCommande = nbTubeCommande;
     }
+
+    @Override
+    public String toString() {
+        return nom;
+    }
+    
+    
+    
+    /*
+        Methodes
+    */
+    
+    public double getCoutUtilises() {
+        return nbTubeUtilise * idPrixTube.getPrix();
+    }
+    
+    public double getCoutCommandes() {
+        return nbTubeCommande * idPrixTube.getPrix();
+    }
+    
+    
     
 }

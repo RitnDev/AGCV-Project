@@ -205,72 +205,6 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th class="table-label" colspan="8">CONSO MOIS</td>
-                                        </tr>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Horodatage</th>
-                                            <th>Nom</th>
-                                            <th>Prix du tube</th>
-                                            <th>type de tube</th>
-                                            <th>Nb tubes utilisés</th>
-                                            <th>Nb tubes commandés</th>
-                                            <th class="table-action">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:if="${consoMoisList.empty}">
-                                            <td colspan="8">Aucune consos mois créé</td>
-                                        </tr>
-                                        <tr th:each="consoMois : ${consoMoisList}">
-                                            <td><span th:text="${consoMois.id}">ID</span></td>
-                                            <td><span th:text="${consoMois.horodatage}">Horodatage</span></td>
-                                            <td><span th:text="${consoMois.nom}">nom</span></td>
-                                            <td><span th:text="${consoMois.idPrixTube.prix}">prix</span></td>
-                                            <td><span th:text="${consoMois.idTypeVolant.idTypeTube}">typetube</span></td>
-                                            <td><span th:text="${consoMois.nbTubeUtilise}">nbTubeUtilise</span></td>
-                                            <td><span th:text="${consoMois.nbTubeCommande}">nbTubeCommande</span></td>
-                                            <td class="table-action">
-                                                <table class="action-input">
-                                                    <tr>
-                                                        <td class="action-input">
-                                                            <form action="#" th:action="@{/consomois/{id}(id=${consoMois.id})}" th:method="post">
-                                                                <input type="hidden" name="_method" value="delete"/>
-                                                                <input id="action-input" type="submit" value="Suppr"/>
-                                                            </form>
-                                                        </td><td class="action-input">|</td>
-                                                        <td class="action-input">
-                                                            <form action="#" th:action="@{/consomois/{id}(id=${consoMois.id})}" th:method="post">
-                                                                <input id="action-input" type="submit" value="Edit"/>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                        </td>
-                    </tr>
-                </table>                
-            </div> 
-            
-            
-            <br/>
-            <br/>
-            
-            
-            <div class="table-su-1">
-                <table>
-                    <tr>
-                        <td>
-                            
-                            <div class="std-table">
-                                <table>
-                                    <thead>
-                                        <tr>
                                             <th class="table-label" colspan="5">TYPES TUBE</td>
                                         </tr>
                                         <tr>
@@ -313,64 +247,13 @@
                             </div>
                             
                         </td>
-                        <td></td>
-                        <td>
-                            
-                            <div class="std-table">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th class="table-label" colspan="6">TYPES VOLANTS</td>
-                                        </tr>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Horodatage</th>
-                                            <th>Saison</th>
-                                            <th>Type de tube</th>
-                                            <th>init tubes</th>
-                                            <th class="table-action">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:if="${typeVolantList.empty}">
-                                            <td colspan="6">Aucun type de volant créé</td>
-                                        </tr>
-                                        <tr th:each="typeVolant : ${typeVolantList}">
-                                            <td><span th:text="${typeVolant.id}">ID</span></td>
-                                            <td><span th:text="${typeVolant.horodatage}">Horodatage</span></td>
-                                            <td><span th:text="${typeVolant.idSaison}">saison</span></td>
-                                            <td><span th:text="${typeVolant.idTypeTube}">typetube</span></td>
-                                            <td><span th:text="${typeVolant.initTube}">initTube</span></td>
-                                            <td class="table-action">
-                                                <table class="action-input">
-                                                    <tr>
-                                                        <td class="action-input">
-                                                            <form action="#" th:action="@{/typevolant/{id}(id=${typeVolant.id})}" th:method="post">
-                                                                <input type="hidden" name="_method" value="delete"/>
-                                                                <input id="action-input" type="submit" value="Suppr"/>
-                                                            </form>
-                                                        </td><td class="action-input">|</td>
-                                                        <td class="action-input">
-                                                            <form action="#" th:action="@{/typevolant/{id}(id=${typeVolant.id})}" th:method="post">
-                                                                <input id="action-input" type="submit" value="Edit"/>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                        </td>
                     </tr>
                 </table>                
             </div> 
+                        
+            <br/>
+            <br/>
             
-            <br/>
-            <br/>
-
         </div>
 
         <!-- pop-up section -->

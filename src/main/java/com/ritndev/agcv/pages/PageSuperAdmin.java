@@ -14,7 +14,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.springframework.ui.Model;
 
@@ -40,16 +39,12 @@ public class PageSuperAdmin extends Page {
         Link newUser = new Link("Nouvel utilisateur", "#", "topnav-menu-user");
         Link newStock = new Link("Nouveau stock de competition", "/newStock", "topnav-menu-data");
         Link newTypeTube = new Link("Nouveau Type de tube", "#", "topnav-menu-typetube");
-        Link newTypeVolant = new Link("Nouveau type de volant", "#", "topnav-menu-typevolant"); 
-        Link newConsoMois = new Link("Nouveau conso mois", "#", "topnav-menu-consomois");
         
         Link[] menu = new Link[] {
             newData,
             newUser,
             newStock,
             newTypeTube,
-            newTypeVolant,
-            newConsoMois
         };
         super.setMenu(menu);
         

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,15 +54,15 @@ public class Saison implements Serializable {
     
     
     //Liste des commandes de la saison
-    @OneToMany(targetEntity=Commande.class, mappedBy="idSaison")
+    @OneToMany(targetEntity=Commande.class, mappedBy="idSaison", cascade=CascadeType.REMOVE)
     @Getter @Setter private List<Commande> commandes = new ArrayList<>();
     
     //Liste des competitions de la saison
-    @OneToMany(targetEntity=Competition.class, mappedBy="idSaison")
+    @OneToMany(targetEntity=Competition.class, mappedBy="idSaison", cascade=CascadeType.REMOVE)
     @Getter @Setter private List<Competition> competitions = new ArrayList<>();
     
     //Les types volants de la saison
-    @OneToMany(targetEntity=TypeVolant.class, mappedBy="idSaison")
+    @OneToMany(targetEntity=TypeVolant.class, mappedBy="idSaison", cascade=CascadeType.REMOVE)
     @Getter @Setter private List<TypeVolant> typeVolants = new ArrayList<>();
     
     
@@ -95,9 +96,24 @@ public class Saison implements Serializable {
     }
     
     
+    /*
+        Méthodes
+    */
+    
     //Renvoie le budget au format String
     public String getBudgetString(){
         return String.valueOf(budget);
     }
+    
+    
+    public TypeVolant getTypeVolantName(String nom){
+        for(TypeVolant tv : typeVolants){
+            if(tv.toString().equals(nom)){
+                return tv;
+            }
+        }
+        return null;
+    }
+    
     
 }

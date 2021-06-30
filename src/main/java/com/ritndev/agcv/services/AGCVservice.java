@@ -5,6 +5,7 @@ import com.ritndev.agcv.model.*;
 import com.ritndev.agcv.model.enumeration.NomMois;
 import com.ritndev.agcv.repository.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -154,21 +155,22 @@ public class AGCVservice implements IagcvService {
     @Override public int updatePrixTube(FormPrixTube editPrixTube) {
         int resultVal = 0;// erreur de modification
         if (prixTubeRep.existsById(editPrixTube.getId())){
-            PrixTube pt = prixTubeRep.getOne(editPrixTube.getId());
-            
-            TypeTube tt = pt.getIdTypeTube();
+            PrixTube pt = prixTubeRep.getOne(editPrixTube.getId()); // je récupère le prix tube
+            TypeTube tt = pt.getIdTypeTube(); // On récupère le Type Tube
             
             if(pt.isActif() == false && editPrixTube.isActif() == true){
-                //Activation de la donnée par défaut
+                //désactivation du prix tubes actif
                 PrixTube ptActif = tt.getPrixTubeActif();
-                ptActif.setActif(false);
-                prixTubeRep.save(ptActif);
+                if(ptActif!=null){
+                    ptActif.setActif(false);
+                    prixTubeRep.save(ptActif);
+                }
+                pt.setActif(editPrixTube.isActif());
             }
             
             pt.setMarque(editPrixTube.getMarque());
             pt.setPrix(editPrixTube.getPrixDouble());
             pt.setPrixMembre(editPrixTube.getPrixMembreDouble());
-            pt.setActif(editPrixTube.isActif());
             
             prixTubeRep.save(pt);
             resultVal = 2; //Modification OK
@@ -316,6 +318,35 @@ public class AGCVservice implements IagcvService {
             resultVal = 2;
         }else{
             resultVal = 1;
+        }
+        return resultVal;
+    }
+    @Override public int updateConsoMoisPrixtube(FormConsoMois editConsoMois){
+        int resultVal = 0;
+        if(consoMoisRep.existsById(editConsoMois.getId())){
+            //Recup du conso mois
+            ConsoMois cm = consoMoisRep.getOne(editConsoMois.getId());
+            //MaJ du prix tube
+            cm.setIdPrixTube(prixTubeRep.getOne(editConsoMois.getIdPrixTube()));
+            
+            boolean suivant = false;
+            if(editConsoMois.isSuivant()){
+                TypeVolant tv = cm.getIdTypeVolant();
+                for (NomMois mois : Arrays.asList(NomMois.values())){
+                    if(suivant){
+                        tv.getConsoMoisName(mois.toString()).setIdPrixTube(prixTubeRep.getOne(editConsoMois.getIdPrixTube()));
+                    }
+                    if(editConsoMois.getNom().equals(mois.toString())){
+                        suivant = true;
+                    }    
+                }
+                typeVolantRep.save(tv);
+            }
+            
+            consoMoisRep.save(cm); 
+            resultVal = 2;
+        }else{
+            resultVal = 3;
         }
         return resultVal;
     }

@@ -42,7 +42,7 @@ public class MainController {
     @GetMapping(value = { "/", "/index"})
     public String index(Model model, Principal principal){
         PageIndex pageIndex = new PageIndex();
-        return pageIndex.getPage(model, principal);
+        return pageIndex.getPage(model, principal, service);
     }
   
     
@@ -109,7 +109,7 @@ public class MainController {
         PageIndex pageIndex = new PageIndex();
         pageIndex.addReponse(messageSource, "mdp", "edit", result);
         
-        return pageIndex.getPage(model, principal);
+        return pageIndex.getPage(model, principal, service);
         
     }
     

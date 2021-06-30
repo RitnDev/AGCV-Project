@@ -1,18 +1,16 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <!--link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/-->
     </head>
     <body>
         <span th:fragment="footer">
             <img class="img-background" src="/images/fond/homme-bad.png"/>
             <span class="footer">2021 - Créer par RitnDev.</span>
-            <!--span class="footer-log" th:if="${connect}" th:utext="${log}"/-->
             
             <form action="#" th:if="${connect}" th:action="@{/mdp/{username}(username=${userActif})}" th:method="post">
                 <input class="footer-log" type="submit" th:value="${log}"/>
             </form>
             
-            </span>
+        </span>
     </body>
 </html>

@@ -26,9 +26,122 @@
                 </table>
             </div>
             <br/>
-            <div th:utext="${message}"> !</div>
             
-            <!--a th:href="test">Page test</a-->
+            
+            <div class="std-table">
+                
+                <table class="std-table-index">
+                    
+                    <thead>
+                        <tr>
+                            <th class="table-tv-empty"></th>
+                            <th class="table-label-index" colspan="15">
+                                <span th:text="${'SAISON : ' + saison.toString}">
+                            </th>
+                        </tr>
+                        <tr class="table-tv-empty"></tr>
+                        <tr>
+                            <th class="table-tv-empty"></th>
+                            <th class="table-tv" colspan="5">
+                                <span th:text="${'Volants ' + saison.getTypeVolantName(plastique).toString}">
+                            </th>
+                            <th class="table-tv" colspan="5">
+                                <span th:text="${'Volants ' + saison.getTypeVolantName(competition).toString}">
+                            </th>
+                            <th class="table-tv" colspan="5">
+                                <span th:text="${'Volants ' + saison.getTypeVolantName(entrainement).toString}">
+                            </th>
+                        </tr>
+                        <tr>
+                            <th class="table-th-index"></th>
+                            <th class="table-th-utilise" colspan="2">Utilisés</th>
+                            <th class="table-th-commande" colspan="2">Commandés</th>
+                            <th class="table-th-prix" rowspan="2">Prix</th>
+                            <th class="table-th-utilise" colspan="2">Utilisés</th>
+                            <th class="table-th-commande" colspan="2">Commandés</th>
+                            <th class="table-th-prix" rowspan="2">Prix</th>
+                            <th class="table-th-utilise" colspan="2">Utilisés</th>
+                            <th class="table-th-commande" colspan="2">Commandés</th>
+                            <th class="table-th-prix" rowspan="2">Prix</th>
+                        </tr>
+                        <tr>
+                            <th class="table-tv-mois">Mois</th>
+                            <th class="table-tv-nbu">Nb</th>
+                            <th class="table-tv-cu">Coût</th>
+                            <th class="table-tv-nbc">Nb</th>
+                            <th class="table-tv-cc">Coût</th>
+                            <th class="table-tv-nbu">Nb</th>
+                            <th class="table-tv-cu">Coût</th>
+                            <th class="table-tv-nbc">Nb</th>
+                            <th class="table-tv-cc">Coût</th>
+                            <th class="table-tv-nbu">Nb</th>
+                            <th class="table-tv-cu">Coût</th>
+                            <th class="table-tv-nbc">Nb</th>
+                            <th class="table-tv-cc">Coût</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="mois : ${nomMois}">
+                            <td class="table-tv-mois"><span th:text="${mois}"></span></td>
+                            <td class="table-tv-nbu">
+                                <span th:text="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).nbTubeUtilise}"></span>
+                            </td>
+                            <td class="table-tv-cu">
+                                <span th:text="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).getCoutUtilises}"></span>
+                            </td>
+                            <td class="table-tv-nbc">
+                                <span th:text="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).nbTubeCommande}"></span>
+                            </td>
+                            <td class="table-tv-cc">
+                                <span th:text="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).getCoutCommandes}"></span>
+                            </td>
+                            <td class="table-tv-prix" th:title="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).idPrixTube.marque}">
+                                <form action="#" th:action="@{/mois/prix/{id}(id=${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).id})}" th:method="post">
+                                    <input class="table-tv-prix" type="submit" th:value="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).idPrixTube.getPrixString}"/>
+                                </form>
+                            </td>
+                            <td class="table-tv-nbu">
+                                <span th:text="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).nbTubeUtilise}"></span>
+                            </td>
+                            <td class="table-tv-cu">
+                                <span th:text="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).getCoutUtilises}"></span>
+                            </td>
+                            <td class="table-tv-nbc">
+                                <span th:text="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).nbTubeCommande}"></span>
+                            </td>
+                            <td class="table-tv-cc">
+                                <span th:text="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).getCoutCommandes}"></span>
+                            </td>
+                            <td class="table-tv-prix" th:title="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).idPrixTube.marque}">
+                                <form action="#" th:action="@{/mois/prix/{id}(id=${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).id})}" th:method="post">
+                                    <input class="table-tv-prix" type="submit" th:value="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).idPrixTube.getPrixString}"/>
+                                </form>
+                            </td>
+                            <td class="table-tv-nbu">
+                                <span th:text="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).nbTubeUtilise}"></span>
+                            </td>
+                            <td class="table-tv-cu">
+                                <span th:text="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).getCoutUtilises}"></span>
+                            </td>
+                            <td class="table-tv-nbc">
+                                <span th:text="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).nbTubeCommande}"></span>
+                            </td>
+                            <td class="table-tv-cc">
+                                <span th:text="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).getCoutCommandes}"></span>
+                            </td>
+                            <td class="table-tv-prix" th:title="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).idPrixTube.marque}">
+                                <form action="#" th:action="@{/mois/prix/{id}(id=${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).id})}" th:method="post">
+                                    <input class="table-tv-prix" type="submit" th:value="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).idPrixTube.getPrixString}"/>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+                
+            </div>
+            
+            
         </div>
       
         <div th:replace="fragments/layout-footer :: footer"/>

@@ -41,11 +41,9 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="table-label" colspan="5">MEMBRES</th>
+                            <th class="table-label" colspan="3">MEMBRES</th>
                         </tr>
                         <tr>
-                            <th>ID</th>
-                            <th>Horodatage</th>
                             <th>Prenom</th>
                             <th>Nom</th>
                             <th class="table-action">Action</th>
@@ -53,11 +51,9 @@
                     </thead>
                     <tbody>
                         <tr th:if="${listMembres.empty}">
-                            <td colspan="5">Aucun Membre créé</td>
+                            <td colspan="3">Aucun Membre créé</td>
                         </tr>
                         <tr th:each="membre : ${listMembres}">
-                            <td><span th:text="${membre.id}">ID</span></td>
-                            <td><span th:text="${membre.horodatage}">Horodatage</span></td>
                             <td><span th:text="${membre.prenom}">Prenom</span></td>
                             <td><span th:text="${membre.nom}">Nom</span></td>
                             <td class="table-action">
@@ -87,25 +83,21 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="table-label" colspan="6">SAISONS</th>
+                            <th class="table-label" colspan="4">SAISONS</th>
                         </tr>
                         <tr>
-                            <th>ID</th>
-                            <th>Horodatage</th>
                             <th>Nom</th>
                             <th>Budget</th>
-                            <th>Active</th>
+                            <th>Actuelle</th>
                             <th class="table-action">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:if="${listSaisons.size()==1}">
-                            <td colspan="6">Aucune Saison créé</td>
+                            <td colspan="4">Aucune Saison créé</td>
                         </tr>
                         <tr th:each="saison : ${listSaisons}" th:if="${saison.id!=1}">
-                            <td><span th:text="${saison.id}">ID</span></td>
-                            <td><span th:text="${saison.horodatage}">Horodatage</span></td>
-                            <td><span th:text="${saison.toString}">Nom</span></td>
+                            <td><span th:text="${saison.toString}">Saison</span></td>
                             <td><span th:text="${saison.budget}">Budget</span></td>
                             <td><span th:text="${saison.actuelle}">Active</span></td>
                             <td class="table-action">
@@ -135,10 +127,9 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="table-label" colspan="7">PRIX TUBES</th>
+                            <th class="table-label" colspan="6">PRIX TUBES</th>
                         </tr>
                         <tr>
-                            <th>ID</th>
                             <th>Type de tube</th>
                             <th>Marque</th>
                             <th>Prix d'achat</th>
@@ -149,10 +140,9 @@
                     </thead>
                     <tbody>
                         <tr th:if="${listPrixTubes.empty}">
-                            <td colspan="7">Aucun prix tube créé</td>
+                            <td colspan="6">Aucun prix tube créé</td>
                         </tr>
                         <tr th:each="prixTube : ${listPrixTubes}" th:if="${!prixTube.defaut}">
-                            <td><span th:text="${prixTube.id}">ID</span></td>
                             <td><span th:text="${prixTube.idTypeTube}">Type de tube</span></td>
                             <td><span th:text="${prixTube.marque}">Marque</span></td>
                             <td><span th:text="${prixTube.prix}">Prix</span></td>

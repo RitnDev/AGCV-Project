@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -54,7 +55,7 @@ public class TypeVolant implements Serializable {
     
     
     //Les types volants de la saison
-    @OneToMany(targetEntity=ConsoMois.class, mappedBy="idTypeVolant")
+    @OneToMany(targetEntity=ConsoMois.class, mappedBy="idTypeVolant", cascade=CascadeType.REMOVE)
     @Getter @Setter private List<ConsoMois> consommationsMois = new ArrayList<>();
     
     
@@ -68,13 +69,32 @@ public class TypeVolant implements Serializable {
         this.idTypeTube = idTypeTube;
         this.initTube = initTube;
     }
+
+    
+    
+    @Override
+    public String toString() {
+        return idTypeTube.getNom();
+    }
    
+    
     
     /*
         Méthodes
     */
+    
     public String getNomTypeTube(){
         return idTypeTube.getNom();
+    }
+    
+    //Renvoie le consoMois correspondant au nomMois
+    public ConsoMois getConsoMoisName(String nomMois){
+        for(ConsoMois cm : consommationsMois){
+            if(cm.toString().equals(nomMois)){
+                return cm;
+            }
+        }
+        return null;
     }
     
 }
