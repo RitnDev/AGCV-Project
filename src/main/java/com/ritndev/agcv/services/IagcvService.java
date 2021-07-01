@@ -44,6 +44,8 @@ public interface IagcvService {
     public ConsoMois findByIdConsoMois(Long id);
     public int supprConsoMois(Long id);
     public int updateConsoMoisPrixtube(FormConsoMois editConsoMois);
+    public int updateConsoMoisNbUtilises(FormConsoMois editConsoMois);
+    public int updateConsoMoisNbCommandes(FormConsoMois editConsoMois);
     public int updateConsoMois(FormConsoMois editConsoMois);
     
     //Methode StockCompetition

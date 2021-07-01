@@ -37,40 +37,31 @@ public class FormConsoMois {
     
     
     //Constructeur
-
     public FormConsoMois() {}
-
-    public FormConsoMois(long id, long idPrixTube, int nbTubeUtilise, int nbTubeCommande) {
-        this.id = id;
-        this.idPrixTube = idPrixTube;
-        this.nbTubeUtilise = nbTubeUtilise;
-        this.nbTubeCommande = nbTubeCommande;
-    }
-
-    public FormConsoMois(long id, int nbTubeUtilise) {
-        this.id = id;
-        this.nbTubeUtilise = nbTubeUtilise;
-    }
-
-    public FormConsoMois(long id, long idPrixTube, int nbTubeCommande) {
-        this.id = id;
-        this.idPrixTube = idPrixTube;
-        this.nbTubeCommande = nbTubeCommande;
-    }
-
-    public FormConsoMois(String nom, long idPrixTube, long idTypeVolant, int nbTubeUtilise) {
-        this.nom = nom;
-        this.idPrixTube = idPrixTube;
-        this.idTypeVolant = idTypeVolant;
-        this.nbTubeUtilise = nbTubeUtilise;
-    }
 
     public FormConsoMois(long id, String nom, long idPrixTube) {
         this.id = id;
         this.nom = nom;
         this.idPrixTube = idPrixTube;
     }
+
+    public FormConsoMois(long id, String nom, int nbTubeUtilise) {
+        this.id = id;
+        this.nom = nom;
+        this.nbTubeUtilise = nbTubeUtilise;
+    }
     
+    public FormConsoMois(long id, int nbTubeCommande, String nom) {
+        this.id = id;
+        this.nom = nom;
+        this.nbTubeCommande = nbTubeCommande;
+    }
+
+    public FormConsoMois(String nom, long idPrixTube, long idTypeVolant) {
+        this.nom = nom;
+        this.idPrixTube = idPrixTube;
+        this.idTypeVolant = idTypeVolant;
+    }
     
     
     

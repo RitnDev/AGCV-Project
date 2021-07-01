@@ -50,7 +50,7 @@ public class TypeVolant implements Serializable {
     //Nombre de tube avant consommation de volant (stock de départ)
     @Column(name = "initTube", nullable = false)
     @Getter @Setter
-    private int initTube;
+    private int initTube; /////// Changer en stock
     
     
     
@@ -83,6 +83,7 @@ public class TypeVolant implements Serializable {
         Méthodes
     */
     
+    //Nom du type tube associé au type volant
     public String getNomTypeTube(){
         return idTypeTube.getNom();
     }
@@ -95,6 +96,42 @@ public class TypeVolant implements Serializable {
             }
         }
         return null;
+    }
+    
+    //Total du nb de tube utilisé sur une saison pour le type volant
+    public int getTotalNbTubesUtilises() {
+        int total = 0;
+        for(ConsoMois cm : consommationsMois){
+            total = total + cm.getNbTubeUtilise();
+        }
+        return total;
+    }
+    
+    //Total du nb de tube commandé sur une saison pour le type volant
+    public int getTotalNbTubesCommandes() {
+        int total = 0;
+        for(ConsoMois cm : consommationsMois){
+            total = total + cm.getNbTubeCommande();
+        }
+        return total;
+    }
+    
+    //Total du coût des tubes utilisés sur une saison pour le type volant
+    public double getTotalCoutUtilises() {
+        double total = 0.0;
+        for(ConsoMois cm : consommationsMois){
+            total = total + cm.getCoutUtilises();
+        }
+        return total;
+    }
+    
+    //Total du coût des tubes commandés sur une saison pour le type volant
+    public double getTotalCoutCommandes() {
+        double total = 0.0;
+        for(ConsoMois cm : consommationsMois){
+            total = total + cm.getCoutCommandes();
+        }
+        return total;
     }
     
 }

@@ -133,6 +133,8 @@ input.footer-log:hover {
 .popup-content-edit-typetube,
 .popup-content-edit-typevolant,
 .popup-content-edit-consomois,
+.popup-content-edit-consomois-nbu,
+.popup-content-edit-consomois-nbc,
 .popup-content-edit-prixtube,
 .popup-content-edit-commande,
 .popup-content-profil,
@@ -188,6 +190,14 @@ input.footer-log:hover {
 .popup-content-edit-consomois {
     width: 520px;
     height: 230px;
+}
+.popup-content-edit-consomois-nbu {
+    width: 420px;
+    height: 180px;
+}
+.popup-content-edit-consomois-nbc {
+    width: 420px;
+    height: 180px;
 }
 .popup-content-typetube {
     width: 500px;
@@ -691,6 +701,75 @@ td.table-tv-prix {
     border-right-color: #101720;
     border-left-color: #afafaf;
     border-bottom-color: #ddd;
+    color: black;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+}
+
+
+td.table-tv-total{
+    border-style: solid solid solid solid;
+    border-width: medium medium 1px medium;
+    border-top-color: #101720;
+    border-right-color: #101720;
+    border-left-color: #101720;
+    border-bottom-color: #0080ff;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+    width:110px;
+    font-weight: bold;
+    background-color: #0080ff;
+    color: white;
+}
+
+td.table-tv-total-nbu {
+    border-style: solid solid solid none;
+    border-width: medium 1px 1px 0;
+    border-top-color: #afafaf;
+    border-right-color: #afafaf;
+    width: 30px;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+    font-weight: bold;
+}
+td.table-tv-total-cu {
+    border-style: solid solid solid none;
+    border-width: medium medium 1px 1px;
+    border-top-color: #afafaf;
+    border-right-color: #afafaf;
+    width: 60px;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+    font-weight: bold;
+}
+td.table-tv-total-nbc {
+    border-style: solid solid solid none;
+    border-width: medium 1px 1px 0;
+    border-top-color: #afafaf;
+    border-right-color: #afafaf;
+    width: 30px;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+    font-weight: bold;
+}
+td.table-tv-total-cc {
+    border-style: solid none solid none;
+    border-width: medium 0 1px 1px;
+    border-top-color: #afafaf;
+    width: 60px;
+    padding-top: 6px; 
+    padding-bottom: 6px;
+    font-weight: bold;
+}
+
+td.table-tv-total-prix {
+    border-style: solid solid none none;
+    border-width: medium medium 1px medium;
+    border-top-color: #101720;
+    border-right-color: #101720;
+    background-color: #101720;
     color: black;
     padding-top: 6px; 
     padding-bottom: 6px;

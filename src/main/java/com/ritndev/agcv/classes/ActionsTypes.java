@@ -34,7 +34,7 @@ public enum ActionsTypes {
         @Override  
         public String toString() {return "prixtube";}; 
     },
-    EDIT_CONSOMOIS(7){
+    EDIT_CONSOMOIS_PT(7){
         @Override  
         public String toString() {return "consomois";}; 
     },
@@ -57,6 +57,14 @@ public enum ActionsTypes {
     EDIT_TYPEVOLANT(12){
         @Override  
         public String toString() {return "typevolant";}; 
+    },
+    EDIT_CONSOMOIS_NBU(13){
+        @Override  
+        public String toString() {return "consomois-nbu";}; 
+    },
+    EDIT_CONSOMOIS_NBC(14){
+        @Override  
+        public String toString() {return "consomois-nbc";}; 
     };
     
     

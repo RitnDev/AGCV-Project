@@ -40,6 +40,9 @@ public class ConsoMoisController {
     
 //---------------------------------------------------------------------------------------------    
     
+    //          -------------------  PRIX TUBE -------------------
+    
+    
     //Changement du prix tube sur un mois
     @PostMapping(value = "/mois/prix/{id}")
     public String getPrixMois(@PathVariable Long id, Model model, Principal principal) {
@@ -52,7 +55,7 @@ public class ConsoMoisController {
          
         model.addAttribute("editConsoMois", formConsoMois);
         model.addAttribute("listPrixTubes", service.ListPrixTubeName(editConsoMois.getIdTypeVolant().getNomTypeTube()));
-        model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS.toString());
+        model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS_PT.toString());
 
         
         PageActions pageAction = new PageActions();
@@ -60,9 +63,9 @@ public class ConsoMoisController {
     }
     
     
-    //Modifier une Type-Tube
-    @PutMapping("/consomois/{id}")
-    public String editConsoMois(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
+    //Modifier une Prix-Tube
+    @PutMapping("/mois/prix/{id}")
+    public String editConsoMoisPrix(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
         int result = service.updateConsoMoisPrixtube(putConsoMois);
         
         PageIndex pageIndex = new PageIndex();   
@@ -70,6 +73,77 @@ public class ConsoMoisController {
                 
         return pageIndex.getPage(model, principal, service);
     } 
+    
+//---------------------------------------------------------------------------------------------    
+    
+    //          -------------------  NB TUBES UTILISES -------------------
+
+
+    //Changement du nombres de tubes utilisés sur le mois
+    @PostMapping(value = "/mois/nbu/{id}")
+    public String changeNbTubeUtilises(@PathVariable Long id, Model model, Principal principal) {
+        
+        //Recupération de la DATA à modifier :
+        ConsoMois editConsoMois = service.findByIdConsoMois(id);
+        FormConsoMois formConsoMois = new FormConsoMois(id,
+                                    editConsoMois.getNom(),
+                                    editConsoMois.getNbTubeUtilise());
+         
+        model.addAttribute("editConsoMois", formConsoMois);
+        model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS_NBU.toString());
+ 
+        PageActions pageAction = new PageActions();
+        return pageAction.returnPage();
+    }
+
+    
+    //Modifier nbTubeUtilises du consoMois
+    @PutMapping("/mois/nbu/{id}")
+    public String editConsoMoisNbUtilises(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
+        int result = service.updateConsoMoisNbUtilises(putConsoMois);
+        
+        PageIndex pageIndex = new PageIndex();   
+        pageIndex.addReponse(messageSource, "nbutilises", "edit", result);
+                
+        return pageIndex.getPage(model, principal, service);
+    } 
+    
+
+//---------------------------------------------------------------------------------------------    
+    
+    //          -------------------  NB TUBES UTILISES -------------------
+
+
+    //Changement du nombres de tubes commandés sur le mois
+    @PostMapping(value = "/mois/nbc/{id}")
+    public String changeNbTubeCommandes(@PathVariable Long id, Model model, Principal principal) {
+        
+        //Recupération de la DATA à modifier :
+        ConsoMois editConsoMois = service.findByIdConsoMois(id);
+        FormConsoMois formConsoMois = new FormConsoMois(id,
+                                    editConsoMois.getNbTubeCommande(),
+                                    editConsoMois.getNom());
+         
+        model.addAttribute("editConsoMois", formConsoMois);
+        model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS_NBC.toString());
+ 
+        PageActions pageAction = new PageActions();
+        return pageAction.returnPage();
+    }
+
+    
+    //Modifier nbTubeCommande du consoMois
+    @PutMapping("/mois/nbc/{id}")
+    public String editConsoMoisNbCommandes(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
+        int result = service.updateConsoMoisNbCommandes(putConsoMois);
+        
+        PageIndex pageIndex = new PageIndex();   
+        pageIndex.addReponse(messageSource, "nbcommandes", "edit", result);
+                
+        return pageIndex.getPage(model, principal, service);
+    } 
+    
+     
     
     
 }
