@@ -2,6 +2,7 @@ package com.ritndev.agcv.services;
 
 // Aide : https://devstory.net/11705/creer-une-application-de-connexion-avec-spring-boot-spring-security-jpa
 
+import com.ritndev.agcv.InterfaceService.IUserService;
 import com.ritndev.agcv.form.FormUser;
 import com.ritndev.agcv.model.AppRole;
 import java.util.ArrayList;

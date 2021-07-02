@@ -3,24 +3,26 @@ package com.ritndev.agcv.pages;
 import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.model.enumeration.NomMois;
 import com.ritndev.agcv.model.enumeration.NomTypeTube;
-import com.ritndev.agcv.services.IagcvService;
-import java.security.Principal;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import org.springframework.ui.Model;
+import java.security.Principal;
+
+
 
 /**
  *
  * @author Ritn
  */
-public class PageIndex extends Page{
-
-    public PageIndex() {
+public class PageIndex extends Page {
+  
+    
+    //Constructeur
+    public PageIndex(Model model, Principal principal) {
+        super(model, principal);
         
-        super.setPage("Consommation de tubes sur la saison");
+        super.setNomPage("Consommation de tubes sur la saison");
         super.setLinkPage(new Link("Page principale","index"));
         super.setAdminPage(true);
         super.setLinkAdminPage(new Link("Admin", "/admin"));
@@ -37,11 +39,11 @@ public class PageIndex extends Page{
         
     }
     
-    
-    public String getPage(Model model, Principal principal, IagcvService service) {
+    //Renvoie la page
+    public String getPage() {
      
         String message = "Ici se trouve la page d'accueil, elle s'appelle également : ";
-        message = message + getPage();
+        message = message + getNomPage();
         
         String tvEntrainement = NomTypeTube.ENTRAINEMENT.toString();
         String tvPlastique = NomTypeTube.PLASTIQUE.toString();
@@ -50,15 +52,15 @@ public class PageIndex extends Page{
         
         
         // Add Attribute :
-        model = getPageGenerique(model, principal);
-        model.addAttribute("message", message);
-        
+        getPageGenerique();
+        super.getModel().addAttribute("message", message);
+                
         //Saison actuellement en cours
-        model.addAttribute("saison", service.returnMainData().getIdSaison());
-        model.addAttribute("plastique", tvPlastique);
-        model.addAttribute("entrainement", tvEntrainement);
-        model.addAttribute("competition", tvCompetition);
-        model.addAttribute("nomMois", new ArrayList<>(Arrays.asList(NomMois.values())));
+        super.getModel().addAttribute("saison", getDataService().returnMainData().getIdSaison());
+        super.getModel().addAttribute("plastique", tvPlastique);
+        super.getModel().addAttribute("entrainement", tvEntrainement);
+        super.getModel().addAttribute("competition", tvCompetition);
+        super.getModel().addAttribute("nomMois", new ArrayList<>(Arrays.asList(NomMois.values())));
         
         return returnPage();
         

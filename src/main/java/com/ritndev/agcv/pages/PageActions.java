@@ -10,9 +10,10 @@ import org.springframework.ui.Model;
  */
 public class PageActions extends Page{
     
-    public PageActions() {
-                
-        super.setPage("");
+    public PageActions(Model model, Principal principal) {
+        super(model, principal);     
+        
+        super.setNomPage("");
         super.setLinkPage(new Link("","actions"));
         
         Link logout = new Link("Page principale", "/logout");
@@ -23,11 +24,11 @@ public class PageActions extends Page{
     }
     
     
-    public String getPage(Model model, Principal principal) {
+    public String getPage() {
      
         // Add Attribute :
-        model = getPageGenerique(model, principal);
-        super.setTitlePage(model, "AGCV");
+        getPageGenerique();
+        super.setTitlePage("AGCV");
         
         return returnPage();
     }

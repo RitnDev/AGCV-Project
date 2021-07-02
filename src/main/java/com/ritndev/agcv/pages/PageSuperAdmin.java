@@ -8,8 +8,6 @@ import com.ritndev.agcv.form.FormUser;
 import com.ritndev.agcv.model.AppUser;
 import com.ritndev.agcv.model.enumeration.NomMois;
 import com.ritndev.agcv.model.enumeration.NomTypeTube;
-import com.ritndev.agcv.services.IUserService;
-import com.ritndev.agcv.services.IagcvService;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,10 +21,11 @@ import org.springframework.ui.Model;
  */
 public class PageSuperAdmin extends Page {
 
-    //Construction de la page ADMIN :
-    public PageSuperAdmin() {
+    //Construction de la page SUPER-ADMIN :
+    public PageSuperAdmin(Model model, Principal principal) {
+        super(model, principal);
         
-        super.setPage("Super Administrateur");
+        super.setNomPage("Super Administrateur");
         super.setLinkPage(new Link("Super Admin", "/superAdmin"));
         super.setAdminPage(true);
         super.setLinkAdminPage(new Link("Déconnexion", "/logout"));
@@ -52,36 +51,36 @@ public class PageSuperAdmin extends Page {
 
       
     
-    public String getPage(Model model, Principal principal, IagcvService service, IUserService userService) {
+    public String getPage() {
     
         String message = "Ici se trouve la page : ";
-        message = message + getPage();
+        message = message + getNomPage();
  
         Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), formatRole(userService.findRoleByUsername(user.getUserName())));
+        for (AppUser user : getUserService().listUser()){
+           userRoleList.put(user.getUserId(), formatRole(getUserService().findRoleByUsername(user.getUserName())));
         }
         
         
         // Add Attribute :
-        model = getPageGenerique(model, principal);
-        model.addAttribute("message", message);
-        model.addAttribute("mainData", service.listMainData());
-        model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", service.listStock());
-        model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("typeTubeList", service.listDataTypeTube());
-        model.addAttribute("prixTubeList", service.listPrixTube());
-        model.addAttribute("typeVolantList", service.listTypeVolant());
-        model.addAttribute("consoMoisList", service.listConsoMois());
-        model.addAttribute("newUser", new FormUser());
-        model.addAttribute("newTypeTube", new FormTypeTube());
-        model.addAttribute("newTypeVolant", new FormTypeVolant());
-        model.addAttribute("newConsoMois", new FormConsoMois());
-        model.addAttribute("roleList", userService.listRole());
-        model.addAttribute("saisons", service.listSaison());
-        model.addAttribute("nomMois", new ArrayList<>(Arrays.asList(NomMois.values())));
-        model.addAttribute("nomTypeTubes", new ArrayList<>(Arrays.asList(NomTypeTube.values())));
+        getPageGenerique();
+        super.getModel().addAttribute("message", message);
+        super.getModel().addAttribute("mainData", getDataService().listMainData());
+        super.getModel().addAttribute("userList", getUserService().listUser());
+        super.getModel().addAttribute("stockList", getStockService().listStock());
+        super.getModel().addAttribute("userRoleList", userRoleList);
+        super.getModel().addAttribute("typeTubeList", getTypeTubeService().listDataTypeTube());
+        super.getModel().addAttribute("prixTubeList", getPrixTubeService().listPrixTube());
+        super.getModel().addAttribute("typeVolantList", getTypeVolantService().listTypeVolant());
+        super.getModel().addAttribute("consoMoisList", getConsoMoisService().listConsoMois());
+        super.getModel().addAttribute("newUser", new FormUser());
+        super.getModel().addAttribute("newTypeTube", new FormTypeTube());
+        super.getModel().addAttribute("newTypeVolant", new FormTypeVolant());
+        super.getModel().addAttribute("newConsoMois", new FormConsoMois());
+        super.getModel().addAttribute("roleList", getUserService().listRole());
+        super.getModel().addAttribute("saisons", getSaisonService().listSaison());
+        super.getModel().addAttribute("nomMois", new ArrayList<>(Arrays.asList(NomMois.values())));
+        super.getModel().addAttribute("nomTypeTubes", new ArrayList<>(Arrays.asList(NomTypeTube.values())));
         
         return returnPage();
     }

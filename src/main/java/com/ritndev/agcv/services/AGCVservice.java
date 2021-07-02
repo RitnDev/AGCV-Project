@@ -1,5 +1,15 @@
 package com.ritndev.agcv.services;
 
+import com.ritndev.agcv.InterfaceService.IStockService;
+import com.ritndev.agcv.InterfaceService.ICompetitionService;
+import com.ritndev.agcv.InterfaceService.ITypeTubeService;
+import com.ritndev.agcv.InterfaceService.ISaisonService;
+import com.ritndev.agcv.InterfaceService.IMainDataService;
+import com.ritndev.agcv.InterfaceService.IPrixTubeService;
+import com.ritndev.agcv.InterfaceService.ITypeVolantService;
+import com.ritndev.agcv.InterfaceService.IConsoMoisService;
+import com.ritndev.agcv.InterfaceService.ICommandeService;
+import com.ritndev.agcv.InterfaceService.IMembreService;
 import com.ritndev.agcv.form.*;
 import com.ritndev.agcv.model.*;
 import com.ritndev.agcv.model.enumeration.NomMois;
@@ -10,12 +20,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 /**
  *
  * @author Ritn
  */
 @Service
-public class AGCVservice implements IagcvService {
+public class AGCVservice implements IMembreService, ICommandeService, ICompetitionService, IConsoMoisService,
+    IMainDataService, IPrixTubeService, ISaisonService, IStockService, ITypeTubeService, ITypeVolantService {
     
     @Autowired CommandeRepository commandeRep;
     @Autowired CompetitionRepository competitionRep;
@@ -94,23 +106,19 @@ public class AGCVservice implements IagcvService {
         && newPrixTube.getIdTypeTube()>0
         && newPrixTube.getPrixDouble()>0
         && newPrixTube.getPrixMembreDouble()>=0){
-            
-            TypeTube tt = typeTubeRep.getOne(newPrixTube.getIdTypeTube());
-            PrixTube ptOld = tt.getPrixTubeActif();
-            ptOld.setActif(false);
-            prixTubeRep.save(ptOld);
+
             prixTubeRep.save(new PrixTube(newPrixTube.getMarque(),
-                                            newPrixTube.getPrixDouble(), 
-                                            newPrixTube.getPrixMembreDouble(),
-                                            typeTubeRep.getOne(newPrixTube.getIdTypeTube()),
-                                            true));
+                                newPrixTube.getPrixDouble(), 
+                                newPrixTube.getPrixMembreDouble(),
+                                typeTubeRep.getOne(newPrixTube.getIdTypeTube()),
+                                true)); // Actif par défaut à la création
             resultVal = 2;
         }
         return resultVal;
     }
     @Override public List<PrixTube> listPrixTube() {return prixTubeRep.findAll();}
     @Override public List<PrixTube> ListPrixTubeName(String nom){
-        List<PrixTube> prixTubes = prixTubeRep.findAll();
+        List<PrixTube> prixTubes = prixTubeRep.findByActifTrue();
         List<PrixTube> prixTubeName = new ArrayList<>();
         for(PrixTube pt : prixTubes){
             if(pt.getIdTypeTube().getNom().equals(nom)){
@@ -119,13 +127,12 @@ public class AGCVservice implements IagcvService {
         }
         return prixTubeName;
     }
-    @Override public FormPrixTube findByIdPrixTube(Long id) {
+    @Override public List<PrixTube> ListPrixTubeActif() {
+        return prixTubeRep.findByActifTrue();
+    }
+    @Override public PrixTube findByIdPrixTube(Long id) {
         if (prixTubeRep.existsById(id)){
-            return new FormPrixTube(id,
-                    prixTubeRep.getOne(id).getMarque(),
-                    prixTubeRep.getOne(id).getPrixString(),
-                    prixTubeRep.getOne(id).getPrixMembreString(),
-                    prixTubeRep.getOne(id).isActif());
+            return prixTubeRep.getOne(id);
         }else{
             return null;
         }   
@@ -135,17 +142,10 @@ public class AGCVservice implements IagcvService {
         if (prixTubeRep.existsById(id)){
             PrixTube pt = prixTubeRep.getOne(id);
             if (!pt.isActif() || !pt.isDefaut()){
-                TypeTube tt = pt.getIdTypeTube();
                 prixTubeRep.delete(pt);
-                
-                //Activation de la donnée par défaut
-                for(PrixTube ptDefaut : tt.getPrixTubes()){
-                    if(ptDefaut.isDefaut()){
-                        ptDefaut.setActif(true);
-                        prixTubeRep.save(ptDefaut);
-                    }
-                }
                 resultVal = 2;
+            }else{
+                resultVal = 3;
             }
         }else{
             resultVal = 1;
@@ -155,25 +155,16 @@ public class AGCVservice implements IagcvService {
     @Override public int updatePrixTube(FormPrixTube editPrixTube) {
         int resultVal = 0;// erreur de modification
         if (prixTubeRep.existsById(editPrixTube.getId())){
-            PrixTube pt = prixTubeRep.getOne(editPrixTube.getId()); // je récupère le prix tube
-            TypeTube tt = pt.getIdTypeTube(); // On récupère le Type Tube
             
-            if(pt.isActif() == false && editPrixTube.isActif() == true){
-                //désactivation du prix tubes actif
-                PrixTube ptActif = tt.getPrixTubeActif();
-                if(ptActif!=null){
-                    ptActif.setActif(false);
-                    prixTubeRep.save(ptActif);
-                }
-                pt.setActif(editPrixTube.isActif());
-            }
+            PrixTube pt = prixTubeRep.getOne(editPrixTube.getId()); // je récupère le prix tube
             
             pt.setMarque(editPrixTube.getMarque());
             pt.setPrix(editPrixTube.getPrixDouble());
             pt.setPrixMembre(editPrixTube.getPrixMembreDouble());
+            pt.setActif(editPrixTube.isActif());
             
             prixTubeRep.save(pt);
-            resultVal = 2; //Modification OK
+            resultVal = 2; // Modification OK
         }else{
             resultVal = 1;
         }

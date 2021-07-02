@@ -4,8 +4,7 @@ import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.form.FormCompet;
 import com.ritndev.agcv.model.Saison;
 import com.ritndev.agcv.model.StockCompetition;
-import com.ritndev.agcv.services.IUserService;
-import com.ritndev.agcv.services.IagcvService;
+
 import java.security.Principal;
 import org.springframework.ui.Model;
 
@@ -14,10 +13,12 @@ import org.springframework.ui.Model;
  * @author Ritn
  */
 public class PageSacCompetition extends Page {
-    
-    public PageSacCompetition() {
        
-        super.setPage("Gestion du stock de compétition");
+    
+    public PageSacCompetition(Model model, Principal principal) {
+        super(model, principal);
+       
+        super.setNomPage("Gestion du stock de compétition");
         super.setLinkPage(new Link("Gestion du stock de compétition", "sacCompetition", "topnav-menu"));
         super.setAdminPage(true);
         super.setLinkAdminPage(new Link("Admin", "/admin"));
@@ -39,33 +40,33 @@ public class PageSacCompetition extends Page {
     }
     
     
-    public String getPage(Model model, Principal principal, IagcvService service, IUserService userService) {
+    public String getPage() {
                 
         String message = "Ici se trouve la page : ";
-        message = message + getPage() + " ";
+        message = message + getNomPage() + " ";
         message = message + "Ici sera affiché la liste des compétition de la saison. ";
         message = message + "Il sera possible de faire le restockage du stock de compétition.";
         
-        Saison saisonActuelle = service.returnMainData().getIdSaison();
-        StockCompetition stockActuel = service.returnMainData().getIdStockCompet();
+        Saison saisonActuelle = getDataService().returnMainData().getIdSaison();
+        StockCompetition stockActuel = getDataService().returnMainData().getIdStockCompet();
         
         int AdminConnect = 0;
         
-        if (!returnUser(principal).equals("")){
-            switch (userService.findRoleByUsername(returnUser(principal))) {
+        if (!returnUser(super.getPrincipal()).equals("")){
+            switch (getUserService().findRoleByUsername(returnUser(super.getPrincipal()))) {
                 case "ROLE_ADMIN" -> AdminConnect = 1;
                 case "ROLE_SUPADMIN" -> AdminConnect = 2;
             }
         }
         
         // Add Attribute :
-        model = getPageGenerique(model, principal);
-        model.addAttribute("AdminConnect", AdminConnect);
-        model.addAttribute("message", message);
-        model.addAttribute("newCompetition", new FormCompet());
-        model.addAttribute("saison", saisonActuelle);
-        model.addAttribute("stock", stockActuel);
-        model.addAttribute("listCompet", saisonActuelle.getCompetitions());
+        getPageGenerique();
+        super.getModel().addAttribute("AdminConnect", AdminConnect);
+        super.getModel().addAttribute("message", message);
+        super.getModel().addAttribute("newCompetition", new FormCompet());
+        super.getModel().addAttribute("saison", saisonActuelle);
+        super.getModel().addAttribute("stock", stockActuel);
+        super.getModel().addAttribute("listCompet", saisonActuelle.getCompetitions());
         
         return returnPage();
         

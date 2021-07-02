@@ -1,21 +1,18 @@
 package com.ritndev.agcv.controller;
 
+import com.ritndev.agcv.InterfaceService.IMainDataService;
+import com.ritndev.agcv.InterfaceService.IUserService;
 import com.ritndev.agcv.classes.ActionsTypes;
+import com.ritndev.agcv.classes.NomService;
 import com.ritndev.agcv.form.FormUser;
 import com.ritndev.agcv.model.AppUser;
 import com.ritndev.agcv.pages.PageActions;
 import org.springframework.ui.Model;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Controller;
-import com.ritndev.agcv.services.IagcvService;
-
-import com.ritndev.agcv.pages.PageCommandesMembres;
 import com.ritndev.agcv.pages.PageHistoSaison;
 import com.ritndev.agcv.pages.PageIndex;
-import com.ritndev.agcv.pages.PageSacCompetition;
-import com.ritndev.agcv.services.IUserService;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,47 +29,31 @@ import org.springframework.web.bind.annotation.PutMapping;
 @Controller
 public class MainController {
        
-    @Autowired private IagcvService service;
     @Autowired private IUserService userService;
-    @Autowired private MessageSource messageSource;
+    @Autowired private IMainDataService dataService;
     
+    @Autowired private MessageSource messageSource;
+        
      
 //--------------------   Page Index   ----------------------------
     
     @GetMapping(value = { "/", "/index"})
     public String index(Model model, Principal principal){
-        PageIndex pageIndex = new PageIndex();
-        return pageIndex.getPage(model, principal, service);
+        PageIndex pageIndex = new PageIndex(model, principal);
+        pageIndex.addService(NomService.DATA.toString(), dataService);
+        return pageIndex.getPage();
     }
   
-    
-//--------------   Page Commande de tube des membres   ------------------
-    
-    @GetMapping(value = {"/commandesMembres", "/newCommande"})
-    public String commandesMembres(Model model, Principal principal){
-        PageCommandesMembres pageCommandesMembres = new PageCommandesMembres();
-        return pageCommandesMembres.getPage(model, principal, service);
-    }
-    
     
 //--------------   Page Historique des saisons précédentes   ------------------
     
     @GetMapping(value = "/histoSaison")
     public String histoSaison(Model model, Principal principal){
-        PageHistoSaison pageHistoSaison = new PageHistoSaison();
-        return pageHistoSaison.getPage(model, principal); 
+        PageHistoSaison pageHistoSaison = new PageHistoSaison(model, principal);
+        return pageHistoSaison.getPage(); 
     }
     
     
-//--------------   Page Commande de tube des membres   ------------------
-    
-    @GetMapping(value = "/sacCompetition")
-    public String sacCompetition(Model model, Principal principal){
-        PageSacCompetition pageSacCompetition = new PageSacCompetition();
-        return pageSacCompetition.getPage(model, principal, service, userService); 
-    }
-    
-   
     
 //--------------   MODIFICATION DU MOT DE PASSE UTILISATEUR   ------------------    
     
@@ -91,7 +72,7 @@ public class MainController {
         model.addAttribute("editUser", formUser);
         model.addAttribute("numAction", ActionsTypes.EDIT_MDP.toString());
                 
-        PageActions pageAction = new PageActions();
+        PageActions pageAction = new PageActions(model, principal);
         return pageAction.returnPage();
     }
     
@@ -106,10 +87,11 @@ public class MainController {
         //Modification du mot de passe utilisateur :
         int result = userService.updateMdpUser(putUser);
                 
-        PageIndex pageIndex = new PageIndex();
+        PageIndex pageIndex = new PageIndex(model, principal);
         pageIndex.addReponse(messageSource, "mdp", "edit", result);
+        pageIndex.addService(NomService.DATA.toString(), dataService);
         
-        return pageIndex.getPage(model, principal, service);
+        return pageIndex.getPage();
         
     }
     

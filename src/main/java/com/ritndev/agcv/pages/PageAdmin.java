@@ -2,12 +2,13 @@ package com.ritndev.agcv.pages;
 
 import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.classes.TypeReponse;
+
 import com.ritndev.agcv.form.FormMembre;
 import com.ritndev.agcv.form.FormPrixTube;
 import com.ritndev.agcv.form.FormSaison;
+
 import com.ritndev.agcv.model.enumeration.NomTypeTube;
-import com.ritndev.agcv.services.IUserService;
-import com.ritndev.agcv.services.IagcvService;
+
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.Locale;
@@ -19,11 +20,12 @@ import org.springframework.ui.Model;
  * @author Ritn
  */
 public class PageAdmin extends Page {
-
+    
     //Construction de la page ADMIN :
-    public PageAdmin() {
+    public PageAdmin(Model model, Principal principal) {
+        super(model, principal); 
         
-        super.setPage("Administrateur");
+        super.setNomPage("Administrateur");
         super.setLinkPage(new Link("Admin", "/admin"));
         super.setAdminPage(true);
         super.setSuperAdminPage(true);
@@ -47,7 +49,7 @@ public class PageAdmin extends Page {
     }
 
     
-    
+    //Ajout de reponse spécifique
     @Override public void addReponse(MessageSource messageSource, String modelName, String methodeName, int result) {
         String strResult = "error";
         TypeReponse tr = TypeReponse.OTHER;
@@ -65,30 +67,31 @@ public class PageAdmin extends Page {
     
     
     
-    
-    public String getPage(Model model, Principal principal, IagcvService service, IUserService userService) {
+    //Renvoie la page
+    public String getPage() {
              
         String message = "Ici se trouve la page : ";
-        message = message + getPage();
-        
-        String budget = service.returnMainData().getBudgetDefault();
+        message = message + getNomPage();
+               
+                
+        String budget = getDataService().returnMainData().getBudgetDefault();
         
         // Add Attribute :
-        model = getPageGenerique(model, principal);
-        model.addAttribute("message", message);
-        model.addAttribute("newMembre", new FormMembre());
-        model.addAttribute("newPrixTube", new FormPrixTube());
+        getPageGenerique();
+        super.getModel().addAttribute("message", message);
+        super.getModel().addAttribute("newMembre", new FormMembre());
+        super.getModel().addAttribute("newPrixTube", new FormPrixTube());
         //Charge l'année en cours + Budget par défaut "1000" + saison active par defaut.
-        model.addAttribute("newSaison", new FormSaison(Calendar.getInstance().get(Calendar.YEAR),budget, true));
-        model.addAttribute("listMembres", service.listMembre());
-        model.addAttribute("listSaisons", service.listSaison());
-        model.addAttribute("listPrixTubes", service.listPrixTube());
-        model.addAttribute("prixPlastiques", service.ListPrixTubeName(NomTypeTube.PLASTIQUE.toString()));
-        model.addAttribute("prixEntrainements", service.ListPrixTubeName(NomTypeTube.ENTRAINEMENT.toString()));
-        model.addAttribute("prixCompetitions", service.ListPrixTubeName(NomTypeTube.COMPETITION.toString()));
-        model.addAttribute("typeTubes", service.listDataTypeTube());
+        super.getModel().addAttribute("newSaison", new FormSaison(Calendar.getInstance().get(Calendar.YEAR),budget, true));
+        super.getModel().addAttribute("listMembres", getMembreService().listMembre());
+        super.getModel().addAttribute("listSaisons", getSaisonService().listSaison());
+        super.getModel().addAttribute("listPrixTubes", getPrixTubeService().listPrixTube());
+        super.getModel().addAttribute("prixPlastiques", getPrixTubeService().ListPrixTubeName(NomTypeTube.PLASTIQUE.toString()));
+        super.getModel().addAttribute("prixEntrainements", getPrixTubeService().ListPrixTubeName(NomTypeTube.ENTRAINEMENT.toString()));
+        super.getModel().addAttribute("prixCompetitions", getPrixTubeService().ListPrixTubeName(NomTypeTube.COMPETITION.toString()));
+        super.getModel().addAttribute("typeTubes", getTypeTubeService().listDataTypeTube());
         
-        boolean connect = userService.findRoleByUsername(super.returnUser(principal)).equals("ROLE_SUPADMIN");
+        boolean connect = getUserService().findRoleByUsername(super.returnUser(super.getPrincipal())).equals("ROLE_SUPADMIN");
         Link pageSupAdmin = new Link("supAdmin", "Super Admin", "/superAdmin", connect);
         super.addLinks(pageSupAdmin);
         

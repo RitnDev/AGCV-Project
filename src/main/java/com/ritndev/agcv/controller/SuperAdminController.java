@@ -1,5 +1,13 @@
 package com.ritndev.agcv.controller;
 
+import com.ritndev.agcv.InterfaceService.IConsoMoisService;
+import com.ritndev.agcv.InterfaceService.IMainDataService;
+import com.ritndev.agcv.InterfaceService.IPrixTubeService;
+import com.ritndev.agcv.InterfaceService.ISaisonService;
+import com.ritndev.agcv.InterfaceService.IStockService;
+import com.ritndev.agcv.InterfaceService.ITypeTubeService;
+import com.ritndev.agcv.InterfaceService.ITypeVolantService;
+import com.ritndev.agcv.InterfaceService.IUserService;
 import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import com.ritndev.agcv.classes.ActionsTypes;
+import com.ritndev.agcv.classes.NomService;
 
 import com.ritndev.agcv.form.FormData;
 import com.ritndev.agcv.form.FormStock;
@@ -29,8 +38,6 @@ import com.ritndev.agcv.model.TypeTube;
 import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.pages.PageSuperAdmin;
 
-import com.ritndev.agcv.services.IagcvService;
-import com.ritndev.agcv.services.IUserService;
 
 
 
@@ -41,15 +48,32 @@ import com.ritndev.agcv.services.IUserService;
 @Controller
 public class SuperAdminController {
     
-    @Autowired private IagcvService service;
     @Autowired private IUserService userService;
+    @Autowired private IMainDataService dataService;
+    @Autowired private ISaisonService saisonService;
+    @Autowired private IStockService stockService;
+    @Autowired private ITypeTubeService typeTubeService;
+    @Autowired private IPrixTubeService prixTubeService;
+    @Autowired private ITypeVolantService typeVolantService;
+    @Autowired private IConsoMoisService consoMoisService;
+    
     @Autowired private MessageSource messageSource;
     
     //--------------------   Page Super Admin   ---------------------------- 
     @GetMapping("/superAdmin")
     public String superAdmin(Model model, Principal principal){     
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
+        
+        
+        return pageSuperAdmin.getPage();
     }
     
  
@@ -60,22 +84,39 @@ public class SuperAdminController {
     //Creation d'une nouvelle Main-Data
     @GetMapping("/newData")
     public String newData(Model model, Principal principal) {
-        int result = service.newMainData();
+        int result = dataService.newMainData();
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "data", "create", result);
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
+        
+        return pageSuperAdmin.getPage();
     }
     
     //Supprimer une main-data
     @DeleteMapping("/data/{id}")
     public String supprData(@PathVariable(value = "id") Long id, Model model, Principal principal) {      
-        int result = service.supprMainData(id);
+        int result = dataService.supprMainData(id);
        
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "data", "remove", result);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
         
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        return pageSuperAdmin.getPage();
     }
     
     
@@ -87,14 +128,14 @@ public class SuperAdminController {
         System.out.println(">> ID : " + id);
         
         //Recupération de la DATA à modifier :
-        MainData editData = service.findByIdMainData(id);
+        MainData editData = dataService.findByIdMainData(id);
         FormData formData = new FormData(id, editData.getIdSaison().getId(), editData.getIdStockCompet().getId(), editData.isActif());
         model.addAttribute("editData", formData);
         model.addAttribute("numAction", ActionsTypes.EDIT_DATA.toString());
-        model.addAttribute("listSaison", service.listSaison());
-        model.addAttribute("listStock", service.listStock());
+        model.addAttribute("listSaison", saisonService.listSaison());
+        model.addAttribute("listStock", stockService.listStock());
                 
-        PageActions pageAction = new PageActions();
+        PageActions pageAction = new PageActions(model, principal);
         return pageAction.returnPage();
     }
     
@@ -103,12 +144,20 @@ public class SuperAdminController {
     //Modifier une Main-Data
     @PutMapping("/data/{id}")
     public String editData(@ModelAttribute FormData putData, Model model, Principal principal) {
-        int result = service.updateMainData(putData);
+        int result = dataService.updateMainData(putData);
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "data", "edit", result);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
                 
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        return pageSuperAdmin.getPage();
 
     }
     
@@ -118,12 +167,20 @@ public class SuperAdminController {
     //Creation d'un nouveau stock de competition
     @GetMapping("/newStock")
     public String newStock(Model model, Principal principal) {
-        int result = service.newStock();
+        int result = stockService.newStock();
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "stock", "create", result);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
         
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        return pageSuperAdmin.getPage();
     }
     
     
@@ -131,12 +188,20 @@ public class SuperAdminController {
     //Supprimer une stock de competition
     @DeleteMapping("/stock/{id}")
     public String supprStock(@PathVariable(value = "id") Long id, Model model, Principal principal) {
-        int result = service.supprStock(id);
+        int result = stockService.supprStock(id);
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "stock", "remove", result);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
         
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        return pageSuperAdmin.getPage();
     }
     
     
@@ -148,13 +213,13 @@ public class SuperAdminController {
         System.out.println(">> ID : " + id);
         
         //Recupération du stock à modifier :
-        StockCompetition editStock = service.findByIdStock(id);
+        StockCompetition editStock = stockService.findByIdStock(id);
         FormStock formStock = new FormStock(id, editStock.getStock());
          
         model.addAttribute("editStock", formStock);
         model.addAttribute("numAction", ActionsTypes.EDIT_STOCK.toString());
                 
-        PageActions pageAction = new PageActions();
+        PageActions pageAction = new PageActions(model, principal);
         return pageAction.returnPage();
     }
     
@@ -162,12 +227,20 @@ public class SuperAdminController {
     //Modifier une stock de competition
     @PutMapping("/stock/{id}")
     public String editStock(@ModelAttribute FormStock putStock, Model model, Principal principal) {
-       int result = service.updateStock(putStock);
+       int result = stockService.updateStock(putStock);
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "stock", "edit", result);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
                 
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        return pageSuperAdmin.getPage();
 
     }
     
@@ -179,12 +252,20 @@ public class SuperAdminController {
     //Creation d'une nouvelle Type-Tube
     @PostMapping("/newTypeTube")
     public String newTypeTube(@ModelAttribute FormTypeTube newTypeTube, Model model, Principal principal) {
-        int result = service.saveTypeTube(newTypeTube);
+        int result = typeTubeService.saveTypeTube(newTypeTube);
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "typetube", "create", result);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
         
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        return pageSuperAdmin.getPage();
     }
     
     
@@ -192,12 +273,20 @@ public class SuperAdminController {
     //Supprimer une Type-Tube
     @DeleteMapping("/typetube/{id}")
     public String supprTypeTube(@PathVariable(value = "id") Long id, Model model, Principal principal) {
-        int result = service.supprTypeTube(id);
+        int result = typeTubeService.supprTypeTube(id);
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "typetube", "remove", result);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
         
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        return pageSuperAdmin.getPage();
     }
     
     
@@ -209,13 +298,13 @@ public class SuperAdminController {
         System.out.println(">> ID : " + id);
         
         //Recupération de la DATA à modifier :
-        TypeTube editTypeTube = service.findByIdTypeTube(id);
+        TypeTube editTypeTube = typeTubeService.findByIdTypeTube(id);
         FormTypeTube formTypeTube = new FormTypeTube(id, editTypeTube.getNom(), editTypeTube.isCommande());
          
         model.addAttribute("editTypeTube", formTypeTube);
         model.addAttribute("numAction", ActionsTypes.EDIT_TYPETUBE.toString());
                 
-        PageActions pageAction = new PageActions();
+        PageActions pageAction = new PageActions(model, principal);
         return pageAction.returnPage();
     }
     
@@ -223,12 +312,20 @@ public class SuperAdminController {
     //Modifier une Type-Tube
     @PutMapping("/typetube/{id}")
     public String editTypeTube(@ModelAttribute FormTypeTube putTypeTube, Model model, Principal principal) {
-        int result = service.updateTypeTube(putTypeTube);
+        int result = typeTubeService.updateTypeTube(putTypeTube);
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();     
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);     
         pageSuperAdmin.addReponse(messageSource, "typetube", "remove", result);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
                 
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        return pageSuperAdmin.getPage();
     }
  
     
@@ -248,10 +345,18 @@ public class SuperAdminController {
         
         int result = userService.saveUser(newUser);
 
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();     
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);    
         pageSuperAdmin.addReponse(messageSource, "user", "create", result);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
                 
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        return pageSuperAdmin.getPage();
     }
     
     
@@ -259,7 +364,7 @@ public class SuperAdminController {
     @DeleteMapping("/user/{id}")
     public String supprUser(@PathVariable(value = "id") Long id, Model model, Principal principal) {
 
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         String userNameLog = pageSuperAdmin.returnUser(principal);
         
         int result = 3;
@@ -270,8 +375,16 @@ public class SuperAdminController {
         }
         
         pageSuperAdmin.addReponse(messageSource, "user", "remove", result);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
         
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        return pageSuperAdmin.getPage();
     }
     
     
@@ -282,7 +395,7 @@ public class SuperAdminController {
         
         System.out.println(">> POST - EDIT USER");
         System.out.println(">> ID : " + id);
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         String userNameLog = pageSuperAdmin.returnUser(principal);
         
         //Recupération du user à modifier :
@@ -298,7 +411,7 @@ public class SuperAdminController {
             model.addAttribute("editUser", formUser);
             model.addAttribute("numAction", ActionsTypes.EDIT_USER.toString());
 
-            PageActions pageAction = new PageActions();
+            PageActions pageAction = new PageActions(model, principal);
 
             return pageAction.returnPage();
             }else{
@@ -308,9 +421,16 @@ public class SuperAdminController {
             pageSuperAdmin.addReponse(messageSource, "user", "edit", 3);
         }
         
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
         
-        
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        return pageSuperAdmin.getPage();
     }
     
     
@@ -319,10 +439,18 @@ public class SuperAdminController {
     public String editUser(@ModelAttribute FormUser putUser, Model model, Principal principal) {
         int result = userService.updateUser(putUser);
                 
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin();
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "user", "edit", result);
+        pageSuperAdmin.addService(NomService.USER.toString(), userService);
+        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
+        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
+        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
+        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
+        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
+        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
+        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
         
-        return pageSuperAdmin.getPage(model, principal, service, userService);
+        return pageSuperAdmin.getPage();
     }
     
     

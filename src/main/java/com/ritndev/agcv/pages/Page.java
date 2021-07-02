@@ -1,6 +1,8 @@
 package com.ritndev.agcv.pages;
 
+import com.ritndev.agcv.InterfaceService.*;
 import com.ritndev.agcv.classes.Link;
+import com.ritndev.agcv.classes.NomService;
 import com.ritndev.agcv.classes.TypeReponse;
 import com.ritndev.agcv.utils.WebUtils;
 import java.security.Principal;
@@ -22,14 +24,15 @@ import org.springframework.ui.Model;
  * @author Ritn
  */
 public class Page {
-    
+           
+    @Getter @Setter private Model model;
+    @Getter @Setter private Principal principal;
     
     private final String title = "AGCV - ";
-    
-    
+        
     //Nom de la page
     @Getter @Setter
-    private String page;
+    private String nomPage;
     
     //lien de la page
     @Getter @Setter
@@ -58,10 +61,17 @@ public class Page {
     //Y a-t-il un lien vers la page super admin ?
     @Getter @Setter
     private boolean superAdminPage = false;
+    
+    @Getter @Setter Map<String,Object> listServices = new HashMap<>();
 
     
     //Constructeur
     public Page() {}
+
+    public Page(Model model, Principal principal) {
+        this.model = model;
+        this.principal = principal;
+    }
     
     
     
@@ -71,12 +81,11 @@ public class Page {
     
     
     //Construit la vue (générique)
-    Model getPageGenerique(Model model, Principal principal) {
-        
+    public void getPageGenerique() {
         
         // Add Attribute :
         model.addAttribute("pageTitle", returnTitre());
-        model.addAttribute("pageName", getPage());
+        model.addAttribute("pageName", getNomPage());
         model.addAttribute("buttonAdmin", isAdminPage());
         model.addAttribute("adminPage", getLinkAdminPage());
         
@@ -92,7 +101,7 @@ public class Page {
         model.addAttribute("log", "Connecté : " + user);
         model.addAttribute("connect", connect);
 
-        return model;
+        //return model;
     }
     
     
@@ -163,7 +172,7 @@ public class Page {
     
     //Retourne le titre de la page
     public String returnTitre(){
-        return title + getPage();
+        return title + getNomPage();
     }
     
     //Renvoie vers la Page
@@ -172,9 +181,46 @@ public class Page {
     }
     
     //Remplace le titre généré par celui inscrit en paramètre de la méthode
-    public void setTitlePage(Model model, String title){
+    public void setTitlePage(String title){
         model.addAttribute("pageTitle", title);
     }
     
-     
+    public void addService(String nomService, Object service) {
+        listServices.put(nomService, service);
+    }
+    
+    public IUserService getUserService() {
+        return (IUserService)listServices.get(NomService.USER.toString());
+    }
+    public IMainDataService getDataService() {
+        return (IMainDataService)listServices.get(NomService.DATA.toString());
+    }
+    public IMembreService getMembreService() {
+        return (IMembreService)listServices.get(NomService.MEMBRE.toString());
+    }
+    public ISaisonService getSaisonService() {
+        return (ISaisonService)listServices.get(NomService.SAISON.toString());
+    }
+    public ICommandeService getCommandeService() {
+        return (ICommandeService)listServices.get(NomService.COMMANDE.toString());
+    }
+    public ICompetitionService getCompetitionService() {
+        return (ICompetitionService)listServices.get(NomService.COMPETITION.toString());
+    }
+    public ITypeTubeService getTypeTubeService() {
+        return (ITypeTubeService)listServices.get(NomService.TYPETUBE.toString());
+    }
+    public IConsoMoisService getConsoMoisService() {
+        return (IConsoMoisService)listServices.get(NomService.CONSOMOIS.toString());
+    }
+    public IPrixTubeService getPrixTubeService() {
+        return (IPrixTubeService)listServices.get(NomService.PRIXTUBE.toString());
+    }
+    public ITypeVolantService getTypeVolantService() {
+        return (ITypeVolantService)listServices.get(NomService.TYPEVOLANT.toString());
+    }
+    public IStockService getStockService() {
+        return (IStockService)listServices.get(NomService.STOCK.toString());
+    }
+    
 }

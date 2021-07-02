@@ -9,10 +9,11 @@ import org.springframework.ui.Model;
  * @author Ritn
  */
 public class PageHistoSaison extends Page{
-    
-    public PageHistoSaison() {
+        
+    public PageHistoSaison(Model model, Principal principal) {
+        super(model, principal);
        
-        super.setPage("Historiques des saisons précédentes");
+        super.setNomPage("Historiques des saisons précédentes");
         super.setLinkPage(new Link("Historiques des saisons précédentes", "histoSaison", "topnav-menu"));
         super.setAdminPage(true);
         super.setLinkAdminPage(new Link("Admin", "/admin"));
@@ -24,14 +25,14 @@ public class PageHistoSaison extends Page{
     }
     
     
-    public String getPage(Model model, Principal principal) {
+    public String getPage() {
                 
         String message = "Ici se trouve la page : ";
-        message = message + getPage();
+        message = message + getNomPage();
         
         // Add Attribute :
-        model = getPageGenerique(model, principal);
-        model.addAttribute("message", message);
+        getPageGenerique();
+        super.getModel().addAttribute("message", message);
         
         return returnPage();
         

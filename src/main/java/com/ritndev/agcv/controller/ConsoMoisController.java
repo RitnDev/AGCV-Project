@@ -1,11 +1,14 @@
 package com.ritndev.agcv.controller;
 
+import com.ritndev.agcv.InterfaceService.IConsoMoisService;
+import com.ritndev.agcv.InterfaceService.IMainDataService;
+import com.ritndev.agcv.InterfaceService.IPrixTubeService;
 import com.ritndev.agcv.classes.ActionsTypes;
+import com.ritndev.agcv.classes.NomService;
 import com.ritndev.agcv.form.FormConsoMois;
 import com.ritndev.agcv.model.ConsoMois;
 import com.ritndev.agcv.pages.PageIndex;
 import com.ritndev.agcv.pages.PageActions;
-import com.ritndev.agcv.services.IagcvService;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -24,19 +27,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 @Controller
 public class ConsoMoisController {
     
-    @Autowired private IagcvService service;
+    @Autowired private IConsoMoisService consoMoisService;
+    @Autowired private IPrixTubeService prixTubeService;
+    @Autowired private IMainDataService dataService;
+    
     @Autowired private MessageSource messageSource;
-
-/*      
-    --------------------   Page Index   ----------------------
-    
-    @GetMapping(value = { "/", "/index"})
-    public String index(Model model, Principal principal){
-        PageIndex pageIndex = new PageIndex();
-        return pageIndex.getPage(model, principal, service);
-    }
-*/ 
-    
+        
     
 //---------------------------------------------------------------------------------------------    
     
@@ -48,17 +44,17 @@ public class ConsoMoisController {
     public String getPrixMois(@PathVariable Long id, Model model, Principal principal) {
         
         //Recupération de la DATA à modifier :
-        ConsoMois editConsoMois = service.findByIdConsoMois(id);
+        ConsoMois editConsoMois = consoMoisService.findByIdConsoMois(id);
         FormConsoMois formConsoMois = new FormConsoMois(id,
                                     editConsoMois.getNom(),
                                     editConsoMois.getIdPrixTube().getId());
          
         model.addAttribute("editConsoMois", formConsoMois);
-        model.addAttribute("listPrixTubes", service.ListPrixTubeName(editConsoMois.getIdTypeVolant().getNomTypeTube()));
+        model.addAttribute("listPrixTubes", prixTubeService.ListPrixTubeName(editConsoMois.getIdTypeVolant().getNomTypeTube()));
         model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS_PT.toString());
 
         
-        PageActions pageAction = new PageActions();
+        PageActions pageAction = new PageActions(model, principal);
         return pageAction.returnPage();
     }
     
@@ -66,12 +62,13 @@ public class ConsoMoisController {
     //Modifier une Prix-Tube
     @PutMapping("/mois/prix/{id}")
     public String editConsoMoisPrix(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
-        int result = service.updateConsoMoisPrixtube(putConsoMois);
+        int result = consoMoisService.updateConsoMoisPrixtube(putConsoMois);
         
-        PageIndex pageIndex = new PageIndex();   
+        PageIndex pageIndex = new PageIndex(model, principal);   
         pageIndex.addReponse(messageSource, "prixtube", "edit", result);
+        pageIndex.addService(NomService.DATA.toString(), dataService);
                 
-        return pageIndex.getPage(model, principal, service);
+        return pageIndex.getPage();
     } 
     
 //---------------------------------------------------------------------------------------------    
@@ -84,7 +81,7 @@ public class ConsoMoisController {
     public String changeNbTubeUtilises(@PathVariable Long id, Model model, Principal principal) {
         
         //Recupération de la DATA à modifier :
-        ConsoMois editConsoMois = service.findByIdConsoMois(id);
+        ConsoMois editConsoMois = consoMoisService.findByIdConsoMois(id);
         FormConsoMois formConsoMois = new FormConsoMois(id,
                                     editConsoMois.getNom(),
                                     editConsoMois.getNbTubeUtilise());
@@ -92,7 +89,7 @@ public class ConsoMoisController {
         model.addAttribute("editConsoMois", formConsoMois);
         model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS_NBU.toString());
  
-        PageActions pageAction = new PageActions();
+        PageActions pageAction = new PageActions(model, principal);
         return pageAction.returnPage();
     }
 
@@ -100,12 +97,13 @@ public class ConsoMoisController {
     //Modifier nbTubeUtilises du consoMois
     @PutMapping("/mois/nbu/{id}")
     public String editConsoMoisNbUtilises(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
-        int result = service.updateConsoMoisNbUtilises(putConsoMois);
+        int result = consoMoisService.updateConsoMoisNbUtilises(putConsoMois);
         
-        PageIndex pageIndex = new PageIndex();   
+        PageIndex pageIndex = new PageIndex(model, principal);   
         pageIndex.addReponse(messageSource, "nbutilises", "edit", result);
+        pageIndex.addService(NomService.DATA.toString(), dataService);
                 
-        return pageIndex.getPage(model, principal, service);
+        return pageIndex.getPage();
     } 
     
 
@@ -119,7 +117,7 @@ public class ConsoMoisController {
     public String changeNbTubeCommandes(@PathVariable Long id, Model model, Principal principal) {
         
         //Recupération de la DATA à modifier :
-        ConsoMois editConsoMois = service.findByIdConsoMois(id);
+        ConsoMois editConsoMois = consoMoisService.findByIdConsoMois(id);
         FormConsoMois formConsoMois = new FormConsoMois(id,
                                     editConsoMois.getNbTubeCommande(),
                                     editConsoMois.getNom());
@@ -127,7 +125,7 @@ public class ConsoMoisController {
         model.addAttribute("editConsoMois", formConsoMois);
         model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS_NBC.toString());
  
-        PageActions pageAction = new PageActions();
+        PageActions pageAction = new PageActions(model, principal);
         return pageAction.returnPage();
     }
 
@@ -135,12 +133,13 @@ public class ConsoMoisController {
     //Modifier nbTubeCommande du consoMois
     @PutMapping("/mois/nbc/{id}")
     public String editConsoMoisNbCommandes(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
-        int result = service.updateConsoMoisNbCommandes(putConsoMois);
+        int result = consoMoisService.updateConsoMoisNbCommandes(putConsoMois);
         
-        PageIndex pageIndex = new PageIndex();   
+        PageIndex pageIndex = new PageIndex(model, principal);   
         pageIndex.addReponse(messageSource, "nbcommandes", "edit", result);
+        pageIndex.addService(NomService.DATA.toString(), dataService);
                 
-        return pageIndex.getPage(model, principal, service);
+        return pageIndex.getPage();
     } 
     
      
