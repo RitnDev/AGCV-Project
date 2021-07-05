@@ -3,7 +3,6 @@ package com.ritndev.agcv.controller;
 import com.ritndev.agcv.InterfaceService.IMainDataService;
 import com.ritndev.agcv.InterfaceService.IUserService;
 import com.ritndev.agcv.classes.ActionsTypes;
-import com.ritndev.agcv.classes.NomService;
 import com.ritndev.agcv.form.FormUser;
 import com.ritndev.agcv.model.AppUser;
 import com.ritndev.agcv.pages.PageActions;
@@ -40,7 +39,7 @@ public class MainController {
     @GetMapping(value = { "/", "/index"})
     public String index(Model model, Principal principal){
         PageIndex pageIndex = new PageIndex(model, principal);
-        pageIndex.addService(NomService.DATA.toString(), dataService);
+        model.addAttribute("saison", dataService.returnMainData().getIdSaison());
         return pageIndex.getPage();
     }
   
@@ -89,7 +88,8 @@ public class MainController {
                 
         PageIndex pageIndex = new PageIndex(model, principal);
         pageIndex.addReponse(messageSource, "mdp", "edit", result);
-        pageIndex.addService(NomService.DATA.toString(), dataService);
+        
+        model.addAttribute("saison", dataService.returnMainData().getIdSaison());
         
         return pageIndex.getPage();
         

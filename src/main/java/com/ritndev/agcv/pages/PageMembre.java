@@ -1,0 +1,54 @@
+package com.ritndev.agcv.pages;
+
+import com.ritndev.agcv.classes.Link;
+import com.ritndev.agcv.form.FormMembre;
+import java.security.Principal;
+import org.springframework.ui.Model;
+
+/**
+ *
+ * @author Ritn
+ */
+public class PageMembre extends Page {
+    
+    //Construction de la page ADMIN :
+    public PageMembre(Model model, Principal principal) {
+        super(model, principal); 
+        
+        super.setNomPage("Liste des membres");
+        super.setLinkPage(new Link("Membre", "/membre"));
+        super.setAdminPage(true);
+        super.setSuperAdminPage(true);
+        super.setLinkAdminPage(new Link("Déconnexion", "/logout"));
+        
+        Link index = new Link("Page principale","/index");
+        Link admin = new Link("Retour page Admin","/admin");
+        
+        super.addLinks(index);
+        super.addLinks(admin);
+        
+        Link newMembre = new Link("Nouveau membre", "#", "topnav-menu-membre"); 
+        
+        Link[] menu = new Link[] {
+            newMembre
+        };
+        
+        super.setMenu(menu);          
+    }
+    
+    
+    
+    //Renvoie la page
+    public String getPage(boolean connect) {
+        // Add Attribute :
+        getPageGenerique();
+        super.getModel().addAttribute("newMembre", new FormMembre());
+
+        Link pageSupAdmin = new Link("supAdmin", "Super Admin", "/superAdmin", connect);
+        super.addLinks(pageSupAdmin);
+        
+        return returnPage();
+    }
+    
+    
+}

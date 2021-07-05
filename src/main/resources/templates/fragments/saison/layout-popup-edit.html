@@ -15,14 +15,14 @@
                             <h3>Modifier la Saison</h3>
                         </td>
                         <td class="popup-header-close">
-                            <a href="/admin" >
+                            <a href="/admin/saison" >
                                 <img class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>
                     </tr>
                 </table>
                 
-                <form th:action="@{/saison/{id}(id=*{id})}" th:object="${editSaison}" method="post">
+                <form th:action="@{/admin/saison/{id}(id=*{id})}" th:object="${editSaison}" method="post">
                         
                     <table class="popup-form">
                         <tr>

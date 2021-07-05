@@ -1,12 +1,9 @@
 package com.ritndev.agcv.controller;
 
-import com.ritndev.agcv.InterfaceService.IConsoMoisService;
 import com.ritndev.agcv.InterfaceService.IMainDataService;
-import com.ritndev.agcv.InterfaceService.IPrixTubeService;
 import com.ritndev.agcv.InterfaceService.ISaisonService;
 import com.ritndev.agcv.InterfaceService.IStockService;
 import com.ritndev.agcv.InterfaceService.ITypeTubeService;
-import com.ritndev.agcv.InterfaceService.ITypeVolantService;
 import com.ritndev.agcv.InterfaceService.IUserService;
 import java.security.Principal;
 import java.util.List;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import com.ritndev.agcv.classes.ActionsTypes;
-import com.ritndev.agcv.classes.NomService;
 
 import com.ritndev.agcv.form.FormData;
 import com.ritndev.agcv.form.FormStock;
@@ -37,6 +33,8 @@ import com.ritndev.agcv.model.TypeTube;
 
 import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.pages.PageSuperAdmin;
+import java.util.HashMap;
+import java.util.Map;
 
 
 
@@ -50,12 +48,9 @@ public class SuperAdminController {
     
     @Autowired private IUserService userService;
     @Autowired private IMainDataService dataService;
-    @Autowired private ISaisonService saisonService;
     @Autowired private IStockService stockService;
     @Autowired private ITypeTubeService typeTubeService;
-    @Autowired private IPrixTubeService prixTubeService;
-    @Autowired private ITypeVolantService typeVolantService;
-    @Autowired private IConsoMoisService consoMoisService;
+    @Autowired private ISaisonService saisonService;
     
     @Autowired private MessageSource messageSource;
     
@@ -63,15 +58,18 @@ public class SuperAdminController {
     @GetMapping("/superAdmin")
     public String superAdmin(Model model, Principal principal){     
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
         
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
     }
@@ -88,14 +86,18 @@ public class SuperAdminController {
         
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "data", "create", result);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
     }
@@ -107,14 +109,18 @@ public class SuperAdminController {
        
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "data", "remove", result);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
     }
@@ -148,15 +154,19 @@ public class SuperAdminController {
         
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "data", "edit", result);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
-                
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
+        
         return pageSuperAdmin.getPage();
 
     }
@@ -171,14 +181,18 @@ public class SuperAdminController {
         
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "stock", "create", result);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
     }
@@ -192,14 +206,18 @@ public class SuperAdminController {
         
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "stock", "remove", result);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
     }
@@ -231,15 +249,19 @@ public class SuperAdminController {
         
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "stock", "edit", result);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
-                
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
+        
         return pageSuperAdmin.getPage();
 
     }
@@ -256,14 +278,18 @@ public class SuperAdminController {
         
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "typetube", "create", result);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
     }
@@ -277,14 +303,18 @@ public class SuperAdminController {
         
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "typetube", "remove", result);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
     }
@@ -316,15 +346,19 @@ public class SuperAdminController {
         
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);     
         pageSuperAdmin.addReponse(messageSource, "typetube", "remove", result);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
-                
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
+        
         return pageSuperAdmin.getPage();
     }
  
@@ -347,15 +381,19 @@ public class SuperAdminController {
 
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);    
         pageSuperAdmin.addReponse(messageSource, "user", "create", result);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
-                
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
+        
         return pageSuperAdmin.getPage();
     }
     
@@ -375,14 +413,18 @@ public class SuperAdminController {
         }
         
         pageSuperAdmin.addReponse(messageSource, "user", "remove", result);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
     }
@@ -421,14 +463,18 @@ public class SuperAdminController {
             pageSuperAdmin.addReponse(messageSource, "user", "edit", 3);
         }
         
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
     }
@@ -441,14 +487,18 @@ public class SuperAdminController {
                 
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
         pageSuperAdmin.addReponse(messageSource, "user", "edit", result);
-        pageSuperAdmin.addService(NomService.USER.toString(), userService);
-        pageSuperAdmin.addService(NomService.DATA.toString(), dataService);
-        pageSuperAdmin.addService(NomService.SAISON.toString(), saisonService);
-        pageSuperAdmin.addService(NomService.STOCK.toString(), stockService);
-        pageSuperAdmin.addService(NomService.TYPETUBE.toString(), typeTubeService);
-        pageSuperAdmin.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageSuperAdmin.addService(NomService.TYPEVOLANT.toString(), typeVolantService);
-        pageSuperAdmin.addService(NomService.CONSOMOIS.toString(), consoMoisService);
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+        
+        model.addAttribute("mainData", dataService.listMainData());
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("stockList", stockService.listStock());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
     }

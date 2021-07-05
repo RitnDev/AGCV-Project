@@ -66,8 +66,9 @@ public class ConsoMoisController {
         
         PageIndex pageIndex = new PageIndex(model, principal);   
         pageIndex.addReponse(messageSource, "prixtube", "edit", result);
-        pageIndex.addService(NomService.DATA.toString(), dataService);
-                
+        
+        model.addAttribute("saison", dataService.returnMainData().getIdSaison());
+        
         return pageIndex.getPage();
     } 
     
@@ -101,8 +102,9 @@ public class ConsoMoisController {
         
         PageIndex pageIndex = new PageIndex(model, principal);   
         pageIndex.addReponse(messageSource, "nbutilises", "edit", result);
-        pageIndex.addService(NomService.DATA.toString(), dataService);
-                
+        
+        model.addAttribute("saison", dataService.returnMainData().getIdSaison());
+        
         return pageIndex.getPage();
     } 
     
@@ -137,8 +139,9 @@ public class ConsoMoisController {
         
         PageIndex pageIndex = new PageIndex(model, principal);   
         pageIndex.addReponse(messageSource, "nbcommandes", "edit", result);
-        pageIndex.addService(NomService.DATA.toString(), dataService);
-                
+        
+        model.addAttribute("saison", dataService.returnMainData().getIdSaison());
+        
         return pageIndex.getPage();
     } 
     

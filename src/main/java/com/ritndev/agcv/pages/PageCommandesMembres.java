@@ -42,13 +42,8 @@ public class PageCommandesMembres extends Page{
         getPageGenerique();
         super.getModel().addAttribute("message", message);
         super.getModel().addAttribute("newCommande", new FormCommande());
-        super.getModel().addAttribute("Membres", getMembreService().listMembre());
-        super.getModel().addAttribute("Commandes", getCommandeService().listCommande());
-        super.getModel().addAttribute("prixTubeList", getPrixTubeService().listPrixTube());
-        super.getModel().addAttribute("saisonList", getSaisonService().listSaison());
         
         return returnPage();
-        
     }
     
 }

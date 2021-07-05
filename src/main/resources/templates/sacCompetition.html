@@ -74,11 +74,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:if="${listCompet.empty}">
+                        <tr th:if="${saison.getCompetitions.empty}">
                             <td th:if="${AdminConnect>=1}" colspan="5">Aucune Compétition créée</td>
                             <td th:if="${AdminConnect==0}" colspan="4">Aucune Compétition créée</td>
                         </tr>
-                        <tr th:each="compet : ${listCompet}">
+                        <tr th:each="compet : ${saison.getCompetitions}">
                             <td><span th:text="${compet.id}">ID</span></td>
                             <td><span th:text="${compet.horodatage}">Horodatage</span></td>
                             <td><span th:text="${compet.nom}">nom</span></td>

@@ -47,26 +47,14 @@ public class PageSacCompetition extends Page {
         message = message + "Ici sera affiché la liste des compétition de la saison. ";
         message = message + "Il sera possible de faire le restockage du stock de compétition.";
         
-        Saison saisonActuelle = getDataService().returnMainData().getIdSaison();
-        StockCompetition stockActuel = getDataService().returnMainData().getIdStockCompet();
         
         int AdminConnect = 0;
         
-        if (!returnUser(super.getPrincipal()).equals("")){
-            switch (getUserService().findRoleByUsername(returnUser(super.getPrincipal()))) {
-                case "ROLE_ADMIN" -> AdminConnect = 1;
-                case "ROLE_SUPADMIN" -> AdminConnect = 2;
-            }
-        }
-        
         // Add Attribute :
         getPageGenerique();
-        super.getModel().addAttribute("AdminConnect", AdminConnect);
         super.getModel().addAttribute("message", message);
         super.getModel().addAttribute("newCompetition", new FormCompet());
-        super.getModel().addAttribute("saison", saisonActuelle);
-        super.getModel().addAttribute("stock", stockActuel);
-        super.getModel().addAttribute("listCompet", saisonActuelle.getCompetitions());
+        
         
         return returnPage();
         

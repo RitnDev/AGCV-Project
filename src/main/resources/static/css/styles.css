@@ -630,7 +630,9 @@ th.table-tv-empty{
 }
 td.table-tv-empty{
     background-color: #101720;
-    border: none;
+    border-style: solid;
+    border-color: #101720;
+    border-width: medium;
 }
 
 
@@ -725,17 +727,18 @@ td.table-tv-total{
 }
 
 td.table-tv-total-nbu {
-    border-style: solid solid solid none;
-    border-width: medium 1px 1px 0;
+    border-style: solid solid solid solid;
+    border-width: medium 1px 1px medium;
     border-top-color: #afafaf;
     border-right-color: #afafaf;
+    border-left-color: #101720;
     width: 30px;
     padding-top: 6px; 
     padding-bottom: 6px;
     font-weight: bold;
 }
 td.table-tv-total-cu {
-    border-style: solid solid solid none;
+    border-style: solid solid solid solid;
     border-width: medium medium 1px 1px;
     border-top-color: #afafaf;
     border-right-color: #afafaf;
@@ -755,9 +758,10 @@ td.table-tv-total-nbc {
     font-weight: bold;
 }
 td.table-tv-total-cc {
-    border-style: solid none solid none;
-    border-width: medium 0 1px 1px;
+    border-style: solid solid solid solid;
+    border-width: medium medium 1px 1px;
     border-top-color: #afafaf;
+    border-right-color: #afafaf;
     width: 60px;
     padding-top: 6px; 
     padding-bottom: 6px;
@@ -765,14 +769,39 @@ td.table-tv-total-cc {
 }
 
 td.table-tv-total-prix {
-    border-style: solid solid none none;
+    border-style: solid solid solid solid;
     border-width: medium medium 1px medium;
-    border-top-color: #101720;
+    border-top-color: #afafaf;
+    border-left-color: #afafaf;
     border-right-color: #101720;
-    background-color: #101720;
+    background-color: #d5d5d5;
     color: black;
     padding-top: 6px; 
     padding-bottom: 6px;
+}
+
+td.table-label-stock {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #d5d5d5;
+    color: black;
+    border-style: solid solid none solid;
+    border-width: medium 1px 0 medium;
+    border-top-color: #afafaf;
+    border-right-color: #afafaf;
+    border-left-color: #101720;
+    
+}
+td.table-tv-stock {
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    border-style: solid solid none none;
+    border-width: medium medium 0 0;
+    border-top-color: #afafaf;
+    border-right-color: #101720;
 }
 
 

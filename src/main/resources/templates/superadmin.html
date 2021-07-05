@@ -10,8 +10,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
         <script type="text/javascript" th:src="@{/js/new-user-popup.js}" charset="utf-8" defer></script>
         <script type="text/javascript" th:src="@{/js/typetube-popup.js}" charset="utf-8" defer></script>
-        <script type="text/javascript" th:src="@{/js/typevolant-popup.js}" charset="utf-8" defer></script>
-        <script type="text/javascript" th:src="@{/js/consomois-popup.js}" charset="utf-8" defer></script>
     </head>
     
 
@@ -262,12 +260,6 @@
         </div>
         <div id="bg-popup" class="bg-popup-typetube">
             <div th:replace="fragments/TypeTube/layout-popup-new :: typetube"/>
-        </div>
-        <div id="bg-popup" class="bg-popup-typevolant">
-            <div th:replace="fragments/TypeVolant/layout-popup-new :: typevolant"/>
-        </div>
-        <div id="bg-popup" class="bg-popup-consomois">
-            <div th:replace="fragments/ConsoMois/layout-popup-new :: consomois"/>
         </div>
         
         <!-- footer section -->

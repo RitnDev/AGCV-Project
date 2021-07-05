@@ -56,29 +56,15 @@ public class PageSuperAdmin extends Page {
         String message = "Ici se trouve la page : ";
         message = message + getNomPage();
  
-        Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : getUserService().listUser()){
-           userRoleList.put(user.getUserId(), formatRole(getUserService().findRoleByUsername(user.getUserName())));
-        }
-        
         
         // Add Attribute :
         getPageGenerique();
         super.getModel().addAttribute("message", message);
-        super.getModel().addAttribute("mainData", getDataService().listMainData());
-        super.getModel().addAttribute("userList", getUserService().listUser());
-        super.getModel().addAttribute("stockList", getStockService().listStock());
-        super.getModel().addAttribute("userRoleList", userRoleList);
-        super.getModel().addAttribute("typeTubeList", getTypeTubeService().listDataTypeTube());
-        super.getModel().addAttribute("prixTubeList", getPrixTubeService().listPrixTube());
-        super.getModel().addAttribute("typeVolantList", getTypeVolantService().listTypeVolant());
-        super.getModel().addAttribute("consoMoisList", getConsoMoisService().listConsoMois());
+        
         super.getModel().addAttribute("newUser", new FormUser());
         super.getModel().addAttribute("newTypeTube", new FormTypeTube());
         super.getModel().addAttribute("newTypeVolant", new FormTypeVolant());
         super.getModel().addAttribute("newConsoMois", new FormConsoMois());
-        super.getModel().addAttribute("roleList", getUserService().listRole());
-        super.getModel().addAttribute("saisons", getSaisonService().listSaison());
         super.getModel().addAttribute("nomMois", new ArrayList<>(Arrays.asList(NomMois.values())));
         super.getModel().addAttribute("nomTypeTubes", new ArrayList<>(Arrays.asList(NomTypeTube.values())));
         
@@ -96,6 +82,4 @@ public class PageSuperAdmin extends Page {
         }
         return result;
     }
-    
-    
 }

@@ -1,8 +1,6 @@
 package com.ritndev.agcv.pages;
 
-import com.ritndev.agcv.InterfaceService.*;
 import com.ritndev.agcv.classes.Link;
-import com.ritndev.agcv.classes.NomService;
 import com.ritndev.agcv.classes.TypeReponse;
 import com.ritndev.agcv.utils.WebUtils;
 import java.security.Principal;
@@ -62,8 +60,6 @@ public class Page {
     @Getter @Setter
     private boolean superAdminPage = false;
     
-    @Getter @Setter Map<String,Object> listServices = new HashMap<>();
-
     
     //Constructeur
     public Page() {}
@@ -183,44 +179,6 @@ public class Page {
     //Remplace le titre généré par celui inscrit en paramètre de la méthode
     public void setTitlePage(String title){
         model.addAttribute("pageTitle", title);
-    }
-    
-    public void addService(String nomService, Object service) {
-        listServices.put(nomService, service);
-    }
-    
-    public IUserService getUserService() {
-        return (IUserService)listServices.get(NomService.USER.toString());
-    }
-    public IMainDataService getDataService() {
-        return (IMainDataService)listServices.get(NomService.DATA.toString());
-    }
-    public IMembreService getMembreService() {
-        return (IMembreService)listServices.get(NomService.MEMBRE.toString());
-    }
-    public ISaisonService getSaisonService() {
-        return (ISaisonService)listServices.get(NomService.SAISON.toString());
-    }
-    public ICommandeService getCommandeService() {
-        return (ICommandeService)listServices.get(NomService.COMMANDE.toString());
-    }
-    public ICompetitionService getCompetitionService() {
-        return (ICompetitionService)listServices.get(NomService.COMPETITION.toString());
-    }
-    public ITypeTubeService getTypeTubeService() {
-        return (ITypeTubeService)listServices.get(NomService.TYPETUBE.toString());
-    }
-    public IConsoMoisService getConsoMoisService() {
-        return (IConsoMoisService)listServices.get(NomService.CONSOMOIS.toString());
-    }
-    public IPrixTubeService getPrixTubeService() {
-        return (IPrixTubeService)listServices.get(NomService.PRIXTUBE.toString());
-    }
-    public ITypeVolantService getTypeVolantService() {
-        return (ITypeVolantService)listServices.get(NomService.TYPEVOLANT.toString());
-    }
-    public IStockService getStockService() {
-        return (IStockService)listServices.get(NomService.STOCK.toString());
     }
     
 }

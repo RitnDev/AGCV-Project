@@ -2,6 +2,7 @@ package com.ritndev.agcv.controller;
 
 import com.ritndev.agcv.InterfaceService.ICompetitionService;
 import com.ritndev.agcv.InterfaceService.IMainDataService;
+import com.ritndev.agcv.InterfaceService.IUserService;
 import java.security.Principal;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import com.ritndev.agcv.classes.ActionsTypes;
 import com.ritndev.agcv.classes.NomService;
 import com.ritndev.agcv.form.FormCompet;
 import com.ritndev.agcv.model.Competition;
+import com.ritndev.agcv.model.Saison;
+import com.ritndev.agcv.model.StockCompetition;
 import com.ritndev.agcv.pages.PageSacCompetition;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +34,7 @@ public class StockCompetController {
     
     @Autowired private ICompetitionService competitionService;
     @Autowired private IMainDataService dataService;
+    @Autowired private IUserService userService;
     
     @Autowired private MessageSource messageSource;
     
@@ -42,7 +46,22 @@ public class StockCompetController {
     @GetMapping(value = "/sacCompetition")
     public String sacCompetition(Model model, Principal principal){
         PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal);
-        pageSacCompetition.addService(NomService.DATA.toString(), dataService);
+        
+        Saison saisonActuelle = dataService.returnMainData().getIdSaison();
+        StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
+        
+        int AdminConnect = 0;
+        
+        if (!pageSacCompetition.returnUser(principal).equals("")){
+            switch (userService.findRoleByUsername(pageSacCompetition.returnUser(principal))) {
+                case "ROLE_ADMIN" -> AdminConnect = 1;
+                case "ROLE_SUPADMIN" -> AdminConnect = 2;
+            }
+        }
+        
+        model.addAttribute("AdminConnect", AdminConnect);
+        model.addAttribute("saison", saisonActuelle);
+        model.addAttribute("stock", stockActuel);
         
         return pageSacCompetition.getPage(); 
     }
@@ -55,7 +74,22 @@ public class StockCompetController {
         
         PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal); 
         pageSacCompetition.addReponse(messageSource, "compet", "create", result);
-        pageSacCompetition.addService(NomService.DATA.toString(), dataService);
+        
+        Saison saisonActuelle = dataService.returnMainData().getIdSaison();
+        StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
+        
+        int AdminConnect = 0;
+        
+        if (!pageSacCompetition.returnUser(principal).equals("")){
+            switch (userService.findRoleByUsername(pageSacCompetition.returnUser(principal))) {
+                case "ROLE_ADMIN" -> AdminConnect = 1;
+                case "ROLE_SUPADMIN" -> AdminConnect = 2;
+            }
+        }
+        
+        model.addAttribute("AdminConnect", AdminConnect);
+        model.addAttribute("saison", saisonActuelle);
+        model.addAttribute("stock", stockActuel);
         
         return pageSacCompetition.getPage();
     }
@@ -69,7 +103,22 @@ public class StockCompetController {
          
         PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal);
         pageSacCompetition.addReponse(messageSource, "compet", "remove", result);
-        pageSacCompetition.addService(NomService.DATA.toString(), dataService);
+        
+        Saison saisonActuelle = dataService.returnMainData().getIdSaison();
+        StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
+        
+        int AdminConnect = 0;
+        
+        if (!pageSacCompetition.returnUser(principal).equals("")){
+            switch (userService.findRoleByUsername(pageSacCompetition.returnUser(principal))) {
+                case "ROLE_ADMIN" -> AdminConnect = 1;
+                case "ROLE_SUPADMIN" -> AdminConnect = 2;
+            }
+        }
+        
+        model.addAttribute("AdminConnect", AdminConnect);
+        model.addAttribute("saison", saisonActuelle);
+        model.addAttribute("stock", stockActuel);
         
         return pageSacCompetition.getPage();
     }
@@ -83,7 +132,22 @@ public class StockCompetController {
 
         PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal);
         pageSacCompetition.addReponse(messageSource, "compet", "edit", result);
-        pageSacCompetition.addService(NomService.DATA.toString(), dataService);
+        
+        Saison saisonActuelle = dataService.returnMainData().getIdSaison();
+        StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
+        
+        int AdminConnect = 0;
+        
+        if (!pageSacCompetition.returnUser(principal).equals("")){
+            switch (userService.findRoleByUsername(pageSacCompetition.returnUser(principal))) {
+                case "ROLE_ADMIN" -> AdminConnect = 1;
+                case "ROLE_SUPADMIN" -> AdminConnect = 2;
+            }
+        }
+        
+        model.addAttribute("AdminConnect", AdminConnect);
+        model.addAttribute("saison", saisonActuelle);
+        model.addAttribute("stock", stockActuel);
         
         return pageSacCompetition.getPage();
     }

@@ -32,7 +32,6 @@ public class CommandeController {
     
     @Autowired private ICommandeService commandeService;
     @Autowired private IMembreService membreService;
-    @Autowired private ISaisonService saisonService;
     @Autowired private IPrixTubeService prixTubeService;
     
     @Autowired private MessageSource messageSource;
@@ -45,10 +44,10 @@ public class CommandeController {
     @GetMapping(value = {"/commandesMembres", "/newCommande"})
     public String commandesMembres(Model model, Principal principal){
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal);
-        pageCommandesMembres.addService(NomService.MEMBRE.toString(), membreService);
-        pageCommandesMembres.addService(NomService.SAISON.toString(), saisonService);
-        pageCommandesMembres.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageCommandesMembres.addService(NomService.COMMANDE.toString(), commandeService);
+        
+        model.addAttribute("Membres", membreService.listMembre());
+        model.addAttribute("Commandes", commandeService.listCommande());
+        model.addAttribute("prixTubeList", prixTubeService.listPrixTube());
         
         return pageCommandesMembres.getPage();
     }
@@ -62,10 +61,10 @@ public class CommandeController {
         
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal);
         pageCommandesMembres.addReponse(messageSource, "commande", "create", result);
-        pageCommandesMembres.addService(NomService.MEMBRE.toString(), membreService);
-        pageCommandesMembres.addService(NomService.SAISON.toString(), saisonService);
-        pageCommandesMembres.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageCommandesMembres.addService(NomService.COMMANDE.toString(), commandeService);
+        
+        model.addAttribute("Membres", membreService.listMembre());
+        model.addAttribute("Commandes", commandeService.listCommande());
+        model.addAttribute("prixTubeList", prixTubeService.listPrixTube());
         
         return pageCommandesMembres.getPage();
     }
@@ -79,10 +78,10 @@ public class CommandeController {
 
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal);
         pageCommandesMembres.addReponse(messageSource, "commande", "remove", result);
-        pageCommandesMembres.addService(NomService.MEMBRE.toString(), membreService);
-        pageCommandesMembres.addService(NomService.SAISON.toString(), saisonService);
-        pageCommandesMembres.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageCommandesMembres.addService(NomService.COMMANDE.toString(), commandeService);
+        
+        model.addAttribute("Membres", membreService.listMembre());
+        model.addAttribute("Commandes", commandeService.listCommande());
+        model.addAttribute("prixTubeList", prixTubeService.listPrixTube());
         
         return pageCommandesMembres.getPage();
     }
@@ -94,10 +93,10 @@ public class CommandeController {
         
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal);
         pageCommandesMembres.addReponse(messageSource, "commande", "edit", result);
-        pageCommandesMembres.addService(NomService.MEMBRE.toString(), membreService);
-        pageCommandesMembres.addService(NomService.SAISON.toString(), saisonService);
-        pageCommandesMembres.addService(NomService.PRIXTUBE.toString(), prixTubeService);
-        pageCommandesMembres.addService(NomService.COMMANDE.toString(), commandeService);
+        
+        model.addAttribute("Membres", membreService.listMembre());
+        model.addAttribute("Commandes", commandeService.listCommande());
+        model.addAttribute("prixTubeList", prixTubeService.listPrixTube());
         
         return pageCommandesMembres.getPage();
     }

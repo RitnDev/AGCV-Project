@@ -56,7 +56,6 @@ public class PageIndex extends Page {
         super.getModel().addAttribute("message", message);
                 
         //Saison actuellement en cours
-        super.getModel().addAttribute("saison", getDataService().returnMainData().getIdSaison());
         super.getModel().addAttribute("plastique", tvPlastique);
         super.getModel().addAttribute("entrainement", tvEntrainement);
         super.getModel().addAttribute("competition", tvCompetition);

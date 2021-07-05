@@ -48,9 +48,9 @@ public class TypeVolant implements Serializable {
     @Getter @Setter private TypeTube idTypeTube;
     
     //Nombre de tube avant consommation de volant (stock de départ)
-    @Column(name = "initTube", nullable = false)
+    @Column(name = "stock", nullable = false)
     @Getter @Setter
-    private int initTube; /////// Changer en stock
+    private int stock;
     
     
     
@@ -64,10 +64,10 @@ public class TypeVolant implements Serializable {
     //Constructeur
     public TypeVolant() {}
 
-    public TypeVolant(Saison idSaison, TypeTube idTypeTube, int initTube) {
+    public TypeVolant(Saison idSaison, TypeTube idTypeTube, int stock) {
         this.idSaison = idSaison;
         this.idTypeTube = idTypeTube;
-        this.initTube = initTube;
+        this.stock = stock;
     }
 
     
@@ -131,6 +131,12 @@ public class TypeVolant implements Serializable {
         for(ConsoMois cm : consommationsMois){
             total = total + cm.getCoutCommandes();
         }
+        return total;
+    }
+    
+    public int getStockTotal() {
+        int total = stock;
+        total = total + getTotalNbTubesCommandes() - getTotalNbTubesUtilises();
         return total;
     }
     

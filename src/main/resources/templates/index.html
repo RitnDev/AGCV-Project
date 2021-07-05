@@ -16,7 +16,7 @@
       
         <div class="main-content">
             <div th:if="${!reponses.empty}">
-                <br/>
+                <!--br/-->
                 <table class="table-reponse">
                     <tbody>
                         <tr th:each="rep : ${reponses}">
@@ -191,6 +191,30 @@
                                 <span th:text="${saison.getTypeVolantName(entrainement).getTotalCoutCommandes}"></span>
                             </td>
                             <td class="table-tv-total-prix"></td>
+                        </tr>
+                        
+                        <tr class="table-tv-empty"></tr>
+                        
+                        <tr>
+                            <td class="table-tv-empty"></td>
+                            <td class="table-label-stock" colspan="3">
+                                <span th:text="${'Stock ' + saison.getTypeVolantName(plastique).toString}">
+                            </td>
+                            <td class="table-tv-stock" colspan="2">
+                                <span th:text="${saison.getTypeVolantName(plastique).getStockTotal}"></span>
+                            </td>
+                            <td class="table-label-stock" colspan="3">
+                                <span th:text="${'Stock ' + saison.getTypeVolantName(competition).toString}">
+                            </td>
+                            <td class="table-tv-stock" colspan="2">
+                                <span th:text="${saison.getTypeVolantName(competition).getStockTotal}"></span>
+                            </td>
+                            <td class="table-label-stock" colspan="3">
+                                <span th:text="${'Stock ' + saison.getTypeVolantName(entrainement).toString}">
+                            </td>
+                            <td class="table-tv-stock" colspan="2">
+                                <span th:text="${saison.getTypeVolantName(entrainement).getStockTotal}"></span>
+                            </td>
                         </tr>
                             
                     </tbody>

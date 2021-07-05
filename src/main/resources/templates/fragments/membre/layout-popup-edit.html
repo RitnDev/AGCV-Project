@@ -15,14 +15,14 @@
                             <h3>Modifier le Membre</h3>
                         </td>
                         <td class="popup-header-close">
-                            <a href="/admin" >
+                            <a href="/admin/membre" >
                                 <img class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>
                     </tr>
                 </table>
                 
-                <form th:action="@{/membre/{id}(id=*{id})}" th:object="${editMembre}" th:method="post">
+                <form th:action="@{/admin/membre/{id}(id=*{id})}" th:object="${editMembre}" th:method="post">
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">

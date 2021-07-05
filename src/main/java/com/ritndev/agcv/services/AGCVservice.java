@@ -630,7 +630,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             TypeVolant t = typeVolantRep.save(new TypeVolant(
                                                 returnMainData().getIdSaison(), 
                                                 typeTubeRep.getOne(newTypeVolant.getIdTypeTube()), 
-                                                newTypeVolant.getInitTube()));
+                                                newTypeVolant.getStock()));
             if(t!=null){
                 resultVal = 2;
                 createConsoMois(t);
@@ -660,7 +660,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         if (typeVolantRep.existsById(editTypeVolant.getId())){  
             TypeVolant ct = typeVolantRep.getOne(editTypeVolant.getId());
                 ct.setIdTypeTube(typeTubeRep.getOne(editTypeVolant.getIdTypeTube()));
-                ct.setInitTube(editTypeVolant.getInitTube());
+                ct.setStock(editTypeVolant.getStock());
 
                 typeVolantRep.save(ct);
             resultVal = 2;

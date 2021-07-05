@@ -19,27 +19,27 @@ public class FormTypeVolant {
     
     //Nombre de tube avant consommation de volant (stock de départ)
     @Getter @Setter
-    private int initTube;
+    private int stock;
     
     
     //Constructeur
 
     public FormTypeVolant() {}
 
-    public FormTypeVolant(int initTube, long idTypeTube) {
+    public FormTypeVolant(int stock, long idTypeTube) {
         this.idTypeTube = idTypeTube;
-        this.initTube = initTube;
+        this.stock = stock;
     }
     
-    public FormTypeVolant(long id, long idTypeTube, int initTube) {
+    public FormTypeVolant(long id, long idTypeTube, int stock) {
         this.id = id;
         this.idTypeTube = idTypeTube;
-        this.initTube = initTube;
+        this.stock = stock;
     }
 
-    public FormTypeVolant(long id, int initTube) {
+    public FormTypeVolant(long id, int stock) {
         this.id = id;
-        this.initTube = initTube;
+        this.stock = stock;
     }
     
     
