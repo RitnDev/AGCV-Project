@@ -4,7 +4,6 @@ import com.ritndev.agcv.InterfaceService.IConsoMoisService;
 import com.ritndev.agcv.InterfaceService.IMainDataService;
 import com.ritndev.agcv.InterfaceService.IPrixTubeService;
 import com.ritndev.agcv.classes.ActionsTypes;
-import com.ritndev.agcv.classes.NomService;
 import com.ritndev.agcv.form.FormConsoMois;
 import com.ritndev.agcv.model.ConsoMois;
 import com.ritndev.agcv.pages.PageIndex;
@@ -54,7 +53,7 @@ public class ConsoMoisController {
         model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS_PT.toString());
 
         
-        PageActions pageAction = new PageActions(model, principal);
+        PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
     }
     
@@ -64,8 +63,8 @@ public class ConsoMoisController {
     public String editConsoMoisPrix(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
         int result = consoMoisService.updateConsoMoisPrixtube(putConsoMois);
         
-        PageIndex pageIndex = new PageIndex(model, principal);   
-        pageIndex.addReponse(messageSource, "prixtube", "edit", result);
+        PageIndex pageIndex = new PageIndex(model, principal, messageSource);   
+        pageIndex.addReponse("prixtube", "edit", result);
         
         model.addAttribute("saison", dataService.returnMainData().getIdSaison());
         
@@ -90,7 +89,7 @@ public class ConsoMoisController {
         model.addAttribute("editConsoMois", formConsoMois);
         model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS_NBU.toString());
  
-        PageActions pageAction = new PageActions(model, principal);
+        PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
     }
 
@@ -100,8 +99,8 @@ public class ConsoMoisController {
     public String editConsoMoisNbUtilises(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
         int result = consoMoisService.updateConsoMoisNbUtilises(putConsoMois);
         
-        PageIndex pageIndex = new PageIndex(model, principal);   
-        pageIndex.addReponse(messageSource, "nbutilises", "edit", result);
+        PageIndex pageIndex = new PageIndex(model, principal, messageSource);   
+        pageIndex.addReponse("nbutilises", "edit", result);
         
         model.addAttribute("saison", dataService.returnMainData().getIdSaison());
         
@@ -127,7 +126,7 @@ public class ConsoMoisController {
         model.addAttribute("editConsoMois", formConsoMois);
         model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS_NBC.toString());
  
-        PageActions pageAction = new PageActions(model, principal);
+        PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
     }
 
@@ -137,8 +136,8 @@ public class ConsoMoisController {
     public String editConsoMoisNbCommandes(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
         int result = consoMoisService.updateConsoMoisNbCommandes(putConsoMois);
         
-        PageIndex pageIndex = new PageIndex(model, principal);   
-        pageIndex.addReponse(messageSource, "nbcommandes", "edit", result);
+        PageIndex pageIndex = new PageIndex(model, principal, messageSource);   
+        pageIndex.addReponse("nbcommandes", "edit", result);
         
         model.addAttribute("saison", dataService.returnMainData().getIdSaison());
         

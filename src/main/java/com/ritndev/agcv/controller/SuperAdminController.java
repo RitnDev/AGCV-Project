@@ -57,7 +57,7 @@ public class SuperAdminController {
     //--------------------   Page Super Admin   ---------------------------- 
     @GetMapping("/superAdmin")
     public String superAdmin(Model model, Principal principal){     
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -84,8 +84,8 @@ public class SuperAdminController {
     public String newData(Model model, Principal principal) {
         int result = dataService.newMainData();
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
-        pageSuperAdmin.addReponse(messageSource, "data", "create", result);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
+        pageSuperAdmin.addReponse("data", "create", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -107,8 +107,8 @@ public class SuperAdminController {
     public String supprData(@PathVariable(value = "id") Long id, Model model, Principal principal) {      
         int result = dataService.supprMainData(id);
        
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
-        pageSuperAdmin.addReponse(messageSource, "data", "remove", result);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
+        pageSuperAdmin.addReponse("data", "remove", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -141,7 +141,7 @@ public class SuperAdminController {
         model.addAttribute("listSaison", saisonService.listSaison());
         model.addAttribute("listStock", stockService.listStock());
                 
-        PageActions pageAction = new PageActions(model, principal);
+        PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
     }
     
@@ -152,8 +152,8 @@ public class SuperAdminController {
     public String editData(@ModelAttribute FormData putData, Model model, Principal principal) {
         int result = dataService.updateMainData(putData);
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
-        pageSuperAdmin.addReponse(messageSource, "data", "edit", result);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
+        pageSuperAdmin.addReponse("data", "edit", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -179,8 +179,8 @@ public class SuperAdminController {
     public String newStock(Model model, Principal principal) {
         int result = stockService.newStock();
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
-        pageSuperAdmin.addReponse(messageSource, "stock", "create", result);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
+        pageSuperAdmin.addReponse("stock", "create", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -204,8 +204,8 @@ public class SuperAdminController {
     public String supprStock(@PathVariable(value = "id") Long id, Model model, Principal principal) {
         int result = stockService.supprStock(id);
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
-        pageSuperAdmin.addReponse(messageSource, "stock", "remove", result);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
+        pageSuperAdmin.addReponse("stock", "remove", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -237,7 +237,7 @@ public class SuperAdminController {
         model.addAttribute("editStock", formStock);
         model.addAttribute("numAction", ActionsTypes.EDIT_STOCK.toString());
                 
-        PageActions pageAction = new PageActions(model, principal);
+        PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
     }
     
@@ -247,8 +247,8 @@ public class SuperAdminController {
     public String editStock(@ModelAttribute FormStock putStock, Model model, Principal principal) {
        int result = stockService.updateStock(putStock);
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
-        pageSuperAdmin.addReponse(messageSource, "stock", "edit", result);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
+        pageSuperAdmin.addReponse("stock", "edit", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -276,8 +276,8 @@ public class SuperAdminController {
     public String newTypeTube(@ModelAttribute FormTypeTube newTypeTube, Model model, Principal principal) {
         int result = typeTubeService.saveTypeTube(newTypeTube);
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
-        pageSuperAdmin.addReponse(messageSource, "typetube", "create", result);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
+        pageSuperAdmin.addReponse("typetube", "create", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -301,8 +301,8 @@ public class SuperAdminController {
     public String supprTypeTube(@PathVariable(value = "id") Long id, Model model, Principal principal) {
         int result = typeTubeService.supprTypeTube(id);
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
-        pageSuperAdmin.addReponse(messageSource, "typetube", "remove", result);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
+        pageSuperAdmin.addReponse("typetube", "remove", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -334,7 +334,7 @@ public class SuperAdminController {
         model.addAttribute("editTypeTube", formTypeTube);
         model.addAttribute("numAction", ActionsTypes.EDIT_TYPETUBE.toString());
                 
-        PageActions pageAction = new PageActions(model, principal);
+        PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
     }
     
@@ -344,8 +344,8 @@ public class SuperAdminController {
     public String editTypeTube(@ModelAttribute FormTypeTube putTypeTube, Model model, Principal principal) {
         int result = typeTubeService.updateTypeTube(putTypeTube);
         
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);     
-        pageSuperAdmin.addReponse(messageSource, "typetube", "remove", result);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);     
+        pageSuperAdmin.addReponse("typetube", "remove", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -379,8 +379,8 @@ public class SuperAdminController {
         
         int result = userService.saveUser(newUser);
 
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);    
-        pageSuperAdmin.addReponse(messageSource, "user", "create", result);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);    
+        pageSuperAdmin.addReponse("user", "create", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -402,7 +402,7 @@ public class SuperAdminController {
     @DeleteMapping("/user/{id}")
     public String supprUser(@PathVariable(value = "id") Long id, Model model, Principal principal) {
 
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
         String userNameLog = pageSuperAdmin.returnUser(principal);
         
         int result = 3;
@@ -412,7 +412,7 @@ public class SuperAdminController {
             result = userService.supprUser(id);
         }
         
-        pageSuperAdmin.addReponse(messageSource, "user", "remove", result);
+        pageSuperAdmin.addReponse("user", "remove", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -437,7 +437,7 @@ public class SuperAdminController {
         
         System.out.println(">> POST - EDIT USER");
         System.out.println(">> ID : " + id);
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
         String userNameLog = pageSuperAdmin.returnUser(principal);
         
         //Recupération du user à modifier :
@@ -453,14 +453,14 @@ public class SuperAdminController {
             model.addAttribute("editUser", formUser);
             model.addAttribute("numAction", ActionsTypes.EDIT_USER.toString());
 
-            PageActions pageAction = new PageActions(model, principal);
+            PageActions pageAction = new PageActions(model, principal, messageSource);
 
             return pageAction.returnPage();
             }else{
-                pageSuperAdmin.addReponse(messageSource, "ritn", "edit", 3);
+                pageSuperAdmin.addReponse("ritn", "edit", 3);
             }
         }else{
-            pageSuperAdmin.addReponse(messageSource, "user", "edit", 3);
+            pageSuperAdmin.addReponse("user", "edit", 3);
         }
         
         
@@ -485,8 +485,8 @@ public class SuperAdminController {
     public String editUser(@ModelAttribute FormUser putUser, Model model, Principal principal) {
         int result = userService.updateUser(putUser);
                 
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal);
-        pageSuperAdmin.addReponse(messageSource, "user", "edit", result);
+        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
+        pageSuperAdmin.addReponse("user", "edit", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){

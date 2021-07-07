@@ -15,14 +15,14 @@
                             <h3>Modifier le prix du tube</h3>
                         </td>
                         <td class="popup-header-close">
-                            <a href="/admin" >
+                            <a href="/admin/prixtube" >
                                 <img class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>
                     </tr>
                 </table>
                 
-                <form th:action="@{/prixtube/{id}(id=*{id})}" th:object="${editPrixTube}" method="post">
+                <form th:action="@{/admin/prixtube/{id}(id=*{id})}" th:object="${editPrixTube}" method="post">
                         
                     <table class="popup-form">
                         <tr>

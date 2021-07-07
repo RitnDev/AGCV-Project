@@ -8,7 +8,6 @@
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
-        <script type="text/javascript" th:src="@{/js/prixtube-popup.js}" charset="utf-8" defer></script>
         <!-- https://www.youtube.com/watch?v=gLWIYk0Sd38 -->
     </head>
     
@@ -31,61 +30,11 @@
             </div>
             <br/>
             
-            <div class="std-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="table-label" colspan="6">PRIX TUBES</th>
-                        </tr>
-                        <tr>
-                            <th>Type de tube</th>
-                            <th>Marque</th>
-                            <th>Prix d'achat</th>
-                            <th>Prix membre</th>
-                            <th>Actif ?</th>
-                            <th class="table-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:if="${listPrixTubes.empty}">
-                            <td colspan="6">Aucun prix tube créé</td>
-                        </tr>
-                        <tr th:each="prixTube : ${listPrixTubes}" th:if="${!prixTube.defaut}">
-                            <td><span th:text="${prixTube.idTypeTube}">Type de tube</span></td>
-                            <td><span th:text="${prixTube.marque}">Marque</span></td>
-                            <td><span th:text="${prixTube.prix}">Prix</span></td>
-                            <td><span th:text="${prixTube.prixMembre}">Prix membre</span></td>
-                            <td><span th:text="${prixTube.actif}">actif</span></td>
-                            <td class="table-action">
-                                <table class="action-input">
-                                    <tr>
-                                        <td class="action-input">
-                                            <form action="#" th:action="@{/prixtube/{id}(id=${prixTube.id})}" th:method="post">
-                                                <input type="hidden" name="_method" value="delete"/>
-                                                <input id="action-input" type="submit" value="Suppr"/>
-                                            </form>
-                                        </td><td class="action-input">|</td>
-                                        <td class="action-input">
-                                            <form action="#" th:action="@{/prixtube/{id}(id=${prixTube.id})}" th:method="post">
-                                                <input id="action-input" type="submit" value="Edit"/>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <br/> 
-            <br/>
             
         </div>
       
         <!-- pop-up section -->
-        <div id="bg-popup" class="bg-popup-prixtube">
-            <div th:replace="fragments/PrixTube/layout-popup-new :: prixtube"/>
-        </div>
+
        
         <!-- footer section -->
         <div th:replace="fragments/layout-footer :: footer"></div>

@@ -3,9 +3,7 @@ package com.ritndev.agcv.controller;
 import com.ritndev.agcv.InterfaceService.ICommandeService;
 import com.ritndev.agcv.InterfaceService.IMembreService;
 import com.ritndev.agcv.InterfaceService.IPrixTubeService;
-import com.ritndev.agcv.InterfaceService.ISaisonService;
 import com.ritndev.agcv.classes.ActionsTypes;
-import com.ritndev.agcv.classes.NomService;
 import com.ritndev.agcv.form.FormCommande;
 import com.ritndev.agcv.model.Commande;
 import com.ritndev.agcv.pages.PageActions;
@@ -43,7 +41,7 @@ public class CommandeController {
     
     @GetMapping(value = {"/commandesMembres", "/newCommande"})
     public String commandesMembres(Model model, Principal principal){
-        PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal);
+        PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
         
         model.addAttribute("Membres", membreService.listMembre());
         model.addAttribute("Commandes", commandeService.listCommande());
@@ -59,8 +57,8 @@ public class CommandeController {
     public String newCommande(@ModelAttribute FormCommande newCommande, Model model, Principal principal) {
         int result = commandeService.saveCommande(newCommande);
         
-        PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal);
-        pageCommandesMembres.addReponse(messageSource, "commande", "create", result);
+        PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
+        pageCommandesMembres.addReponse("commande", "create", result);
         
         model.addAttribute("Membres", membreService.listMembre());
         model.addAttribute("Commandes", commandeService.listCommande());
@@ -76,8 +74,8 @@ public class CommandeController {
     public String supprCommande(@PathVariable(value = "id") Long id, Model model, Principal principal) {       
         int result = commandeService.supprCommande(id);
 
-        PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal);
-        pageCommandesMembres.addReponse(messageSource, "commande", "remove", result);
+        PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
+        pageCommandesMembres.addReponse("commande", "remove", result);
         
         model.addAttribute("Membres", membreService.listMembre());
         model.addAttribute("Commandes", commandeService.listCommande());
@@ -91,8 +89,8 @@ public class CommandeController {
     public String editCommande(@ModelAttribute FormCommande putCommande, Model model, Principal principal) {   
         int result = commandeService.updateCommande(putCommande);
         
-        PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal);
-        pageCommandesMembres.addReponse(messageSource, "commande", "edit", result);
+        PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
+        pageCommandesMembres.addReponse("commande", "edit", result);
         
         model.addAttribute("Membres", membreService.listMembre());
         model.addAttribute("Commandes", commandeService.listCommande());
@@ -117,7 +115,7 @@ public class CommandeController {
         model.addAttribute("numAction", ActionsTypes.EDIT_COMMANDE.toString());
         
                 
-        PageActions pageAction = new PageActions(model, principal);
+        PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
     }
     

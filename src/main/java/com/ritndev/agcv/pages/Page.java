@@ -25,9 +25,11 @@ public class Page {
            
     @Getter @Setter private Model model;
     @Getter @Setter private Principal principal;
+    @Getter @Setter private MessageSource messageSource;
     
-    private final String title = "AGCV - ";
-        
+    //Nom de la page html
+    @Getter @Setter private String nom;
+    
     //Nom de la page
     @Getter @Setter
     private String nomPage;
@@ -63,10 +65,16 @@ public class Page {
     
     //Constructeur
     public Page() {}
-
-    public Page(Model model, Principal principal) {
+    
+    public Page(String nom, Model model, Principal principal, MessageSource messageSource) {
+        this.nom = nom;
         this.model = model;
         this.principal = principal;
+        this.messageSource = messageSource;
+        
+        this.nomPage = messageSource.getMessage("texte.page." + nom + ".titre", null, Locale.FRENCH);
+        this.linkPage = returnLink(nom);
+        this.linkAdminPage = returnLink("admin");
     }
     
     
@@ -117,7 +125,7 @@ public class Page {
         reponses.put(tr, reponse);
     }
     
-    public void addReponse(MessageSource messageSource, String modelName, String methodeName, int result) {
+    public void addReponse(String modelName, String methodeName, int result) {
         String strResult = "error";
         TypeReponse tr = TypeReponse.OTHER;
         
@@ -168,17 +176,27 @@ public class Page {
     
     //Retourne le titre de la page
     public String returnTitre(){
-        return title + getNomPage();
+        return messageSource.getMessage("texte.global.page.titre", null, Locale.FRENCH) + getNomPage();
     }
     
     //Renvoie vers la Page
     public String returnPage() {
-        return linkPage.getHref();
+        return "/" + nom;
     }
     
-    //Remplace le titre généré par celui inscrit en paramètre de la méthode
-    public void setTitlePage(String title){
-        model.addAttribute("pageTitle", title);
+    //Renvoie vers la Page
+    public Link returnLink(String nom) {
+        return new Link(messageSource.getMessage("texte.page." + nom + ".link", null, Locale.FRENCH), nom);
+    }
+    
+    
+    //Remplace le lien vers la page Admin
+    public void setLinkAdminPage(String nom){
+        linkAdminPage = returnLink(nom);
+    }
+    
+    public String getTexteRessource(String paramTexte) {
+        return messageSource.getMessage("texte.page." + nom + "." + paramTexte, null, Locale.FRENCH);
     }
     
 }

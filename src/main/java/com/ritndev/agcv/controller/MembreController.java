@@ -37,7 +37,7 @@ public class MembreController {
         
         model.addAttribute("listMembres", membreService.listMembre());
          
-        PageMembre pageMembre = new PageMembre(model, principal);    
+        PageMembre pageMembre = new PageMembre(model, principal, messageSource);    
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
         
         return pageMembre.getPage(connect);
@@ -53,10 +53,10 @@ public class MembreController {
         
         model.addAttribute("listMembres", membreService.listMembre());   
         
-        PageMembre pageMembre = new PageMembre(model, principal);
+        PageMembre pageMembre = new PageMembre(model, principal, messageSource);
         
         int result = membreService.saveMembre(newMembre);
-        pageMembre.addReponse(messageSource, "membre", "create", result);
+        pageMembre.addReponse("membre", "create", result);
         
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
         
@@ -70,10 +70,10 @@ public class MembreController {
 
         model.addAttribute("listMembres", membreService.listMembre());
        
-        PageMembre pageMembre = new PageMembre(model, principal);
+        PageMembre pageMembre = new PageMembre(model, principal, messageSource);
         
         int result = membreService.supprMembre(id);
-        pageMembre.addReponse(messageSource, "membre", "remove", result);
+        pageMembre.addReponse("membre", "remove", result);
         
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
 
@@ -86,10 +86,10 @@ public class MembreController {
         
         model.addAttribute("listMembres", membreService.listMembre());
        
-        PageMembre pageMembre = new PageMembre(model, principal);
+        PageMembre pageMembre = new PageMembre(model, principal, messageSource);
         
         int result = membreService.updateMembre(putMembre);
-        pageMembre.addReponse(messageSource, "membre", "edit", result);
+        pageMembre.addReponse("membre", "edit", result);
         
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
 
@@ -111,7 +111,7 @@ public class MembreController {
         model.addAttribute("editMembre", formMembre);
         model.addAttribute("numAction", ActionsTypes.EDIT_MEMBRE.toString());
                 
-        PageActions pageAction = new PageActions(model, principal);
+        PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
     }
     

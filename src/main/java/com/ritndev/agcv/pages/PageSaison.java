@@ -4,6 +4,7 @@ import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.form.FormSaison;
 import java.security.Principal;
 import java.util.Calendar;
+import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 
 /**
@@ -13,22 +14,15 @@ import org.springframework.ui.Model;
 public class PageSaison extends Page {
     
     //Construction de la page ADMIN :
-    public PageSaison(Model model, Principal principal) {
-        super(model, principal); 
+    public PageSaison(Model model, Principal principal, MessageSource messageSource) {
+        super("saison", model, principal, messageSource);
         
-        super.setNomPage("Liste des saisons");
-        super.setLinkPage(new Link("Saison", "/saison"));
         super.setAdminPage(true);
         super.setSuperAdminPage(true);
-        super.setLinkAdminPage(new Link("Déconnexion", "/logout"));
-        
-        Link index = new Link("Page principale","/index");
-        Link admin = new Link("Retour page Admin","/admin");
-        
-        super.addLinks(index);
-        super.addLinks(admin);
-        
-        
+        super.setLinkAdminPage("logout");
+        super.addLinks(returnLink("index"));
+        super.addLinks(returnLink("admin"));
+                
         Link newSaison = new Link("Nouvelle saison", "#", "topnav-menu-saison");
         
         Link[] menu = new Link[] {

@@ -5,14 +5,12 @@ import com.ritndev.agcv.form.FormConsoMois;
 import com.ritndev.agcv.form.FormTypeTube;
 import com.ritndev.agcv.form.FormTypeVolant;
 import com.ritndev.agcv.form.FormUser;
-import com.ritndev.agcv.model.AppUser;
 import com.ritndev.agcv.model.enumeration.NomMois;
 import com.ritndev.agcv.model.enumeration.NomTypeTube;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 
 /**
@@ -22,17 +20,13 @@ import org.springframework.ui.Model;
 public class PageSuperAdmin extends Page {
 
     //Construction de la page SUPER-ADMIN :
-    public PageSuperAdmin(Model model, Principal principal) {
-        super(model, principal);
+    public PageSuperAdmin(Model model, Principal principal, MessageSource messageSource) {
+        super("superAdmin", model, principal, messageSource);
         
-        super.setNomPage("Super Administrateur");
-        super.setLinkPage(new Link("Super Admin", "/superAdmin"));
         super.setAdminPage(true);
-        super.setLinkAdminPage(new Link("Déconnexion", "/logout"));
+        super.setLinkAdminPage("logout");
         
-        Link index = new Link("Retour page Admin","/admin");
-        
-        super.addLinks(index);
+        super.addLinks(returnLink("index"));
        
         Link newData = new Link("Nouvelle MAIN-DATA", "/newData", "topnav-menu-data");
         Link newUser = new Link("Nouvel utilisateur", "#", "topnav-menu-user");
@@ -52,15 +46,9 @@ public class PageSuperAdmin extends Page {
       
     
     public String getPage() {
-    
-        String message = "Ici se trouve la page : ";
-        message = message + getNomPage();
- 
-        
         // Add Attribute :
         getPageGenerique();
-        super.getModel().addAttribute("message", message);
-        
+       
         super.getModel().addAttribute("newUser", new FormUser());
         super.getModel().addAttribute("newTypeTube", new FormTypeTube());
         super.getModel().addAttribute("newTypeVolant", new FormTypeVolant());

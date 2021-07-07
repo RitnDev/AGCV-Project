@@ -3,6 +3,7 @@ package com.ritndev.agcv.pages;
 import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.form.FormMembre;
 import java.security.Principal;
+import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 
 /**
@@ -12,20 +13,14 @@ import org.springframework.ui.Model;
 public class PageMembre extends Page {
     
     //Construction de la page ADMIN :
-    public PageMembre(Model model, Principal principal) {
-        super(model, principal); 
+    public PageMembre(Model model, Principal principal, MessageSource messageSource) {
+        super("membre", model, principal, messageSource); 
         
-        super.setNomPage("Liste des membres");
-        super.setLinkPage(new Link("Membre", "/membre"));
         super.setAdminPage(true);
         super.setSuperAdminPage(true);
-        super.setLinkAdminPage(new Link("Déconnexion", "/logout"));
-        
-        Link index = new Link("Page principale","/index");
-        Link admin = new Link("Retour page Admin","/admin");
-        
-        super.addLinks(index);
-        super.addLinks(admin);
+        super.setLinkAdminPage("logout");
+        super.addLinks(returnLink("index"));
+        super.addLinks(returnLink("admin"));
         
         Link newMembre = new Link("Nouveau membre", "#", "topnav-menu-membre"); 
         

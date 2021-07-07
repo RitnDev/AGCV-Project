@@ -2,10 +2,9 @@ package com.ritndev.agcv.pages;
 
 import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.form.FormCompet;
-import com.ritndev.agcv.model.Saison;
-import com.ritndev.agcv.model.StockCompetition;
 
 import java.security.Principal;
+import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 
 /**
@@ -15,14 +14,12 @@ import org.springframework.ui.Model;
 public class PageSacCompetition extends Page {
        
     
-    public PageSacCompetition(Model model, Principal principal) {
-        super(model, principal);
+    public PageSacCompetition(Model model, Principal principal, MessageSource messageSource) {
+        super("sacCompetition", model, principal, messageSource);
        
-        super.setNomPage("Gestion du stock de compétition");
-        super.setLinkPage(new Link("Gestion du stock de compétition", "sacCompetition", "topnav-menu"));
         super.setAdminPage(true);
-        super.setLinkAdminPage(new Link("Admin", "/admin"));
-        
+        super.addLinks(returnLink("index"));
+
         
         Link competition = new Link("Nouvelle compétition", "#", "topnav-menu-compet"); 
         Link stock = new Link("Ajuster le stock", "#", "topnav-menu-stock");
@@ -31,12 +28,7 @@ public class PageSacCompetition extends Page {
             competition,
             stock
         };
-        super.setMenu(menu);
-        
-        
-        Link index = new Link("Page principale","/index");
-        super.addLinks(index);
-        
+        super.setMenu(menu);      
     }
     
     
@@ -46,18 +38,14 @@ public class PageSacCompetition extends Page {
         message = message + getNomPage() + " ";
         message = message + "Ici sera affiché la liste des compétition de la saison. ";
         message = message + "Il sera possible de faire le restockage du stock de compétition.";
-        
-        
-        int AdminConnect = 0;
+
         
         // Add Attribute :
         getPageGenerique();
         super.getModel().addAttribute("message", message);
         super.getModel().addAttribute("newCompetition", new FormCompet());
         
-        
         return returnPage();
-        
     }
     
 }

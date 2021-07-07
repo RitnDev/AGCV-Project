@@ -16,7 +16,8 @@ public class RessourcesMessagesConfig {
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasenames(
-                "classpath:/messages/typeReponses"//,
+                "classpath:/messages/typeReponses",
+                "classpath:/messages/resources"
                 //"classpath:/messages/api_response_messages"
         );
         messageSource.setDefaultEncoding("UTF-8");

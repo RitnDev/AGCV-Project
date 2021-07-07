@@ -1,12 +1,8 @@
 package com.ritndev.agcv.pages;
 
 import com.ritndev.agcv.classes.Link;
-import com.ritndev.agcv.classes.TypeReponse;
-
-import com.ritndev.agcv.form.FormPrixTube;
 
 import java.security.Principal;
-import java.util.Locale;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 
@@ -17,22 +13,18 @@ import org.springframework.ui.Model;
 public class PageAdmin extends Page {
     
     //Construction de la page ADMIN :
-    public PageAdmin(Model model, Principal principal) {
-        super(model, principal); 
+    public PageAdmin(Model model, Principal principal, MessageSource messageSource) {
+        super("admin", model, principal, messageSource);
         
-        super.setNomPage("Administrateur");
-        super.setLinkPage(new Link("Admin", "/admin"));
         super.setAdminPage(true);
         super.setSuperAdminPage(true);
-        super.setLinkAdminPage(new Link("Déconnexion", "/logout"));
-        
-        Link index = new Link("Page principale","/index");
-        super.addLinks(index);
+        super.setLinkAdminPage("logout");
+        super.addLinks(returnLink("index"));
         
         
         Link newSaison = new Link("Saisons", "/admin/saison", "topnav-menu-saison");
         Link newMembre = new Link("Membres", "/admin/membre", "topnav-menu-membre"); 
-        Link newPrixTube = new Link("Nouveau prix de tube", "#", "topnav-menu-prixtube"); 
+        Link newPrixTube = new Link("Prix des tubes", "/admin/prixtube", "topnav-menu-prixtube"); 
         
         Link[] menu = new Link[] {
             newSaison,
@@ -43,7 +35,7 @@ public class PageAdmin extends Page {
                
     }
 
-    
+    /*
     //Ajout de reponse spécifique
     @Override public void addReponse(MessageSource messageSource, String modelName, String methodeName, int result) {
         String strResult = "error";
@@ -59,21 +51,16 @@ public class PageAdmin extends Page {
             }
         }
     }
-    
+    */
     
     
     //Renvoie la page
     public String getPage(boolean connect) {
-             
-        String message = "Ici se trouve la page : ";
-        message = message + getNomPage();
-
-        
+       
         // Add Attribute :
         getPageGenerique();
-        super.getModel().addAttribute("newPrixTube", new FormPrixTube());
-
-        Link pageSupAdmin = new Link("supAdmin", "Super Admin", "/superAdmin", connect);
+        
+        Link pageSupAdmin = new Link("superAdmin", "Super Admin", "/superAdmin", connect);
         super.addLinks(pageSupAdmin);
         
         return returnPage();

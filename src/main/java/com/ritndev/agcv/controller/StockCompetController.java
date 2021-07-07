@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.classes.ActionsTypes;
-import com.ritndev.agcv.classes.NomService;
 import com.ritndev.agcv.form.FormCompet;
 import com.ritndev.agcv.model.Competition;
 import com.ritndev.agcv.model.Saison;
@@ -45,7 +44,7 @@ public class StockCompetController {
     
     @GetMapping(value = "/sacCompetition")
     public String sacCompetition(Model model, Principal principal){
-        PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal);
+        PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal, messageSource);
         
         Saison saisonActuelle = dataService.returnMainData().getIdSaison();
         StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
@@ -72,8 +71,8 @@ public class StockCompetController {
     public String newCompetition(@ModelAttribute FormCompet newCompetition, Model model, Principal principal) {
         int result = competitionService.saveCompetition(newCompetition);
         
-        PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal); 
-        pageSacCompetition.addReponse(messageSource, "compet", "create", result);
+        PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal, messageSource); 
+        pageSacCompetition.addReponse("compet", "create", result);
         
         Saison saisonActuelle = dataService.returnMainData().getIdSaison();
         StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
@@ -101,8 +100,8 @@ public class StockCompetController {
     public String supprCompet(@PathVariable(value = "id") Long id, Model model, Principal principal) {
         int result = competitionService.supprCompetition(id);
          
-        PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal);
-        pageSacCompetition.addReponse(messageSource, "compet", "remove", result);
+        PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal, messageSource);
+        pageSacCompetition.addReponse("compet", "remove", result);
         
         Saison saisonActuelle = dataService.returnMainData().getIdSaison();
         StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
@@ -130,8 +129,8 @@ public class StockCompetController {
     public String editCompet(@ModelAttribute FormCompet putCompet, Model model, Principal principal) { 
         int result = competitionService.updateCompetition(putCompet);
 
-        PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal);
-        pageSacCompetition.addReponse(messageSource, "compet", "edit", result);
+        PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal, messageSource);
+        pageSacCompetition.addReponse("compet", "edit", result);
         
         Saison saisonActuelle = dataService.returnMainData().getIdSaison();
         StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
@@ -167,7 +166,7 @@ public class StockCompetController {
         model.addAttribute("editCompet", formCompet);
         model.addAttribute("numAction", ActionsTypes.EDIT_COMPETITION.toString());
         
-        PageActions pageAction = new PageActions(model, principal);
+        PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
     }
     

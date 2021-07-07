@@ -38,7 +38,7 @@ public class MainController {
     
     @GetMapping(value = { "/", "/index"})
     public String index(Model model, Principal principal){
-        PageIndex pageIndex = new PageIndex(model, principal);
+        PageIndex pageIndex = new PageIndex(model, principal, messageSource);
         model.addAttribute("saison", dataService.returnMainData().getIdSaison());
         return pageIndex.getPage();
     }
@@ -48,7 +48,7 @@ public class MainController {
     
     @GetMapping(value = "/histoSaison")
     public String histoSaison(Model model, Principal principal){
-        PageHistoSaison pageHistoSaison = new PageHistoSaison(model, principal);
+        PageHistoSaison pageHistoSaison = new PageHistoSaison(model, principal, messageSource);
         return pageHistoSaison.getPage(); 
     }
     
@@ -71,7 +71,7 @@ public class MainController {
         model.addAttribute("editUser", formUser);
         model.addAttribute("numAction", ActionsTypes.EDIT_MDP.toString());
                 
-        PageActions pageAction = new PageActions(model, principal);
+        PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
     }
     
@@ -86,8 +86,8 @@ public class MainController {
         //Modification du mot de passe utilisateur :
         int result = userService.updateMdpUser(putUser);
                 
-        PageIndex pageIndex = new PageIndex(model, principal);
-        pageIndex.addReponse(messageSource, "mdp", "edit", result);
+        PageIndex pageIndex = new PageIndex(model, principal, messageSource);
+        pageIndex.addReponse("mdp", "edit", result);
         
         model.addAttribute("saison", dataService.returnMainData().getIdSaison());
         
