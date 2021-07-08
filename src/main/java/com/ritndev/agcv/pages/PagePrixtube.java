@@ -19,9 +19,9 @@ public class PagePrixtube extends Page {
         
         super.setAdminPage(true);
         super.setSuperAdminPage(true);
-        super.setLinkAdminPage("logout");
+        super.replaceLinkAdminPage("prixtube", "logout");
         super.addLinks(returnLink("index"));
-        super.addLinks(returnLink("admin"));
+        super.addLinks(returnLink("prixtube", "admin"));
         
         Link newPrixTube = new Link("Nouveau prix de tube", "#", "topnav-menu-prixtube"); 
         

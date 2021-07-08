@@ -32,17 +32,9 @@ public class PageSacCompetition extends Page {
     }
     
     
-    public String getPage() {
-                
-        String message = "Ici se trouve la page : ";
-        message = message + getNomPage() + " ";
-        message = message + "Ici sera affiché la liste des compétition de la saison. ";
-        message = message + "Il sera possible de faire le restockage du stock de compétition.";
-
-        
+    public String getPage() {       
         // Add Attribute :
         getPageGenerique();
-        super.getModel().addAttribute("message", message);
         super.getModel().addAttribute("newCompetition", new FormCompet());
         
         return returnPage();

@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-    </head>
-    <body>
         
 <!-- ------------------------------------------ POPUP NOUVELLE SAISON -------------------------------------------------- -->
         
@@ -12,7 +8,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Nouvelle Saison</h3>
+                            <h3 th:text="#{texte.pop.new.saison.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <img id="close-saison" class="button-close" src="/images/popup/button-close.png">
@@ -25,7 +21,7 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="anneeDebut">Année de début de Saison :</label>
+                                <label for="anneeDebut" th:text="#{texte.pop.new.saison.anneeDebut}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="anneeDebut" type="number" th:value="*{annee_debut}" th:field="*{annee_debut}" />
@@ -33,7 +29,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="budget">Budget prévisionnelle :</label>
+                                <label for="budget" th:text="#{texte.pop.new.saison.budget}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="budget" type="number" th:value="*{budget}" th:field="*{budget}" step="0.01" />
@@ -41,7 +37,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="actuelle">Saison en cours ?</label>
+                                <label for="actuelle" th:text="#{texte.pop.new.saison.actuelle}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="actuelle" name="actuelle" type="checkbox" th:checked="*{actuelle}"/>
@@ -50,7 +46,7 @@
                         
                         <tr>
                             <td colspan="2" class="popup-form-submit">
-                                <input class="popup-form-submit-button" type="submit" value="Créer la Saison"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.new.saison.submit}"/>                            
                             </td>
                         </tr>
                         
@@ -61,5 +57,4 @@
             </div>
         </div>        
         
-    </body>
 </html>

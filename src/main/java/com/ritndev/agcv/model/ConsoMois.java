@@ -85,11 +85,16 @@ public class ConsoMois implements Serializable {
     public double getCoutUtilises() {
         return nbTubeUtilise * idPrixTube.getPrix();
     }
+    public String getStringCoutUtilises() {
+        return String.format("%.2f", getCoutUtilises());
+    }
     
     public double getCoutCommandes() {
         return nbTubeCommande * idPrixTube.getPrix();
     }
-    
+    public String getStringCoutCommandes() {
+        return String.format("%.2f", getCoutCommandes());
+    }
     
     
 }

@@ -19,9 +19,9 @@ public class PageSaison extends Page {
         
         super.setAdminPage(true);
         super.setSuperAdminPage(true);
-        super.setLinkAdminPage("logout");
+        super.replaceLinkAdminPage("saison", "logout");
         super.addLinks(returnLink("index"));
-        super.addLinks(returnLink("admin"));
+        super.addLinks(returnLink("saison", "admin"));
                 
         Link newSaison = new Link("Nouvelle saison", "#", "topnav-menu-saison");
         

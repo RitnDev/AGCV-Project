@@ -124,6 +124,9 @@ public class TypeVolant implements Serializable {
         }
         return total;
     }
+    public String getStringTotalCoutUtilises() {
+        return String.format("%.2f", getTotalCoutUtilises());
+    }
     
     //Total du coût des tubes commandés sur une saison pour le type volant
     public double getTotalCoutCommandes() {
@@ -133,11 +136,17 @@ public class TypeVolant implements Serializable {
         }
         return total;
     }
+    public String getStringTotalCoutCommandes() {
+        return String.format("%.2f", getTotalCoutCommandes());
+    }
     
     public int getStockTotal() {
         int total = stock;
         total = total + getTotalNbTubesCommandes() - getTotalNbTubesUtilises();
         return total;
     }
+    
+    
+        
     
 }

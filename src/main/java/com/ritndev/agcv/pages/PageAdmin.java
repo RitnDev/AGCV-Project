@@ -18,7 +18,7 @@ public class PageAdmin extends Page {
         
         super.setAdminPage(true);
         super.setSuperAdminPage(true);
-        super.setLinkAdminPage("logout");
+        super.replaceLinkAdminPage("admin", "logout");
         super.addLinks(returnLink("index"));
         
         
@@ -35,28 +35,10 @@ public class PageAdmin extends Page {
                
     }
 
-    /*
-    //Ajout de reponse spécifique
-    @Override public void addReponse(MessageSource messageSource, String modelName, String methodeName, int result) {
-        String strResult = "error";
-        TypeReponse tr = TypeReponse.OTHER;
-        
-        if(result<=4){
-            super.addReponse(messageSource, modelName, methodeName, result);
-        }else{
-            if(result==3004){
-                strResult = "3004";
-                tr = TypeReponse.ADD;
-                super.getReponses().put(tr, messageSource.getMessage("reponse." + modelName + "." + methodeName + "." + strResult, null, Locale.FRENCH));
-            }
-        }
-    }
-    */
-    
+   
     
     //Renvoie la page
     public String getPage(boolean connect) {
-       
         // Add Attribute :
         getPageGenerique();
         

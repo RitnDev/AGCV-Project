@@ -89,7 +89,7 @@
                                 </form>
                             </td>
                             <td class="table-tv-cu">
-                                <span th:text="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).getCoutUtilises}"></span>
+                                <span th:text="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).getStringCoutUtilises} + #{texte.global.devise}"></span>
                             </td>
                             <td class="table-tv-nbc">
                                 <form action="#" th:action="@{/mois/nbc/{id}(id=${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).id})}" th:method="post">
@@ -97,11 +97,11 @@
                                 </form>
                             </td>
                             <td class="table-tv-cc">
-                                <span th:text="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).getCoutCommandes}"></span>
+                                <span th:text="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).getStringCoutCommandes} + #{texte.global.devise}"></span>
                             </td>
                             <td class="table-tv-prix" th:title="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).idPrixTube.marque}">
                                 <form action="#" th:action="@{/mois/prix/{id}(id=${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).id})}" th:method="post">
-                                    <input class="table-tv-prix" type="submit" th:value="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).idPrixTube.getPrixString}"/>
+                                    <input class="table-tv-prix" type="submit" th:value="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).idPrixTube.getPrixString} + #{texte.global.devise}"/>
                                 </form>
                             </td>
                             <td class="table-tv-nbu">
@@ -110,7 +110,7 @@
                                 </form>
                             </td>
                             <td class="table-tv-cu">
-                                <span th:text="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).getCoutUtilises}"></span>
+                                <span th:text="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).getStringCoutUtilises} + #{texte.global.devise}"></span>
                             </td>
                             <td class="table-tv-nbc">
                                 <form action="#" th:action="@{/mois/nbc/{id}(id=${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).id})}" th:method="post">
@@ -118,11 +118,11 @@
                                 </form>
                             </td>
                             <td class="table-tv-cc">
-                                <span th:text="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).getCoutCommandes}"></span>
+                                <span th:text="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).getStringCoutCommandes} + #{texte.global.devise}"></span>
                             </td>
                             <td class="table-tv-prix" th:title="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).idPrixTube.marque}">
                                 <form action="#" th:action="@{/mois/prix/{id}(id=${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).id})}" th:method="post">
-                                    <input class="table-tv-prix" type="submit" th:value="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).idPrixTube.getPrixString}"/>
+                                    <input class="table-tv-prix" type="submit" th:value="${saison.getTypeVolantName(competition).getConsoMoisName(mois.toString).idPrixTube.getPrixString} + #{texte.global.devise}"/>
                                 </form>
                             </td>
                             <td class="table-tv-nbu">
@@ -131,7 +131,7 @@
                                 </form>
                             </td>
                             <td class="table-tv-cu">
-                                <span th:text="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).getCoutUtilises}"></span>
+                                <span th:text="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).getStringCoutUtilises} + #{texte.global.devise}"></span>
                             </td>
                             <td class="table-tv-nbc">
                                 <form action="#" th:action="@{/mois/nbc/{id}(id=${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).id})}" th:method="post">
@@ -139,11 +139,11 @@
                                 </form>
                             </td>
                             <td class="table-tv-cc">
-                                <span th:text="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).getCoutCommandes}"></span>
+                                <span th:text="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).getStringCoutCommandes} + #{texte.global.devise}"></span>
                             </td>
                             <td class="table-tv-prix" th:title="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).idPrixTube.marque}">
                                 <form action="#" th:action="@{/mois/prix/{id}(id=${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).id})}" th:method="post">
-                                    <input class="table-tv-prix" type="submit" th:value="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).idPrixTube.getPrixString}"/>
+                                    <input class="table-tv-prix" type="submit" th:value="${saison.getTypeVolantName(entrainement).getConsoMoisName(mois.toString).idPrixTube.getPrixString} + #{texte.global.devise}"/>
                                 </form>
                             </td>
                         </tr>
@@ -156,39 +156,39 @@
                                 <span th:text="${saison.getTypeVolantName(plastique).getTotalNbTubesUtilises}"></span>
                             </td>
                             <td class="table-tv-total-cu">
-                                <span th:text="${saison.getTypeVolantName(plastique).getTotalCoutUtilises}"></span>
+                                <span th:text="${saison.getTypeVolantName(plastique).getStringTotalCoutUtilises} + #{texte.global.devise}"></span>
                             </td>
                             <td class="table-tv-total-nbc">
                                 <span th:text="${saison.getTypeVolantName(plastique).getTotalNbTubesCommandes}"></span>
                             </td>
                             <td class="table-tv-total-cc">
-                                <span th:text="${saison.getTypeVolantName(plastique).getTotalCoutCommandes}"></span>
+                                <span th:text="${saison.getTypeVolantName(plastique).getStringTotalCoutCommandes} + #{texte.global.devise}"></span>
                             </td>
                             <td class="table-tv-total-prix"></td>
                             <td class="table-tv-total-nbu">
                                 <span th:text="${saison.getTypeVolantName(competition).getTotalNbTubesUtilises}"></span>
                             </td>
                             <td class="table-tv-total-cu">
-                                <span th:text="${saison.getTypeVolantName(competition).getTotalCoutUtilises}"></span>
+                                <span th:text="${saison.getTypeVolantName(competition).getStringTotalCoutUtilises} + #{texte.global.devise}"></span>
                             </td>
                             <td class="table-tv-total-nbc">
                                 <span th:text="${saison.getTypeVolantName(competition).getTotalNbTubesCommandes}"></span>
                             </td>
                             <td class="table-tv-total-cc">
-                                <span th:text="${saison.getTypeVolantName(competition).getTotalCoutCommandes}"></span>
+                                <span th:text="${saison.getTypeVolantName(competition).getStringTotalCoutCommandes} + #{texte.global.devise}"></span>
                             </td>
                             <td class="table-tv-total-prix"></td>
                             <td class="table-tv-total-nbu">
                                 <span th:text="${saison.getTypeVolantName(entrainement).getTotalNbTubesUtilises}"></span>
                             </td>
                             <td class="table-tv-total-cu">
-                                <span th:text="${saison.getTypeVolantName(entrainement).getTotalCoutUtilises}"></span>
+                                <span th:text="${saison.getTypeVolantName(entrainement).getStringTotalCoutUtilises} + #{texte.global.devise}"></span>
                             </td>
                             <td class="table-tv-total-nbc">
                                 <span th:text="${saison.getTypeVolantName(entrainement).getTotalNbTubesCommandes}"></span>
                             </td>
                             <td class="table-tv-total-cc">
-                                <span th:text="${saison.getTypeVolantName(entrainement).getTotalCoutCommandes}"></span>
+                                <span th:text="${saison.getTypeVolantName(entrainement).getStringTotalCoutCommandes} + #{texte.global.devise}"></span>
                             </td>
                             <td class="table-tv-total-prix"></td>
                         </tr>

@@ -24,8 +24,8 @@ public class PageSuperAdmin extends Page {
         super("superAdmin", model, principal, messageSource);
         
         super.setAdminPage(true);
-        super.setLinkAdminPage("logout");
-        
+        super.replaceLinkAdminPage("superAdmin", "logout");
+        super.addLinks(returnLink("superAdmin", "admin"));
         super.addLinks(returnLink("index"));
        
         Link newData = new Link("Nouvelle MAIN-DATA", "/newData", "topnav-menu-data");

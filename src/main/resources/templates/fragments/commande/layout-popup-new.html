@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-    </head>
-    <body>
         
 <!-- ------------------------------------------ POPUP NOUVELLE COMMANDE -------------------------------------------------- -->
         
@@ -12,7 +8,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Nouvelle Commande</h3>
+                            <h3 th:text="#{texte.pop.new.commande.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <img id="close-commande" class="button-close" src="/images/popup/button-close.png">
@@ -25,7 +21,7 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="idPrixTube">Quel Tube vous commandés ?</label>
+                                <label for="idPrixTube" th:text="#{texte.pop.new.commande.idPrixTube}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <select id="idPrixTube" th:field="*{idPrixTube}">
@@ -35,7 +31,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="membre">Membre ayant commandé des tubes :</label>
+                                <label for="membre" th:text="#{texte.pop.new.commande.membre}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <select id="membre" th:field="*{idMembre}">
@@ -45,7 +41,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="nbTubeCommande">Nombre de tubes commandés :</label>
+                                <label for="nbTubeCommande" th:text="#{texte.pop.new.commande.nbTubeCommande}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="nbTubeCommande" type="number" min="1" th:value="*{nbTubeCommande}" th:field="*{nbTubeCommande}" />
@@ -53,7 +49,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="regler">La commande est-elle déjà réglée ?</label>
+                                <label for="regler" th:text="#{texte.pop.new.commande.regler}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="regler" name="regler" type="checkbox" th:checked="*{regler}"/>
@@ -61,7 +57,7 @@
                         </tr>
                         <tr>
                             <td colspan="2" class="popup-form-submit">
-                                <input class="popup-form-submit-button" type="submit" value="Créer la commande"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.new.commande.submit}"/>                            
                             </td>
                         </tr>
                         
@@ -72,5 +68,5 @@
             </div>
         </div>        
         
-    </body>
+
 </html>

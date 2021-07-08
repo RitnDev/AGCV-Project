@@ -18,9 +18,9 @@ public class PageMembre extends Page {
         
         super.setAdminPage(true);
         super.setSuperAdminPage(true);
-        super.setLinkAdminPage("logout");
+        super.replaceLinkAdminPage("membre", "logout");
         super.addLinks(returnLink("index"));
-        super.addLinks(returnLink("admin"));
+        super.addLinks(returnLink("membre", "admin"));
         
         Link newMembre = new Link("Nouveau membre", "#", "topnav-menu-membre"); 
         

@@ -23,7 +23,6 @@ public class PageIndex extends Page {
         super("index", model, principal, messageSource);
         
         super.setAdminPage(true);
-        
         super.addLinks(returnLink("commandesMembres"));
         super.addLinks(returnLink("sacCompetition"));
         super.addLinks(returnLink("histoSaison"));
