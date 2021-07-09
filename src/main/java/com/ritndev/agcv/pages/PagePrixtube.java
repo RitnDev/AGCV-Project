@@ -40,7 +40,7 @@ public class PagePrixtube extends Page {
         getPageGenerique();
         super.getModel().addAttribute("newPrixTube", new FormPrixTube());
 
-        Link pageSupAdmin = new Link("supAdmin", "Super Admin", "/superAdmin", connect);
+        Link pageSupAdmin = new Link("superAdmin", "Super Admin", "/superAdmin", connect);
         super.addLinks(pageSupAdmin);
         
         return returnPage();

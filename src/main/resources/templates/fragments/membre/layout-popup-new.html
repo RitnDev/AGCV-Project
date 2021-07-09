@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-    </head>
-    <body>
         
 <!-- ------------------------------------------ POPUP NOUVEAU MEMBRE -------------------------------------------------- -->
         
@@ -12,7 +8,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Nouveau Membre</h3>
+                            <h3 th:text="#{texte.pop.new.membre.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <img id="close-membre" class="button-close" src="/images/popup/button-close.png">
@@ -25,7 +21,7 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="prenom">Prénom :</label>
+                                <label for="prenom" th:text="#{texte.pop.new.membre.prenom}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="prenom" type="text" th:value="*{prenom}" th:field="*{prenom}" />
@@ -33,7 +29,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="nom">Nom :</label>
+                                <label for="nom" th:text="#{texte.pop.new.membre.nom}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
@@ -41,7 +37,7 @@
                         </tr>
                         <tr>
                             <td colspan="2" class="popup-form-submit">
-                                <input class="popup-form-submit-button" type="submit" value="Créer le membre"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.new.membre.submit}"/>                            
                             </td>
                         </tr>
                         
@@ -52,5 +48,4 @@
             </div>
         </div>        
         
-    </body>
 </html>

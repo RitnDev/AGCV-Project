@@ -433,11 +433,11 @@ input#regler:hover {
   color: #000;
 }
 
-#topnav-link.supAdmin {
+#topnav-link.superAdmin {
   background-color:#c6ab13;
   color: #f2f2f2;
 }
-#topnav-link.supAdmin:hover {
+#topnav-link.superAdmin:hover {
   background-color:#fff9bb;
   color: #000;
 }

@@ -12,7 +12,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Nouvel Utilisateur</h3>
+                            <h3 th:text="#{texte.pop.new.user.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <img id="close-user" class="button-close" src="/images/popup/button-close.png">
@@ -25,7 +25,7 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="identifiant">Identifiant :</label>
+                                <label for="identifiant" th:text="#{texte.pop.new.user.identifiant}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="identifiant" type="text" th:value="*{identifiant}" th:field="*{identifiant}" />
@@ -33,7 +33,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="mdp">Mot de passe :</label>
+                                <label for="mdp" th:text="#{texte.pop.new.user.mdp}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="mdp" type="password" th:value="*{mdp}" th:field="*{mdp}" />
@@ -41,7 +41,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="role">Role utilisateur :</label>
+                                <label for="role" th:text="#{texte.pop.new.user.role}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <select id="role" th:field="*{roleId}">
@@ -51,7 +51,7 @@
                         </tr>
                         <tr>
                             <td colspan="2" class="popup-form-submit">
-                                <input class="popup-form-submit-button" type="submit" value="Créer l'utilisateur"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.new.user.submit}"/>                            
                             </td>
                         </tr>
                         

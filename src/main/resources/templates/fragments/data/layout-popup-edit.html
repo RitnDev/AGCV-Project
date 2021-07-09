@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-    </head>
-    <body>
         
 <!-- ------------------------------------------ POPUP EDITION DATA -------------------------------------------------- -->
         
        <div th:fragment="data">
+           
             <div id="popup-content" class="popup-content-edit-data">
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Modifier la Main-Data</h3>
+                            <h3 th:text="#{texte.pop.edit.data.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <a href="/superAdmin" >
@@ -26,7 +23,7 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="id-saison">Saison :</label>
+                                <label for="id-saison" th:text="#{texte.pop.edit.data.saison}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <select id="id-saison" th:field="*{idSaison}">
@@ -36,7 +33,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="id-stock">Stock compet :</label>
+                                <label for="id-stock" th:text="#{texte.pop.edit.data.stock}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <select id="id-stock" th:field="*{idStockCompet}">
@@ -46,7 +43,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="actif">Main-Data actif ?</label>
+                                <label for="actif" th:text="#{texte.pop.edit.data.actif}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="actif" name="actif" type="checkbox" th:checked="*{actif}"/>
@@ -56,7 +53,7 @@
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
-                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.edit.global.submit}"/>                             
                             </td>
                         </tr>
                         
@@ -67,5 +64,4 @@
             </div>
         </div>        
         
-    </body>
 </html>

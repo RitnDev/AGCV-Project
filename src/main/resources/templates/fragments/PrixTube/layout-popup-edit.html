@@ -12,7 +12,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Modifier le prix du tube</h3>
+                            <h3 th:text="#{texte.pop.edit.prixtube.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <a href="/admin/prixtube" >
@@ -27,7 +27,7 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="marque">Marque du tube</label>
+                                <label for="marque" th:text="#{texte.pop.edit.prixtube.marque}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="marque" type="text" th:value="*{marque}" th:field="*{marque}" />
@@ -35,7 +35,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="prix">Prix du tube :</label>
+                                <label for="prix" th:text="#{texte.pop.edit.prixtube.prix}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="prix" type="number" th:value="*{prix}" th:field="*{prix}" step="0.01" />
@@ -43,7 +43,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="prixMembre">Prix du tube pour les membres :</label>
+                                <label for="prixMembre" th:text="#{texte.pop.edit.prixtube.prixMembre}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="prixMembre" type="number" th:value="*{prixMembre}" th:field="*{prixMembre}" step="0.01" />
@@ -51,7 +51,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="actif">Ce prix de tube est-il actif ?</label>
+                                <label for="actif" th:text="#{texte.pop.edit.prixtube.actif}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="actif" name="actif" type="checkbox" th:checked="*{actif}"/>
@@ -62,7 +62,7 @@
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
-                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.edit.global.submit}"/>                            
                             </td>
                         </tr>
                         

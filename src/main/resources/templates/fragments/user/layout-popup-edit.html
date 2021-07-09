@@ -12,7 +12,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Modifier l'utilisateur</h3>
+                            <h3 th:text="#{texte.pop.edit.user.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <a href="/superAdmin" >
@@ -26,15 +26,15 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label>Utilisateur :</label>
+                                <label for="identifiant" th:text="#{texte.pop.edit.user.identifiant}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <span th:text="*{identifiant}"></span>
+                                <span id="identifiant" th:text="*{identifiant}"></span>
                             </td>
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="role">Role utilisateur :</label>
+                                <label for="role" th:text="#{texte.pop.edit.user.role}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <select id="role" th:field="*{roleId}">
@@ -44,7 +44,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="actif">Utilisateur actif ?</label>
+                                <label for="actif" th:text="#{texte.pop.edit.user.actif}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="actif" name="actif" type="checkbox" th:checked="*{actif}"/>
@@ -54,7 +54,7 @@
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
-                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.edit.global.submit}"/>                            
                             </td>
                         </tr>
                         

@@ -86,13 +86,13 @@
                             <td  th:if="${AdminConnect>=1}" class="table-action">
                                 <table class="action-input">
                                     <tr>
-                                        <td th:if="${AdminConnect>=1}" class="action-input">
+                                        <td th:if="${AdminConnect>=2}" class="action-input">
                                             <form action="#" th:action="@{/compet/{id}(id=${compet.id})}" th:method="post">
                                                 <input type="hidden" name="_method" value="delete"/>
                                                 <input id="action-input" type="submit" value="Suppr"/>
                                             </form>
                                         </td><td th:if="${AdminConnect==2}" class="action-input">|</td>
-                                        <td th:if="${AdminConnect==2}" class="action-input">
+                                        <td th:if="${AdminConnect==1}" class="action-input">
                                             <form action="#" th:action="@{/compet/{id}(id=${compet.id})}" th:method="post">
                                                 <input id="action-input" type="submit" value="Edit"/>
                                             </form>

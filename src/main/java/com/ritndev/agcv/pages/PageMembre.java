@@ -39,7 +39,7 @@ public class PageMembre extends Page {
         getPageGenerique();
         super.getModel().addAttribute("newMembre", new FormMembre());
 
-        Link pageSupAdmin = new Link("supAdmin", "Super Admin", "/superAdmin", connect);
+        Link pageSupAdmin = new Link("superAdmin", "Super Admin", "/superAdmin", connect);
         super.addLinks(pageSupAdmin);
         
         return returnPage();

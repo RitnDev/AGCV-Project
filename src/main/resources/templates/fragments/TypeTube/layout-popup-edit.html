@@ -12,7 +12,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Modifier le type de tube</h3>
+                            <h3 th:text="#{texte.pop.edit.typetube.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <a href="/superAdmin" >
@@ -27,7 +27,7 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="commande">Ce type de tube peut-il être sujet à des commandes membre ?</label>
+                                <label for="commande" th:text="#{texte.pop.edit.typetube.commande}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="commande" name="commande" type="checkbox" th:checked="*{commande}"/>
@@ -38,7 +38,7 @@
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
-                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.edit.global.submit}"/>                           
                             </td>
                         </tr>
                         

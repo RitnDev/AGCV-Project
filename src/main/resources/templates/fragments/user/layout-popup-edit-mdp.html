@@ -12,7 +12,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Modifier l'utilisateur</h3>
+                            <h3 th:text="#{texte.pop.edit.mdp.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <a href="/index" >
@@ -26,15 +26,15 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label>Utilisateur :</label>
+                                <label for="identifiant" th:text="#{texte.pop.edit.mdp.identifiant}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <span th:text="*{identifiant}"></span>
+                                <span id="identifiant" th:text="*{identifiant}"></span>
                             </td>
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="mdp">Mot de passe actuel :</label>
+                                <label for="mdp" th:text="#{texte.pop.edit.mdp.mdp}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="mdp" type="password" th:value="*{mdp}" th:field="*{mdp}" />
@@ -42,7 +42,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="newMdp">Nouveau mot de passe :</label>
+                                <label for="newMdp" th:text="#{texte.pop.edit.mdp.newMdp}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="newMdp" type="password" th:value="*{newMdp}" th:field="*{newMdp}" />
@@ -50,7 +50,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="confirmMdp">Confirmation du mot de passe :</label>
+                                <label for="confirmMdp" th:text="#{texte.pop.edit.mdp.confirmMdp}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="confirmMdp" type="password" th:value="*{confirmMdp}" th:field="*{confirmMdp}" />
@@ -60,7 +60,7 @@
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
-                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.edit.global.submit}"/>                            
                             </td>
                         </tr>
                         

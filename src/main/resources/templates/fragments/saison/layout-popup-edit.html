@@ -12,7 +12,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Modifier la Saison</h3>
+                            <h3 th:text="#{texte.edit.saison.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <a href="/admin/saison" >
@@ -27,25 +27,18 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="budget">Budget prévisionnelle :</label>
+                                <label for="budget" th:text="#{texte.edit.saison.budget}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="budget" type="number" th:value="*{budget}" th:field="*{budget}" step="0.01" />
                             </td>
                         </tr>
-                        <!--tr>
-                            <td class="popup-form-label">
-                                <label for="actuelle">Saison en cours ?</label>
-                            </td>
-                            <td class="popup-form-input">
-                                <input id="actuelle" name="actuelle" type="checkbox" th:checked="*{actuelle}"/>
-                            </td>
-                        </tr-->
+                        
                         <tr>
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
-                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.edit.global.submit}"/>                            
                             </td>
                         </tr>
                         

@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-    </head>
-    <body>
         
 <!-- ------------------------------------------ POPUP MODIFICATION CONSO-MOIS -------------------------------------------------- -->
         
@@ -14,7 +10,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Nouveau prix du tube</h3>
+                            <h3 th:text="#{texte.pop.edit.moisPrix.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <a href="/index">
@@ -29,7 +25,7 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="prixTube">Prix du tube :</label>
+                                <label for="prixTube" th:text="#{texte.pop.edit.moisPrix.prixTube}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <select id="prixTube" th:field="*{idPrixTube}">
@@ -39,7 +35,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="suivant">Faut-il changer ce prix pour les mois suivants ?</label>
+                                <label for="suivant" th:text="#{texte.pop.edit.moisPrix.suivant}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="suivant" name="suivant" type="checkbox" th:checked="*{suivant}"/>
@@ -51,7 +47,7 @@
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
                                 <input type="hidden" th:value="*{nom}" th:field="*{nom}" />
-                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.edit.global.submit}"/>                            
                             </td>
                         </tr>
                         
@@ -69,7 +65,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Tubes utilisés</h3>
+                            <h3 th:text="#{texte.pop.edit.moisNbu.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <a href="/index">
@@ -84,7 +80,7 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="nbTubeUtilise">Nb tubes utilisés :</label>
+                                <label for="nbTubeUtilise" th:text="#{texte.pop.edit.moisNbu.nbTubeUtilise}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="nbTubeUtilise" type="number" th:value="*{nbTubeUtilise}" th:field="*{nbTubeUtilise}" min="0" />
@@ -96,7 +92,7 @@
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
                                 <input type="hidden" th:value="*{nom}" th:field="*{nom}" />
-                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.edit.global.submit}"/>                            
                             </td>
                         </tr>
                         
@@ -114,7 +110,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Tubes commandés</h3>
+                            <h3 th:text="#{texte.pop.edit.moisNbc.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <a href="/index">
@@ -125,11 +121,11 @@
                 </table>
                 
                 <form th:action="@{/mois/nbc/{id}(id=*{id})}" th:object="${editConsoMois}" method="post">
-                        
+                    
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="nbTubeCommande">Nb tubes commandés :</label>
+                                <label for="nbTubeCommande" th:text="#{texte.pop.edit.moisNbc.nbTubeCommande}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="nbTubeCommande" type="number" th:value="*{nbTubeCommande}" th:field="*{nbTubeCommande}" min="0" />
@@ -141,7 +137,7 @@
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
                                 <input type="hidden" th:value="*{nom}" th:field="*{nom}" />
-                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.edit.global.submit}"/>                            
                             </td>
                         </tr>
                         
@@ -153,6 +149,5 @@
         </div>
 
 
-        
-    </body>
+       
 </html>

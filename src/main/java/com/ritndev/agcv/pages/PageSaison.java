@@ -40,7 +40,7 @@ public class PageSaison extends Page {
         //Charge l'année en cours + Budget par défaut "1000" + saison active par defaut.
         super.getModel().addAttribute("newSaison", new FormSaison(Calendar.getInstance().get(Calendar.YEAR),budget, true));
 
-        Link pageSupAdmin = new Link("supAdmin", "Super Admin", "/superAdmin", connect);
+        Link pageSupAdmin = new Link("superAdmin", "Super Admin", "/superAdmin", connect);
         super.addLinks(pageSupAdmin);
         
         return returnPage();

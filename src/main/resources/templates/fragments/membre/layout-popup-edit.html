@@ -12,7 +12,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Modifier le Membre</h3>
+                            <h3 th:text="#{texte.pop.edit.membre.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <a href="/admin/membre" >
@@ -26,7 +26,7 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="prenom">Prénom :</label>
+                                <label for="prenom" th:text="#{texte.pop.edit.membre.prenom}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="prenom" type="text" th:value="*{prenom}" th:field="*{prenom}" />
@@ -34,7 +34,7 @@
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="nom">Nom :</label>
+                                <label for="nom" th:text="#{texte.pop.edit.membre.nom}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
@@ -44,7 +44,7 @@
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
-                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.edit.global.submit}"/>                           
                             </td>
                         </tr>
                         

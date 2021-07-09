@@ -96,12 +96,12 @@ public class PrixTube implements Serializable {
     
     //Renvoie le prix au format String
     public String getPrixString(){
-        return String.valueOf(prix);
+        return String.format("%.2f", prix);
     }
     
     //Renvoie le prix au format String
     public String getPrixMembreString(){
-        return String.valueOf(prixMembre);
+        return String.format("%.2f", prixMembre);
     }
     
     //Pour les commentaire de tableau

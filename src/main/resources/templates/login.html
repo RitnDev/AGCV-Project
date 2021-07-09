@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
  
 <head>
-	<title>Login</title>
+	<title th:text="#{texte.page.login.titre}" ></title>
         <link rel="stylesheet" type="text/css" th:href="@{/css/style-login.css}"/>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -17,17 +17,19 @@
                 <h3 th:text="${pageName}"/><br/>
                         
                 <div align="center" th:if="${param.error}">
-                    <p class="form-login-p">L'identifiant ou le mot de passe est invalide.</p>
+                    <p class="form-login-p">
+                        <span th:text="#{texte.page.index.formError}"></span>
+                    </p>
                 </div>
 		
-                <input type="text" id="username" name="username"  th:placeholder="identifiant" class="form-login-control"/>
+                <input type="text" id="username" name="username"  th:placeholder="#{texte.page.login.username}" class="form-login-control"/>
                 <br/> 
-                <input type="password" id="password" name="password" th:placeholder="mot_de_passe" class="form-login-control"/>
+                <input type="password" id="password" name="password" th:placeholder="#{texte.page.login.password}" class="form-login-control"/>
                 <br/>
-                <button class="form-login-btn" name="Submit" value="login" type="Submit" th:text="Connexion"/>
+                <button class="form-login-btn" name="Submit" value="login" type="Submit" th:text="#{texte.page.login.submit}"/>
                 <br/>
                 <br/>
-                <a th:href="${index.href}">Retour à la page principale</a>
+                <a th:href="${index.href}" th:text="#{texte.page.login.index}"></a>
             </form>
 	</div>
 </body>

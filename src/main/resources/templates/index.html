@@ -84,8 +84,14 @@
                         <tr th:each="mois : ${nomMois}">
                             <td class="table-tv-mois"><span th:text="${mois}"></span></td>
                             <td class="table-tv-nbu">
-                                <form action="#" th:action="@{/mois/nbu/{id}(id=${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).id})}" th:method="post">
-                                    <input class="table-tv-nbu" type="submit" th:value="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).nbTubeUtilise}"/>
+                                <form 
+                                    action="#" 
+                                    th:action="@{/mois/nbu/{id}(id=${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).id})}" 
+                                    th:method="post">
+                                    
+                                    <input class="table-tv-nbu" 
+                                           type="submit" 
+                                           th:value="${saison.getTypeVolantName(plastique).getConsoMoisName(mois.toString).nbTubeUtilise}"/>
                                 </form>
                             </td>
                             <td class="table-tv-cu">

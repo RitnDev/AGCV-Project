@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-    </head>
-    <body>
+
         
 <!-- ------------------------------------------ POPUP MODIFICATION COMMANDE -------------------------------------------------- -->
         
@@ -12,7 +9,7 @@
                 <table class="popup-header">
                     <tr>
                         <td class="popup-header-titre">
-                            <h3>Modifier la Commande</h3>
+                            <h3 th:text="#{texte.pop.edit.commande.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
                             <a href="/commandesMembres" >
@@ -27,7 +24,7 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="regler">La commande est-elle déjà réglée ?</label>
+                                <label for="regler" th:text="#{texte.pop.edit.commande.regler}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <input id="regler" name="regler" type="checkbox" th:checked="*{regler}"/>
@@ -37,7 +34,7 @@
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
-                                <input class="popup-form-submit-button" type="submit" value="Valider les modifications"/>                            
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.edit.global.submit}"/>                             
                             </td>
                         </tr>
                         
@@ -48,5 +45,5 @@
             </div>
         </div>        
         
-    </body>
+
 </html>
