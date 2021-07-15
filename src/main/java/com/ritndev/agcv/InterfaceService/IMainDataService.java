@@ -16,6 +16,8 @@ public interface IMainDataService {
     public MainData findByIdMainData(Long id);
     public int supprMainData(Long id);
     public int updateMainData(FormData editMainData);
+    public int updateBudget(FormData editMainData);
+    public int updateSeuil(FormData editMainData);
     public MainData returnMainData();
     
 }

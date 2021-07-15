@@ -17,6 +17,10 @@ public class FormTypeVolant {
     @Getter @Setter
     private long idTypeTube;
     
+    //Nom du type de volant
+    @Getter @Setter
+    private String nom;
+    
     //Nombre de tube avant consommation de volant (stock de départ)
     @Getter @Setter
     private int stock;
@@ -31,18 +35,15 @@ public class FormTypeVolant {
         this.stock = stock;
     }
     
-    public FormTypeVolant(long id, long idTypeTube, int stock) {
+    public FormTypeVolant(long id, String nom, int stock) {
         this.id = id;
-        this.idTypeTube = idTypeTube;
+        this.nom = nom;
         this.stock = stock;
     }
-
+    
     public FormTypeVolant(long id, int stock) {
         this.id = id;
         this.stock = stock;
     }
-    
-    
-    
     
 }

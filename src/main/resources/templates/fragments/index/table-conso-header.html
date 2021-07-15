@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        
+        
+<!-- --------------- En-tête du tableau dans la page index ----------------- --> 
+
+
+    <thead th:fragment="head">  
+        
+        
+        <tr>
+            <th class="table-tv-empty"></th>
+            <th class="table-label-index" colspan="15">
+                <span th:text="${'SAISON : ' + saison.toString}">
+            </th>
+        </tr>
+        
+        <tr class="table-tv-empty"></tr>
+        
+        <tr>
+            <th class="table-tv-empty"></th>
+
+            <th:block th:each="volant : ${listVolants}">
+                <th class="table-tv" colspan="5">
+                    <span th:text="${'Volants ' + saison.getTypeVolantName(volant).toString}">
+                </th>
+            </th:block>
+        </tr>
+        
+        <tr>
+            <th class="table-th-index"></th>
+            <th class="table-th-utilise" colspan="2">Utilisés</th>
+            <th class="table-th-commande" colspan="2">Commandés</th>
+            <th class="table-th-prix" rowspan="2">Prix</th>
+            <th class="table-th-utilise" colspan="2">Utilisés</th>
+            <th class="table-th-commande" colspan="2">Commandés</th>
+            <th class="table-th-prix" rowspan="2">Prix</th>
+            <th class="table-th-utilise" colspan="2">Utilisés</th>
+            <th class="table-th-commande" colspan="2">Commandés</th>
+            <th class="table-th-prix" rowspan="2">Prix</th>
+        </tr>
+        
+        <tr>
+            <th class="table-tv-mois">Mois</th>
+            <th class="table-tv-nbu">Nb</th>
+            <th class="table-tv-cu">Coût</th>
+            <th class="table-tv-nbc">Nb</th>
+            <th class="table-tv-cc">Coût</th>
+            <th class="table-tv-nbu">Nb</th>
+            <th class="table-tv-cu">Coût</th>
+            <th class="table-tv-nbc">Nb</th>
+            <th class="table-tv-cc">Coût</th>
+            <th class="table-tv-nbu">Nb</th>
+            <th class="table-tv-cu">Coût</th>
+            <th class="table-tv-nbc">Nb</th>
+            <th class="table-tv-cc">Coût</th>
+        </tr>
+        
+    </thead>     
+        
+<!-- ----------------------------------------------------------------------------------- -->     
+    
+    </body>
+</html>

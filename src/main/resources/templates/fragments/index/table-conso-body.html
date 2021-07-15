@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        
+        
+<!-- --------------- Corp du tableau dans la page index ----------------- -->        
+    <tbody th:fragment="body"> 
+
+<tr th:each="mois : ${nomMois}">
+    
+    <!-- Nom du mois -->
+    <td class="table-tv-mois">
+        <span th:text="${mois}"></span>
+    </td>
+ 
+    <th:block th:each="volant : ${listVolants}">
+
+        <!-- Nombre de tubes utilisés sur le mois pour les volants -->
+        <td class="table-tv-nbu">
+            <form 
+                action="#" 
+                th:action="@{/mois/nbu/{id}(id=${saison.getConsoMois(volant, mois.toString()).id})}" 
+                th:method="post">
+
+                <!-- Nombre de tubes utilisés modifiables -->
+                <input class="table-tv-nbu" 
+                       type="submit" 
+                       th:value="${saison.getConsoMois(volant, mois.toString()).nbTubeUtilise}"/>
+            </form>
+        </td>
+
+        <!-- Coût des tubes utilisés dans le mois -->
+        <td class="table-tv-cu">
+            <span 
+                th:text="${saison.getConsoMois(volant, mois.toString()).getStringCoutUtilises} + #{texte.global.devise}">
+            </span>
+        </td>
+
+        <!-- Nombre de tubes commandés sur le mois pour les volants -->
+        <td class="table-tv-nbc">
+            <form 
+                action="#" 
+                th:action="@{/mois/nbc/{id}(id=${saison.getConsoMois(volant, mois.toString()).id})}" 
+                th:method="post">
+
+                <input 
+                    class="table-tv-nbc" 
+                    type="submit" 
+                    th:value="${saison.getConsoMois(volant, mois.toString()).nbTubeCommande}"/>
+            </form>
+        </td>
+
+        <td class="table-tv-cc">
+            <span 
+                th:text="${saison.getConsoMois(volant, mois.toString()).getStringCoutCommandes} + #{texte.global.devise}">
+            </span>
+        </td>
+
+        <td 
+            class="table-tv-prix" 
+            th:title="${saison.getPrixTube(volant, mois.toString()).marque}">
+
+            <form 
+                action="#" 
+                th:action="@{/mois/prix/{id}(id=${saison.getConsoMois(volant, mois.toString()).id})}" 
+                th:method="post">
+
+                <input 
+                    class="table-tv-prix" 
+                    type="submit" 
+                    th:value="${saison.getPrixTube(volant, mois.toString()).getPrixString} + #{texte.global.devise}"/>
+            </form>
+        </td>
+
+
+    </th:block>
+      
+</tr>
+
+
+<tr class="table-tv-empty"></tr>
+
+
+<tr>
+    
+    <td class="table-tv-total"><span>Total</span></td>
+    
+    <th:block th:each="volant : ${listVolants}">
+
+        <td class="table-tv-total-nbu">
+            <span th:text="${saison.getTypeVolantName(volant).getTotalNbTubesUtilises}"></span>
+        </td>
+        <td class="table-tv-total-cu">
+            <span th:text="${saison.getTypeVolantName(volant).getStringTotalCoutUtilises} + #{texte.global.devise}"></span>
+        </td>
+        <td class="table-tv-total-nbc">
+            <span th:text="${saison.getTypeVolantName(volant).getTotalNbTubesCommandes}"></span>
+        </td>
+        <td class="table-tv-total-cc">
+            <span th:text="${saison.getTypeVolantName(volant).getStringTotalCoutCommandes} + #{texte.global.devise}"></span>
+        </td>
+        <td class="table-tv-total-prix"></td>
+
+    </th:block>
+
+</tr>
+
+
+<tr class="table-tv-empty"></tr>
+
+
+<tr>
+    
+    <td class="table-tv-empty"></td>
+    
+    <th:block th:each="volant : ${listVolants}">
+        
+        <td class="table-label-stock" colspan="3">
+            <span th:text="${'Stock ' + saison.getTypeVolantName(volant).toString}">
+        </td>
+        
+        <td class="table-tv-stock" colspan="2">
+            <span th:text="${saison.getTypeVolantName(volant).getStockTotal}"></span>
+        </td>
+        
+    </th:block>    
+
+</tr>
+
+
+
+</tbody>     
+     
+<!-- ----------------------------------------------------------------------------------- --> 
+    
+    </body>
+</html>

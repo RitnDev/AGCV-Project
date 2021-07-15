@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import org.springframework.ui.Model;
 import java.security.Principal;
+import java.util.List;
 import org.springframework.context.MessageSource;
 
 
@@ -32,17 +33,16 @@ public class PageIndex extends Page {
     //Renvoie la page
     public String getPage() {
         
-        String tvEntrainement = NomTypeTube.ENTRAINEMENT.toString();
-        String tvPlastique = NomTypeTube.PLASTIQUE.toString();
-        String tvCompetition = NomTypeTube.COMPETITION.toString();
+        List<String> listVolants = new ArrayList<>();
+        
+        listVolants.add(NomTypeTube.PLASTIQUE.toString());
+        listVolants.add(NomTypeTube.COMPETITION.toString());
+        listVolants.add(NomTypeTube.ENTRAINEMENT.toString());
         
         // Add Attribute :
         getPageGenerique();
                 
-        //Saison actuellement en cours
-        super.getModel().addAttribute("plastique", tvPlastique);
-        super.getModel().addAttribute("entrainement", tvEntrainement);
-        super.getModel().addAttribute("competition", tvCompetition);
+        super.getModel().addAttribute("listVolants", listVolants);
         super.getModel().addAttribute("nomMois", new ArrayList<>(Arrays.asList(NomMois.values())));
         
         return returnPage();

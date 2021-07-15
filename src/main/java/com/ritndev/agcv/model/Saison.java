@@ -1,5 +1,6 @@
 package com.ritndev.agcv.model;
 
+import com.ritndev.agcv.form.FormTypeVolant;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -105,7 +106,7 @@ public class Saison implements Serializable {
         return String.valueOf(budget);
     }
     
-    
+    //Renvoie le TypeVolant par son nom
     public TypeVolant getTypeVolantName(String nom){
         for(TypeVolant tv : typeVolants){
             if(tv.toString().equals(nom)){
@@ -114,6 +115,23 @@ public class Saison implements Serializable {
         }
         return null;
     }
+    
+    //Renvoie un Consomois selon le nom du mois d'un type de volant particulier (nomVolant)
+    public ConsoMois getConsoMois(String nomVolant, String mois){
+        return getTypeVolantName(nomVolant).getConsoMoisName(mois);
+    }
+    
+    //Renvoie Le PrixTube associé à un TypeVolant et un ConsoMois particulier (mois)
+    public PrixTube getPrixTube(String nomVolant, String mois) {
+        return getTypeVolantName(nomVolant).getConsoMoisName(mois).getIdPrixTube();
+    }
+    
+    
+    public FormTypeVolant getFormVolantName(String nom) {
+        TypeVolant tv = getTypeVolantName(nom);
+        return new FormTypeVolant(tv.getId(), nom, tv.getStock());
+    }
+    
     
     
 }

@@ -31,6 +31,150 @@
             <br/>
             
             
+            <div>
+                <span 
+                    class="admin-saison"
+                    th:text="${'Saison en cours : ' + saison.toString}"></span>
+            </div>
+            <br/>
+            
+            <fieldset>
+                
+            <legend th:text="#{texte.page.admin.stock.legend}"></legend>
+            <br/>               
+                
+                <form
+                    class="admin-form-stock"
+                    th:action="@{/admin/stock/{id}(id=${editTVPlastique.id})}"
+                    th:object="${editTVPlastique}" 
+                    method="post">
+
+                        <label 
+                            th:for="${'admin-form-input-stock-' + editTVPlastique.nom}"
+                            th:text="#{texte.page.admin.stock.label} + *{nom}" />
+                        <input 
+                            th:id="${'admin-form-input-stock-' + editTVPlastique.nom}" 
+                            type="number"
+                            min="0"
+                            th:value="*{stock}"
+                            th:field="*{stock}" />
+
+                        <input 
+                            class="admin-form-input-stock-submit" 
+                            type="submit" 
+                            th:value="#{texte.page.admin.stock.submit}"/> 
+
+                </form>
+                <br/>
+                <form
+                    class="admin-form-stock"
+                    th:action="@{/admin/stock/{id}(id=${editTVCompetition.id})}"
+                    th:object="${editTVCompetition}" 
+                    method="post">
+
+                        <label 
+                            th:for="${'admin-form-input-stock-' + editTVCompetition.nom}"
+                            th:text="#{texte.page.admin.stock.label} + *{nom}" />
+                        <input 
+                            th:id="${'admin-form-input-stock-' + editTVCompetition.nom}" 
+                            type="number"
+                            min="0"
+                            th:value="*{stock}"
+                            th:field="*{stock}" />
+
+                        <input 
+                            class="admin-form-input-stock-submit" 
+                            type="submit" 
+                            th:value="#{texte.page.admin.stock.submit}"/> 
+
+                </form>
+                <br/>
+                <form
+                    class="admin-form-stock"
+                    th:action="@{/admin/stock/{id}(id=${editTVEntrainement.id})}"
+                    th:object="${editTVEntrainement}" 
+                    method="post">
+
+                        <label 
+                            th:for="${'admin-form-input-stock-' + editTVEntrainement.nom}"
+                            th:text="#{texte.page.admin.stock.label} + *{nom}" />
+                        <input 
+                            th:id="${'admin-form-input-stock-' + editTVEntrainement.nom}" 
+                            type="number"
+                            min="0"
+                            th:value="*{stock}"
+                            th:field="*{stock}" />
+
+                        <input 
+                            class="admin-form-input-stock-submit" 
+                            type="submit" 
+                            th:value="#{texte.page.admin.stock.submit}"/> 
+
+                </form>
+                <br/>
+            
+            </fieldset>
+            <fieldset>
+                
+            <legend th:text="#{texte.page.admin.budget.legend}"></legend>
+            <br/>
+                <form
+                    class="admin-form-budget"
+                    th:action="@{/admin/budget}"
+                    th:object="${editData}" 
+                    method="post">
+
+                        <label 
+                            for="admin-form-input-budget"
+                            th:text="#{texte.page.admin.budget.label}" />
+                        <input 
+                            id="admin-form-input-budget"
+                            type="number"
+                            min="0"
+                            th:value="${budgetDefault}"
+                            th:field="*{budget}" />
+
+                        <input 
+                            class="admin-form-input-budget-submit" 
+                            type="submit" 
+                            th:value="#{texte.page.admin.budget.submit}"/> 
+
+                </form>
+                <br/>
+                
+                  
+            </fieldset>
+            <fieldset>
+                
+            <legend th:text="#{texte.page.admin.seuil.legend}"></legend>
+            <br/>
+                <form
+                    class="admin-form-budget"
+                    th:action="@{/admin/seuil}"
+                    th:object="${editData}" 
+                    method="post">
+
+                        <label 
+                            for="admin-form-input-seuil"
+                            th:text="#{texte.page.admin.seuil.label}" />
+                        <input 
+                            id="admin-form-input-budget"
+                            type="number"
+                            min="0"
+                            th:value="${seuilBas}"
+                            th:field="*{seuilBas}" />
+
+                        <input 
+                            class="admin-form-input-seuil-submit" 
+                            type="submit" 
+                            th:value="#{texte.page.admin.seuil.submit}"/> 
+
+                </form>
+                <br/>
+                
+                  
+            </fieldset>
+            
         </div>
       
         <!-- pop-up section -->

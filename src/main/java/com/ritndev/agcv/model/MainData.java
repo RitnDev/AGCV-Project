@@ -46,7 +46,11 @@ public class MainData implements Serializable {
     
     //Valeur du budget previsionnel par défaut
     @Column(name = "budgetDefault", nullable = false)
-    @Getter @Setter private String budgetDefault;
+    @Getter @Setter private double budgetDefault;
+    
+    //Valeur du budget previsionnel par défaut
+    @Column(name = "seuilBas", nullable = false)
+    @Getter @Setter private int seuilBas;
     
     //TypeTube Plastique actif
     @OneToOne
@@ -79,7 +83,7 @@ public class MainData implements Serializable {
     public MainData(Saison idSaison, StockCompetition idStockCompet, boolean actif) {
         this.idSaison = idSaison;
         this.idStockCompet = idStockCompet;
-        this.budgetDefault = "1000.00";
+        this.budgetDefault = 1000.00;
         this.actif = actif;
     }
     

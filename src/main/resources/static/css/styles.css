@@ -15,6 +15,12 @@ body, p {
 a { font-style: normal; color: #8cdeff; text-decoration: none;}
 a:hover {color: #c0edff;}
 
+fieldset {
+ padding: 10px;
+ border: 1px #0568CD solid;
+ border-radius: 10px;
+ margin: 10px;
+}
 
 .header {
     /*position: absolute;*/

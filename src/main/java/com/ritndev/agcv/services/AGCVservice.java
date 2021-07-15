@@ -467,7 +467,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 ){
             
             if (!saisonRep.existsByAnneeDebut(newSaison.getAnnee_debut())) {
-                Saison sNew = saisonRep.save(new Saison(newSaison.getAnnee_debut(), newSaison.getBudgetDouble(), newSaison.isActuelle()));
+                Saison sNew = saisonRep.save(new Saison(newSaison.getAnnee_debut(), newSaison.getBudget(), newSaison.isActuelle()));
                 resultVal = 2;
                 
                 if (sNew.isActuelle()){
@@ -573,7 +573,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 //On récupère la saison et modifie les attributs concernés
                 System.out.println(">> (debug) ID Saison edit : " + editSaison.getId());
                 Saison saison = saisonRep.getOne(editSaison.getId());
-                saison.setBudget(editSaison.getBudgetDouble());
+                saison.setBudget(editSaison.getBudget());
 
                 //On save si la saison est l'actuelle avant changement
                 boolean actif = saison.isActuelle(); //La saison modifié est elle active ?
@@ -659,7 +659,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         int resultVal = 0;
         if (typeVolantRep.existsById(editTypeVolant.getId())){  
             TypeVolant ct = typeVolantRep.getOne(editTypeVolant.getId());
-                ct.setIdTypeTube(typeTubeRep.getOne(editTypeVolant.getIdTypeTube()));
+                //ct.setIdTypeTube(typeTubeRep.getOne(editTypeVolant.getIdTypeTube()));
                 ct.setStock(editTypeVolant.getStock());
 
                 typeVolantRep.save(ct);
@@ -752,6 +752,14 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
+        return resultVal;
+    }
+    @Override public int updateBudget(FormData editMainData) {
+        int resultVal = 0;
+        return resultVal;
+    }
+    @Override public int updateSeuil(FormData editMainData) {
+        int resultVal = 0;
         return resultVal;
     }
     @Override public MainData returnMainData() {

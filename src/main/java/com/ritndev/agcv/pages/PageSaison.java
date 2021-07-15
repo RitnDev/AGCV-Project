@@ -33,7 +33,7 @@ public class PageSaison extends Page {
     
     
     //Renvoie la page
-    public String getPage(String budget, boolean connect) {
+    public String getPage(double budget, boolean connect) {
         
         // Add Attribute :
         getPageGenerique();

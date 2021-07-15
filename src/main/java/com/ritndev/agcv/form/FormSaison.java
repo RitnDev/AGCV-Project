@@ -21,7 +21,7 @@ public class FormSaison {
     @Getter @Setter private int annee_debut;
 
     //budget prévisionnelle de la saison
-    @Getter @Setter private String budget;
+    @Getter @Setter private double budget;
     
     //Est-ce la saison actuelle ?
     @Getter @Setter private boolean actuelle;
@@ -29,13 +29,13 @@ public class FormSaison {
     
     
     //Constructeur
-    public FormSaison(int annee_debut, String budget, boolean actuelle) {
+    public FormSaison(int annee_debut, double budget, boolean actuelle) {
         this.annee_debut = annee_debut;
         this.budget = budget;
         this.actuelle = actuelle;
     }
     
-    public FormSaison(long id, String budget, boolean actuelle) {
+    public FormSaison(long id, double budget, boolean actuelle) {
         this.id = id;
         this.budget = budget;
         this.actuelle = actuelle;
@@ -51,10 +51,10 @@ public class FormSaison {
         return String.valueOf(annee_debut) + " - " + String.valueOf(annee_debut + 1);
     }
     
-    
+    /*
     public double getBudgetDouble() {
         return Double.valueOf(budget);
     }
-    
+    */
     
 }

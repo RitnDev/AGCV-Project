@@ -108,7 +108,7 @@ public class SaisonController {
         
         //Recupération du membre à modifier :
         Saison editSaison = saisonService.findByIdSaison(id);
-        FormSaison formSaison = new FormSaison(id, editSaison.getBudgetString(), editSaison.isActuelle());
+        FormSaison formSaison = new FormSaison(id, editSaison.getBudget(), editSaison.isActuelle());
         model.addAttribute("editSaison", formSaison);
         model.addAttribute("numAction", ActionsTypes.EDIT_SAISON.toString());
                 
