@@ -39,8 +39,7 @@ public class MainController {
     @GetMapping(value = { "/", "/index"})
     public String index(Model model, Principal principal){
         PageIndex pageIndex = new PageIndex(model, principal, messageSource);
-        model.addAttribute("saison", dataService.returnMainData().getIdSaison());
-        return pageIndex.getPage();
+        return pageIndex.getPage(dataService);
     }
   
     
@@ -89,9 +88,7 @@ public class MainController {
         PageIndex pageIndex = new PageIndex(model, principal, messageSource);
         pageIndex.addReponse("mdp", "edit", result);
         
-        model.addAttribute("saison", dataService.returnMainData().getIdSaison());
-        
-        return pageIndex.getPage();
+        return pageIndex.getPage(dataService);
         
     }
     

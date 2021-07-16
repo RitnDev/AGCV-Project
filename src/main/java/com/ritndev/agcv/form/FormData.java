@@ -25,5 +25,12 @@ public class FormData {
         this.idStockCompet = idStockCompet;
         this.actif = actif;
     }
+
+    public FormData(double budget, int seuilBas) {
+        this.budget = budget;
+        this.seuilBas = seuilBas;
+    }
+    
+    
     
 }

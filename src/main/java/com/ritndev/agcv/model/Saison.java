@@ -103,8 +103,41 @@ public class Saison implements Serializable {
     
     //Renvoie le budget au format String
     public String getBudgetString(){
-        return String.valueOf(budget);
+        return String.format("%.2f", budget);
     }
+    
+    //Coût total des volants commandés par le club sur une saison
+    public double getCoutTotalCommandesClub() {
+        double total = 0.0;
+        for (TypeVolant tv : typeVolants){
+            total = total + tv.getTotalCoutCommandes();
+        }
+        return total;
+    }
+    public String getStringCoutTotalCommandesClub() {
+        return String.format("%.2f", getCoutTotalCommandesClub());
+    }
+    
+    //Coût total des volants utilisés sur une saison
+    public double getCoutTotalUtilises() {
+        double total = 0.0;
+        for (TypeVolant tv : typeVolants){
+            total = total + tv.getTotalCoutUtilises();
+        }
+        return total;
+    }
+    public String getStringCoutTotalUtilises() {
+        return String.format("%.2f", getCoutTotalUtilises());
+    }
+    
+    //Coût total des volants commandés par les membres sur une saison
+    public double getCoutCommandesMembres() {
+        return 0.0;
+    }
+    public String getStringCoutCommandesMembres() {
+        return String.format("%.2f", getCoutCommandesMembres());
+    }
+    
     
     //Renvoie le TypeVolant par son nom
     public TypeVolant getTypeVolantName(String nom){

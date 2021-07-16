@@ -40,13 +40,14 @@
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th class="table-label" colspan="9">MAIN DATA</td>
+                                            <th class="table-label" colspan="10">MAIN DATA</td>
                                         </tr>
                                         <tr>
                                             <th>ID</th>
                                             <th title="Saison en cours">Saison</th>
                                             <th>ID Stock Compet</th>
                                             <th>Budget par défaut</th>
+                                            <th>Seuil bas (stock)</th>
                                             <th title="ID du Type de tube Plastique">ID Plastique</th>
                                             <th title="ID du Type de tube Entrainement">ID Entrainement</th>
                                             <th title="ID du Type de tube Compétition">ID  Compétition</th>
@@ -56,13 +57,14 @@
                                     </thead>
                                     <tbody>
                                         <tr th:if="${mainData.empty}">
-                                            <td colspan="9">Aucune data créée</td>
+                                            <td colspan="10">Aucune data créée</td>
                                         </tr>
                                         <tr th:each="data : ${mainData}">
                                             <td><span th:text="${data.id}">ID</span></td>
                                             <td><span th:text="${data.idSaison.toString()}" th:title="${'id='+data.idSaison.id}">id_saison</span></td>
                                             <td><span th:text="${data.idStockCompet.id}">id_stock_compet</span></td>
                                             <td><span th:text="${data.budgetDefault}">budget</span></td>
+                                            <td><span th:text="${data.seuilBas}">seuilBas</span></td>
                                             <td><span th:text="${data.idTTPlastique}" th:title="${'id='+data.idTTPlastique.id}">idTTPlastique</span></td>
                                             <td><span th:text="${data.idTTEntrainement}" th:title="${'id='+data.idTTEntrainement.id}">idTTEntrainement</span></td>
                                             <td><span th:text="${data.idTTCompetition}" th:title="${'id='+data.idTTCompetition.id}">idTTCompetition</span></td>

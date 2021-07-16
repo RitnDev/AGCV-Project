@@ -756,10 +756,30 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     }
     @Override public int updateBudget(FormData editMainData) {
         int resultVal = 0;
+        
+        MainData md = returnMainData();
+        if(md.getId() != 0){
+            md.setBudgetDefault(editMainData.getBudget());
+            mainDataRep.save(md);
+            resultVal = 2;
+        }else{
+            resultVal = 1;
+        }
+        
         return resultVal;
     }
     @Override public int updateSeuil(FormData editMainData) {
         int resultVal = 0;
+        
+        MainData md = returnMainData();
+        if(md.getId() != 0){
+            md.setSeuilBas(editMainData.getSeuilBas());
+            mainDataRep.save(md);
+            resultVal = 2;
+        }else{
+            resultVal = 1;
+        }
+        
         return resultVal;
     }
     @Override public MainData returnMainData() {

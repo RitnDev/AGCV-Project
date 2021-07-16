@@ -119,7 +119,7 @@
             <span th:text="${'Stock ' + saison.getTypeVolantName(volant).toString}">
         </td>
         
-        <td class="table-tv-stock" colspan="2">
+        <td th:class="${classStock.get(listVolants.indexOf(volant))}" colspan="2">
             <span th:text="${saison.getTypeVolantName(volant).getStockTotal}"></span>
         </td>
         

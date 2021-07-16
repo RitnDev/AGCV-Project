@@ -121,7 +121,7 @@
                 <form
                     class="admin-form-budget"
                     th:action="@{/admin/budget}"
-                    th:object="${editData}" 
+                    th:object="${editData}"
                     method="post">
 
                         <label 
@@ -131,7 +131,7 @@
                             id="admin-form-input-budget"
                             type="number"
                             min="0"
-                            th:value="${budgetDefault}"
+                            th:value="*{budget}"
                             th:field="*{budget}" />
 
                         <input 
@@ -161,7 +161,7 @@
                             id="admin-form-input-budget"
                             type="number"
                             min="0"
-                            th:value="${seuilBas}"
+                            th:value="*{seuilBas}"
                             th:field="*{seuilBas}" />
 
                         <input 

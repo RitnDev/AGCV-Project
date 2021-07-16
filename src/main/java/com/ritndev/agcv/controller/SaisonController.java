@@ -36,11 +36,10 @@ public class SaisonController {
     
     @GetMapping(value = {"/admin/saison"})
     public String getSaison(Model model, Principal principal){     
-        
-        model.addAttribute("listSaisons", saisonService.listSaison());
-
         PageSaison pageSaison = new PageSaison(model, principal, messageSource);    
         boolean connect = userService.findRoleByUsername(pageSaison.returnUser(principal)).equals("ROLE_SUPADMIN");
+        
+        model.addAttribute("listSaisons", saisonService.listSaison());
         
         return pageSaison.getPage(dataService.returnMainData().getBudgetDefault(),connect);
     } 
@@ -51,15 +50,14 @@ public class SaisonController {
     //Création d'une nouvelle saison
     @PostMapping("/admin/newSaison")
     public String newSaison(@ModelAttribute FormSaison newSaison, Model model, Principal principal) {
-                
-        model.addAttribute("listSaisons", saisonService.listSaison());
-        
         PageSaison pageSaison = new PageSaison(model, principal, messageSource); 
         
         int result = saisonService.saveSaison(newSaison);
         pageSaison.addReponse("saison", "create", result);
          
         boolean connect = userService.findRoleByUsername(pageSaison.returnUser(principal)).equals("ROLE_SUPADMIN");
+        
+        model.addAttribute("listSaisons", saisonService.listSaison());
         
         return pageSaison.getPage(dataService.returnMainData().getBudgetDefault(),connect);
     }
@@ -68,15 +66,14 @@ public class SaisonController {
     //Supprimer une saison
     @DeleteMapping("/admin/saison/{id}")
     public String supprSaison(@PathVariable(value = "id") Long id, Model model, Principal principal) {
-        
-        model.addAttribute("listSaisons", saisonService.listSaison());
-        
         PageSaison pageSaison = new PageSaison(model, principal, messageSource); 
         
         int result = saisonService.supprSaison(id);
         pageSaison.addReponse("saison", "remove", result);
          
         boolean connect = userService.findRoleByUsername(pageSaison.returnUser(principal)).equals("ROLE_SUPADMIN");
+        
+        model.addAttribute("listSaisons", saisonService.listSaison());
         
         return pageSaison.getPage(dataService.returnMainData().getBudgetDefault(),connect);
     }
@@ -85,15 +82,13 @@ public class SaisonController {
     //Modifier une saison
     @PutMapping("/admin/saison/{id}")
     public String editSaison(@ModelAttribute FormSaison putSaison, Model model, Principal principal) {
-                
-        model.addAttribute("listSaisons", saisonService.listSaison());
-        
         PageSaison pageSaison = new PageSaison(model, principal, messageSource); 
         
         int result = saisonService.updateSaison(putSaison);
         pageSaison.addReponse("saison", "edit", result);
-         
         boolean connect = userService.findRoleByUsername(pageSaison.returnUser(principal)).equals("ROLE_SUPADMIN");
+        
+        model.addAttribute("listSaisons", saisonService.listSaison());
         
         return pageSaison.getPage(dataService.returnMainData().getBudgetDefault(),connect);
     }

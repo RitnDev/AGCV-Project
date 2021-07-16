@@ -59,12 +59,10 @@ public class PageAdmin extends Page {
         getPageGenerique();
         
         super.getModel().addAttribute("saison", saisonActuelle);
-        super.getModel().addAttribute("editData", new FormData());
+        super.getModel().addAttribute("editData", new FormData(budgetDefault, seuilBas));
         super.getModel().addAttribute("editTVPlastique", ftvPlastique);
         super.getModel().addAttribute("editTVCompetition", ftvCompetition);
         super.getModel().addAttribute("editTVEntrainement", ftvEntrainement);
-        super.getModel().addAttribute("budgetDefault", budgetDefault);
-        super.getModel().addAttribute("seuilBas", seuilBas);
         
         Link pageSupAdmin = new Link("superAdmin", "Super Admin", "/superAdmin", connect);
         super.addLinks(pageSupAdmin);
