@@ -13,5 +13,8 @@ import org.springframework.stereotype.Repository;
 public interface SaisonRepository extends JpaRepository<Saison, Long> {
 
     public boolean existsByAnneeDebut(int anneeDebut);
+    public boolean existsByAnneeFin(int anneeFin);
+    public Saison findByAnneeDebut(int anneeDebut);
+    public Saison findByAnneeFin(int anneeFin);
 
 }

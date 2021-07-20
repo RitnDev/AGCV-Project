@@ -115,7 +115,7 @@
                                         <tr th:each="stock : ${stockList}">
                                             <td><span th:text="${stock.id}">ID</span></td>
                                             <td><span th:text="${stock.horodatage}">horodatage</span></td>
-                                            <td><span th:text="${stock.stock}">Stock</span></td>
+                                            <td><span th:text="${stock.showStock}">Stock</span></td>
                                             <td class="table-action">
                                                 <table class="action-input">
                                                     <tr>
@@ -123,11 +123,6 @@
                                                             <form action="#" th:action="@{/stock/{id}(id=${stock.id})}" th:method="post">
                                                                 <input type="hidden" name="_method" value="delete"/>
                                                                 <input id="action-input" type="submit" value="Suppr"/>
-                                                            </form>
-                                                        </td><td class="action-input">|</td>
-                                                        <td class="action-input">
-                                                            <form action="#" th:action="@{/stock/{id}(id=${stock.id})}" th:method="post">
-                                                                <input id="action-input" type="submit" value="Edit"/>
                                                             </form>
                                                         </td>
                                                     </tr>

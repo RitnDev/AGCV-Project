@@ -16,6 +16,9 @@ public class FormStock {
     //Stock pour les competition actuel
     @Getter @Setter private int stock;
     
+    //Valeur à ajouter au stock
+    @Getter @Setter private int ajout;
+    
       
     //Constructeur
     public FormStock() {

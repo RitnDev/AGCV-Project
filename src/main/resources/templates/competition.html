@@ -13,12 +13,11 @@
 
 
     <body>
-        <div th:replace="fragments/layout-header :: header">...</div>
+        <div th:replace="fragments/layout-header :: header"></div>
       
         <!-- content section -->
         <div class="main-content">
             <div th:if="${!reponses.empty}">
-                <br/>
                 <table class="table-reponse">
                     <tbody>
                         <tr th:each="rep : ${reponses}">
@@ -28,14 +27,15 @@
                 </table>
             </div>
             <br/>
-            <div th:utext="${message}"> !</div><br/><br/>
             
             <!-- affichage du stock competiton actuel -->
             <div class="std-table">
                 <table>
                     <thead>
                         <tr>
-                            <th colspan="2" class="table-label">Stock de compétition actuel</th>
+                            <th colspan="2" class="table-label">
+                                <span th:text="#{texte.page.competition.table.stock.titre}"></span>
+                            </th>
                         </tr>
                         <tr th:if="${stock!=null}">
                             <th>Stock</th>
@@ -44,14 +44,14 @@
                     </thead>
                     <tbody>
                         <tr th:if="${stock!=null}">
-                            <td th:text="${stock.stock}"></td>
+                            <td th:text="${stock.showStock}"></td>
                             <td th:text="${stock.horodatage}"></td>
                         </tr>
                         <tr th:if="${stock==null}">
                             <td colspan="2">Aucun stock de compétition créé</td>
                         </tr>
                         <tr th:if="${stock==null}">
-                            <td colspan="2">Contacter un administrateur pour le créer !</td>
+                            <td colspan="2">Contacter un super-admin pour le créer !</td>
                         </tr>
                     </tbody>
                 </table>
@@ -62,37 +62,33 @@
                 <table>
                     <thead>
                         <tr>
-                            <th th:if="${AdminConnect>=1}" class="table-label" colspan="5" th:text="${'COMPETITION DE LA SAISON '+saison.toString()}">Aucune Compétition créée</th>
-                            <th th:if="${AdminConnect==0}" class="table-label" colspan="4" th:text="${'COMPETITION DE LA SAISON '+saison.toString()}">Aucune Compétition créée</th>
+                            <th class="table-label" colspan="4" th:text="#{texte.page.competition.table.compet.titre}"></th>
                         </tr>
                         <tr>
-                            <th>ID</th>
                             <th>Horodatage</th>
                             <th>Nom de la compétition</th>
                             <th>Nbs de tubes utilisés</th>
-                            <th th:if="${AdminConnect>=1}" class="table-action">Action</th>
+                            <th class="table-action">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:if="${saison.getCompetitions.empty}">
-                            <td th:if="${AdminConnect>=1}" colspan="5">Aucune Compétition créée</td>
-                            <td th:if="${AdminConnect==0}" colspan="4">Aucune Compétition créée</td>
+                            <td colspan="4">Aucune Compétition créée</td>
                         </tr>
                         <tr th:each="compet : ${saison.getCompetitions}">
-                            <td><span th:text="${compet.id}">ID</span></td>
                             <td><span th:text="${compet.horodatage}">Horodatage</span></td>
                             <td><span th:text="${compet.nom}">nom</span></td>
                             <td><span th:text="${compet.nbTubesUtilises}">nbTubesUtilises</span></td>
-                            <td  th:if="${AdminConnect>=1}" class="table-action">
+                            <td class="table-action">
                                 <table class="action-input">
                                     <tr>
-                                        <td th:if="${AdminConnect>=2}" class="action-input">
+                                        <td class="action-input">
                                             <form action="#" th:action="@{/compet/{id}(id=${compet.id})}" th:method="post">
                                                 <input type="hidden" name="_method" value="delete"/>
                                                 <input id="action-input" type="submit" value="Suppr"/>
                                             </form>
-                                        </td><td th:if="${AdminConnect==2}" class="action-input">|</td>
-                                        <td th:if="${AdminConnect==1}" class="action-input">
+                                        </td><td class="action-input">|</td>
+                                        <td class="action-input">
                                             <form action="#" th:action="@{/compet/{id}(id=${compet.id})}" th:method="post">
                                                 <input id="action-input" type="submit" value="Edit"/>
                                             </form>

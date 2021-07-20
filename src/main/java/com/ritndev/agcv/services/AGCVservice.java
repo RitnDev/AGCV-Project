@@ -16,6 +16,7 @@ import com.ritndev.agcv.model.enumeration.NomMois;
 import com.ritndev.agcv.repository.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -233,7 +234,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 if (newCompet != null
                 && newCompet.getNbTubesUtilises() != 0
                 && !newCompet.getNom().equals("")){
-                    competitionRep.save(new Competition(md.getIdSaison(), newCompet.getNbTubesUtilises(), newCompet.getNom()));
+                    competitionRep.save(new Competition(md.getIdSaison(), md.getIdStockCompet(), newCompet.getNbTubesUtilises(), newCompet.getNom()));
                     resultVal = 2;
                 }
             }else{
@@ -437,10 +438,27 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     @Override public int updateStock(FormStock editStockCompet) {
         int resultVal = 0;
         if (stockCompetRep.existsById(editStockCompet.getId())){
-            StockCompetition sc = stockCompetRep.getOne(editStockCompet.getId());
-            sc.setStock(editStockCompet.getStock());   
-            stockCompetRep.save(sc);
-            resultVal = 2;
+            
+            int annee = Calendar.getInstance().get(Calendar.YEAR);
+            int mois = Calendar.getInstance().get(Calendar.MONTH);
+            String strMois = getMois(mois); //Valeur String du mois
+            
+            //Récupération de l'année de début de saison selon le mois
+            if (mois<6){
+                annee = annee - 1;
+            }
+            
+            if (returnMainData().getIdSaison().getAnneeDebut() == annee) {
+                ConsoMois cm = returnMainData().getIdSaison().getConsoMois("Compétition", strMois);
+                cm.setNbTubeUtilise(cm.getNbTubeUtilise() + editStockCompet.getAjout());
+                
+                StockCompetition sc = stockCompetRep.getOne(editStockCompet.getId());          
+                sc.setStock(editStockCompet.getStock() + editStockCompet.getAjout());  
+                stockCompetRep.save(sc);
+                resultVal = 2;
+            }else{
+                resultVal = 3;
+            }
         }else{
             resultVal = 1;
         }
@@ -521,6 +539,20 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     @Override public Saison findByIdSaison(Long id) {
         if (saisonRep.existsById(id)){
             return saisonRep.getOne(id);
+        }else{
+            return null;
+        }
+    }
+    @Override public Saison findByAnneeSaison(int anneeDebut) {
+        if (saisonRep.existsByAnneeDebut(anneeDebut)) {
+            return saisonRep.findByAnneeDebut(anneeDebut);
+        }else{
+            return null;
+        }
+    }
+    @Override public Saison findByAnneeFinSaison(int anneeFin) {
+        if (saisonRep.existsByAnneeFin(anneeFin)) {
+            return saisonRep.findByAnneeFin(anneeFin);
         }else{
             return null;
         }
@@ -1025,5 +1057,23 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         return resultVal;
     }
     
-    
+    //Retourne le nom du mois en String afin de comparer avec un NomMois
+    //Attention numMois commence à 0 et fini à 11
+    private String getMois(int numMois) {
+        switch (numMois) {
+            default : return "Janvier";
+            case 1 : return "Février";
+            case 2 : return "Mars";
+            case 3 : return "Avril";
+            case 4 : return "Mai";
+            case 5 : return "Juin";
+            case 6 : return "Juillet";
+            case 7 : return "Août";
+            case 8 : return "Septembre";
+            case 9 : return "Octobre";
+            case 10 : return "Novembre";
+            case 11 : return "Décembre";
+            
+        }
+    }
 }

@@ -21,14 +21,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import com.ritndev.agcv.classes.ActionsTypes;
 
 import com.ritndev.agcv.form.FormData;
-import com.ritndev.agcv.form.FormStock;
 import com.ritndev.agcv.form.FormTypeTube;
 import com.ritndev.agcv.form.FormUser;
 
 import com.ritndev.agcv.model.AppRole;
 import com.ritndev.agcv.model.AppUser;
 import com.ritndev.agcv.model.MainData;
-import com.ritndev.agcv.model.StockCompetition;
 import com.ritndev.agcv.model.TypeTube;
 
 import com.ritndev.agcv.pages.PageActions;
@@ -221,51 +219,7 @@ public class SuperAdminController {
         
         return pageSuperAdmin.getPage();
     }
-    
-    
-    //Lancer la modification d'un stock de competition
-    @PostMapping("/stock/{id}")
-    public String getStock(@PathVariable Long id, Model model, Principal principal) {
-        
-        System.out.println(">> POST - EDIT STOCK");
-        System.out.println(">> ID : " + id);
-        
-        //Recupération du stock à modifier :
-        StockCompetition editStock = stockService.findByIdStock(id);
-        FormStock formStock = new FormStock(id, editStock.getStock());
-         
-        model.addAttribute("editStock", formStock);
-        model.addAttribute("numAction", ActionsTypes.EDIT_STOCK.toString());
-                
-        PageActions pageAction = new PageActions(model, principal, messageSource);
-        return pageAction.returnPage();
-    }
-    
-    
-    //Modifier une stock de competition
-    @PutMapping("/stock/{id}")
-    public String editStock(@ModelAttribute FormStock putStock, Model model, Principal principal) {
-       int result = stockService.updateStock(putStock);
-        
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
-        pageSuperAdmin.addReponse("stock", "edit", result);
-        
-        Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
-        }
-        
-        model.addAttribute("mainData", dataService.listMainData());
-        model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
-        model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("roleList", userService.listRole());
-        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
-        
-        return pageSuperAdmin.getPage();
-
-    }
-    
+ 
     
     
 // ---------------------------- TYPE TUBE -------------------------------------  

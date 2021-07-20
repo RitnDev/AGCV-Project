@@ -2,6 +2,7 @@ package com.ritndev.agcv.controller;
 
 import com.ritndev.agcv.InterfaceService.ICompetitionService;
 import com.ritndev.agcv.InterfaceService.IMainDataService;
+import com.ritndev.agcv.InterfaceService.IStockService;
 import com.ritndev.agcv.InterfaceService.IUserService;
 import java.security.Principal;
 import org.springframework.ui.Model;
@@ -14,10 +15,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.classes.ActionsTypes;
 import com.ritndev.agcv.form.FormCompet;
+import com.ritndev.agcv.form.FormStock;
 import com.ritndev.agcv.model.Competition;
-import com.ritndev.agcv.model.Saison;
 import com.ritndev.agcv.model.StockCompetition;
-import com.ritndev.agcv.pages.PageSacCompetition;
+import com.ritndev.agcv.pages.PageCompetition;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,9 +30,10 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author Ritn
  */
 @Controller
-public class StockCompetController {
+public class CompetController {
     
     @Autowired private ICompetitionService competitionService;
+    @Autowired private IStockService stockService;
     @Autowired private IMainDataService dataService;
     @Autowired private IUserService userService;
     
@@ -42,27 +44,21 @@ public class StockCompetController {
     
     //--------------   Page Commande de tube des membres   ------------------
     
-    @GetMapping(value = "/sacCompetition")
+    @GetMapping(value = "/competition")
     public String sacCompetition(Model model, Principal principal){
-        PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal, messageSource);
-        
-        Saison saisonActuelle = dataService.returnMainData().getIdSaison();
-        StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
+        PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
         
         int AdminConnect = 0;
-        
-        if (!pageSacCompetition.returnUser(principal).equals("")){
-            switch (userService.findRoleByUsername(pageSacCompetition.returnUser(principal))) {
+        if (!pageCompet.returnUser(principal).equals("")){
+            switch (userService.findRoleByUsername(pageCompet.returnUser(principal))) {
                 case "ROLE_ADMIN" -> AdminConnect = 1;
                 case "ROLE_SUPADMIN" -> AdminConnect = 2;
             }
         }
         
         model.addAttribute("AdminConnect", AdminConnect);
-        model.addAttribute("saison", saisonActuelle);
-        model.addAttribute("stock", stockActuel);
-        
-        return pageSacCompetition.getPage(); 
+               
+        return pageCompet.getPage(dataService); 
     }
     
     
@@ -71,26 +67,20 @@ public class StockCompetController {
     public String newCompetition(@ModelAttribute FormCompet newCompetition, Model model, Principal principal) {
         int result = competitionService.saveCompetition(newCompetition);
         
-        PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal, messageSource); 
-        pageSacCompetition.addReponse("compet", "create", result);
-        
-        Saison saisonActuelle = dataService.returnMainData().getIdSaison();
-        StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
+        PageCompetition pageCompet = new PageCompetition(model, principal, messageSource); 
+        pageCompet.addReponse("compet", "create", result);
         
         int AdminConnect = 0;
-        
-        if (!pageSacCompetition.returnUser(principal).equals("")){
-            switch (userService.findRoleByUsername(pageSacCompetition.returnUser(principal))) {
+        if (!pageCompet.returnUser(principal).equals("")){
+            switch (userService.findRoleByUsername(pageCompet.returnUser(principal))) {
                 case "ROLE_ADMIN" -> AdminConnect = 1;
                 case "ROLE_SUPADMIN" -> AdminConnect = 2;
             }
         }
         
         model.addAttribute("AdminConnect", AdminConnect);
-        model.addAttribute("saison", saisonActuelle);
-        model.addAttribute("stock", stockActuel);
         
-        return pageSacCompetition.getPage();
+        return pageCompet.getPage(dataService);
     }
     
     
@@ -100,26 +90,20 @@ public class StockCompetController {
     public String supprCompet(@PathVariable(value = "id") Long id, Model model, Principal principal) {
         int result = competitionService.supprCompetition(id);
          
-        PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal, messageSource);
-        pageSacCompetition.addReponse("compet", "remove", result);
-        
-        Saison saisonActuelle = dataService.returnMainData().getIdSaison();
-        StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
+        PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
+        pageCompet.addReponse("compet", "remove", result);
         
         int AdminConnect = 0;
-        
-        if (!pageSacCompetition.returnUser(principal).equals("")){
-            switch (userService.findRoleByUsername(pageSacCompetition.returnUser(principal))) {
+        if (!pageCompet.returnUser(principal).equals("")){
+            switch (userService.findRoleByUsername(pageCompet.returnUser(principal))) {
                 case "ROLE_ADMIN" -> AdminConnect = 1;
                 case "ROLE_SUPADMIN" -> AdminConnect = 2;
             }
         }
         
         model.addAttribute("AdminConnect", AdminConnect);
-        model.addAttribute("saison", saisonActuelle);
-        model.addAttribute("stock", stockActuel);
         
-        return pageSacCompetition.getPage();
+        return pageCompet.getPage(dataService);
     }
     
     
@@ -129,26 +113,20 @@ public class StockCompetController {
     public String editCompet(@ModelAttribute FormCompet putCompet, Model model, Principal principal) { 
         int result = competitionService.updateCompetition(putCompet);
 
-        PageSacCompetition pageSacCompetition = new PageSacCompetition(model, principal, messageSource);
-        pageSacCompetition.addReponse("compet", "edit", result);
-        
-        Saison saisonActuelle = dataService.returnMainData().getIdSaison();
-        StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
+        PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
+        pageCompet.addReponse("compet", "edit", result);
         
         int AdminConnect = 0;
-        
-        if (!pageSacCompetition.returnUser(principal).equals("")){
-            switch (userService.findRoleByUsername(pageSacCompetition.returnUser(principal))) {
+        if (!pageCompet.returnUser(principal).equals("")){
+            switch (userService.findRoleByUsername(pageCompet.returnUser(principal))) {
                 case "ROLE_ADMIN" -> AdminConnect = 1;
                 case "ROLE_SUPADMIN" -> AdminConnect = 2;
             }
         }
         
         model.addAttribute("AdminConnect", AdminConnect);
-        model.addAttribute("saison", saisonActuelle);
-        model.addAttribute("stock", stockActuel);
         
-        return pageSacCompetition.getPage();
+        return pageCompet.getPage(dataService);
     }
     
     
@@ -165,6 +143,51 @@ public class StockCompetController {
         FormCompet formCompet = new FormCompet(id, editCompet.getNbTubesUtilises(), editCompet.getNom());
         model.addAttribute("editCompet", formCompet);
         model.addAttribute("numAction", ActionsTypes.EDIT_COMPETITION.toString());
+        
+        PageActions pageAction = new PageActions(model, principal, messageSource);
+        return pageAction.returnPage();
+    }
+    
+
+    
+    
+    
+    
+// ----------------------  GESTION DU STOCK DE COMPETITION --------------------------    
+    
+    
+    
+    //Modifier une stock de competition
+    @PutMapping("/stock/{id}")
+    public String editStock(@ModelAttribute FormStock putStock, Model model, Principal principal) {
+       int result = stockService.updateStock(putStock);
+        
+        PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
+        pageCompet.addReponse("stock", "edit", result);
+        
+        int AdminConnect = 0;
+        if (!pageCompet.returnUser(principal).equals("")){
+            switch (userService.findRoleByUsername(pageCompet.returnUser(principal))) {
+                case "ROLE_ADMIN" -> AdminConnect = 1;
+                case "ROLE_SUPADMIN" -> AdminConnect = 2;
+            }
+        }
+        
+        model.addAttribute("AdminConnect", AdminConnect);
+        
+        return pageCompet.getPage(dataService);
+
+    }
+    
+    
+    @GetMapping("/stockCompet")
+    public String editStockCompet(Model model, Principal principal) {
+        
+        StockCompetition stock = dataService.returnMainData().getIdStockCompet();
+        FormStock editStock = new FormStock(stock.getId(), stock.getStock());
+        
+        model.addAttribute("editStock", editStock);
+        model.addAttribute("numAction", ActionsTypes.EDIT_STOCK.toString());
         
         PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();

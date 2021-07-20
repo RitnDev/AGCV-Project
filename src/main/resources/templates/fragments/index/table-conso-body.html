@@ -17,16 +17,21 @@
 
         <!-- Nombre de tubes utilisés sur le mois pour les volants -->
         <td class="table-tv-nbu">
-            <form 
-                action="#" 
-                th:action="@{/mois/nbu/{id}(id=${saison.getConsoMois(volant, mois.toString()).id})}" 
-                th:method="post">
+            <span th:if="${volant!='Compétition'}" >
+                <form 
+                    action="#" 
+                    th:action="@{/mois/nbu/{id}(id=${saison.getConsoMois(volant, mois.toString()).id})}" 
+                    th:method="post">
 
-                <!-- Nombre de tubes utilisés modifiables -->
-                <input class="table-tv-nbu" 
-                       type="submit" 
-                       th:value="${saison.getConsoMois(volant, mois.toString()).nbTubeUtilise}"/>
-            </form>
+                    <!-- Nombre de tubes utilisés modifiables -->
+                    <input class="table-tv-nbu" 
+                           type="submit" 
+                           th:value="${saison.getConsoMois(volant, mois.toString()).nbTubeUtilise}"/>
+                </form>
+            </span>
+            <span th:if="${volant=='Compétition'}" th:text="${saison.getConsoMois(volant, mois.toString()).nbTubeUtilise}">
+                
+            </span>
         </td>
 
         <!-- Coût des tubes utilisés dans le mois -->

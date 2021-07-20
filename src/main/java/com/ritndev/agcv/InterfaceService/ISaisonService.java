@@ -14,6 +14,8 @@ public interface ISaisonService {
     public int saveSaison(FormSaison newSaison);
     public List<Saison> listSaison();
     public Saison findByIdSaison(Long id);
+    public Saison findByAnneeSaison(int anneeDebut);
+    public Saison findByAnneeFinSaison(int anneeFin);
     public int supprSaison(Long id);
     public int updateSaison(FormSaison editSaison);
     

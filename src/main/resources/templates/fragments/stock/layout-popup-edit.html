@@ -12,7 +12,7 @@
                             <h3 th:text="#{texte.pop.edit.stock.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
-                            <a href="/superAdmin" >
+                            <a href="/competition" >
                                 <img class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>
@@ -27,13 +27,22 @@
                                 <label for="stock" th:text="#{texte.pop.edit.stock.stock}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="stock" type="number" th:value="*{stock}" th:field="*{stock}" min="0" />
+                                <span id="stock" th:text="*{stock}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="ajout" th:text="#{texte.pop.edit.stock.ajout}"></label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="ajout" type="number" th:value="*{ajout}" th:field="*{ajout}" min="0" />
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                                <input type="hidden" th:value="*{stock}" th:field="*{stock}" />
                                 <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.edit.global.submit}"/>                             
                             </td>
                         </tr>

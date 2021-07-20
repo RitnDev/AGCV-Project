@@ -45,14 +45,20 @@ public class Competition implements Serializable {
     //Nom de la competition
     @Column(name = "nom", nullable = false)
     @Getter @Setter private String nom;
+
+    //id de la saison de cette competition
+    @OneToOne
+    @JoinColumn(name = "idStock", nullable = false)
+    @Getter @Setter private StockCompetition idStock;
     
     
     
     //Constructeur
     public Competition() {}
 
-    public Competition(Saison idSaison, int nbTubesUtilises, String nom) {
+    public Competition(Saison idSaison, StockCompetition idStock, int nbTubesUtilises, String nom) {
         this.idSaison = idSaison;
+        this.idStock = idStock;
         this.nbTubesUtilises = nbTubesUtilises;
         this.nom = nom;
     }
