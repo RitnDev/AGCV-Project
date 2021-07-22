@@ -34,11 +34,12 @@
             <div>
                 <span 
                     class="admin-saison"
+                    th:if="${!saison.toString.isEmpty}"
                     th:text="${'Saison en cours : ' + saison.toString}"></span>
             </div>
             <br/>
             
-            <fieldset>
+            <fieldset th:if="${editTVPlastique != null}">
                 
             <legend th:text="#{texte.page.admin.stock.legend}"></legend>
             <br/>               

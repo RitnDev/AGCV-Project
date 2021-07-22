@@ -2,7 +2,7 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
+import java.text.SimpleDateFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,16 +43,6 @@ public class Commande implements Serializable {
     @Getter @Setter
     private Timestamp dateCrea;
     
-    //id de la saison de cette commande
-    @OneToOne
-    @JoinColumn(name = "idSaison", nullable = false)
-    @Getter @Setter private Saison idSaison;
-    
-    //id du prix tube correspondant à cette commande
-    @Column(name = "idPrixTube", nullable = false)
-    @Getter @Setter
-    private long idPrixTube;
-    
     //id du membre qui commande
     @OneToOne
     @JoinColumn(name = "idMembre", nullable = false)
@@ -72,17 +62,37 @@ public class Commande implements Serializable {
     
     
     
+    //id de la saison de cette commande
+    @OneToOne
+    @JoinColumn(name = "idSaison", nullable = false)
+    @Getter @Setter private Saison idSaison;
+    
+    //id du mois de consommation de cette commande
+    @OneToOne
+    @JoinColumn(name = "idConsoMois", nullable = false)
+    @Getter @Setter private ConsoMois idConsoMois;
+    
+    //id du prix tube correspondant à cette commande
+    @OneToOne
+    @JoinColumn(name = "idPrixTube", nullable = false)
+    @Getter @Setter private PrixTube idPrixTube;
+    
+    
+    
+    
     //Constructeur
     public Commande() {}
 
-    public Commande(Saison idSaison, long idPrixTube, Membre idMembre, int nbTubeCommande, boolean regler) {
-        this.idSaison = idSaison;
-        this.idPrixTube = idPrixTube;
+    
+    public Commande(Membre idMembre, int nbTubeCommande, boolean regler, Saison idSaison, ConsoMois idConsoMois, PrixTube idPrixTube) {
         this.idMembre = idMembre;
         this.nbTubeCommande = nbTubeCommande;
         this.regler = regler;
+        this.idSaison = idSaison;
+        this.idConsoMois = idConsoMois;
+        this.idPrixTube = idPrixTube;
     }
- 
+
     
     /*
         Methodes
@@ -93,44 +103,13 @@ public class Commande implements Serializable {
         if(regler) strResult = "Oui";
         return strResult;
     }
-            
-    public String getPrixTube(List<PrixTube> prixTubes) {
-        String strResult = "";
-        for (PrixTube pt : prixTubes){
-            if(pt.getId()==idPrixTube){
-                strResult = pt.toString();
-            }
-        }
-        return strResult;
-    }
     
-    public String getPrixTubeClub(List<PrixTube> prixTubes) {
-        String strResult = "";
-        for (PrixTube pt : prixTubes){
-            if(pt.getId()==idPrixTube){
-                strResult = pt.getPrixString();
-            }
-        }
-        return strResult;
+    public String getDateCommande() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(horodatage);
     }
-    public String getPrixTubeMembre(List<PrixTube> prixTubes) {
-        String strResult = "";
-        for (PrixTube pt : prixTubes){
-            if(pt.getId()==idPrixTube){
-                strResult = pt.getPrixMembreString();
-            }
-        }
-        return strResult;
-    }
-    
-    public double getPrixCommande(List<PrixTube> prixTubes) {
-        double dbResult = nbTubeCommande;
-        for (PrixTube pt : prixTubes){
-            if(pt.getId()==idPrixTube){
-                dbResult = dbResult * pt.getPrixMembre();
-            }
-        }
-        return dbResult;
+        
+    public double getPrixCommande() {
+        return nbTubeCommande * idPrixTube.getPrixMembre();
     }
     
     

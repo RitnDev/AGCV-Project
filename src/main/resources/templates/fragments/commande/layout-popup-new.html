@@ -21,11 +21,19 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
-                                <label for="idPrixTube" th:text="#{texte.pop.new.commande.idPrixTube}"></label>
+                                <label for="stock" th:text="#{texte.pop.new.commande.saison}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <select id="idPrixTube" th:field="*{idPrixTube}">
-                                <option th:each="pt : ${prixTubeList}" th:if="${pt.actif && pt.idTypeTube.commande}" th:value="${pt.id}" th:text="${pt.toString()}"></option>
+                                <span id="stock" th:text="${saison}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="mois" th:text="#{texte.pop.new.commande.mois}"></label>
+                            </td>
+                            <td class="popup-form-input">
+                                <select id="mois" th:field="*{nomMois}">
+                                    <option th:each="m : ${saison.getTypeVolantName('Compétition').getConsommationsMois}" th:value="${m.toString()}" th:text="${m.toString()}" ></option>
                                 </select>
                             </td>
                         </tr>
@@ -37,6 +45,45 @@
                                 <select id="membre" th:field="*{idMembre}">
                                 <option th:each="m : ${Membres}" th:value="${m.id}" th:text="${m.toString()}"></option>
                                 </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" th:value="*{idSaison}" th:field="*{idSaison}" />
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.new.commande.submit}"/>                            
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+            </div>
+        </div>
+        
+        <div th:fragment="commande-suite">
+            <div id="popup-content" class="popup-content-edit-commande-suite">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3 th:text="#{texte.pop.new.commande.titre}"></h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <a href="/commandesMembres" >
+                                <img class="button-close" src="/images/popup/button-close.png">
+                            </a>
+                        </td>
+                    </tr>
+                </table>                
+                
+                <form th:action="@{/commande}" th:object="${newCommande}" method="post">
+                    
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="prixtube" th:text="#{texte.pop.new.commande.prixtube}"></label>
+                            </td>
+                            <td class="popup-form-input">
+                                <span id="prixtube" th:text="${prixtube}"/>
                             </td>
                         </tr>
                         <tr>
@@ -57,6 +104,10 @@
                         </tr>
                         <tr>
                             <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" th:value="*{idMembre}" th:field="*{idMembre}"/>
+                                <input type="hidden" th:value="*{idSaison}" th:field="*{idSaison}"/>
+                                <input type="hidden" th:value="*{idConsoMois}" th:field="*{idConsoMois}"/>
+                                <input type="hidden" th:value="*{idPrixTube}" th:field="*{idPrixTube}"/>
                                 <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.new.commande.submit}"/>                            
                             </td>
                         </tr>

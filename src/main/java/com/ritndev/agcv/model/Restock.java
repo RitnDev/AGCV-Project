@@ -19,8 +19,8 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author Ritn
  */
 @Entity
-@Table(name = "COMPETITION")
-public class Competition implements Serializable {
+@Table(name = "RESTOCK")
+public class Restock implements Serializable {
     
     //ID
     @Id
@@ -33,37 +33,37 @@ public class Competition implements Serializable {
     @Column(name = "horodatage", nullable = false)
     @Getter @Setter private Timestamp horodatage;
     
-    //id de la saison de cette competition
+    //Valeur de restockage
+    @Column(name = "valeur", nullable = false)
+    @Getter @Setter private int valeur;
+
+    //id du stock de competition
     @OneToOne
     @JoinColumn(name = "idSaison", nullable = false)
     @Getter @Setter private Saison idSaison;
     
-    //Nombre de tubes utilisés lors de cette competition
-    @Column(name = "nbTubesUtilises", nullable = false)
-    @Getter @Setter private int nbTubesUtilises;
-    
-    //Nom de la competition
-    @Column(name = "nom", nullable = false)
-    @Getter @Setter private String nom;
-
     //id du stock de competition
     @OneToOne
     @JoinColumn(name = "idStock", nullable = false)
     @Getter @Setter private MainData idStock;
     
+    //id du conso-mois associé
+    @OneToOne
+    @JoinColumn(name = "idConsoMois", nullable = false)
+    @Getter @Setter private ConsoMois idConsoMois;
     
     
     //Constructeur
-    public Competition() {}
+    public Restock() {}
 
-    public Competition(Saison idSaison, MainData idStock, int nbTubesUtilises, String nom) {
-        this.idSaison = idSaison;
+    public Restock(int valeur, Saison idSaison, MainData idStock, ConsoMois idConsoMois) {
+        this.valeur = valeur;
         this.idStock = idStock;
-        this.nbTubesUtilises = nbTubesUtilises;
-        this.nom = nom;
+        this.idSaison = idSaison;
+        this.idConsoMois = idConsoMois;
     }
     
     
-    
+   
     
 }

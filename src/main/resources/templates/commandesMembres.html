@@ -32,13 +32,10 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="table-label" colspan="10">COMMANDES</th>
+                            <th class="table-label" colspan="7">COMMANDES</th>
                         </tr>
                         <tr>
-                            <th>ID</th>
                             <th>Date de la commande</th>
-                            <th>Dernière MaJ de la commande</th>
-                            <th>Saison</th>
                             <th>Membre</th>
                             <th title="club | membre">Prix du tube</th>
                             <th>Nb de tubes commandés</th>
@@ -49,20 +46,17 @@
                     </thead>
                     <tbody>
                         <tr th:if="${Commandes.empty}">
-                            <td colspan="10">Aucune Commande créée</td>
+                            <td colspan="7">Aucune Commande créée</td>
                         </tr>
                         <tr th:each="commande : ${Commandes}">
-                            <td><span th:text="${commande.id}">ID</span></td>
-                            <td><span th:text="${commande.dateCrea}">dateCrea</span></td>
-                            <td><span th:text="${commande.horodatage}">Horodatage</span></td>
-                            <td><span th:text="${commande.idSaison}">Saison</span></td>
+                            <td><span th:text="${commande.getDateCommande}">Horodatage</span></td>
                             <td><span th:text="${commande.idMembre}">Membre</span></td>
-                            <td title="prix club | prix membre"><span th:text="${commande.getPrixTube(prixTubeList)}">prixTube</span></td>
+                            <td title="prix club | prix membre"><span th:text="${commande.idPrixTube.getPrixComment}">prixTube</span></td>
                             <td><span th:text="${commande.nbTubeCommande}">nbTubesCommandes</span></td>
-                            <td th:title="${commande.nbTubeCommande + ' x ' + commande.getPrixTubeMembre(prixTubeList)}">
-                                <span th:text="${commande.getPrixCommande(prixTubeList)}">prixCommande</span>
+                            <td th:title="${commande.nbTubeCommande + ' x ' + commande.idPrixTube.getPrixMembreString}">
+                                <span th:text="${commande.getPrixCommande}">prixCommande</span>
                             </td>
-                            <td><span th:text="${commande.getRegler()}">régler</span></td>
+                            <td><span th:text="${commande.getRegler}">régler</span></td>
                             <td class="table-action">
                                 <table class="action-input">
                                     <tr>

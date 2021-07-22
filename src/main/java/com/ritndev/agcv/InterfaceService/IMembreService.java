@@ -13,6 +13,7 @@ public interface IMembreService {
     //Methode Membres :
     public int saveMembre(FormMembre newMembre);
     public List<Membre> listMembre();
+    public List<Membre> listMembreActif();
     public Membre findByIdMembre(Long id);
     public int supprMembre(Long id);
     public int updateMembre(FormMembre editMembre);

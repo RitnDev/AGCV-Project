@@ -26,12 +26,10 @@
                     <!-- Nombre de tubes utilisés modifiables -->
                     <input class="table-tv-nbu" 
                            type="submit" 
-                           th:value="${saison.getConsoMois(volant, mois.toString()).nbTubeUtilise}"/>
+                           th:value="${saison.getConsoMois(volant, mois.toString()).showTubesUtilises}"/>
                 </form>
             </span>
-            <span th:if="${volant=='Compétition'}" th:text="${saison.getConsoMois(volant, mois.toString()).nbTubeUtilise}">
-                
-            </span>
+            <span th:if="${volant=='Compétition'}" th:text="${saison.getConsoMois(volant, mois.toString()).showTubesUtilises}"/>
         </td>
 
         <!-- Coût des tubes utilisés dans le mois -->

@@ -35,21 +35,23 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="table-label" colspan="3">MEMBRES</th>
+                            <th class="table-label" colspan="4">MEMBRES</th>
                         </tr>
                         <tr>
                             <th>Prenom</th>
                             <th>Nom</th>
+                            <th>Actif ?</th>
                             <th class="table-action">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:if="${listMembres.empty}">
-                            <td colspan="3">Aucun Membre créé</td>
+                            <td colspan="4">Aucun Membre créé</td>
                         </tr>
                         <tr th:each="membre : ${listMembres}">
                             <td><span th:text="${membre.prenom}">Prenom</span></td>
                             <td><span th:text="${membre.nom}">Nom</span></td>
+                            <td><span th:text="${membre.actif}">Actif</span></td>
                             <td class="table-action">
                                 <table class="action-input">
                                     <tr>

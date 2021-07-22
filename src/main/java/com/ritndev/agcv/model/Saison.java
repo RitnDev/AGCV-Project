@@ -66,7 +66,9 @@ public class Saison implements Serializable {
     @OneToMany(targetEntity=TypeVolant.class, mappedBy="idSaison", cascade=CascadeType.REMOVE)
     @Getter @Setter private List<TypeVolant> typeVolants = new ArrayList<>();
     
-    
+    //Liste des restockages de la saison
+    @OneToMany(targetEntity=Restock.class, mappedBy="idSaison", cascade=CascadeType.REMOVE)
+    @Getter @Setter private List<Restock> restocks = new ArrayList<>();
     
     
     //Constructeur

@@ -12,11 +12,10 @@ import lombok.Setter;
 public class FormCommande {
     
     //ID
-    @Getter @Setter
-    private long id;
+    @Getter @Setter private long id;
    
-    //id du prix tube correspondant à cette commande
-    @Getter @Setter private long idPrixTube;
+    //Nom du mois de la commande
+    @Getter @Setter private String nomMois;
     
     //id du membre qui commande
     @Getter @Setter private long idMembre;
@@ -26,12 +25,29 @@ public class FormCommande {
     
     //La facture est-elle déjà réglée ?
     @Getter @Setter private boolean regler;
+    
+    //id du prix tube correspondant à cette commande
+    @Getter @Setter private long idPrixTube;
+    
+    //Id de la saison active au moment de la commande
+    @Getter @Setter private long idSaison;
 
-
+    //Mois de la commande
+    @Getter @Setter private long idConsoMois;
+    
+    
+    
     
     //Constructeur
     public FormCommande() {}
 
+    public FormCommande(String nomMois, long idPrixTube, long idSaison, long idConsoMois) {
+        this.nomMois = nomMois;
+        this.idPrixTube = idPrixTube;
+        this.idSaison = idSaison;
+        this.idConsoMois = idConsoMois;
+    }
+    
     public FormCommande(long idMembre, int nbTubeCommande, boolean regler) {
         this.idMembre = idMembre;
         this.nbTubeCommande = nbTubeCommande;

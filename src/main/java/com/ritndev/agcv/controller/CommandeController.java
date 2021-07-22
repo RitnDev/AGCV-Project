@@ -1,11 +1,12 @@
 package com.ritndev.agcv.controller;
 
 import com.ritndev.agcv.InterfaceService.ICommandeService;
+import com.ritndev.agcv.InterfaceService.IMainDataService;
 import com.ritndev.agcv.InterfaceService.IMembreService;
-import com.ritndev.agcv.InterfaceService.IPrixTubeService;
 import com.ritndev.agcv.classes.ActionsTypes;
 import com.ritndev.agcv.form.FormCommande;
 import com.ritndev.agcv.model.Commande;
+import com.ritndev.agcv.model.ConsoMois;
 import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.pages.PageCommandesMembres;
 
@@ -30,7 +31,7 @@ public class CommandeController {
     
     @Autowired private ICommandeService commandeService;
     @Autowired private IMembreService membreService;
-    @Autowired private IPrixTubeService prixTubeService;
+    @Autowired private IMainDataService dataService;
     
     @Autowired private MessageSource messageSource;
     
@@ -39,32 +40,45 @@ public class CommandeController {
     
     //--------------   Page Commande de tube des membres   ------------------
     
-    @GetMapping(value = {"/commandesMembres", "/newCommande"})
+    @GetMapping(value = {"/commandesMembres"})
     public String commandesMembres(Model model, Principal principal){
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
         
-        model.addAttribute("Membres", membreService.listMembre());
+        model.addAttribute("Membres", membreService.listMembreActif());
         model.addAttribute("Commandes", commandeService.listCommande());
-        model.addAttribute("prixTubeList", prixTubeService.listPrixTube());
         
-        return pageCommandesMembres.getPage();
+        return pageCommandesMembres.getPage(dataService);
     }
     
     
     
     //Création d'une nouvelle commande de membre
     @PostMapping("/newCommande")
-    public String newCommande(@ModelAttribute FormCommande newCommande, Model model, Principal principal) {
+    public String newCommande1(@ModelAttribute FormCommande newCommande, Model model, Principal principal) {
+       
+        ConsoMois consoMois = dataService.returnMainData().getIdSaison().getConsoMois("Compétition", newCommande.getNomMois());
+        newCommande.setIdPrixTube(consoMois.getIdPrixTube().getId());
+        newCommande.setIdConsoMois(consoMois.getId());
+        
+        model.addAttribute("prixtube", consoMois.getIdPrixTube().toString());
+        model.addAttribute("newCommande", newCommande);
+        model.addAttribute("numAction", ActionsTypes.ADD_COMMANDE.toString());
+              
+        PageActions pageAction = new PageActions(model, principal, messageSource);
+        return pageAction.returnPage();
+    }
+
+    @PostMapping("/commande")
+    public String newCommande2(@ModelAttribute FormCommande newCommande, Model model, Principal principal) {
         int result = commandeService.saveCommande(newCommande);
         
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
         pageCommandesMembres.addReponse("commande", "create", result);
         
-        model.addAttribute("Membres", membreService.listMembre());
+        model.addAttribute("Membres", membreService.listMembreActif());
         model.addAttribute("Commandes", commandeService.listCommande());
-        model.addAttribute("prixTubeList", prixTubeService.listPrixTube());
         
-        return pageCommandesMembres.getPage();
+        return pageCommandesMembres.getPage(dataService);
     }
     
     
@@ -77,11 +91,10 @@ public class CommandeController {
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
         pageCommandesMembres.addReponse("commande", "remove", result);
         
-        model.addAttribute("Membres", membreService.listMembre());
+        model.addAttribute("Membres", membreService.listMembreActif());
         model.addAttribute("Commandes", commandeService.listCommande());
-        model.addAttribute("prixTubeList", prixTubeService.listPrixTube());
         
-        return pageCommandesMembres.getPage();
+        return pageCommandesMembres.getPage(dataService);
     }
     
     //Modifier un membre
@@ -92,11 +105,10 @@ public class CommandeController {
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
         pageCommandesMembres.addReponse("commande", "edit", result);
         
-        model.addAttribute("Membres", membreService.listMembre());
+        model.addAttribute("Membres", membreService.listMembreActif());
         model.addAttribute("Commandes", commandeService.listCommande());
-        model.addAttribute("prixTubeList", prixTubeService.listPrixTube());
         
-        return pageCommandesMembres.getPage();
+        return pageCommandesMembres.getPage(dataService);
     }
     
     

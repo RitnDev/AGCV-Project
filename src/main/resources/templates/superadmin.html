@@ -32,113 +32,60 @@
             <br/>
             <div th:utext="${message}"> !</div><br/><br/>
             
-            <div class="table-su-1">
-                <table>
-                    <tr>
-                        <td>
-                            <div class="std-table">
-                                <table>
-                                    <thead>
+                <div class="std-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="table-label" colspan="10">MAIN DATA</td>
+                            </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th title="Saison en cours">Saison</th>
+                                <th>Stock Compet</th>
+                                <th>Budget par défaut</th>
+                                <th>Seuil bas (stock)</th>
+                                <th title="ID du Type de tube Plastique">ID Plastique</th>
+                                <th title="ID du Type de tube Entrainement">ID Entrainement</th>
+                                <th title="ID du Type de tube Compétition">ID  Compétition</th>
+                                <th>Actif ?</th>
+                                <th class="table-action">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${mainData.empty}">
+                                <td colspan="10">Aucune data créée</td>
+                            </tr>
+                            <tr th:each="data : ${mainData}">
+                                <td><span th:text="${data.id}">ID</span></td>
+                                <td><span th:text="${data.idSaison.toString()}" th:title="${'id='+data.idSaison.id}">id_saison</span></td>
+                                <td><span th:text="${data.showStock}"></span></td>
+                                <td><span th:text="${data.budgetDefault}">budget</span></td>
+                                <td><span th:text="${data.seuilBas}">seuilBas</span></td>
+                                <td><span th:text="${data.idTTPlastique}" th:title="${'id='+data.idTTPlastique.id}">idTTPlastique</span></td>
+                                <td><span th:text="${data.idTTEntrainement}" th:title="${'id='+data.idTTEntrainement.id}">idTTEntrainement</span></td>
+                                <td><span th:text="${data.idTTCompetition}" th:title="${'id='+data.idTTCompetition.id}">idTTCompetition</span></td>
+                                <td><span th:text="${data.actif}">actif</span></td>
+                                <td class="table-action">
+                                    <table class="action-input">
                                         <tr>
-                                            <th class="table-label" colspan="10">MAIN DATA</td>
-                                        </tr>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th title="Saison en cours">Saison</th>
-                                            <th>ID Stock Compet</th>
-                                            <th>Budget par défaut</th>
-                                            <th>Seuil bas (stock)</th>
-                                            <th title="ID du Type de tube Plastique">ID Plastique</th>
-                                            <th title="ID du Type de tube Entrainement">ID Entrainement</th>
-                                            <th title="ID du Type de tube Compétition">ID  Compétition</th>
-                                            <th>Actif ?</th>
-                                            <th class="table-action">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:if="${mainData.empty}">
-                                            <td colspan="10">Aucune data créée</td>
-                                        </tr>
-                                        <tr th:each="data : ${mainData}">
-                                            <td><span th:text="${data.id}">ID</span></td>
-                                            <td><span th:text="${data.idSaison.toString()}" th:title="${'id='+data.idSaison.id}">id_saison</span></td>
-                                            <td><span th:text="${data.idStockCompet.id}">id_stock_compet</span></td>
-                                            <td><span th:text="${data.budgetDefault}">budget</span></td>
-                                            <td><span th:text="${data.seuilBas}">seuilBas</span></td>
-                                            <td><span th:text="${data.idTTPlastique}" th:title="${'id='+data.idTTPlastique.id}">idTTPlastique</span></td>
-                                            <td><span th:text="${data.idTTEntrainement}" th:title="${'id='+data.idTTEntrainement.id}">idTTEntrainement</span></td>
-                                            <td><span th:text="${data.idTTCompetition}" th:title="${'id='+data.idTTCompetition.id}">idTTCompetition</span></td>
-                                            <td><span th:text="${data.actif}">actif</span></td>
-                                            <td class="table-action">
-                                                <table class="action-input">
-                                                    <tr>
-                                                        <td class="action-input">
-                                                            <form action="#" th:action="@{/data/{id}(id=${data.id})}" th:method="post">
-                                                                <input type="hidden" name="_method" value="delete"/>
-                                                                <input id="action-input" type="submit" value="Suppr"/>
-                                                            </form>
-                                                        </td><td class="action-input">|</td>
-                                                        <td class="action-input">
-                                                            <form action="#" th:action="@{/data/{id}(id=${data.id})}" th:method="post">
-                                                                <input id="action-input" type="submit" value="Edit"/>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                            <td class="action-input">
+                                                <form action="#" th:action="@{/data/{id}(id=${data.id})}" th:method="post">
+                                                    <input type="hidden" name="_method" value="delete"/>
+                                                    <input id="action-input" type="submit" value="Suppr"/>
+                                                </form>
+                                            </td><td class="action-input">|</td>
+                                            <td class="action-input">
+                                                <form action="#" th:action="@{/data/{id}(id=${data.id})}" th:method="post">
+                                                    <input id="action-input" type="submit" value="Edit"/>
+                                                </form>
                                             </td>
                                         </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                        </td>
-                        <td></td>
-                        <td>
-                            
-                            <div class="std-table">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th class="table-label" colspan="4">STOCK COMPETITION</td>
-                                        </tr>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>horodatage</th>
-                                            <th>stock</th>
-                                            <th class="table-action">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:if="${stockList.empty}">
-                                            <td colspan="4">Aucun stock créé</td>
-                                        </tr>
-                                        <tr th:each="stock : ${stockList}">
-                                            <td><span th:text="${stock.id}">ID</span></td>
-                                            <td><span th:text="${stock.horodatage}">horodatage</span></td>
-                                            <td><span th:text="${stock.showStock}">Stock</span></td>
-                                            <td class="table-action">
-                                                <table class="action-input">
-                                                    <tr>
-                                                        <td class="action-input">
-                                                            <form action="#" th:action="@{/stock/{id}(id=${stock.id})}" th:method="post">
-                                                                <input type="hidden" name="_method" value="delete"/>
-                                                                <input id="action-input" type="submit" value="Suppr"/>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div> 
-                            
-                        </td>
-                    </tr>
-                </table>                
-            </div>
-            
-            
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             <br/>
             <br/>
                         

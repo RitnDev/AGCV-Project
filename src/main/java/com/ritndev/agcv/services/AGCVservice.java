@@ -1,6 +1,5 @@
 package com.ritndev.agcv.services;
 
-import com.ritndev.agcv.InterfaceService.IStockService;
 import com.ritndev.agcv.InterfaceService.ICompetitionService;
 import com.ritndev.agcv.InterfaceService.ITypeTubeService;
 import com.ritndev.agcv.InterfaceService.ISaisonService;
@@ -10,13 +9,13 @@ import com.ritndev.agcv.InterfaceService.ITypeVolantService;
 import com.ritndev.agcv.InterfaceService.IConsoMoisService;
 import com.ritndev.agcv.InterfaceService.ICommandeService;
 import com.ritndev.agcv.InterfaceService.IMembreService;
+import com.ritndev.agcv.InterfaceService.IRestockService;
 import com.ritndev.agcv.form.*;
 import com.ritndev.agcv.model.*;
 import com.ritndev.agcv.model.enumeration.NomMois;
 import com.ritndev.agcv.repository.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AGCVservice implements IMembreService, ICommandeService, ICompetitionService, IConsoMoisService,
-    IMainDataService, IPrixTubeService, ISaisonService, IStockService, ITypeTubeService, ITypeVolantService {
+    IMainDataService, IPrixTubeService, ISaisonService, ITypeTubeService, ITypeVolantService, IRestockService {
     
     @Autowired CommandeRepository commandeRep;
     @Autowired CompetitionRepository competitionRep;
@@ -38,8 +37,8 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     @Autowired MembreRepository membreRep;
     @Autowired PrixTubeRepository prixTubeRep;
     @Autowired SaisonRepository saisonRep;
-    @Autowired StockCompetitionRepository stockCompetRep;
     @Autowired TypeTubeRepository typeTubeRep;
+    @Autowired RestockRepository restockRep;
     
     
     
@@ -49,11 +48,11 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     public void setConsoMoisRep (ConsoMoisRepository consoMoisRep) {this.consoMoisRep = consoMoisRep;}
     public void setMembreRepository (MembreRepository membreRep) {this.membreRep = membreRep;}
     public void setPrixTubeRep (PrixTubeRepository prixTubeRep) {this.prixTubeRep = prixTubeRep;}
-    public void setStockCompetitionRep (StockCompetitionRepository stockCompetitionRep) {this.stockCompetRep = stockCompetitionRep;}
     public void setSaisonRep (SaisonRepository saisonRep) {this.saisonRep = saisonRep;}
     public void setTypeVolantRep (TypeVolantRepository typeVolantRep) {this.typeVolantRep = typeVolantRep;}
     public void setMainDataRep (MainDataRepository mainDataRep) {this.mainDataRep = mainDataRep;}
     public void setTypeTubeRep (TypeTubeRepository typeTubeRep) {this.typeTubeRep = typeTubeRep;}
+    public void setRestockRep (RestockRepository restockRep) {this.restockRep = restockRep;}
     
     
     // -------------------   FONCTIONS MEMBRES ---------------------
@@ -64,6 +63,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         return resultVal;
     }
     @Override public List<Membre> listMembre() {return membreRep.findAll();}
+    @Override public List<Membre> listMembreActif() {return membreRep.findByActifTrue();}
     @Override public Membre findByIdMembre(Long id) {
         if (membreRep.existsById(id)){
             return membreRep.getOne(id); 
@@ -77,7 +77,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             Membre m = membreRep.getOne(id);
             //vérifie que la liste des commandes est vide avant de supprimer le membre
             if(m.getCommandes().isEmpty()){
-                membreRep.delete(m);
+                membreRep.deleteById(id);
                 resultVal = 2;
             }
         }else{
@@ -90,7 +90,8 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         if (membreRep.existsById(editMembre.getId())){
             Membre m = membreRep.getOne(editMembre.getId());
             m.setNom(editMembre.getNom());
-            m.setPrenom(editMembre.getPrenom()); 
+            m.setPrenom(editMembre.getPrenom());
+            m.setActif(editMembre.isActif()); 
             membreRep.save(m);
             resultVal = 2;
         }else{
@@ -143,7 +144,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         if (prixTubeRep.existsById(id)){
             PrixTube pt = prixTubeRep.getOne(id);
             if (!pt.isActif() || !pt.isDefaut()){
-                prixTubeRep.delete(pt);
+                prixTubeRep.deleteById(id);
                 resultVal = 2;
             }else{
                 resultVal = 3;
@@ -177,13 +178,13 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     // -------------------   FONCTIONS COMMANDES ---------------------
     @Override public int saveCommande(FormCommande newCommande) {
         int resultVal = 0;
-        
         Commande c = commandeRep.save(new Commande(
-                                        returnMainData().getIdSaison(), 
-                                        newCommande.getIdPrixTube(),
-                                        membreRep.getOne(newCommande.getIdMembre()), 
+                                        membreRep.getOne(newCommande.getIdMembre()),
                                         newCommande.getNbTubeCommande(), 
-                                        newCommande.isRegler()));
+                                        newCommande.isRegler(),
+                                        returnMainData().getIdSaison(),
+                                        consoMoisRep.getOne(newCommande.getIdConsoMois()),
+                                        prixTubeRep.getOne(newCommande.getIdPrixTube())));
         if(c!=null) resultVal = 2;
         
         return resultVal;
@@ -199,7 +200,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     @Override public int supprCommande(Long id) {
         int resultVal = 0;
         if (commandeRep.existsById(id)){
-            commandeRep.delete(commandeRep.getOne(id));
+            commandeRep.deleteById(id);
             resultVal = 2;
         }else{
             resultVal = 1;
@@ -234,7 +235,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 if (newCompet != null
                 && newCompet.getNbTubesUtilises() != 0
                 && !newCompet.getNom().equals("")){
-                    competitionRep.save(new Competition(md.getIdSaison(), md.getIdStockCompet(), newCompet.getNbTubesUtilises(), newCompet.getNom()));
+                    competitionRep.save(new Competition(md.getIdSaison(), md, newCompet.getNbTubesUtilises(), newCompet.getNom()));
                     resultVal = 2;
                 }
             }else{
@@ -255,7 +256,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     @Override public int supprCompetition(Long id) {
         int resultVal = 0;
         if(competitionRep.existsById(id)){
-            competitionRep.delete(competitionRep.getOne(id));
+            competitionRep.deleteById(id);
             resultVal = 2;
         }else{
             resultVal = 1;
@@ -306,7 +307,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     @Override public int supprConsoMois(Long id) {
         int resultVal = 0;
         if(consoMoisRep.existsById(id)){
-            consoMoisRep.delete(consoMoisRep.getOne(id));
+            consoMoisRep.deleteById(id);
             resultVal = 2;
         }else{
             resultVal = 1;
@@ -385,85 +386,6 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         return resultVal;
     }
 
-
-    // -------------------   FONCTIONS STOCK-COMPETITION ---------------------
-    @Override public int newStock() {
-        int resultVal = 0;
-        if (stockCompetRep.findAll().isEmpty()){
-            
-            // ----- MISE A JOUR MAIN-DATA -----
-            
-                MainData md = returnMainData();
-                //Vérification qu'il y a bien une main-data de créée
-                if(md.getId() == 0){
-                    resultVal = 1; //Pas de main-data créée
-                }else{
-                    Long id = stockCompetRep.save(new StockCompetition()).getId();
-                    md.setIdStockCompet(stockCompetRep.getOne(id));
-                    mainDataRep.save(md);
-                    resultVal = 2;      //mise à jour de la main-data ok et nouveau stock
-                }   
-        }
-        return resultVal;
-    }
-    @Override public List<StockCompetition> listStock() {
-        return stockCompetRep.findAll();
-    }
-    @Override public StockCompetition findByIdStock(Long id) {
-        if (stockCompetRep.existsById(id)){
-            return stockCompetRep.getOne(id);
-        }else{
-            return null;
-        }
-    }
-    @Override public int supprStock(Long id) {
-        int resultVal = 0;
-        if (id!=1){
-            if (stockCompetRep.existsById(id)){
-
-                // ----- MISE A JOUR MAIN-DATA -----
-                for (MainData d : mainDataRep.findByIdStockCompet(id)){
-                    Long st = 1L;
-                    d.setIdStockCompet(stockCompetRep.getOne(st));
-                    mainDataRep.save(d);
-                }
-                stockCompetRep.delete(stockCompetRep.getOne(id));
-                resultVal = 2;
-            }else{
-                resultVal = 1;
-            }
-        }
-        return resultVal;
-    }
-    @Override public int updateStock(FormStock editStockCompet) {
-        int resultVal = 0;
-        if (stockCompetRep.existsById(editStockCompet.getId())){
-            
-            int annee = Calendar.getInstance().get(Calendar.YEAR);
-            int mois = Calendar.getInstance().get(Calendar.MONTH);
-            String strMois = getMois(mois); //Valeur String du mois
-            
-            //Récupération de l'année de début de saison selon le mois
-            if (mois<6){
-                annee = annee - 1;
-            }
-            
-            if (returnMainData().getIdSaison().getAnneeDebut() == annee) {
-                ConsoMois cm = returnMainData().getIdSaison().getConsoMois("Compétition", strMois);
-                cm.setNbTubeUtilise(cm.getNbTubeUtilise() + editStockCompet.getAjout());
-                
-                StockCompetition sc = stockCompetRep.getOne(editStockCompet.getId());          
-                sc.setStock(editStockCompet.getStock() + editStockCompet.getAjout());  
-                stockCompetRep.save(sc);
-                resultVal = 2;
-            }else{
-                resultVal = 3;
-            }
-        }else{
-            resultVal = 1;
-        }
-        return resultVal;
-    }
     
 
     // -------------------   FONCTIONS SAISON ---------------------
@@ -656,6 +578,55 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     }
     
     
+    @Override public int saveRestock(FormRestock newRestock) {
+        int resultVal = 0;
+        if(newRestock.getValeur()!=0){
+            Restock rs = restockRep.save(new Restock(
+                                newRestock.getValeur(),
+                                saisonRep.getOne(newRestock.getIdSaison()),
+                                returnMainData(),
+                                consoMoisRep.getOne(newRestock.getIdConsoMois())));
+            if(rs!=null) resultVal = 2;
+        }
+        return resultVal;
+    }
+    @Override public List<Restock> listRestock() {return restockRep.findAll();}
+    @Override public Restock findByIdRestock(Long id) {
+        if (restockRep.existsById(id)){
+            return restockRep.getOne(id);
+        }else{
+            return null;
+        }
+    }
+    @Override public int supprRestock(Long id) {
+        int resultVal = 0;
+        if (restockRep.existsById(id)){
+            restockRep.deleteById(id);
+            resultVal = 2;
+        }else{
+            resultVal = 1; //N'existe pas dans la BDD.
+        }     
+        return resultVal;
+    }
+
+    @Override public int updateRestock(FormRestock editRestock) {
+        int resultVal = 0;
+        if(restockRep.existsById(editRestock.getId())){
+            Restock rs = restockRep.getOne(editRestock.getId());
+            rs.setValeur(editRestock.getValeur());
+            rs.setIdConsoMois(consoMoisRep.getOne(editRestock.getIdConsoMois()));
+            
+            restockRep.save(rs);
+            resultVal = 2;
+        }else{
+            resultVal = 1;
+        }
+        return resultVal;
+    }
+    
+    
+    
+    
     // -------------------   FONCTIONS TYPE-VOLANT ---------------------
     @Override public int saveTypeVolant(FormTypeVolant newTypeVolant) {
         int resultVal = 0;
@@ -680,7 +651,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     @Override public int supprTypeVolant(Long id) {
         int resultVal = 0;
         if (typeVolantRep.existsById(id)){     
-            typeVolantRep.delete(typeVolantRep.getOne(id));
+            typeVolantRep.deleteById(id);
             resultVal = 2;
         }else{
             resultVal = 1;
@@ -691,7 +662,6 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         int resultVal = 0;
         if (typeVolantRep.existsById(editTypeVolant.getId())){  
             TypeVolant ct = typeVolantRep.getOne(editTypeVolant.getId());
-                //ct.setIdTypeTube(typeTubeRep.getOne(editTypeVolant.getIdTypeTube()));
                 ct.setStock(editTypeVolant.getStock());
 
                 typeVolantRep.save(ct);
@@ -727,9 +697,8 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         if(mainDataRep.existsById(id)) {
             resultVal = 3;
             MainData md = mainDataRep.getOne(id);
-            if (md.getIdSaison().getId()==1
-            && md.getIdStockCompet().getId()==1){
-                mainDataRep.delete(md);
+            if (md.getIdSaison().getId()==1){
+                mainDataRep.deleteById(id);
                 resultVal = 2;  
             }
         }else{
@@ -761,7 +730,6 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             }
             
             md.setIdSaison(sNew);
-            md.setIdStockCompet(stockCompetRep.getOne(editMainData.getIdStockCompet()));
             resultVal = 2;//mise à jour de la main-data
             
             
@@ -818,7 +786,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         List<MainData> data = mainDataRep.findAll();
         MainData md = new MainData(0);
         if (!data.isEmpty()){
-            //Si la liste est non vide on vérifi laquelle est active
+            //Si la liste est non vide on vérifie laquelle est active
             for(MainData d : data){
                 if(d.isActif()){
                     //on retourne la data active
@@ -885,7 +853,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             MainData md = returnMainData();
             if(md.getId()>0){
                 String nomTypeTube = typeTubeRep.getOne(id).getNom();
-                typeTubeRep.delete(typeTubeRep.getOne(id));
+                typeTubeRep.deleteById(id);
                 long value = 1;
                 
                 switch(nomTypeTube){
@@ -948,132 +916,34 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             case "Compétition" ->   md.setIdTTCompetition(typeTubeRep.getOne(id));
         }
     }
-
     
-    
+    //Créer les 3 type Volant
     private int createTypeVolant() {
         int resultVal = 4;
-        
-        int result = 1000 + saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTPlastique().getId()));
-//        if (result==122){
-//            resultVal = resultVal + 1000;
-//        }else{
-//            return resultVal + result;
-//        }
-        result = result + 1000 + saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTEntrainement().getId()));
-//        if (result==122){
-//            resultVal = resultVal + 1000;
-//        }else{
-//            return resultVal + result;
-//        }
-        result = result + 1000 + saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTCompetition().getId()));
-//        if (result==122){
-//            resultVal = resultVal + 1000;
-//        }else{
-//            return resultVal + result;
-//        }
-        System.out.println(">> result = " + result);
+        saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTPlastique().getId()));
+        saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTEntrainement().getId()));
+        saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTCompetition().getId()));
         return resultVal;
     }
 
+    //Créer les 12 ConsoMois
     private int createConsoMois(TypeVolant idTypeVolant) {
         int resultVal = 2;
         PrixTube idPrixTube = idTypeVolant.getIdTypeTube().getPrixTubeActif();
-        
-        int result = saveConsoMois(new FormConsoMois(NomMois.AOUT.toString(), idPrixTube.getId(), idTypeVolant.getId()));
-//        if (result==2){
-//            resultVal = resultVal + 10;
-//        }else{
-//            return resultVal;
-//        }
-        result = result + saveConsoMois(new FormConsoMois(NomMois.SEPTEMBRE.toString(), idPrixTube.getId(), idTypeVolant.getId()));
-//        if (result==2){
-//            resultVal = resultVal + 10;
-//        }else{
-//            return resultVal;
-//        }
-        result = result + saveConsoMois(new FormConsoMois(NomMois.OCTOBRE.toString(), idPrixTube.getId(), idTypeVolant.getId()));
-//        if (result==2){
-//            resultVal = resultVal + 10;
-//        }else{
-//            return resultVal;
-//        }
-        result = result + saveConsoMois(new FormConsoMois(NomMois.NOVEMBRE.toString(), idPrixTube.getId(), idTypeVolant.getId()));
-//        if (result==2){
-//            resultVal = resultVal + 10;
-//        }else{
-//            return resultVal;
-//        }
-        result = result + saveConsoMois(new FormConsoMois(NomMois.DECEMBRE.toString(), idPrixTube.getId(), idTypeVolant.getId()));
-//        if (result==2){
-//            resultVal = resultVal + 10;
-//        }else{
-//            return resultVal;
-//        }
-        result = result + saveConsoMois(new FormConsoMois(NomMois.JANVIER.toString(), idPrixTube.getId(), idTypeVolant.getId()));
-//        if (result==2){
-//            resultVal = resultVal + 10;
-//        }else{
-//            return resultVal;
-//        }
-        result = result + saveConsoMois(new FormConsoMois(NomMois.FEVRIER.toString(), idPrixTube.getId(), idTypeVolant.getId()));
-//        if (result==2){
-//            resultVal = resultVal + 10;
-//        }else{
-//            return resultVal;
-//        }
-        result = result + saveConsoMois(new FormConsoMois(NomMois.MARS.toString(), idPrixTube.getId(), idTypeVolant.getId()));
-//        if (result==2){
-//            resultVal = resultVal + 10;
-//        }else{
-//            return resultVal;
-//        }
-        result = result + saveConsoMois(new FormConsoMois(NomMois.AVRIL.toString(), idPrixTube.getId(), idTypeVolant.getId()));
-//        if (result==2){
-//            resultVal = resultVal + 10;
-//        }else{
-//            return resultVal;
-//        }
-        result = result + saveConsoMois(new FormConsoMois(NomMois.MAI.toString(), idPrixTube.getId(), idTypeVolant.getId()));
-//        if (result==2){
-//            resultVal = resultVal + 10;
-//        }else{
-//            return resultVal;
-//        }
-        result = result + saveConsoMois(new FormConsoMois(NomMois.JUIN.toString(), idPrixTube.getId(), idTypeVolant.getId()));
-//        if (result==2){
-//            resultVal = resultVal + 10;
-//        }else{
-//            return resultVal;
-//        }
-        result = result + saveConsoMois(new FormConsoMois(NomMois.JUILLET.toString(), idPrixTube.getId(), idTypeVolant.getId()));
-//        if (result==2){
-//            resultVal = resultVal + 10;
-//        }else{
-//            return resultVal;
-//        }
-        resultVal = 100 + (result/2);
-
+        saveConsoMois(new FormConsoMois(NomMois.AOUT.toString(), idPrixTube.getId(), idTypeVolant.getId()));
+        saveConsoMois(new FormConsoMois(NomMois.SEPTEMBRE.toString(), idPrixTube.getId(), idTypeVolant.getId()));
+        saveConsoMois(new FormConsoMois(NomMois.OCTOBRE.toString(), idPrixTube.getId(), idTypeVolant.getId()));
+        saveConsoMois(new FormConsoMois(NomMois.NOVEMBRE.toString(), idPrixTube.getId(), idTypeVolant.getId()));
+        saveConsoMois(new FormConsoMois(NomMois.DECEMBRE.toString(), idPrixTube.getId(), idTypeVolant.getId()));
+        saveConsoMois(new FormConsoMois(NomMois.JANVIER.toString(), idPrixTube.getId(), idTypeVolant.getId()));
+        saveConsoMois(new FormConsoMois(NomMois.FEVRIER.toString(), idPrixTube.getId(), idTypeVolant.getId()));
+        saveConsoMois(new FormConsoMois(NomMois.MARS.toString(), idPrixTube.getId(), idTypeVolant.getId()));
+        saveConsoMois(new FormConsoMois(NomMois.AVRIL.toString(), idPrixTube.getId(), idTypeVolant.getId()));
+        saveConsoMois(new FormConsoMois(NomMois.MAI.toString(), idPrixTube.getId(), idTypeVolant.getId()));
+        saveConsoMois(new FormConsoMois(NomMois.JUIN.toString(), idPrixTube.getId(), idTypeVolant.getId()));
+        saveConsoMois(new FormConsoMois(NomMois.JUILLET.toString(), idPrixTube.getId(), idTypeVolant.getId()));
         return resultVal;
     }
     
-    //Retourne le nom du mois en String afin de comparer avec un NomMois
-    //Attention numMois commence à 0 et fini à 11
-    private String getMois(int numMois) {
-        switch (numMois) {
-            default : return "Janvier";
-            case 1 : return "Février";
-            case 2 : return "Mars";
-            case 3 : return "Avril";
-            case 4 : return "Mai";
-            case 5 : return "Juin";
-            case 6 : return "Juillet";
-            case 7 : return "Août";
-            case 8 : return "Septembre";
-            case 9 : return "Octobre";
-            case 10 : return "Novembre";
-            case 11 : return "Décembre";
-            
-        }
-    }
+    
 }

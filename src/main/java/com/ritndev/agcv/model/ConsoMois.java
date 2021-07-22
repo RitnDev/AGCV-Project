@@ -2,12 +2,16 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
@@ -60,6 +64,18 @@ public class ConsoMois implements Serializable {
     
     
     
+    //Liste des restockages du conso-mois
+    @OneToMany(targetEntity=Restock.class, mappedBy="idConsoMois", cascade=CascadeType.REMOVE)
+    @Getter @Setter private List<Restock> restocks = new ArrayList<>();
+    
+    //Liste des commandes de ce PrixTube
+    @OneToMany(targetEntity=Commande.class, mappedBy="idConsoMois")
+    @Getter @Setter private List<Commande> commandes = new ArrayList<>();
+    
+    
+    
+    
+    
     //Constructeur
     public ConsoMois() {}
 
@@ -82,8 +98,19 @@ public class ConsoMois implements Serializable {
         Methodes
     */
     
+    public int showTubesUtilises() {
+        int value = 0;
+        for (Restock rs : restocks) {
+            value = value + rs.getValeur();
+        }
+        for (Commande c : commandes) {
+            value = value + c.getNbTubeCommande();
+        }
+        return nbTubeUtilise + value;
+    }
+    
     public double getCoutUtilises() {
-        return nbTubeUtilise * idPrixTube.getPrix();
+        return showTubesUtilises() * idPrixTube.getPrix();
     }
     public String getStringCoutUtilises() {
         return String.format("%.2f", getCoutUtilises());

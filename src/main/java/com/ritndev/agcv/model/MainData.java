@@ -2,12 +2,16 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -38,11 +42,6 @@ public class MainData implements Serializable {
     @OneToOne
     @JoinColumn(name="idSaison", nullable = false)
     @Getter @Setter private Saison idSaison;
-
-    //ID du sstock de competition actuel
-    @OneToOne
-    @JoinColumn(name = "idStockCompet", nullable = false)
-    @Getter @Setter private StockCompetition idStockCompet;
     
     //Valeur du budget previsionnel par défaut
     @Column(name = "budgetDefault", nullable = false)
@@ -70,7 +69,16 @@ public class MainData implements Serializable {
     //ID du sstock de competition actuel
     @Column(name = "actif", nullable = false)
     @Getter @Setter private boolean actif = true;
-       
+    
+    //Liste des competitions de la saison
+    @OneToMany(targetEntity=Competition.class, mappedBy="idStock", cascade=CascadeType.REMOVE)
+    @Getter @Setter private List<Competition> competitions = new ArrayList<>();
+    
+    //Liste des competitions de la saison
+    @OneToMany(targetEntity=Restock.class, mappedBy="idStock", cascade=CascadeType.REMOVE)
+    @Getter @Setter private List<Restock> restocks = new ArrayList<>();
+    
+    
     
     
     //Constructeur
@@ -80,10 +88,9 @@ public class MainData implements Serializable {
         this.id = id;
     }
 
-    public MainData(Saison idSaison, StockCompetition idStockCompet, boolean actif) {
+    public MainData(Saison idSaison, boolean actif) {
         this.idSaison = idSaison;
-        this.idStockCompet = idStockCompet;
-        this.budgetDefault = 1000.00;
+        this.budgetDefault = 3000.00;
         this.actif = actif;
     }
     
@@ -107,5 +114,17 @@ public class MainData implements Serializable {
         return null;
     }
     
+    //Stock competition
+    public int showStock() {
+        int moins = 0;
+        int plus = 0;
+        for(Competition c : competitions){
+            moins = moins + c.getNbTubesUtilises();
+        }
+        for(Restock rs : restocks){
+            plus = plus + rs.getValeur();
+        }
+        return 0 - moins + plus ;
+    }
     
 }

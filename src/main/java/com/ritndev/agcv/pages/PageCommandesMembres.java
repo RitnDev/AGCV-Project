@@ -1,7 +1,10 @@
 package com.ritndev.agcv.pages;
 
+import com.ritndev.agcv.InterfaceService.IMainDataService;
 import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.form.FormCommande;
+import com.ritndev.agcv.model.Saison;
+import com.ritndev.agcv.utils.MoisUtils;
 import java.security.Principal;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
@@ -28,10 +31,23 @@ public class PageCommandesMembres extends Page{
     }
     
     
-    public String getPage() {
+    public String getPage(IMainDataService dataService) {
+        
+        Saison saisonActuelle = dataService.returnMainData().getIdSaison();
+        String strMois = MoisUtils.moisCourant();
+
+        
+        
+        FormCommande newCommande = new FormCommande(
+                            strMois,
+                            saisonActuelle.getConsoMois("Compétition", strMois).getIdPrixTube().getId(),
+                            saisonActuelle.getId(), 
+                            saisonActuelle.getConsoMois("Compétition", strMois).getId());
+        
         // Add Attribute :
         getPageGenerique();
-        super.getModel().addAttribute("newCommande", new FormCommande());
+        super.getModel().addAttribute("newCommande", newCommande);
+        super.getModel().addAttribute("saison", saisonActuelle);
         
         return returnPage();
     }

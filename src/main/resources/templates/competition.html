@@ -9,6 +9,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
         <script type="text/javascript" th:src="@{/js/competition-popup.js}" charset="utf-8" defer></script>
+        <script type="text/javascript" th:src="@{/js/stock-popup.js}" charset="utf-8" defer></script>
     </head>
 
 
@@ -37,21 +38,15 @@
                                 <span th:text="#{texte.page.competition.table.stock.titre}"></span>
                             </th>
                         </tr>
-                        <tr th:if="${stock!=null}">
+                        <tr>
                             <th>Stock</th>
-                            <th>Dernière modif</th>
+                            <!--th>Dernière modif</th-->
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:if="${stock!=null}">
-                            <td th:text="${stock.showStock}"></td>
-                            <td th:text="${stock.horodatage}"></td>
-                        </tr>
-                        <tr th:if="${stock==null}">
-                            <td colspan="2">Aucun stock de compétition créé</td>
-                        </tr>
-                        <tr th:if="${stock==null}">
-                            <td colspan="2">Contacter un super-admin pour le créer !</td>
+                        <tr>
+                            <td th:text="${stock}"></td>
+                            <!--td th:text="${stock.horodatage}"></td-->
                         </tr>
                     </tbody>
                 </table>
@@ -106,6 +101,9 @@
         <!-- pop-up section -->
         <div id="bg-popup" class="bg-popup-competition">
             <div th:replace="fragments/competition/layout-popup-new :: compet"/>
+        </div>
+        <div id="bg-popup" class="bg-popup-stock">
+            <div th:replace="fragments/stock/layout-popup-new :: stock"/>
         </div>
       
         <div th:replace="fragments/layout-footer :: footer">...</div>

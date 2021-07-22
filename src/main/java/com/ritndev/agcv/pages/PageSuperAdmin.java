@@ -30,13 +30,11 @@ public class PageSuperAdmin extends Page {
        
         Link newData = new Link("Nouvelle MAIN-DATA", "/newData", "topnav-menu-data");
         Link newUser = new Link("Nouvel utilisateur", "#", "topnav-menu-user");
-        Link newStock = new Link("Nouveau stock de competition", "/newStock", "topnav-menu-data");
         Link newTypeTube = new Link("Nouveau Type de tube", "#", "topnav-menu-typetube");
         
         Link[] menu = new Link[] {
             newData,
             newUser,
-            newStock,
             newTypeTube,
         };
         super.setMenu(menu);

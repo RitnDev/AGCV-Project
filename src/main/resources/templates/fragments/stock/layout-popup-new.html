@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+        
+<!-- ------------------------------------------ POPUP EDITION STOCK-COMPETITION -------------------------------------------------- -->
+        
+        <div th:fragment="stock">
+            <div id="popup-content" class="popup-content-stock">
+                <table class="popup-header">
+                    <tr>
+                        <td class="popup-header-titre">
+                            <h3 th:text="#{texte.pop.new.stock.titre}"></h3>
+                        </td>
+                        <td class="popup-header-close">
+                            <img id="close-stock" class="button-close" src="/images/popup/button-close.png">
+                        </td>
+                    </tr>
+                </table>
+                
+                <form th:action="@{/newRestock}" th:object="${newStock}" method="post">
+                        
+                    <table class="popup-form">
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="stock" th:text="#{texte.pop.new.stock.saison}"></label>
+                            </td>
+                            <td class="popup-form-input">
+                                <span id="stock" th:text="${saison}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="mois" th:text="#{texte.pop.new.stock.mois}"></label>
+                            </td>
+                            <td class="popup-form-input">
+                                <select id="mois" th:field="*{idConsoMois}">
+                                <option th:each="m : ${saison.getTypeVolantName('Compétition').getConsommationsMois}" th:value="${m.id}" th:text="${m.toString()}" ></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="stock" th:text="#{texte.pop.new.stock.stock}"></label>
+                            </td>
+                            <td class="popup-form-input">
+                                <span id="stock" th:text="${stock}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
+                                <label for="ajout" th:text="#{texte.pop.new.stock.valeur}"></label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="ajout" type="number" th:value="*{valeur}" th:field="*{valeur}" min="0" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="popup-form-submit">
+                                <input type="hidden" th:value="*{idSaison}" th:field="*{idSaison}" />
+                                <input type="hidden" th:value="*{idStock}" th:field="*{idStock}" />
+                                <input class="popup-form-submit-button" type="submit" th:value="#{texte.pop.new.stock.submit}"/>                             
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    
+                </form>
+                
+            </div>
+        </div>        
+        
+
+</html>

@@ -47,13 +47,17 @@ public class PageAdmin extends Page {
         
         Saison saisonActuelle = dataService.returnMainData().getIdSaison();
         
-        FormTypeVolant ftvPlastique = saisonActuelle.getFormVolantName(NomTypeTube.PLASTIQUE.toString());
-        FormTypeVolant ftvCompetition = saisonActuelle.getFormVolantName(NomTypeTube.COMPETITION.toString());
-        FormTypeVolant ftvEntrainement = saisonActuelle.getFormVolantName(NomTypeTube.ENTRAINEMENT.toString());
+        FormTypeVolant ftvPlastique = null;
+        FormTypeVolant ftvCompetition = null;
+        FormTypeVolant ftvEntrainement = null;
         
+        if (!saisonActuelle.getTypeVolants().isEmpty()) {
+            ftvPlastique = saisonActuelle.getFormVolantName(NomTypeTube.PLASTIQUE.toString());
+            ftvCompetition = saisonActuelle.getFormVolantName(NomTypeTube.COMPETITION.toString());
+            ftvEntrainement = saisonActuelle.getFormVolantName(NomTypeTube.ENTRAINEMENT.toString());
+        }
         double budgetDefault = dataService.returnMainData().getBudgetDefault();
         int seuilBas = dataService.returnMainData().getSeuilBas();
-        
         
         // Add Attribute :
         getPageGenerique();

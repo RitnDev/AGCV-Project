@@ -132,7 +132,6 @@ input.footer-log:hover {
 .popup-content-edit-user, 
 .popup-content-edit-saison,
 .popup-content-edit-data,
-.popup-content-edit-stock,
 .popup-content-edit-mdp,
 .popup-content-edit-membre,
 .popup-content-edit-compet,
@@ -143,7 +142,8 @@ input.footer-log:hover {
 .popup-content-edit-consomois-nbc,
 .popup-content-edit-prixtube,
 .popup-content-edit-commande,
-.popup-content-profil,
+.popup-content-edit-commande-suite,
+.popup-content-stock,
 .popup-content-typetube,
 .popup-content-typevolant,
 .popup-content-consomois,
@@ -167,7 +167,11 @@ input.footer-log:hover {
 }
 .popup-content-commande {
     width: 650px;
-    height: 300px;
+    height: 250px;
+}
+.popup-content-edit-commande-suite {
+    width: 650px;
+    height: 250px;
 }
 .popup-content-edit-commande {
     width: 525px;
@@ -239,11 +243,11 @@ input.footer-log:hover {
 }
 .popup-content-edit-membre {
     width: 380px;
-    height: 215px;
+    height: 255px;
 }
 .popup-content-edit-data {
     width: 450px;
-    height: 260px;
+    height: 210px;
 }
 .popup-content-saison {
     width: 500px;
@@ -253,9 +257,9 @@ input.footer-log:hover {
     width: 500px;
     height: 180px;
 }
-.popup-content-edit-stock {
+.popup-content-stock {
     width: 400px;
-    height: 210px;
+    height: 290px;
 }
 
 /* animation d'ouverture / fermeture :      */

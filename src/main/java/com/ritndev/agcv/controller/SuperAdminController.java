@@ -2,7 +2,6 @@ package com.ritndev.agcv.controller;
 
 import com.ritndev.agcv.InterfaceService.IMainDataService;
 import com.ritndev.agcv.InterfaceService.ISaisonService;
-import com.ritndev.agcv.InterfaceService.IStockService;
 import com.ritndev.agcv.InterfaceService.ITypeTubeService;
 import com.ritndev.agcv.InterfaceService.IUserService;
 import java.security.Principal;
@@ -46,7 +45,6 @@ public class SuperAdminController {
     
     @Autowired private IUserService userService;
     @Autowired private IMainDataService dataService;
-    @Autowired private IStockService stockService;
     @Autowired private ITypeTubeService typeTubeService;
     @Autowired private ISaisonService saisonService;
     
@@ -64,7 +62,6 @@ public class SuperAdminController {
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -92,7 +89,6 @@ public class SuperAdminController {
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -115,7 +111,6 @@ public class SuperAdminController {
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -133,11 +128,10 @@ public class SuperAdminController {
         
         //Recupération de la DATA à modifier :
         MainData editData = dataService.findByIdMainData(id);
-        FormData formData = new FormData(id, editData.getIdSaison().getId(), editData.getIdStockCompet().getId(), editData.isActif());
+        FormData formData = new FormData(id, editData.getIdSaison().getId(), editData.isActif());
         model.addAttribute("editData", formData);
         model.addAttribute("numAction", ActionsTypes.EDIT_DATA.toString());
         model.addAttribute("listSaison", saisonService.listSaison());
-        model.addAttribute("listStock", stockService.listStock());
                 
         PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
@@ -160,7 +154,6 @@ public class SuperAdminController {
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -169,57 +162,6 @@ public class SuperAdminController {
 
     }
     
-// ---------------------------- STOCK COMPET -------------------------------------  
-    
-    
-    //Creation d'un nouveau stock de competition
-    @GetMapping("/newStock")
-    public String newStock(Model model, Principal principal) {
-        int result = stockService.newStock();
-        
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
-        pageSuperAdmin.addReponse("stock", "create", result);
-        
-        Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
-        }
-        
-        model.addAttribute("mainData", dataService.listMainData());
-        model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
-        model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("roleList", userService.listRole());
-        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
-        
-        return pageSuperAdmin.getPage();
-    }
-    
-    
-    
-    //Supprimer une stock de competition
-    @DeleteMapping("/stock/{id}")
-    public String supprStock(@PathVariable(value = "id") Long id, Model model, Principal principal) {
-        int result = stockService.supprStock(id);
-        
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
-        pageSuperAdmin.addReponse("stock", "remove", result);
-        
-        Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
-        }
-        
-        model.addAttribute("mainData", dataService.listMainData());
-        model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
-        model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("roleList", userService.listRole());
-        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
-        
-        return pageSuperAdmin.getPage();
-    }
- 
     
     
 // ---------------------------- TYPE TUBE -------------------------------------  
@@ -240,7 +182,6 @@ public class SuperAdminController {
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -265,7 +206,6 @@ public class SuperAdminController {
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -308,7 +248,6 @@ public class SuperAdminController {
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -343,7 +282,6 @@ public class SuperAdminController {
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -375,7 +313,6 @@ public class SuperAdminController {
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -425,7 +362,6 @@ public class SuperAdminController {
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -449,7 +385,6 @@ public class SuperAdminController {
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("userList", userService.listUser());
-        model.addAttribute("stockList", stockService.listStock());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());

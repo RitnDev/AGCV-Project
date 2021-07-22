@@ -3,8 +3,11 @@ package com.ritndev.agcv.pages;
 import com.ritndev.agcv.InterfaceService.IMainDataService;
 import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.form.FormCompet;
+import com.ritndev.agcv.form.FormRestock;
+import com.ritndev.agcv.model.ConsoMois;
 import com.ritndev.agcv.model.Saison;
-import com.ritndev.agcv.model.StockCompetition;
+import com.ritndev.agcv.model.enumeration.NomTypeTube;
+import com.ritndev.agcv.utils.MoisUtils;
 
 import java.security.Principal;
 import org.springframework.context.MessageSource;
@@ -25,7 +28,7 @@ public class PageCompetition extends Page {
 
         
         Link competition = new Link("Nouvelle compétition", "#", "topnav-menu-compet"); 
-        Link stock = new Link("Ajuster le stock", "/stockCompet", "topnav-menu-stock");
+        Link stock = new Link("Ajuster le stock", "#", "topnav-menu-stock");
         
         Link[] menu = new Link[] {
             competition,
@@ -37,14 +40,19 @@ public class PageCompetition extends Page {
     
     public String getPage(IMainDataService dataService) {       
         
+        String strMois = MoisUtils.moisCourant();
         Saison saisonActuelle = dataService.returnMainData().getIdSaison();
-        StockCompetition stockActuel = dataService.returnMainData().getIdStockCompet();
-
+        ConsoMois consoMoisActu = saisonActuelle.getConsoMois(NomTypeTube.COMPETITION.toString(), strMois);
+        
         // Add Attribute :
         getPageGenerique();
         super.getModel().addAttribute("newCompetition", new FormCompet());
+        super.getModel().addAttribute("newStock", new FormRestock(
+                                                            saisonActuelle.getId(),
+                                                            dataService.returnMainData().getId(), 
+                                                            consoMoisActu.getId()));
         super.getModel().addAttribute("saison", saisonActuelle);
-        super.getModel().addAttribute("stock", stockActuel);
+        super.getModel().addAttribute("stock", dataService.returnMainData().showStock());
                 
         return returnPage();
     }

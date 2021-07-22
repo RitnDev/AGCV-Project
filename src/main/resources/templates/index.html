@@ -26,7 +26,13 @@
             </div>
             <br/>
             
-            <table class="table-saison">
+            <!-- pas de saison en cours -->
+            <div th:if="${saison.toString.isEmpty}">
+                <div th:text="#{texte.page.index.noSaison.text1}"/><br/>
+                <div th:text="#{texte.page.index.noSaison.text2}"/><br/>
+            </div>
+            
+            <div th:if="${!saison.toString.isEmpty}"><table class="table-saison">
                 
                 <tr>
                     <td class="table-saison">
@@ -101,7 +107,7 @@
                         </div>
                     </td>
                 </tr>
-            </table>
+            </table></div>
             
         </div>
       

@@ -50,9 +50,6 @@ public class MembreController {
     //Création d'un nouveau membre
     @PostMapping("/admin/newMembre")
     public String newMembre(@ModelAttribute FormMembre newMembre, Model model, Principal principal) {
-        
-        model.addAttribute("listMembres", membreService.listMembre());   
-        
         PageMembre pageMembre = new PageMembre(model, principal, messageSource);
         
         int result = membreService.saveMembre(newMembre);
@@ -60,6 +57,7 @@ public class MembreController {
         
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
         
+        model.addAttribute("listMembres", membreService.listMembre()); 
         return pageMembre.getPage(connect);
     }
     
@@ -67,9 +65,6 @@ public class MembreController {
     //Supprimer un membre
     @DeleteMapping("/admin/membre/{id}")
     public String supprMembre(@PathVariable(value = "id") Long id, Model model, Principal principal) {       
-
-        model.addAttribute("listMembres", membreService.listMembre());
-       
         PageMembre pageMembre = new PageMembre(model, principal, messageSource);
         
         int result = membreService.supprMembre(id);
@@ -77,15 +72,13 @@ public class MembreController {
         
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
 
+        model.addAttribute("listMembres", membreService.listMembre());
         return pageMembre.getPage(connect);
     }
     
     //Modifier un membre
     @PutMapping("/admin/membre/{id}")
     public String editMembre(@ModelAttribute FormMembre putMembre, Model model, Principal principal) {   
-        
-        model.addAttribute("listMembres", membreService.listMembre());
-       
         PageMembre pageMembre = new PageMembre(model, principal, messageSource);
         
         int result = membreService.updateMembre(putMembre);
@@ -93,6 +86,7 @@ public class MembreController {
         
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
 
+        model.addAttribute("listMembres", membreService.listMembre());
         return pageMembre.getPage(connect);
     }
     
@@ -107,7 +101,7 @@ public class MembreController {
         
         //Recupération du membre à modifier :
         Membre editMembre = membreService.findByIdMembre(id);
-        FormMembre formMembre = new FormMembre(id, editMembre.getPrenom(), editMembre.getNom());
+        FormMembre formMembre = new FormMembre(id, editMembre.getPrenom(), editMembre.getNom(), editMembre.isActif());
         model.addAttribute("editMembre", formMembre);
         model.addAttribute("numAction", ActionsTypes.EDIT_MEMBRE.toString());
                 

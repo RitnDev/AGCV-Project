@@ -47,6 +47,11 @@ public class Membre implements Serializable {
     @Getter @Setter
     private String nom;
     
+    //Si ce membre est toujours utilisé pour les commandes ?
+    @Column(name = "actif", nullable = false)
+    @Getter @Setter
+    private boolean actif;
+    
     //Liste des commande du membre
     @OneToMany(targetEntity=Commande.class, mappedBy="idMembre")
     @Getter @Setter private List<Commande> commandes = new ArrayList<>();
@@ -59,6 +64,7 @@ public class Membre implements Serializable {
     public Membre(String prenom, String nom) {
         this.prenom = prenom;
         this.nom = nom;
+        this.actif = true;
     }
 
     

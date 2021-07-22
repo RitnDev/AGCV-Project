@@ -74,6 +74,9 @@ public class PrixTube implements Serializable {
     @OneToMany(targetEntity=ConsoMois.class, mappedBy="idPrixTube")
     @Getter @Setter private List<ConsoMois> consommationsMois = new ArrayList<>();
     
+    //Liste des commandes de ce PrixTube
+    @OneToMany(targetEntity=Commande.class, mappedBy="idPrixTube")
+    @Getter @Setter private List<Commande> commandes = new ArrayList<>();
     
     
     

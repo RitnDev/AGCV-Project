@@ -102,7 +102,7 @@ public class TypeVolant implements Serializable {
     public int getTotalNbTubesUtilises() {
         int total = 0;
         for(ConsoMois cm : consommationsMois){
-            total = total + cm.getNbTubeUtilise();
+            total = total + cm.showTubesUtilises();
         }
         return total;
     }

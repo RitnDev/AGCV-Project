@@ -11,7 +11,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MainDataRepository extends JpaRepository<MainData, Long> {
     
     public List<MainData> findByActifTrue();
-    
-    public List<MainData> findByIdStockCompet(long idStockCompet);
-    
+        
 }

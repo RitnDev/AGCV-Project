@@ -41,6 +41,14 @@
                             </td>
                         </tr>
                         <tr>
+                            <td class="popup-form-label">
+                                <label for="actif" th:text="#{texte.pop.edit.membre.actif}"></label>
+                            </td>
+                            <td class="popup-form-input">
+                                <input id="actif" name="actif" type="checkbox" th:checked="*{actif}"/>
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="2" class="popup-form-submit">
                                 <input type="hidden" name="_method" value="put"/>
                                 <input type="hidden" th:value="*{id}" th:field="*{id}" />

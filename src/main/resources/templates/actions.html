@@ -58,6 +58,9 @@
         <div th:if="${editConsoMois != null}" id="bg-popup-action" class="bg-popup-edit-consomois-nbc">
             <div th:replace="fragments/ConsoMois/layout-popup-edit :: consomois-nbc"/>
         </div>
+        <div th:if="${newCommande != null}" id="bg-popup-action" class="bg-popup-edit-commande-suite">
+            <div th:replace="fragments/commande/layout-popup-new :: commande-suite"/>
+        </div>
       
         <div th:replace="fragments/layout-footer :: footer"/>
         
@@ -65,7 +68,7 @@
         <script th:inline="javascript">
             /*<![CDATA[*/
                 var numAction = [[${numAction}]];
-                                
+                
                 const popupEdit = document.querySelector(".popup-content-edit-" + numAction.toString());
                 const bgEdit = document.querySelector('.bg-popup-edit-' + numAction.toString());
                 bgEdit.style.display = 'flex';

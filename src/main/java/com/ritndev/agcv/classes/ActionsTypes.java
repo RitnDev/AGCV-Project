@@ -65,6 +65,10 @@ public enum ActionsTypes {
     EDIT_CONSOMOIS_NBC(14){
         @Override  
         public String toString() {return "consomois-nbc";}; 
+    },
+    ADD_COMMANDE(15){
+        @Override  
+        public String toString() {return "commande-suite";}; 
     };
     
     

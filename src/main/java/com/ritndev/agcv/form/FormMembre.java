@@ -1,5 +1,8 @@
 package com.ritndev.agcv.form;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  *
  * @author Ritn
@@ -7,19 +10,16 @@ package com.ritndev.agcv.form;
 public class FormMembre {
     
     // ID
-    private Long id;
-    public Long getId() {return id;}
-    public void setId(Long id) {this.id = id;}
+    @Getter @Setter private Long id;
     
     // Prenom du membre à créer
-    private String prenom;
-    public String getPrenom() {return prenom;}
-    public void setPrenom(String prenom) {this.prenom = prenom;}
+    @Getter @Setter private String prenom;
     
     // Nom du membre à créer
-    private String nom;
-    public String getNom() {return nom;}
-    public void setNom(String nom) {this.nom = nom;}
+    @Getter @Setter private String nom;
+    
+    // Membre actif ?
+    @Getter @Setter private boolean actif;
     
     
     // Constructeur
@@ -30,10 +30,11 @@ public class FormMembre {
         this.nom = nom;
     }
 
-    public FormMembre(Long id, String prenom, String nom) {
+    public FormMembre(Long id, String prenom, String nom, boolean actif) {
         this.id = id;
         this.prenom = prenom;
         this.nom = nom;
+        this.actif = actif;
     }
        
     

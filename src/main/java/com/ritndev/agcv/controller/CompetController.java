@@ -2,7 +2,7 @@ package com.ritndev.agcv.controller;
 
 import com.ritndev.agcv.InterfaceService.ICompetitionService;
 import com.ritndev.agcv.InterfaceService.IMainDataService;
-import com.ritndev.agcv.InterfaceService.IStockService;
+import com.ritndev.agcv.InterfaceService.IRestockService;
 import com.ritndev.agcv.InterfaceService.IUserService;
 import java.security.Principal;
 import org.springframework.ui.Model;
@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.classes.ActionsTypes;
 import com.ritndev.agcv.form.FormCompet;
-import com.ritndev.agcv.form.FormStock;
+import com.ritndev.agcv.form.FormRestock;
 import com.ritndev.agcv.model.Competition;
-import com.ritndev.agcv.model.StockCompetition;
 import com.ritndev.agcv.pages.PageCompetition;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,7 +32,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CompetController {
     
     @Autowired private ICompetitionService competitionService;
-    @Autowired private IStockService stockService;
+    @Autowired private IRestockService restockService;
     @Autowired private IMainDataService dataService;
     @Autowired private IUserService userService;
     
@@ -158,12 +157,12 @@ public class CompetController {
     
     
     //Modifier une stock de competition
-    @PutMapping("/stock/{id}")
-    public String editStock(@ModelAttribute FormStock putStock, Model model, Principal principal) {
-       int result = stockService.updateStock(putStock);
+    @PostMapping("/newRestock")
+    public String editStock(@ModelAttribute FormRestock putStock, Model model, Principal principal) {
+       int result = restockService.saveRestock(putStock);
         
         PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
-        pageCompet.addReponse("stock", "edit", result);
+        pageCompet.addReponse("stock", "create", result);
         
         int AdminConnect = 0;
         if (!pageCompet.returnUser(principal).equals("")){
@@ -176,21 +175,6 @@ public class CompetController {
         model.addAttribute("AdminConnect", AdminConnect);
         
         return pageCompet.getPage(dataService);
-
-    }
-    
-    
-    @GetMapping("/stockCompet")
-    public String editStockCompet(Model model, Principal principal) {
-        
-        StockCompetition stock = dataService.returnMainData().getIdStockCompet();
-        FormStock editStock = new FormStock(stock.getId(), stock.getStock());
-        
-        model.addAttribute("editStock", editStock);
-        model.addAttribute("numAction", ActionsTypes.EDIT_STOCK.toString());
-        
-        PageActions pageAction = new PageActions(model, principal, messageSource);
-        return pageAction.returnPage();
     }
     
 }
