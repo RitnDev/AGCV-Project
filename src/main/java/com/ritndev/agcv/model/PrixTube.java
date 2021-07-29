@@ -111,6 +111,14 @@ public class PrixTube implements Serializable {
     public String getPrixComment(){
         return prix + " | " + prixMembre;
     }
+    
+    public String getPrixtubeDevise(String devise) {
+        if (!marque.equals("")){
+            return marque + " : " + getPrixString() + devise;
+        }else{
+            return getPrixString() + devise;
+        }
+    }
        
     
     @Override

@@ -9,6 +9,7 @@ import com.ritndev.agcv.model.ConsoMois;
 import com.ritndev.agcv.pages.PageIndex;
 import com.ritndev.agcv.pages.PageActions;
 import java.security.Principal;
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -46,12 +47,13 @@ public class ConsoMoisController {
         ConsoMois editConsoMois = consoMoisService.findByIdConsoMois(id);
         FormConsoMois formConsoMois = new FormConsoMois(id,
                                     editConsoMois.getNom(),
-                                    editConsoMois.getIdPrixTube().getId());
+                                    editConsoMois.getIdPrixTube().getId(),
+                                    editConsoMois.getIdTypeVolant().getNomTypeTube());
          
         model.addAttribute("editConsoMois", formConsoMois);
         model.addAttribute("listPrixTubes", prixTubeService.ListPrixTubeName(editConsoMois.getIdTypeVolant().getNomTypeTube()));
         model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS_PT.toString());
-
+        model.addAttribute("devise", messageSource.getMessage("texte.global.devise", null, Locale.FRENCH));
         
         PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();

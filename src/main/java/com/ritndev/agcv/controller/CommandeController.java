@@ -11,6 +11,7 @@ import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.pages.PageCommandesMembres;
 
 import java.security.Principal;
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -45,7 +46,6 @@ public class CommandeController {
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
         
         model.addAttribute("Membres", membreService.listMembreActif());
-        model.addAttribute("Commandes", commandeService.listCommande());
         
         return pageCommandesMembres.getPage(dataService);
     }
@@ -56,11 +56,13 @@ public class CommandeController {
     @PostMapping("/newCommande")
     public String newCommande1(@ModelAttribute FormCommande newCommande, Model model, Principal principal) {
        
+        String devise = messageSource.getMessage("texte.global.devise", null, Locale.FRENCH);
+        
         ConsoMois consoMois = dataService.returnMainData().getIdSaison().getConsoMois("Compétition", newCommande.getNomMois());
         newCommande.setIdPrixTube(consoMois.getIdPrixTube().getId());
         newCommande.setIdConsoMois(consoMois.getId());
         
-        model.addAttribute("prixtube", consoMois.getIdPrixTube().toString());
+        model.addAttribute("prixtube", "(" + consoMois.getIdTypeVolant().toString() + ") " + consoMois.getIdPrixTube().getPrixtubeDevise(devise));
         model.addAttribute("newCommande", newCommande);
         model.addAttribute("numAction", ActionsTypes.ADD_COMMANDE.toString());
               
@@ -76,7 +78,6 @@ public class CommandeController {
         pageCommandesMembres.addReponse("commande", "create", result);
         
         model.addAttribute("Membres", membreService.listMembreActif());
-        model.addAttribute("Commandes", commandeService.listCommande());
         
         return pageCommandesMembres.getPage(dataService);
     }
@@ -92,7 +93,6 @@ public class CommandeController {
         pageCommandesMembres.addReponse("commande", "remove", result);
         
         model.addAttribute("Membres", membreService.listMembreActif());
-        model.addAttribute("Commandes", commandeService.listCommande());
         
         return pageCommandesMembres.getPage(dataService);
     }
@@ -106,7 +106,6 @@ public class CommandeController {
         pageCommandesMembres.addReponse("commande", "edit", result);
         
         model.addAttribute("Membres", membreService.listMembreActif());
-        model.addAttribute("Commandes", commandeService.listCommande());
         
         return pageCommandesMembres.getPage(dataService);
     }

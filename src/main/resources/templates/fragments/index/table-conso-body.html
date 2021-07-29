@@ -20,6 +20,7 @@
             <span th:if="${volant!='Compétition'}" >
                 <form 
                     action="#" 
+                    th:if="${saison.actuelle}"
                     th:action="@{/mois/nbu/{id}(id=${saison.getConsoMois(volant, mois.toString()).id})}" 
                     th:method="post">
 
@@ -28,6 +29,8 @@
                            type="submit" 
                            th:value="${saison.getConsoMois(volant, mois.toString()).showTubesUtilises}"/>
                 </form>
+                <span th:if="${!saison.actuelle}"
+                      th:text="${saison.getConsoMois(volant, mois.toString()).showTubesUtilises}"/>
             </span>
             <span th:if="${volant=='Compétition'}" th:text="${saison.getConsoMois(volant, mois.toString()).showTubesUtilises}"/>
         </td>
@@ -43,6 +46,7 @@
         <td class="table-tv-nbc">
             <form 
                 action="#" 
+                th:if="${saison.actuelle}"
                 th:action="@{/mois/nbc/{id}(id=${saison.getConsoMois(volant, mois.toString()).id})}" 
                 th:method="post">
 
@@ -51,6 +55,8 @@
                     type="submit" 
                     th:value="${saison.getConsoMois(volant, mois.toString()).nbTubeCommande}"/>
             </form>
+            <span th:if="${!saison.actuelle}"
+                      th:text="${saison.getConsoMois(volant, mois.toString()).nbTubeCommande}"/>
         </td>
 
         <td class="table-tv-cc">
@@ -65,6 +71,7 @@
 
             <form 
                 action="#" 
+                th:if="${saison.actuelle}"
                 th:action="@{/mois/prix/{id}(id=${saison.getConsoMois(volant, mois.toString()).id})}" 
                 th:method="post">
 
@@ -73,6 +80,8 @@
                     type="submit" 
                     th:value="${saison.getPrixTube(volant, mois.toString()).getPrixString} + #{texte.global.devise}"/>
             </form>
+            <span th:if="${!saison.actuelle}"
+                  th:text="${saison.getPrixTube(volant, mois.toString()).getPrixString} + #{texte.global.devise}"/>
         </td>
 
 

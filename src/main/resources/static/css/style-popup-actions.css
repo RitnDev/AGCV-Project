@@ -1,0 +1,257 @@
+/*
+    style-popup-action.css
+    ----------------------
+*/
+
+
+
+/* 
+ -> Tableaux - popup 
+*/
+
+/* HEADER */ 
+
+table.popup-header {
+  border-collapse: collapse;
+  width: 100%; 
+}
+
+td.popup-header-titre, td.popup-header-close {
+  text-align: center;
+}
+
+td.popup-header-close {
+  width: 9%;
+}
+
+td.popup-header-titre {
+  padding-left: 45px;
+}
+
+tr.popup-header {
+  background-color: transparent
+}
+
+
+/*  FORM    */
+
+table.popup-form {
+  border-collapse: collapse;
+  border-radius: 12px;
+  width: 95%; 
+  text-align: left;
+  color: #101720;
+  background-color: #bbd5ea;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+}
+
+td.popup-form-label, td.popup-form-input {
+  padding: 8px;
+  padding-top: 12px;
+  text-align: left;
+}
+
+td.popup-form-label {
+  padding-left: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  width:55%;
+}
+
+td.popup-form-submit {
+  text-align:center;
+  padding-top: 20px;
+  padding-bottom: 13px;
+}
+
+.popup-form-submit-button {
+  padding: 8px 10px;
+  min-width: 200px;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+  background-image: linear-gradient(to right, #1b4cb8,#18a5ff);
+  color: #fff;
+}
+
+.popup-form-submit-button:hover {
+  transform: translateY(-2px);
+}
+
+
+/* FORM Commande (suite) */
+
+
+input#nbTubeCommande {
+  height: 20px;
+  width: 45px;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 20px 1px #356adeb0;
+}
+input#regler {
+  margin-left: 0;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 20px 1px #356ade;
+}
+
+
+input#nbTubeCommande:hover{
+  box-shadow: 0 0 20px 1px #1b4cb8;
+}
+input#regler:hover {
+  box-shadow: 0 0 20px 4px #1b4cb8;
+}
+
+
+
+
+/* Fond de page */
+
+#bg-popup {
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+#bg-popup h3, p {
+    color: #101720;
+    background-color: #e6e7e8;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 25px;
+    margin:5px;
+}
+
+#bg-popup-action {
+    background-color: rgba(0, 0, 0, 0.9);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+#bg-popup-action h3, p {
+    color: #101720;
+    background-color: #e6e7e8;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 25px;
+    margin:5px;
+}
+
+/*  En-tête de la popup :  */
+.button-close {
+    float: right;
+    display: block;
+    width: 30px;
+    border: 2px #e6e7e8 solid;
+    border-radius: 4px;
+    margin: 5px;
+}
+.button-close:hover {
+    transform: rotate(15deg);
+}
+
+
+
+/*    Taille des popup  */
+.popup-content-edit-commande-suite {
+    width: 650px;
+    height: 250px;
+}
+.popup-content-edit-commande {
+    width: 525px;
+    height: 180px;
+}
+.popup-content-edit-compet {
+    width: 430px;
+    height: 220px;
+}
+.popup-content-edit-typevolant {
+    width: 430px;
+    height: 215px;
+}
+.popup-content-edit-consomois {
+  width: 500px;
+  height: 265px;
+}
+.popup-content-edit-consomois-nbu {
+    width: 420px;
+    height: 180px;
+}
+.popup-content-edit-consomois-nbc {
+    width: 420px;
+    height: 180px;
+}
+.popup-content-edit-typetube {
+    width: 500px;
+    height: 225px;
+}
+.popup-content-edit-prixtube {
+    width: 500px;
+    height: 295px;
+}
+.popup-content-edit-user {
+    width: 380px;
+    height: 250px;
+}
+.popup-content-edit-mdp {
+    width: 500px;
+    height: 295px;
+}
+.popup-content-edit-membre {
+    width: 380px;
+    height: 255px;
+}
+.popup-content-edit-data {
+    width: 450px;
+    height: 210px;
+}
+.popup-content-edit-saison {
+    width: 500px;
+    height: 180px;
+}
+
+
+/*     Animation de la popup     */
+#popup-content.open {
+  animation: open 0.5s forwards;
+}
+
+/*  Ouverture   */
+@keyframes open {
+  0% {transform: scale(0);}
+  50% {transform: scale(1.2);}
+}
+
+/* BACKGROUND */
+.popup-content-edit-user, 
+.popup-content-edit-saison,
+.popup-content-edit-data,
+.popup-content-edit-mdp,
+.popup-content-edit-membre,
+.popup-content-edit-compet,
+.popup-content-edit-typetube,
+.popup-content-edit-typevolant,
+.popup-content-edit-consomois,
+.popup-content-edit-consomois-nbu,
+.popup-content-edit-consomois-nbc,
+.popup-content-edit-prixtube,
+.popup-content-edit-commande,
+.popup-content-edit-commande-suite {
+    background-color: #e6e7e8;
+    opacity: 1;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 0 100px 1px #e6e7e880;
+}

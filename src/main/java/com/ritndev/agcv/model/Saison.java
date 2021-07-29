@@ -132,12 +132,52 @@ public class Saison implements Serializable {
         return String.format("%.2f", getCoutTotalUtilises());
     }
     
-    //Coût total des volants commandés par les membres sur une saison
-    public double getCoutCommandesMembres() {
-        return 0.0;
+    //Coût total des volants commandés par les membres sur une saison (membre)
+    public double getMontantCommandesMembres() {
+        double total = 0.0;
+        for (Commande c : commandes){
+            total = total + c.getPrixCommandeMembre();
+        }
+        return total;
     }
-    public String getStringCoutCommandesMembres() {
-        return String.format("%.2f", getCoutCommandesMembres());
+    public String getStringMontantCommandesMembres() {
+        return String.format("%.2f", getMontantCommandesMembres());
+    }
+    
+    //Coût total des volants commandés par les membres sur une saison (club)
+    public double getMontantCommandesClub() {
+        double total = 0.0;
+        for (Commande c : commandes){
+            total = total + c.getPrixCommandeClub();
+        }
+        return total;
+    }
+    public String getStringMontantCommandesClub() {
+        return String.format("%.2f", getMontantCommandesClub());
+    }
+    
+    //Montant total restant à payé par les membres sur la saison
+    public double getMontantRestant() {
+        double total = 0.0;
+        for (Commande c : commandes){
+            total = total + c.getMontantRestant();
+        }
+        return total;
+    }
+    public String getStringMontantRestant() {
+        return String.format("%.2f", getMontantRestant());
+    }
+    
+    //Montant total des commandes déduit apres membre
+    public double getMontantDeduit() {
+        double total = 0.0;
+        for (Commande c : commandes){
+            total = total + c.getDeductionClub();
+        }
+        return total;
+    }
+    public String getStringMontantDeduit() {
+        return String.format("%.2f", getMontantDeduit());
     }
     
     
@@ -161,12 +201,19 @@ public class Saison implements Serializable {
         return getTypeVolantName(nomVolant).getConsoMoisName(mois).getIdPrixTube();
     }
     
-    
+    //Renvoie le FormTypeVolant par le nom du typeVolant
     public FormTypeVolant getFormVolantName(String nom) {
         TypeVolant tv = getTypeVolantName(nom);
         return new FormTypeVolant(tv.getId(), nom, tv.getStock());
     }
     
-    
+    //Nombres de tubes utilisés pour des compétitions dans la saison
+    public int getNbTubesCompet() {
+        int total = 0;
+        for (Competition c : competitions){
+            total = total + c.getNbTubesUtilises();
+        }
+        return total;
+    }
     
 }

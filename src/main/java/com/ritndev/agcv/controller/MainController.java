@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import com.ritndev.agcv.pages.PageHistoSaison;
 import com.ritndev.agcv.pages.PageIndex;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,16 +40,6 @@ public class MainController {
         PageIndex pageIndex = new PageIndex(model, principal, messageSource);
         return pageIndex.getPage(dataService);
     }
-  
-    
-//--------------   Page Historique des saisons précédentes   ------------------
-    
-    @GetMapping(value = "/histoSaison")
-    public String histoSaison(Model model, Principal principal){
-        PageHistoSaison pageHistoSaison = new PageHistoSaison(model, principal, messageSource);
-        return pageHistoSaison.getPage(); 
-    }
-    
     
     
 //--------------   MODIFICATION DU MOT DE PASSE UTILISATEUR   ------------------    

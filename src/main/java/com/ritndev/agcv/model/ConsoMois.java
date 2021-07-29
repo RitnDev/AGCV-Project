@@ -110,7 +110,17 @@ public class ConsoMois implements Serializable {
     }
     
     public double getCoutUtilises() {
-        return showTubesUtilises() * idPrixTube.getPrix();
+        double totalMembre = 0.0;
+        
+        if (idPrixTube.getIdTypeTube().isCommande()) {
+            int value = 0;
+            for (Commande c : commandes) {
+                value = value + c.getNbTubeCommande();
+            }
+            totalMembre = value * idPrixTube.getPrixMembre();
+        }
+               
+        return (showTubesUtilises() * idPrixTube.getPrix()) - totalMembre;
     }
     public String getStringCoutUtilises() {
         return String.format("%.2f", getCoutUtilises());

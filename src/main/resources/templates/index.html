@@ -32,82 +32,8 @@
                 <div th:text="#{texte.page.index.noSaison.text2}"/><br/>
             </div>
             
-            <div th:if="${!saison.toString.isEmpty}"><table class="table-saison">
-                
-                <tr>
-                    <td class="table-saison">
-                        
-                        <div class="std-table">
-
-                            <table class="std-table-index">
-
-                                <thead th:replace="fragments/index/table-conso-header :: head" />
-                                <tbody th:replace="fragments/index/table-conso-body :: body" />
-
-                            </table>
-
-                        </div>
-                    </td>
-                    <td class="table-saison-resume">
-                        
-                        <div class="std-table">
-
-                            <table class="std-table-index">
-                                
-                                <thead>
-                                    <tr>
-                                        <th colspan="2">
-                                            <span th:text="#{texte.page.index.resume.label}"></span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                
-                                <tbody>
-                                    <!-- Budget prévisionnel -->
-                                    <tr>
-                                        <td class="table-label-resume">
-                                            <span th:text="#{texte.page.index.resume.budget}"></span>
-                                        </td>
-                                        <td>
-                                            <span th:text="${saison.getBudgetString} + #{texte.global.devise}"></span>
-                                        </td>
-                                    </tr>
-                                    <!-- Total commandes club -->
-                                    <tr>
-                                        <td class="table-label-resume">
-                                            <span th:text="#{texte.page.index.resume.commandeClub}"></span>
-                                        </td>
-                                        <td>
-                                            <span th:text="${saison.getStringCoutTotalCommandesClub} + #{texte.global.devise}"></span>
-                                        </td>
-                                    </tr>
-                                    <!-- Total utilises -->
-                                    <tr>
-                                        <td class="table-label-resume">
-                                            <span th:text="#{texte.page.index.resume.utilise}"></span>
-                                        </td>
-                                        <td>
-                                            <span th:text="${saison.getStringCoutTotalUtilises} + #{texte.global.devise}"></span>
-                                        </td>
-                                    </tr>
-                                    <!-- Total commandes membres -->
-                                    <tr>
-                                        <td class="table-label-resume">
-                                            <span th:text="#{texte.page.index.resume.commandeMembre}"></span>
-                                        </td>
-                                        <td>
-                                            <span th:text="${saison.getStringCoutCommandesMembres} + #{texte.global.devise}"></span>
-                                        </td>
-                                    </tr>
-                                    
-                                    
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </td>
-                </tr>
-            </table></div>
+            <!-- tableau de consomation de la saison -->
+            <div th:replace="fragments/table-conso-saison :: table-conso"/>
             
         </div>
       

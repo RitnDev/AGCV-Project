@@ -25,11 +25,19 @@
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">
+                                <label for="typeVolant" th:text="#{texte.pop.edit.moisPrix.typeVolant}"></label>
+                            </td>
+                            <td class="popup-form-input">
+                                <span id="typeVolant" th:text="*{typeVolant}" ></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="popup-form-label">
                                 <label for="prixTube" th:text="#{texte.pop.edit.moisPrix.prixTube}"></label>
                             </td>
                             <td class="popup-form-input">
                                 <select id="prixTube" th:field="*{idPrixTube}">
-                                <option th:each="pt : ${listPrixTubes}" th:value="${pt.id}" th:text="${pt.toString()}"></option>
+                                <option th:each="pt : ${listPrixTubes}" th:value="${pt.id}" th:text="${pt.getPrixtubeDevise(devise)}"></option>
                                 </select>
                             </td>
                         </tr>

@@ -1,0 +1,292 @@
+/*
+style-popup.css
+---------
+*/
+
+
+/* 
+ -> Tableaux - popup 
+*/
+
+/* HEADER */ 
+
+table.popup-header {
+  border-collapse: collapse;
+  width: 100%; 
+}
+
+td.popup-header-titre, td.popup-header-close {
+  text-align: center;
+}
+
+td.popup-header-close {
+  width: 9%;
+}
+
+td.popup-header-titre {
+  padding-left: 45px;
+}
+
+tr.popup-header {
+  background-color: transparent
+}
+
+
+/*  FORM    */
+
+table.popup-form {
+  border-collapse: collapse;
+  border-radius: 12px;
+  width: 95%; 
+  text-align: left;
+  color: #101720;
+  background-color: #bbd5ea;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+}
+
+td.popup-form-label, td.popup-form-input {
+  padding: 8px;
+  padding-top: 12px;
+  text-align: left;
+}
+
+td.popup-form-label {
+  padding-left: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  width:55%;
+}
+
+td.popup-form-submit {
+  text-align:center;
+  padding-top: 20px;
+  padding-bottom: 13px;
+}
+
+.popup-form-submit-button {
+  padding: 8px 10px;
+  min-width: 200px;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+  background-image: linear-gradient(to right, #1b4cb8,#18a5ff);
+  color: #fff;
+}
+
+.popup-form-submit-button:hover {
+  transform: translateY(-2px);
+}
+
+
+
+/* FORM Commande */
+
+select#membre {
+  height: 22px;
+  width: 85%;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 10px 1px #356adeb0;
+}
+select#mois {
+  height: 22px;
+  width: 85%;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 10px 1px #356adeb0;
+}
+
+
+select#membre:hover,
+select#mois:hover {
+  box-shadow: 0 0 20px 1px #1b4cb8;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Pour pop-up des formulaire ---------------------------------------------------------- */
+
+#bg-popup {
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+#bg-popup h3, p {
+    color: #101720;
+    background-color: #e6e7e8;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 25px;
+    margin:5px;
+}
+
+#bg-popup-action {
+    background-color: rgba(0, 0, 0, 0.9);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+#bg-popup-action h3, p {
+    color: #101720;
+    background-color: #e6e7e8;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 25px;
+    margin:5px;
+}
+
+
+
+/*  En-tête de la popup :  */
+
+.button-close {
+    float: right;
+    display: block;
+    width: 30px;
+    border: 2px #e6e7e8 solid;
+    border-radius: 4px;
+    margin: 5px;
+}
+.button-close:hover {
+    transform: rotate(15deg);
+}
+
+
+/* 
+    Animation de la popup     
+*/
+
+#popup-content.open {
+  animation: open 0.5s forwards;
+}
+
+#popup-content.close {
+  animation: close 0.5s forwards;
+}
+
+
+/*  Ouverture   */
+@keyframes open {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/*    Fermeture     */
+@keyframes close {
+  100% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/**************/
+
+
+
+/*  Taille des popup    */
+
+.popup-content-commande {
+    width: 650px;
+    height: 250px;
+}
+.popup-content-competition {
+    width: 430px;
+    height: 220px;
+}
+.popup-content-typevolant {
+    width: 430px;
+    height: 215px;
+}
+.popup-content-consomois {
+    width: 420px;
+    height: 335px;
+}
+.popup-content-typetube {
+    width: 500px;
+    height: 225px;
+}
+.popup-content-prixtube {
+    width: 500px;
+    height: 295px;
+}
+.popup-content-user {
+    width: 500px;
+    height: 260px;
+}
+.popup-content-membre {
+    width: 380px;
+    height: 215px;
+}
+.popup-content-saison {
+    width: 500px;
+    height: 255px;
+}
+.popup-content-stock {
+    width: 400px;
+    height: 290px;
+}
+
+
+/* BACKGROUND */
+
+.bg-popup-profil,
+.bg-popup-commande,
+.bg-popup-typetube,
+.bg-popup-typevolant,
+.bg-popup-consomois,
+.bg-popup-prixtube,
+.bg-popup-membre,
+.bg-popup-user,
+.bg-popup-saison,
+.bg-popup-competition{
+    display: none;
+}
+ 
+.popup-content-stock,
+.popup-content-typetube,
+.popup-content-typevolant,
+.popup-content-consomois,
+.popup-content-prixtube,
+.popup-content-membre,
+.popup-content-user,
+.popup-content-saison,
+.popup-content-competition,
+.popup-content-commande {
+    background-color: #e6e7e8;
+    opacity: 1;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 0 100px 1px #e6e7e880;
+}

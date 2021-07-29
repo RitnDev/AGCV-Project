@@ -47,7 +47,7 @@ public class MainData implements Serializable {
     @Column(name = "budgetDefault", nullable = false)
     @Getter @Setter private double budgetDefault;
     
-    //Valeur du budget previsionnel par défaut
+    //Valeur du seuil bas avant avertissement de restockage (commande club)
     @Column(name = "seuilBas", nullable = false)
     @Getter @Setter private int seuilBas;
     

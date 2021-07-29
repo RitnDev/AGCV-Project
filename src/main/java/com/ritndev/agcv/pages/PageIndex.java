@@ -27,7 +27,7 @@ public class PageIndex extends Page {
         super.setAdminPage(true);
         super.addLinks(returnLink("commandesMembres"));
         super.addLinks(returnLink("competition"));
-        super.addLinks(returnLink("histoSaison"));
+        super.addLinks(returnLink("histo"));
         
     }
     

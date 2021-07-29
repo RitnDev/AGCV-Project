@@ -2,6 +2,7 @@ package com.ritndev.agcv.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -63,7 +64,13 @@ public class Competition implements Serializable {
         this.nom = nom;
     }
     
+    /*
+        Méthodes
+    */
     
+    public String getDateCompetition() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(horodatage);
+    }
     
     
 }

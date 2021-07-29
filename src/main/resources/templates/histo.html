@@ -16,7 +16,11 @@
       
         <div class="main-content">
             <br/>
-            <div th:utext="${message}"> !</div>
+            
+            
+            <!-- tableau de consomation de la saison -->
+            <div th:replace="fragments/table-conso-saison :: table-conso"/>
+            
         </div>
       
         <div th:replace="fragments/layout-footer :: footer">...</div>

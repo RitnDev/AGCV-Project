@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        
+        
+<!----------------------- liste des compétitions ----------------------->
+
+<td class="table-compet" th:fragment="list">
+    
+    <div class="std-table">
+        <table>
+            <thead>
+                <tr>
+                    <th class="table-label" colspan="4" th:text="#{texte.page.competition.table.compet.titre}"></th>
+                </tr>
+                <tr>
+                    <th th:text="#{texte.page.competition.table.compet.date}"/>
+                    <th th:text="#{texte.page.competition.table.compet.nom}"/>
+                    <th th:text="#{texte.page.competition.table.compet.nbUtilises}"/>
+                    <th class="table-action" th:text="#{texte.global.page.action}"/>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${saison.getCompetitions.empty}">
+                    <td colspan="4" th:text="#{texte.page.competition.table.compet.noCompet}"></td>
+                </tr>
+                <tr th:each="compet : ${saison.getCompetitions}">
+                    <td><span th:text="${compet.getDateCompetition}"></span></td>
+                    <td><span th:text="${compet.nom}"></span></td>
+                    <td><span th:text="${compet.nbTubesUtilises}"></span></td>
+                    <td class="table-action">
+                        <table class="action-input">
+                            <tr>
+                                <td class="action-input">
+                                    <form action="#" th:action="@{/compet/{id}(id=${compet.id})}" th:method="post">
+                                        <input type="hidden" name="_method" value="delete"/>
+                                        <input id="action-input" type="submit" value="Suppr"/>
+                                    </form>
+                                </td><td class="action-input">|</td>
+                                <td class="action-input">
+                                    <form action="#" th:action="@{/compet/{id}(id=${compet.id})}" th:method="post">
+                                        <input id="action-input" type="submit" value="Edit"/>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</td>
+     
+<!-- ----------------------------------------------------------------------------------- --> 
+    
+    </body>
+</html>

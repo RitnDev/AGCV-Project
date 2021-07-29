@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        
+        
+<!----------------------- liste des commandes ----------------------->
+
+<td class="table-commande" th:fragment="list-commandes">
+
+    <div class="std-table">
+        <table>
+            <thead>
+                <tr>
+                    <th class="table-label" colspan="7" th:text="#{texte.page.commandesMembres.table.titre}"/>
+                </tr>
+                <tr>
+                    <th th:text="#{texte.page.commandesMembres.table.date}"/>
+                    <th th:text="#{texte.page.commandesMembres.table.membre}"/>
+                    <th th:title="#{texte.page.commandesMembres.title.prixtube}"
+                        th:text="#{texte.page.commandesMembres.table.prixtube}"/>
+                    <th th:text="#{texte.page.commandesMembres.table.nbtube}"/>
+                    <th th:title="#{texte.page.commandesMembres.title.prix}" 
+                        th:text="#{texte.page.commandesMembres.table.prix}"/>
+                    <th th:text="#{texte.page.commandesMembres.table.regler}"/>
+                    <th class="table-action" th:text="#{texte.global.page.action}"/>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${saison.commandes.empty}">
+                    <td colspan="7" th:text="#{texte.page.commandesMembres.table.noCommande}"/>
+                </tr>
+                <tr th:each="commande : ${saison.commandes}">
+                    <td>
+                        <span th:text="${commande.getDateCommande}"/>
+                    </td>
+                    <td>
+                        <span th:text="${commande.idMembre}"/>
+                    </td>
+                    <td title="prix club | prix membre">
+                        <span th:text="${commande.idPrixTube.getPrixComment}"/>
+                    </td>
+                    <td>
+                        <span th:text="${commande.nbTubeCommande}"/>
+                    </td>
+                    <td th:title="${commande.nbTubeCommande + ' x ' + commande.idPrixTube.getPrixMembreString}">
+                        <span th:text="${commande.getStringPrixCommandeMembre} + #{texte.global.devise}"/>
+                    </td>
+                    <td th:class="${commande.getClassRegler}">
+                        <span th:text="${commande.getRegler}"/>
+                    </td>
+                    <td class="table-action">
+                        <table class="action-input">
+                            <tr>
+                                <td class="action-input">
+                                    <form action="#" th:action="@{/commande/{id}(id=${commande.id})}" th:method="post">
+                                        <input type="hidden" name="_method" value="delete"/>
+                                        <input id="action-input" type="submit" value="Suppr"/>
+                                    </form>
+                                </td><td class="action-input">|</td>
+                                <td class="action-input">
+                                    <form action="#" th:action="@{/commande/{id}(id=${commande.id})}" th:method="post">
+                                        <input id="action-input" type="submit" value="Edit"/>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        
+</td>
+     
+<!-- ----------------------------------------------------------------------------------- --> 
+    
+    </body>
+</html>

@@ -21,7 +21,7 @@ public class PageActions extends Page{
     
     public String getPage() {
         // Add Attribute :
-        getPageGenerique();
+        getPageGenerique();        
         return returnPage();
     }
     

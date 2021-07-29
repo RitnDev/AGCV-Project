@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        
+        
+<!----------------------- résumé commandes ----------------------->
+
+<td class="table-commande-resume" th:fragment="resume-commandes">
+                 
+    <div class="std-table">
+
+        <table class="std-table-index">
+
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        <span th:text="#{texte.page.commandesMembres.resume.label}"></span>
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!-- Montant commandes club -->
+                <tr>
+                    <td class="table-label-resume">
+                        <span th:text="#{texte.page.commandesMembres.resume.commandeClub}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${saison.getStringMontantCommandesClub} + #{texte.global.devise}"></span>
+                    </td>
+                </tr>
+                <!-- Montant commandes membres -->
+                <tr>
+                    <td class="table-label-resume">
+                        <span th:text="#{texte.page.commandesMembres.resume.commandeMembre}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${saison.getStringMontantCommandesMembres} + #{texte.global.devise}"></span>
+                    </td>
+                </tr>
+                <!-- Montant commandes restant à payé -->
+                <tr>
+                    <td class="table-label-resume">
+                        <span th:text="#{texte.page.commandesMembres.resume.restant}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${saison.getStringMontantRestant} + #{texte.global.devise}"></span>
+                    </td>
+                </tr>
+                <!-- Montant payé par le club apres déduction des membres-->
+                <tr>
+                    <td class="table-label-resume">
+                        <span th:text="#{texte.page.commandesMembres.resume.deduc}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${saison.getStringMontantDeduit} + #{texte.global.devise}"></span>
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+
+    </div>
+        
+</td>
+     
+<!-- ----------------------------------------------------------------------------------- --> 
+    
+    </body>
+</html>

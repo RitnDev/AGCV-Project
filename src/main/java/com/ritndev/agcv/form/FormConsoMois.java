@@ -19,9 +19,13 @@ public class FormConsoMois {
     @Getter @Setter
     private long idPrixTube;
     
-    //id de la reference à la conse de tube (type de tube utilise)
+    //id du type volant utilises lors de ce mois-ci
     @Getter @Setter
     private long idTypeVolant;
+    
+    //Nom du type volant de ce conso mois
+    @Getter @Setter
+    private String typeVolant;
     
     //Nombre de tubes utilises ce mois-ci
     @Getter @Setter
@@ -39,10 +43,11 @@ public class FormConsoMois {
     //Constructeur
     public FormConsoMois() {}
 
-    public FormConsoMois(long id, String nom, long idPrixTube) {
+    public FormConsoMois(long id, String nom, long idPrixTube, String typeVolant) {
         this.id = id;
         this.nom = nom;
         this.idPrixTube = idPrixTube;
+        this.typeVolant = typeVolant;
     }
 
     public FormConsoMois(long id, String nom, int nbTubeUtilise) {
@@ -62,7 +67,8 @@ public class FormConsoMois {
         this.idPrixTube = idPrixTube;
         this.idTypeVolant = idTypeVolant;
     }
-    
+
+
     
     
 }

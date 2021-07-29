@@ -25,14 +25,19 @@ public class FormTypeVolant {
     @Getter @Setter
     private int stock;
     
+    //id de la saison
+    @Getter @Setter
+    private long idSaison;
+    
     
     //Constructeur
 
     public FormTypeVolant() {}
 
-    public FormTypeVolant(int stock, long idTypeTube) {
+    public FormTypeVolant(int stock, long idTypeTube, long idSaison) {
         this.idTypeTube = idTypeTube;
         this.stock = stock;
+        this.idSaison = idSaison;
     }
     
     public FormTypeVolant(long id, String nom, int stock) {

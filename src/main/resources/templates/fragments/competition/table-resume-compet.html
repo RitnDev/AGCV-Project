@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        
+        
+<!----------------------- résumé de la partie compétition ----------------------->
+
+<td class="table-compet-resume" th:fragment="resume">
+    
+    <!-- affichage du stock competiton actuel -->
+    <div class="std-table">
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        <span th:text="#{texte.page.competition.resume.label}"></span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="table-label-resume" th:text="#{texte.page.competition.resume.nbCompet}"></td>
+                    <td th:text="${saison.competitions.size}"></td>
+                </tr>
+                <tr>
+                    <td class="table-label-resume" th:text="#{texte.page.competition.resume.nbTubesCompet}"></td>
+                    <td th:text="${saison.getNbTubesCompet}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</td>
+     
+<!-- ----------------------------------------------------------------------------------- --> 
+    
+    </body>
+</html>

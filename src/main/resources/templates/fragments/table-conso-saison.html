@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        
+        <div th:fragment="table-conso" th:if="${!saison.toString.isEmpty}"><table class="table-saison">
+                
+                <tr>
+                    <td class="table-saison">
+                        
+                        <div class="std-table">
+
+                            <table class="std-table-index">
+
+                                <thead th:replace="fragments/index/table-conso-header :: head" />
+                                <tbody th:replace="fragments/index/table-conso-body :: body" />
+
+                            </table>
+
+                        </div>
+                    </td>
+                    <td class="table-saison-resume">
+                        
+                        <div th:replace="fragments/index/table-conso-resume :: resume" />
+                        
+                    </td>
+                </tr>
+            </table></div>
+        
+    </body>
+</html>

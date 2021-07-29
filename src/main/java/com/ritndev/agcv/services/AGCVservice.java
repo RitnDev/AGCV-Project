@@ -40,20 +40,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     @Autowired TypeTubeRepository typeTubeRep;
     @Autowired RestockRepository restockRep;
     
-    
-    
-    // Initialisation des Repositories 
-    public void setCommandeRep (CommandeRepository commandeRep) {this.commandeRep = commandeRep;}
-    public void setCompetitionRep (CompetitionRepository competitionRep) {this.competitionRep = competitionRep;}
-    public void setConsoMoisRep (ConsoMoisRepository consoMoisRep) {this.consoMoisRep = consoMoisRep;}
-    public void setMembreRepository (MembreRepository membreRep) {this.membreRep = membreRep;}
-    public void setPrixTubeRep (PrixTubeRepository prixTubeRep) {this.prixTubeRep = prixTubeRep;}
-    public void setSaisonRep (SaisonRepository saisonRep) {this.saisonRep = saisonRep;}
-    public void setTypeVolantRep (TypeVolantRepository typeVolantRep) {this.typeVolantRep = typeVolantRep;}
-    public void setMainDataRep (MainDataRepository mainDataRep) {this.mainDataRep = mainDataRep;}
-    public void setTypeTubeRep (TypeTubeRepository typeTubeRep) {this.typeTubeRep = typeTubeRep;}
-    public void setRestockRep (RestockRepository restockRep) {this.restockRep = restockRep;}
-    
+
     
     // -------------------   FONCTIONS MEMBRES ---------------------
     @Override public int saveMembre(FormMembre newMembre) {
@@ -398,7 +385,8 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 4 = Saison créée avec succès. Cette saison devient la nouvelle saison active !
     */
     @Override public int saveSaison(FormSaison newSaison) {
-        int resultVal = 0; 
+        int resultVal = 0;
+        long idSaison = 0;
         
         //Est-ce possible de créer la saison ?
         if(newSaison != null 
@@ -408,6 +396,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             
             if (!saisonRep.existsByAnneeDebut(newSaison.getAnnee_debut())) {
                 Saison sNew = saisonRep.save(new Saison(newSaison.getAnnee_debut(), newSaison.getBudget(), newSaison.isActuelle()));
+                idSaison = sNew.getId(); //recupération de l'id pour la création des TypeVolant
                 resultVal = 2;
                 
                 if (sNew.isActuelle()){
@@ -452,8 +441,10 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 resultVal = 3; //Saison existe déjà (année de début)
             }
         }
-        if(resultVal==4){
-            createTypeVolant();
+        
+        //Si Saison est sauvegardé avec succès
+        if(resultVal==4 || resultVal ==2){
+            createTypeVolant(idSaison);
         }
         return resultVal;
     }
@@ -630,8 +621,14 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     // -------------------   FONCTIONS TYPE-VOLANT ---------------------
     @Override public int saveTypeVolant(FormTypeVolant newTypeVolant) {
         int resultVal = 0;
+        //Si Saison = Actuelle, idSaison=0, du coup recuperation depuis MainData
+        long idSaison = newTypeVolant.getIdSaison();
+        if (idSaison == 0) {
+            idSaison = returnMainData().getIdSaison().getId();
+        }
+        
             TypeVolant t = typeVolantRep.save(new TypeVolant(
-                                                returnMainData().getIdSaison(), 
+                                                saisonRep.getOne(idSaison), 
                                                 typeTubeRep.getOne(newTypeVolant.getIdTypeTube()), 
                                                 newTypeVolant.getStock()));
             if(t!=null){
@@ -918,11 +915,11 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     }
     
     //Créer les 3 type Volant
-    private int createTypeVolant() {
+    private int createTypeVolant(long idSaison) {
         int resultVal = 4;
-        saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTPlastique().getId()));
-        saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTEntrainement().getId()));
-        saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTCompetition().getId()));
+        saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTPlastique().getId(), idSaison));
+        saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTEntrainement().getId(), idSaison));
+        saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTCompetition().getId(), idSaison));
         return resultVal;
     }
 

@@ -6,6 +6,7 @@
         <title th:text="${pageTitle}">Template Title</title>
         <meta charset="UTF-8" />
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style-popup.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
         <script type="text/javascript" th:src="@{/js/commande-popup.js}" charset="utf-8" defer></script>
@@ -27,60 +28,14 @@
                 </table>
             </div>
             <br/>
-            
-            <div class="std-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="table-label" colspan="7">COMMANDES</th>
-                        </tr>
-                        <tr>
-                            <th>Date de la commande</th>
-                            <th>Membre</th>
-                            <th title="club | membre">Prix du tube</th>
-                            <th>Nb de tubes commandés</th>
-                            <th title="Nb tubes commandés x Prix tube (membre)">Prix de la commande</th>
-                            <th>Réglée ?</th>
-                            <th class="table-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:if="${Commandes.empty}">
-                            <td colspan="7">Aucune Commande créée</td>
-                        </tr>
-                        <tr th:each="commande : ${Commandes}">
-                            <td><span th:text="${commande.getDateCommande}">Horodatage</span></td>
-                            <td><span th:text="${commande.idMembre}">Membre</span></td>
-                            <td title="prix club | prix membre"><span th:text="${commande.idPrixTube.getPrixComment}">prixTube</span></td>
-                            <td><span th:text="${commande.nbTubeCommande}">nbTubesCommandes</span></td>
-                            <td th:title="${commande.nbTubeCommande + ' x ' + commande.idPrixTube.getPrixMembreString}">
-                                <span th:text="${commande.getPrixCommande}">prixCommande</span>
-                            </td>
-                            <td><span th:text="${commande.getRegler}">régler</span></td>
-                            <td class="table-action">
-                                <table class="action-input">
-                                    <tr>
-                                        <td class="action-input">
-                                            <form action="#" th:action="@{/commande/{id}(id=${commande.id})}" th:method="post">
-                                                <input type="hidden" name="_method" value="delete"/>
-                                                <input id="action-input" type="submit" value="Suppr"/>
-                                            </form>
-                                        </td><td class="action-input">|</td>
-                                        <td class="action-input">
-                                            <form action="#" th:action="@{/commande/{id}(id=${commande.id})}" th:method="post">
-                                                <input id="action-input" type="submit" value="Edit"/>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            
-            
+                        
+            <table class="table-commande">
+                <tr>
+                    <td class="table-commande" th:replace="fragments/commande/table-list-commande :: list-commandes" />
+                    <td class="table-commande-resume" th:replace="fragments/commande/table-resume-commande :: resume-commandes" />
+                </tr>
+            </table>
+                        
         </div>
         
         

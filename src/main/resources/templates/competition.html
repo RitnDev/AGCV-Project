@@ -6,6 +6,7 @@
         <title th:text="${pageTitle}">Template Title</title>
         <meta charset="UTF-8" />
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style-popup.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
         <script type="text/javascript" th:src="@{/js/competition-popup.js}" charset="utf-8" defer></script>
@@ -29,73 +30,15 @@
             </div>
             <br/>
             
-            <!-- affichage du stock competiton actuel -->
-            <div class="std-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th colspan="2" class="table-label">
-                                <span th:text="#{texte.page.competition.table.stock.titre}"></span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>Stock</th>
-                            <!--th>Dernière modif</th-->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td th:text="${stock}"></td>
-                            <!--td th:text="${stock.horodatage}"></td-->
-                        </tr>
-                    </tbody>
-                </table>
-            </div><br/><br/>
             
-            
-            <div class="std-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="table-label" colspan="4" th:text="#{texte.page.competition.table.compet.titre}"></th>
-                        </tr>
-                        <tr>
-                            <th>Horodatage</th>
-                            <th>Nom de la compétition</th>
-                            <th>Nbs de tubes utilisés</th>
-                            <th class="table-action">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:if="${saison.getCompetitions.empty}">
-                            <td colspan="4">Aucune Compétition créée</td>
-                        </tr>
-                        <tr th:each="compet : ${saison.getCompetitions}">
-                            <td><span th:text="${compet.horodatage}">Horodatage</span></td>
-                            <td><span th:text="${compet.nom}">nom</span></td>
-                            <td><span th:text="${compet.nbTubesUtilises}">nbTubesUtilises</span></td>
-                            <td class="table-action">
-                                <table class="action-input">
-                                    <tr>
-                                        <td class="action-input">
-                                            <form action="#" th:action="@{/compet/{id}(id=${compet.id})}" th:method="post">
-                                                <input type="hidden" name="_method" value="delete"/>
-                                                <input id="action-input" type="submit" value="Suppr"/>
-                                            </form>
-                                        </td><td class="action-input">|</td>
-                                        <td class="action-input">
-                                            <form action="#" th:action="@{/compet/{id}(id=${compet.id})}" th:method="post">
-                                                <input id="action-input" type="submit" value="Edit"/>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-                    
+            <table class="table-compet">
+                <tr>
+                    <td th:replace="fragments/competition/table-stock-compet :: stock" />
+                    <td th:replace="fragments/competition/table-list-compet :: list" />
+                    <td th:replace="fragments/competition/table-resume-compet :: resume" />
+                </tr>
+            </table>
+                                
         </div>
         
         <!-- pop-up section -->

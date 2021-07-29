@@ -107,9 +107,45 @@ public class Commande implements Serializable {
     public String getDateCommande() {
         return new SimpleDateFormat("dd/MM/yyyy").format(horodatage);
     }
-        
-    public double getPrixCommande() {
+    
+    //Prix de la commande pour le membre
+    public double getPrixCommandeMembre() {
         return nbTubeCommande * idPrixTube.getPrixMembre();
+    }
+    public String getStringPrixCommandeMembre() {
+        return String.format("%.2f", getPrixCommandeMembre());
+    }
+    
+    //Prix de la commande pour le club
+    public double getPrixCommandeClub() {
+        return nbTubeCommande * idPrixTube.getPrix();
+    }
+    public String getStringPrixCommandeClub() {
+        return String.format("%.2f", getPrixCommandeClub());
+    }
+    
+    //Montant du volant payer par le club
+    public double getDeductionClub() {
+        return getPrixCommandeClub() - getPrixCommandeMembre();
+    }
+    
+    //Reste de la commande a payé
+    public double getMontantRestant() {
+        if (regler) {
+            return 0.0;
+        }else{
+            return getPrixCommandeMembre();
+        }
+    }
+    public String getStringMontantRestant() {
+        return String.format("%.2f", getMontantRestant());
+    }
+    
+    //renvoie la class html en fonction si la commande est réglée ou non
+    public String getClassRegler() {
+        String strClass = "td-regler";
+        if(!regler) strClass = "td-non-regler";
+        return strClass;
     }
     
     

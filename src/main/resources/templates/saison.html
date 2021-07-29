@@ -6,6 +6,7 @@
         <title th:text="${pageTitle}">Template Title</title>
         <meta charset="UTF-8" />
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style-popup.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com"/>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet"/>
         <script type="text/javascript" th:src="@{/js/saison-popup.js}" charset="utf-8" defer></script>
@@ -19,7 +20,6 @@
         <!-- content section -->
         <div class="main-content">
             <div th:if="${!reponses.empty}">
-                <br/>
                 <table class="table-reponse">
                     <tbody>
                         <tr th:each="rep : ${reponses}">
@@ -31,26 +31,26 @@
             <br/>
             
             <div class="std-table">
-                <table>
+                <table class="list-saisons">
                     <thead>
                         <tr>
-                            <th class="table-label" colspan="4">SAISONS</th>
+                            <th class="table-label" colspan="4" th:text="#{texte.page.saison.table.titre}"/>
                         </tr>
                         <tr>
-                            <th>Nom</th>
-                            <th>Budget</th>
-                            <th>Actuelle</th>
-                            <th class="table-action">Action</th>
+                            <th class="list-saisons-nom" th:text="#{texte.page.saison.table.nom}"/>
+                            <th class="list-saisons-budget" th:text="#{texte.page.saison.table.budget}"/>
+                            <th class="list-saisons-actif" th:text="#{texte.page.saison.table.actif}"/>
+                            <th class="table-action" th:text="#{texte.global.page.action}"/>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:if="${listSaisons.size()==1}">
-                            <td colspan="4">Aucune Saison créé</td>
+                            <td colspan="4" th:text="#{texte.page.saison.table.noSaison}"/>
                         </tr>
                         <tr th:each="saison : ${listSaisons}" th:if="${saison.id!=1}">
-                            <td><span th:text="${saison.toString}">Saison</span></td>
-                            <td><span th:text="${saison.budget}">Budget</span></td>
-                            <td><span th:text="${saison.actuelle}">Active</span></td>
+                            <td th:text="${saison.toString}"/>
+                            <td th:text="${saison.budget}"/>
+                            <td th:text="${saison.actuelle}"/>
                             <td class="table-action">
                                 <table class="action-input">
                                     <tr>
