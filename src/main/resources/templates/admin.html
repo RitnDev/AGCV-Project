@@ -6,6 +6,7 @@
         <title th:text="${pageTitle}">Template Title</title>
         <meta charset="UTF-8" />
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style-admin.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
         <!-- https://www.youtube.com/watch?v=gLWIYk0Sd38 -->
@@ -31,150 +32,163 @@
             <br/>
             
             
-            <div>
+            <div class="admin-saison">
                 <span 
-                    class="admin-saison"
                     th:if="${!saison.toString.isEmpty}"
-                    th:text="${'Saison en cours : ' + saison.toString}"></span>
+                    th:text="#{texte.page.admin.saison} + ${saison.toString}"></span>
             </div>
             <br/>
             
-            <fieldset th:if="${editTVPlastique != null}">
+            <div class="admin-table-option"><table class="admin-table-option"><tr><td>
+                <fieldset th:if="${editTVPlastique != null}">
                 
-            <legend th:text="#{texte.page.admin.stock.legend}"></legend>
-            <br/>               
-                
-                <form
-                    class="admin-form-stock"
-                    th:action="@{/admin/stock/{id}(id=${editTVPlastique.id})}"
-                    th:object="${editTVPlastique}" 
-                    method="post">
+                    <legend th:text="#{texte.page.admin.stock.legend}"></legend>
+                    <br/>               
 
-                        <label 
-                            th:for="${'admin-form-input-stock-' + editTVPlastique.nom}"
-                            th:text="#{texte.page.admin.stock.label} + *{nom}" />
-                        <input 
-                            th:id="${'admin-form-input-stock-' + editTVPlastique.nom}" 
-                            type="number"
-                            min="0"
-                            th:value="*{stock}"
-                            th:field="*{stock}" />
+                        <form
+                            class="admin-form"
+                            th:action="@{/admin/stock/{id}(id=${editTVPlastique.id})}"
+                            th:object="${editTVPlastique}" 
+                            method="post">
+                            <table class="admin-form"><tr><td class="admin-form-label">
+                                <label 
+                                    th:for="${'admin-form-input-stock-' + editTVPlastique.nom}"
+                                    th:text="#{texte.page.admin.stock.label} + *{nom}" />
+                                </td><td class="admin-form-input">
+                                <input 
+                                    th:id="${'admin-form-input-stock-' + editTVPlastique.nom}" 
+                                    type="number"
+                                    min="0"
+                                    th:value="*{stock}"
+                                    th:field="*{stock}" />
+                                </td><td class="admin-form-submit">
+                                <input 
+                                    class="admin-form-submit" 
+                                    type="submit" 
+                                    th:value="#{texte.page.admin.stock.submit}"/> 
+                                </td>
+                            </tr></table>
+                        </form>
+                        <br/>
+                        <form
+                            class="admin-form"
+                            th:action="@{/admin/stock/{id}(id=${editTVCompetition.id})}"
+                            th:object="${editTVCompetition}" 
+                            method="post">
+                            <table class="admin-form"><tr><td class="admin-form-label">
+                                <label 
+                                    class="admin-form-label" 
+                                    th:for="${'admin-form-input-stock-' + editTVCompetition.nom}"
+                                    th:text="#{texte.page.admin.stock.label} + *{nom}" />
+                                </td><td class="admin-form-input">
+                                <input 
+                                    th:id="${'admin-form-input-stock-' + editTVCompetition.nom}" 
+                                    type="number"
+                                    min="0"
+                                    th:value="*{stock}"
+                                    th:field="*{stock}" />
+                                </td><td class="admin-form-submit">
+                                <input 
+                                    class="admin-form-submit" 
+                                    type="submit" 
+                                    th:value="#{texte.page.admin.stock.submit}"/> 
+                            </tr></table>
+                        </form>
+                        <br/>
+                        <form
+                            class="admin-form"
+                            th:action="@{/admin/stock/{id}(id=${editTVEntrainement.id})}"
+                            th:object="${editTVEntrainement}" 
+                            method="post">
+                            <table class="admin-form"><tr><td class="admin-form-label">
+                                <label 
+                                    class="admin-form-label" 
+                                    th:for="${'admin-form-input-stock-' + editTVEntrainement.nom}"
+                                    th:text="#{texte.page.admin.stock.label} + *{nom}" />
+                                </td><td class="admin-form-input">
+                                <input 
+                                    th:id="${'admin-form-input-stock-' + editTVEntrainement.nom}" 
+                                    type="number"
+                                    min="0"
+                                    th:value="*{stock}"
+                                    th:field="*{stock}" />
+                                </td><td class="admin-form-submit">
+                                <input 
+                                    class="admin-form-submit" 
+                                    type="submit" 
+                                    th:value="#{texte.page.admin.stock.submit}"/> 
+                            </tr></table>
+                        </form>
+                        <br/>
 
-                        <input 
-                            class="admin-form-input-stock-submit" 
-                            type="submit" 
-                            th:value="#{texte.page.admin.stock.submit}"/> 
+                </fieldset>
+            </td></tr><tr><td>
+                <fieldset>
 
-                </form>
-                <br/>
-                <form
-                    class="admin-form-stock"
-                    th:action="@{/admin/stock/{id}(id=${editTVCompetition.id})}"
-                    th:object="${editTVCompetition}" 
-                    method="post">
+                    <legend th:text="#{texte.page.admin.budget.legend}"></legend>
+                    <br/>
+                        <form
+                            class="admin-form"
+                            th:action="@{/admin/budget}"
+                            th:object="${editData}"
+                            method="post">
+                            <table class="admin-form"><tr><td class="admin-form-label">
+                                <label 
+                                    class="admin-form-label" 
+                                    for="admin-form-input-budget"
+                                    th:text="#{texte.page.admin.budget.label}" />
+                                </td><td class="admin-form-input">
+                                <input 
+                                    id="admin-form-input-budget"
+                                    type="number"
+                                    min="0"
+                                    th:value="*{budget}"
+                                    th:field="*{budget}" />
+                                </td><td class="admin-form-submit">
+                                <input 
+                                    class="admin-form-submit"
+                                    type="submit" 
+                                    th:value="#{texte.page.admin.budget.submit}"/> 
+                            </tr></table>
+                        </form>
+                        <br/>
 
-                        <label 
-                            th:for="${'admin-form-input-stock-' + editTVCompetition.nom}"
-                            th:text="#{texte.page.admin.stock.label} + *{nom}" />
-                        <input 
-                            th:id="${'admin-form-input-stock-' + editTVCompetition.nom}" 
-                            type="number"
-                            min="0"
-                            th:value="*{stock}"
-                            th:field="*{stock}" />
 
-                        <input 
-                            class="admin-form-input-stock-submit" 
-                            type="submit" 
-                            th:value="#{texte.page.admin.stock.submit}"/> 
+                </fieldset>
+            </td></tr><tr><td>
+                <fieldset>
 
-                </form>
-                <br/>
-                <form
-                    class="admin-form-stock"
-                    th:action="@{/admin/stock/{id}(id=${editTVEntrainement.id})}"
-                    th:object="${editTVEntrainement}" 
-                    method="post">
-
-                        <label 
-                            th:for="${'admin-form-input-stock-' + editTVEntrainement.nom}"
-                            th:text="#{texte.page.admin.stock.label} + *{nom}" />
-                        <input 
-                            th:id="${'admin-form-input-stock-' + editTVEntrainement.nom}" 
-                            type="number"
-                            min="0"
-                            th:value="*{stock}"
-                            th:field="*{stock}" />
-
-                        <input 
-                            class="admin-form-input-stock-submit" 
-                            type="submit" 
-                            th:value="#{texte.page.admin.stock.submit}"/> 
-
-                </form>
-                <br/>
+                    <legend th:text="#{texte.page.admin.seuil.legend}"></legend>
+                    <br/>
+                        <form
+                            class="admin-form"
+                            th:action="@{/admin/seuil}"
+                            th:object="${editData}" 
+                            method="post">
+                            <table class="admin-form"><tr><td class="admin-form-label">
+                                <label 
+                                    class="admin-form-label"
+                                    for="admin-form-input-seuil"
+                                    th:text="#{texte.page.admin.seuil.label}" />
+                                </td><td class="admin-form-input">
+                                <input 
+                                    id="admin-form-input-budget"
+                                    type="number"
+                                    min="0"
+                                    th:value="*{seuilBas}"
+                                    th:field="*{seuilBas}" />
+                                </td><td class="admin-form-submit">
+                                <input 
+                                    class="admin-form-submit"
+                                    type="submit" 
+                                    th:value="#{texte.page.admin.seuil.submit}"/> 
+                            </tr></table>
+                        </form>
+                        <br/>
+                </fieldset>
+            </td></tr>
+            </table></div>
             
-            </fieldset>
-            <fieldset>
-                
-            <legend th:text="#{texte.page.admin.budget.legend}"></legend>
-            <br/>
-                <form
-                    class="admin-form-budget"
-                    th:action="@{/admin/budget}"
-                    th:object="${editData}"
-                    method="post">
-
-                        <label 
-                            for="admin-form-input-budget"
-                            th:text="#{texte.page.admin.budget.label}" />
-                        <input 
-                            id="admin-form-input-budget"
-                            type="number"
-                            min="0"
-                            th:value="*{budget}"
-                            th:field="*{budget}" />
-
-                        <input 
-                            class="admin-form-input-budget-submit" 
-                            type="submit" 
-                            th:value="#{texte.page.admin.budget.submit}"/> 
-
-                </form>
-                <br/>
-                
-                  
-            </fieldset>
-            <fieldset>
-                
-            <legend th:text="#{texte.page.admin.seuil.legend}"></legend>
-            <br/>
-                <form
-                    class="admin-form-budget"
-                    th:action="@{/admin/seuil}"
-                    th:object="${editData}" 
-                    method="post">
-
-                        <label 
-                            for="admin-form-input-seuil"
-                            th:text="#{texte.page.admin.seuil.label}" />
-                        <input 
-                            id="admin-form-input-budget"
-                            type="number"
-                            min="0"
-                            th:value="*{seuilBas}"
-                            th:field="*{seuilBas}" />
-
-                        <input 
-                            class="admin-form-input-seuil-submit" 
-                            type="submit" 
-                            th:value="#{texte.page.admin.seuil.submit}"/> 
-
-                </form>
-                <br/>
-                
-                  
-            </fieldset>
             
         </div>
       

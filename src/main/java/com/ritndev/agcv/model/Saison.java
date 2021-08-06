@@ -103,6 +103,12 @@ public class Saison implements Serializable {
         Méthodes
     */
     
+    public String getActif() {
+        String strResult = "Non";
+        if(actuelle) strResult = "Oui";
+        return strResult;
+    }
+    
     //Renvoie le budget au format String
     public String getBudgetString(){
         return String.format("%.2f", budget);
@@ -214,6 +220,13 @@ public class Saison implements Serializable {
             total = total + c.getNbTubesUtilises();
         }
         return total;
+    }
+    
+    public double getRestantBudget() {
+        return budget - getCoutTotalUtilises() + getMontantCommandesMembres();
+    }
+    public String getStringRestantBudget() {
+        return String.format("%.2f", getRestantBudget());
     }
     
 }

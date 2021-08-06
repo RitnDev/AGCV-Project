@@ -37,7 +37,7 @@ tr.popup-header {
 table.popup-form {
   border-collapse: collapse;
   border-radius: 12px;
-  width: 95%; 
+  width: 95%;
   text-align: left;
   color: #101720;
   background-color: #bbd5ea;
@@ -48,6 +48,7 @@ table.popup-form {
 td.popup-form-label, td.popup-form-input {
   padding: 8px;
   padding-top: 12px;
+  padding-right: 12px;
   text-align: left;
 }
 
@@ -63,6 +64,7 @@ td.popup-form-submit {
   padding-top: 20px;
   padding-bottom: 13px;
 }
+
 
 .popup-form-submit-button {
   padding: 8px 10px;
@@ -83,23 +85,23 @@ td.popup-form-submit {
 
 /* FORM Commande */
 
-select#membre {
+select#membre,
+input#ajout,
+select#mois {
   height: 22px;
-  width: 85%;
+  width: 100%;
   border: none;
   border-radius: 1px;
   box-shadow: 0 0 10px 1px #356adeb0;
 }
-select#mois {
-  height: 22px;
-  width: 85%;
-  border: none;
-  border-radius: 1px;
-  box-shadow: 0 0 10px 1px #356adeb0;
+
+input#ajout{
+  width: 30%;
 }
 
 
 select#membre:hover,
+input#ajout:hover,
 select#mois:hover {
   box-shadow: 0 0 20px 1px #1b4cb8;
 }
@@ -163,7 +165,7 @@ select#mois:hover {
 
 
 
-/*  En-tête de la popup :  */
+/*  En-tÃªte de la popup :  */
 
 .button-close {
     float: right;

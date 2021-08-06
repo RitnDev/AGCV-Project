@@ -49,8 +49,9 @@ public class Membre implements Serializable {
     
     //Si ce membre est toujours utilisé pour les commandes ?
     @Column(name = "actif", nullable = false)
-    @Getter @Setter
+    @Setter
     private boolean actif;
+    public boolean isActif() {return actif;}
     
     //Liste des commande du membre
     @OneToMany(targetEntity=Commande.class, mappedBy="idMembre")
@@ -90,6 +91,21 @@ public class Membre implements Serializable {
         return obj1.equals(obj2);
     }
 
+    /*
+        Methodes
+    */
     
+    public String getActif() {
+        String strResult = "Non";
+        if(actif) strResult = "Oui";
+        return strResult;
+    }
+    
+    public String getIdH() {
+        String strResult = "membre-actif-on";
+        if(!actif) strResult = "membre-actif-off";
+        return strResult;
+    }
+            
     
 }

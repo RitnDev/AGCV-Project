@@ -39,7 +39,7 @@ public class PageHistoSaison extends Page{
         
         // Add Attribute :
         getPageGenerique();
-        
+
         super.getModel().addAttribute("classStock", classStock);
         super.getModel().addAttribute("listVolants", listVolants);
         super.getModel().addAttribute("nomMois", new ArrayList<>(Arrays.asList(NomMois.values())));

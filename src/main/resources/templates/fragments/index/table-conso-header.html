@@ -12,7 +12,7 @@
         <tr>
             <th class="table-tv-empty"></th>
             <th class="table-label-index" colspan="15">
-                <span th:text="${'SAISON : ' + saison.toString}">
+                <span th:text="#{texte.global.table.saison.saison} + ${saison.toString}">
             </th>
         </tr>
         
@@ -23,38 +23,38 @@
 
             <th:block th:each="volant : ${listVolants}">
                 <th class="table-tv" colspan="5">
-                    <span th:text="${'Volants ' + saison.getTypeVolantName(volant).toString}">
+                    <span th:text="#{texte.global.table.saison.volant} + ${saison.getTypeVolantName(volant).toString}">
                 </th>
             </th:block>
         </tr>
         
         <tr>
-            <th class="table-th-index"></th>
-            <th class="table-th-utilise" colspan="2">Utilisés</th>
-            <th class="table-th-commande" colspan="2">Commandés</th>
-            <th class="table-th-prix" rowspan="2">Prix</th>
-            <th class="table-th-utilise" colspan="2">Utilisés</th>
-            <th class="table-th-commande" colspan="2">Commandés</th>
-            <th class="table-th-prix" rowspan="2">Prix</th>
-            <th class="table-th-utilise" colspan="2">Utilisés</th>
-            <th class="table-th-commande" colspan="2">Commandés</th>
-            <th class="table-th-prix" rowspan="2">Prix</th>
+            <th class="table-th-index"/>
+            <th class="table-th-utilise" colspan="2" th:text="#{texte.global.table.saison.utilise}"/>
+            <th class="table-th-commande" colspan="2" th:text="#{texte.global.table.saison.commande}"/>
+            <th class="table-th-prix" rowspan="2" th:text="#{texte.global.table.saison.prix}"/>
+            <th class="table-th-utilise" colspan="2" th:text="#{texte.global.table.saison.utilise}"/>
+            <th class="table-th-commande" colspan="2" th:text="#{texte.global.table.saison.commande}"/>
+            <th class="table-th-prix" rowspan="2" th:text="#{texte.global.table.saison.prix}"/>
+            <th class="table-th-utilise" colspan="2" th:text="#{texte.global.table.saison.utilise}"/>
+            <th class="table-th-commande" colspan="2" th:text="#{texte.global.table.saison.commande}"/>
+            <th class="table-th-prix" rowspan="2" th:text="#{texte.global.table.saison.prix}"/>
         </tr>
         
         <tr>
-            <th class="table-tv-mois">Mois</th>
-            <th class="table-tv-nbu">Nb</th>
-            <th class="table-tv-cu">Coût</th>
-            <th class="table-tv-nbc">Nb</th>
-            <th class="table-tv-cc">Coût</th>
-            <th class="table-tv-nbu">Nb</th>
-            <th class="table-tv-cu">Coût</th>
-            <th class="table-tv-nbc">Nb</th>
-            <th class="table-tv-cc">Coût</th>
-            <th class="table-tv-nbu">Nb</th>
-            <th class="table-tv-cu">Coût</th>
-            <th class="table-tv-nbc">Nb</th>
-            <th class="table-tv-cc">Coût</th>
+            <th class="table-tv-mois" th:text="#{texte.global.table.saison.mois}"/>
+            <th class="table-tv-nbu" th:text="#{texte.global.table.saison.nb}"/>
+            <th class="table-tv-cu" th:text="#{texte.global.table.saison.cout}"/>
+            <th class="table-tv-nbu" th:text="#{texte.global.table.saison.nb}"/>
+            <th class="table-tv-cu" th:text="#{texte.global.table.saison.cout}"/>
+            <th class="table-tv-nbu" th:text="#{texte.global.table.saison.nb}"/>
+            <th class="table-tv-cu" th:text="#{texte.global.table.saison.cout}"/>
+            <th class="table-tv-nbu" th:text="#{texte.global.table.saison.nb}"/>
+            <th class="table-tv-cu" th:text="#{texte.global.table.saison.cout}"/>
+            <th class="table-tv-nbu" th:text="#{texte.global.table.saison.nb}"/>
+            <th class="table-tv-cu" th:text="#{texte.global.table.saison.cout}"/>
+            <th class="table-tv-nbu" th:text="#{texte.global.table.saison.nb}"/>
+            <th class="table-tv-cu" th:text="#{texte.global.table.saison.cout}"/>
         </tr>
         
     </thead>     

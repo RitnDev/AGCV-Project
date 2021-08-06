@@ -24,7 +24,11 @@
                                 <label for="prenom" th:text="#{texte.pop.new.membre.prenom}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="prenom" type="text" th:value="*{prenom}" th:field="*{prenom}" />
+                                <input id="prenom" 
+                                       type="text" 
+                                       th:value="*{prenom}" 
+                                       th:field="*{prenom}" 
+                                       maxlength="40"/>
                             </td>
                         </tr>
                         <tr>
@@ -32,7 +36,11 @@
                                 <label for="nom" th:text="#{texte.pop.new.membre.nom}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
+                                <input id="nom" 
+                                       type="text" 
+                                       th:value="*{nom}" 
+                                       th:field="*{nom}" 
+                                       maxlength="40"/>
                             </td>
                         </tr>
                         <tr>

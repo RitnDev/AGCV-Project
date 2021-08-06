@@ -52,7 +52,15 @@
                             <span th:text="${saison.getStringMontantCommandesMembres} + #{texte.global.devise}"></span>
                         </td>
                     </tr>
-
+                    <!-- Budget restant -->
+                    <tr>
+                        <td class="table-label-resume">
+                            <span th:text="#{texte.page.index.resume.total}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${saison.getStringRestantBudget} + #{texte.global.devise}"></span>
+                        </td>
+                    </tr>
 
                 </tbody>
             </table>

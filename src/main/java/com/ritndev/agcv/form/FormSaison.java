@@ -29,6 +29,8 @@ public class FormSaison {
     
     
     //Constructeur
+    public FormSaison(){}
+  
     public FormSaison(int annee_debut, double budget, boolean actuelle) {
         this.annee_debut = annee_debut;
         this.budget = budget;
@@ -40,10 +42,14 @@ public class FormSaison {
         this.budget = budget;
         this.actuelle = actuelle;
     }
-    
-    public FormSaison(){}
 
-  
+    public FormSaison(long id, int annee_debut) {
+        this.id = id;
+        this.annee_debut = annee_debut;
+    }
+    
+    
+    
     
     
     @Override

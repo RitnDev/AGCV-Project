@@ -18,5 +18,6 @@ public interface ISaisonService {
     public Saison findByAnneeFinSaison(int anneeFin);
     public int supprSaison(Long id);
     public int updateSaison(FormSaison editSaison);
+    public List<Saison> listSaisonHisto();
     
 }

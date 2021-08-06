@@ -1,0 +1,54 @@
+/*
+style-histo.css
+---------
+*/
+
+.histo-div-form{
+    background-color: #e6e7e8;
+    border-radius: 4px;
+    text-align: center;
+}
+
+table.histo-form{
+    width:100%;
+}
+
+.histo-form td{
+  text-align: left;
+}
+
+td.histo-form-label{
+    padding-left: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    text-align:right;
+    color: #101720;
+}
+td.histo-form-input{
+    text-align: center;
+    width: 10%;
+}
+
+.histo-form select {
+  width: 100%;
+  font-size: 18px;
+}
+
+select#saison:hover{
+    box-shadow: 0 0 20px 1px #1b4cb8;
+}
+
+.histo-form-submit {
+  padding: 8px 10px;
+  min-width: 200px;
+  border-radius: 50px;
+  border: none;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+  background-image: linear-gradient(to right, #1b4cb8,#18a5ff);
+  color: #fff;
+}
+
+.histo-form-submit:hover {
+  transform: translateY(-2px);
+}

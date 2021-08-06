@@ -6,6 +6,7 @@
         <title th:text="${pageTitle}">Template Title</title>
         <meta charset="UTF-8" />
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style-membre.css}"/>
         <link rel="stylesheet" type="text/css" th:href="@{/css/style-popup.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com"/>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet"/>
@@ -35,38 +36,40 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="table-label" colspan="4">MEMBRES</th>
+                            <th class="table-label" colspan="4" th:text="#{texte.page.membre.table.label}"/>
                         </tr>
                         <tr>
-                            <th>Prenom</th>
-                            <th>Nom</th>
-                            <th>Actif ?</th>
-                            <th class="table-action">Action</th>
+                            <th th:text="#{texte.page.membre.table.prenom}" class="table-membre-prenom"/>
+                            <th th:text="#{texte.page.membre.table.nom}" class="table-membre-nom"/>
+                            <th th:text="#{texte.page.membre.table.actif}" class="table-membre-actif"/>
+                            <th class="table-action" th:text="#{texte.global.page.action}"/>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="table-membre">
                         <tr th:if="${listMembres.empty}">
-                            <td colspan="4">Aucun Membre créé</td>
+                            <td colspan="4" th:text="texte.page.membre.noMembre"/>
                         </tr>
                         <tr th:each="membre : ${listMembres}">
-                            <td><span th:text="${membre.prenom}">Prenom</span></td>
-                            <td><span th:text="${membre.nom}">Nom</span></td>
-                            <td><span th:text="${membre.actif}">Actif</span></td>
-                            <td class="table-action">
+                            <td th:id="${membre.getIdH}" th:text="${membre.prenom}" class="table-membre-prenom"/>
+                            <td th:id="${membre.getIdH}" th:text="${membre.nom}" class="table-membre-nom"/>
+                            <td th:id="${membre.getIdH}" th:text="${membre.getActif}" class="table-membre-actif"/>
+                            <td th:id="${membre.getIdH}" class="table-action">
                                 <table class="action-input">
+                                <tbody class="action-input">
                                     <tr>
-                                        <td class="action-input">
+                                        <td th:id="${membre.getIdH}" class="action-input">
                                             <form action="#" th:action="@{/admin/membre/{id}(id=${membre.id})}" th:method="post">
                                                 <input type="hidden" name="_method" value="delete"/>
                                                 <input id="action-input" type="submit" value="Suppr"/>
                                             </form>
-                                        </td><td class="action-input">|</td>
-                                        <td class="action-input">
+                                        </td><td th:id="${membre.getIdH}" class="action-input">|</td>
+                                        <td th:id="${membre.getIdH}" class="action-input">
                                             <form action="#" th:action="@{/admin/membre/{id}(id=${membre.id})}" th:method="post">
                                                 <input id="action-input" type="submit" value="Edit"/>
                                             </form>
                                         </td>
                                     </tr>
+                                </tbody>
                                 </table>
                             </td>
                         </tr>

@@ -1,0 +1,45 @@
+/*
+style-membre.css
+---------
+*/
+
+
+td#membre-actif-off {
+    background-color: #bfbfbf;
+}
+
+th.table-membre-prenom,
+td.table-membre-prenom {
+    width:200px;
+    height: 15px;
+}
+th.table-membre-nom,
+td.table-membre-nom {
+    width:200px;
+    height: 15px;
+}
+th.table-membre-actif,
+td.table-membre-actif {
+    width:80px;
+    height: 15px;
+}
+th.table-action,
+td.table-action {
+    width:110px;
+    height: 15px;
+}
+
+
+.std-table thead{
+    display: block;
+}
+.std-table tbody{
+    display: block;
+    height: 628px;
+    overflow-y:overlay;
+}
+
+.table-action tbody{
+    overflow-y:hidden;
+    height: 15px;
+}

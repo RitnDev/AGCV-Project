@@ -6,24 +6,33 @@
         <title th:text="${pageTitle}">Template Title</title>
         <meta charset="UTF-8" />
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style-histo.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style-table-saison.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
     </head>
     
 
     <body>
-        <div th:replace="fragments/layout-header :: header">...</div>
-      
+        <div th:replace="fragments/layout-header :: header"/>
+    
         <div class="main-content">
-            <br/>
             
+            <div th:replace="fragments/histo/select-annee :: selecteur"/><br/>
             
             <!-- tableau de consomation de la saison -->
-            <div th:replace="fragments/table-conso-saison :: table-conso"/>
+            <div th:if="${saison!=null}">
+                <div th:replace="fragments/table-conso-saison :: table-conso"/>
+            </div>
             
+            <div th:if="${saison==null}">
+                <!-- Pas de saison à afficher -->
+                <span th:text="#{texte.page.histo.noSaison}" />
+            </div>
+                
         </div>
       
-        <div th:replace="fragments/layout-footer :: footer">...</div>
+        <div th:replace="fragments/layout-footer :: footer"/>
     </body>
     
 </html>

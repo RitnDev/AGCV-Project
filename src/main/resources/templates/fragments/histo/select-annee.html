@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    
+    <div class="histo-div-form" th:fragment="selecteur" th:if="${selectSaison != null}">
+        <form th:action="@{/histo}" th:object="${selectSaison}" method="post">
+            <table class="histo-form">
+                <tr>
+                    <td class="histo-form-label">
+                        <label for="saison" th:text="#{texte.page.histo.table.label}"></label>
+                    </td>
+                    <td class="histo-form-input">
+                        <select id="saison" th:field="*{annee_debut}">
+                            <option 
+                                th:if="${saisonH.id!=1}"
+                                th:each="saisonH : ${listSaisons}" 
+                                th:value="${saisonH.anneeDebut}" 
+                                th:text="${saisonH.toString}" ></option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="histo-form-submit" type="submit" th:value="#{texte.page.histo.table.submit}"/> 
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    
+</html>

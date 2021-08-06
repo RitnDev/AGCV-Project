@@ -470,6 +470,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             return null;
         }
     }
+    @Override public List<Saison> listSaisonHisto() {
+        return saisonRep.findByActuelleFalseOrderByAnneeDebutDesc();
+    }
     @Override public int supprSaison(Long id) {
         int resultVal = 0;
         
