@@ -38,15 +38,15 @@
                                 <label for="marque" th:text="#{texte.pop.new.prixtube.marque}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="marque" type="text" th:value="*{marque}" th:field="*{marque}" />
+                                <input id="marque" type="text" th:value="*{marque}" th:field="*{marque}" maxlength="40"/>
                             </td>
                         </tr>
                         <tr>
                             <td class="popup-form-label">
-                                <label for="prix" th:text="#{texte.pop.new.commande.prix}"></label>
+                                <label for="prix" th:text="#{texte.pop.new.prixtube.prix}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="prix" type="number" th:value="*{prix}" th:field="*{prix}" step="0.01" min="0.01" />
+                                <input id="prix" type="number" th:value="*{prix}" th:field="*{prix}" step="0.01" min="0.01" max="1000.00"/>
                             </td>
                         </tr>
                         <tr>

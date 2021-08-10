@@ -187,32 +187,19 @@ color: black;
 margin: auto;
 }
 
-table.table-compet,
 table.table-commande{
   margin-left: 400px;
 }
-
-td.table-compet,
 td.table-commande{
 padding: 0px;
 vertical-align : top;
 }
-
 td.table-commande-resume{
 padding: 0px;
 padding-left: 10px;
 vertical-align : top;
 }
-td.table-compet-stock{
-  padding: 0px;
-  padding-right: 10px;
-  vertical-align : top;
-}
-td.table-compet-resume{
-  padding: 0px;
-  padding-left: 10px;
-  vertical-align : top;
-}
+
 
 
 .std-table th, td {

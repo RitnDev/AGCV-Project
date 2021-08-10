@@ -14,20 +14,22 @@
                     <th class="table-label" colspan="4" th:text="#{texte.page.competition.table.compet.titre}"></th>
                 </tr>
                 <tr>
-                    <th th:text="#{texte.page.competition.table.compet.date}"/>
-                    <th th:text="#{texte.page.competition.table.compet.nom}"/>
-                    <th th:text="#{texte.page.competition.table.compet.nbUtilises}"/>
+                    <th th:text="#{texte.page.competition.table.compet.date}" class="table-compet-date"/>
+                    <th th:text="#{texte.page.competition.table.compet.nom}" class="table-compet-nom"/>
+                    <th class="table-compet-nbUtilises">
+                        <img class="table-compet-nbUtilises" src="/images/TubesUtilises.png"/>
+                    </th>
                     <th class="table-action" th:text="#{texte.global.page.action}"/>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-compet">
                 <tr th:if="${saison.getCompetitions.empty}">
                     <td colspan="4" th:text="#{texte.page.competition.table.compet.noCompet}"></td>
                 </tr>
                 <tr th:each="compet : ${saison.getCompetitions}">
-                    <td><span th:text="${compet.getDateCompetition}"></span></td>
-                    <td><span th:text="${compet.nom}"></span></td>
-                    <td><span th:text="${compet.nbTubesUtilises}"></span></td>
+                    <td th:text="${compet.getDateCompetition}" class="table-compet-date"/>
+                    <td th:text="${compet.nom}" class="table-compet-nom"/>
+                    <td th:text="${compet.nbTubesUtilises}" class="table-compet-nbUtilises"/>
                     <td class="table-action">
                         <table class="action-input">
                             <tr>

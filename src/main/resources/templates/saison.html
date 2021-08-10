@@ -6,6 +6,7 @@
         <title th:text="${pageTitle}">Template Title</title>
         <meta charset="UTF-8" />
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style-saison.css}"/>
         <link rel="stylesheet" type="text/css" th:href="@{/css/style-popup.css}"/>
         <link rel="preconnect" href="https://fonts.gstatic.com"/>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet"/>
@@ -31,41 +32,43 @@
             <br/>
             
             <div class="std-table">
-                <table class="list-saisons">
+                <table class="table-saisons">
                     <thead>
                         <tr>
                             <th class="table-label" colspan="4" th:text="#{texte.page.saison.table.titre}"/>
                         </tr>
                         <tr>
-                            <th class="list-saisons-nom" th:text="#{texte.page.saison.table.nom}"/>
-                            <th class="list-saisons-budget" th:text="#{texte.page.saison.table.budget}"/>
-                            <th class="list-saisons-actif" th:text="#{texte.page.saison.table.actif}"/>
+                            <th th:text="#{texte.page.saison.table.nom}" class="table-saison-nom"/>
+                            <th th:text="#{texte.page.saison.table.budget}" class="table-saison-budget"/>
+                            <th th:text="#{texte.page.saison.table.actif}" class="table-saison-actif"/>
                             <th class="table-action" th:text="#{texte.global.page.action}"/>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="table-saison">
                         <tr th:if="${listSaisons.size()==1}">
                             <td colspan="4" th:text="#{texte.page.saison.table.noSaison}"/>
                         </tr>
                         <tr th:each="saison : ${listSaisons}" th:if="${saison.id!=1}">
-                            <td th:text="${saison.toString}"/>
-                            <td th:text="${saison.budget}"/>
-                            <td th:text="${saison.actuelle}"/>
-                            <td class="table-action">
+                            <td th:id="${saison.getIdH}" th:text="${saison.toString}" class="table-saison-nom"/>
+                            <td th:id="${saison.getIdH}" th:text="${saison.budget}" class="table-saison-budget"/>
+                            <td th:id="${saison.getIdH}" th:text="${saison.getActif}" class="table-saison-actif"/>
+                            <td th:id="${saison.getIdH}" class="table-action">
                                 <table class="action-input">
+                                <tbody class="action-input">
                                     <tr>
-                                        <td class="action-input">
+                                        <td th:id="${saison.getIdH}" class="action-input">
                                             <form action="#" th:action="@{/admin/saison/{id}(id=${saison.id})}" th:method="post">
                                                 <input type="hidden" name="_method" value="delete"/>
                                                 <input id="action-input" type="submit" value="Suppr"/>
                                             </form>
-                                        </td><td class="action-input">|</td>
-                                        <td class="action-input">
+                                        </td><td th:id="${saison.getIdH}" class="action-input">|</td>
+                                        <td th:id="${saison.getIdH}" class="action-input">
                                             <form action="#" th:action="@{/admin/saison/{id}(id=${saison.id})}" th:method="post">
                                                 <input id="action-input" type="submit" value="Edit"/>
                                             </form>
                                         </td>
                                     </tr>
+                                </tbody>
                                 </table>
                             </td>
                         </tr>

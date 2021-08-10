@@ -1,25 +1,25 @@
 /*
-style-membre.css
+style-saison.css
 ---------
 */
 
 
-td#membre-actif-off {
-    background-color: #bfbfbf;
+td#saison-actif-on {
+    background-color: #a1f16d40;
 }
 
-th.table-membre-prenom,
-td.table-membre-prenom {
-    width:300px;
+th.table-saison-nom,
+td.table-saison-nom {
+    width: 180px;
     height: 15px;
 }
-th.table-membre-nom,
-td.table-membre-nom {
-    width:300px;
+th.table-saison-budget,
+td.table-saison-budget {
+    width: 150px;
     height: 15px;
 }
-th.table-membre-actif,
-td.table-membre-actif {
+th.table-saison-actif,
+td.table-saison-actif {
     width:80px;
     height: 15px;
 }

@@ -1,25 +1,35 @@
 /*
-style-membre.css
+style-prixtube.css
 ---------
 */
 
 
-td#membre-actif-off {
+td#prixtube-actif-off {
     background-color: #bfbfbf;
 }
 
-th.table-membre-prenom,
-td.table-membre-prenom {
-    width:300px;
+th.table-pt-typetube,
+td.table-pt-typetube {
+    width: 120px;
     height: 15px;
 }
-th.table-membre-nom,
-td.table-membre-nom {
-    width:300px;
+th.table-pt-marque,
+td.table-pt-marque {
+    width: 300px;
     height: 15px;
 }
-th.table-membre-actif,
-td.table-membre-actif {
+th.table-pt-prixAchat,
+td.table-pt-prixAchat {
+    width: 120px;
+    height: 15px;
+}
+th.table-pt-prixMembre,
+td.table-pt-prixMembre {
+    width: 120px;
+    height: 15px;
+}
+th.table-pt-actif,
+td.table-pt-actif {
     width:80px;
     height: 15px;
 }

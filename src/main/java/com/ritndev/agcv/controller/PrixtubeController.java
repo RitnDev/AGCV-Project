@@ -60,17 +60,17 @@ public class PrixtubeController {
     @PostMapping("/admin/newPrixTube")
     public String newPrixTube(@ModelAttribute FormPrixTube newPrixTube, Model model, Principal principal) {
         
+        int result = prixTubeService.savePrixTube(newPrixTube);
+        
+        PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
+        pagePrixtube.addReponse("prixtube", "create", result);
+        
         model.addAttribute("listPrixTubes", prixTubeService.listPrixTube());
         model.addAttribute("prixPlastiques", prixTubeService.ListPrixTubeName(NomTypeTube.PLASTIQUE.toString()));
         model.addAttribute("prixEntrainements", prixTubeService.ListPrixTubeName(NomTypeTube.ENTRAINEMENT.toString()));
         model.addAttribute("prixCompetitions", prixTubeService.ListPrixTubeName(NomTypeTube.COMPETITION.toString()));
         model.addAttribute("typeTubes", typeTubeService.listDataTypeTube());
-        
-        PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
-        
-        int result = prixTubeService.savePrixTube(newPrixTube);
-        pagePrixtube.addReponse("prixtube", "create", result);
-   
+           
         boolean connect = userService.findRoleByUsername(pagePrixtube.returnUser(principal)).equals("ROLE_SUPADMIN");
         
         return pagePrixtube.getPage(connect);
@@ -81,18 +81,16 @@ public class PrixtubeController {
     @DeleteMapping("/admin/prixtube/{id}")
     public String supprPrixTube(@PathVariable(value = "id") Long id, Model model, Principal principal) {  
         
+        PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
+        int result = prixTubeService.supprPrixTube(id);
+        pagePrixtube.addReponse("prixtube", "remove", result);
+        
         model.addAttribute("listPrixTubes", prixTubeService.listPrixTube());
         model.addAttribute("prixPlastiques", prixTubeService.ListPrixTubeName(NomTypeTube.PLASTIQUE.toString()));
         model.addAttribute("prixEntrainements", prixTubeService.ListPrixTubeName(NomTypeTube.ENTRAINEMENT.toString()));
         model.addAttribute("prixCompetitions", prixTubeService.ListPrixTubeName(NomTypeTube.COMPETITION.toString()));
         model.addAttribute("typeTubes", typeTubeService.listDataTypeTube());
-        
-        PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
-        
-        int result = prixTubeService.supprPrixTube(id);
-        pagePrixtube.addReponse("prixtube", "remove", result);
-        
-        
+         
         boolean connect = userService.findRoleByUsername(pagePrixtube.returnUser(principal)).equals("ROLE_SUPADMIN");
 
         return pagePrixtube.getPage(connect);
@@ -118,16 +116,15 @@ public class PrixtubeController {
     @PutMapping("/admin/prixtube/{id}")
     public String editPrixTube(@ModelAttribute FormPrixTube putPrixTube, Model model, Principal principal) {
         
+        PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
+        int result = prixTubeService.updatePrixTube(putPrixTube);
+        pagePrixtube.addReponse("prixtube", "edit", result);
+        
         model.addAttribute("listPrixTubes", prixTubeService.listPrixTube());
         model.addAttribute("prixPlastiques", prixTubeService.ListPrixTubeName(NomTypeTube.PLASTIQUE.toString()));
         model.addAttribute("prixEntrainements", prixTubeService.ListPrixTubeName(NomTypeTube.ENTRAINEMENT.toString()));
         model.addAttribute("prixCompetitions", prixTubeService.ListPrixTubeName(NomTypeTube.COMPETITION.toString()));
         model.addAttribute("typeTubes", typeTubeService.listDataTypeTube());
-        
-        PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
-        
-        int result = prixTubeService.updatePrixTube(putPrixTube);
-        pagePrixtube.addReponse("prixtube", "edit", result);
         
         boolean connect = userService.findRoleByUsername(pagePrixtube.returnUser(principal)).equals("ROLE_SUPADMIN");
 

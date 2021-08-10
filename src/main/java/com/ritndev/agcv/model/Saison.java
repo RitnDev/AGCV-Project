@@ -103,6 +103,12 @@ public class Saison implements Serializable {
         Méthodes
     */
     
+    public String getIdH() {
+        String strResult = "saison-actif-on";
+        if(!actuelle) strResult = "saison-actif-off";
+        return strResult;
+    }
+    
     public String getActif() {
         String strResult = "Non";
         if(actuelle) strResult = "Oui";

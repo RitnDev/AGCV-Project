@@ -61,8 +61,9 @@ public class PrixTube implements Serializable {
     
     //Si ce prix est toujours utilisé pour les commandes ?
     @Column(name = "actif", nullable = false)
-    @Getter @Setter
+    @Setter
     private boolean actif;
+    public boolean isActif() {return actif;}
     
     //Donnée par défaut
     @Column(name = "defaut", nullable = false)
@@ -97,6 +98,12 @@ public class PrixTube implements Serializable {
         Methodes
     */
     
+    public String getIdH() {
+        String strResult = "prixtube-actif-on";
+        if(!actif) strResult = "prixtube-actif-off";
+        return strResult;
+    }
+    
     //Renvoie le prix au format String
     public String getPrixString(){
         return String.format("%.2f", prix);
@@ -120,6 +127,12 @@ public class PrixTube implements Serializable {
         }
     }
        
+    public String getActif() {
+        String strResult = "Non";
+        if(actif) strResult = "Oui";
+        return strResult;
+    }
+    
     
     @Override
     public String toString() {
