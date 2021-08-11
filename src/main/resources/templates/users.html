@@ -6,21 +6,21 @@
         <title th:text="${pageTitle}">Template Title</title>
         <meta charset="UTF-8" />
         <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style-users.css}"/>
         <link rel="stylesheet" type="text/css" th:href="@{/css/style-popup.css}"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet">
-        <script type="text/javascript" th:src="@{/js/typetube-popup.js}" charset="utf-8" defer></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com"/>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100&display=swap" rel="stylesheet"/>
+        <script type="text/javascript" th:src="@{/js/new-user-popup.js}" charset="utf-8" defer></script>
     </head>
     
 
     <body>
         <!-- header section -->
-        <div th:replace="fragments/layout-header :: header"></div>
-      
+        <div th:replace="fragments/layout-header :: header"/>
+    
         <!-- content section -->
         <div class="main-content">
             <div th:if="${!reponses.empty}">
-                <br/>
                 <table class="table-reponse">
                     <tbody>
                         <tr th:each="rep : ${reponses}">
@@ -30,26 +30,21 @@
                 </table>
             </div>
             <br/>
-            <div th:utext="${message}"> !</div><br/><br/>
             
-            <div th:replace="fragments/superAdmin/table-data :: data"/>
-            <br/>
-            <br/>
-                        
-            <div th:replace="fragments/superAdmin/table-typetubes :: type-tube"/>           
-            <br/>
-            <br/>
+            <div th:replace="fragments/superAdmin/table-users :: user"/>
+            </br>
+            </br>
             
         </div>
-
+      
+        
         <!-- pop-up section -->
-        <div id="bg-popup" class="bg-popup-typetube">
-            <div th:replace="fragments/TypeTube/layout-popup-new :: typetube"/>
+        <div id="bg-popup" class="bg-popup-user">
+            <div th:replace="fragments/user/layout-popup-new :: user"/>
         </div>
         
-        <!-- footer section -->
-        <div th:replace="fragments/layout-footer :: footer"></div>
-                
+        <div th:replace="fragments/layout-footer :: footer"/>
     </body>
     
 </html>
+

@@ -15,14 +15,14 @@
                             <h3 th:text="#{texte.pop.edit.user.titre}"></h3>
                         </td>
                         <td class="popup-header-close">
-                            <a href="/superAdmin" >
+                            <a href="/superAdmin/users/">
                                 <img class="button-close" src="/images/popup/button-close.png">
                             </a>
                         </td>
                     </tr>
                 </table>
                 
-                <form th:action="@{/user/{id}(id=*{id})}" th:object="${editUser}" th:method="post">
+                <form th:action="@{/superAdmin/user/{id}(id=*{id})}" th:object="${editUser}" th:method="post">
                     <table class="popup-form">
                         <tr>
                             <td class="popup-form-label">

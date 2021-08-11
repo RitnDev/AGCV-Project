@@ -20,7 +20,7 @@
                     </tr>
                 </table>
                 
-                <form th:action="@{/newUser}" th:object="${newUser}" method="post">
+                <form th:action="@{/superAdmin/newUser}" th:object="${newUser}" method="post">
                         
                     <table class="popup-form">
                         <tr>
@@ -28,7 +28,7 @@
                                 <label for="identifiant" th:text="#{texte.pop.new.user.identifiant}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="identifiant" type="text" th:value="*{identifiant}" th:field="*{identifiant}" />
+                                <input id="identifiant" type="text" th:value="*{identifiant}" th:field="*{identifiant}" maxlength="20"/>
                             </td>
                         </tr>
                         <tr>
@@ -36,7 +36,7 @@
                                 <label for="mdp" th:text="#{texte.pop.new.user.mdp}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="mdp" type="password" th:value="*{mdp}" th:field="*{mdp}" />
+                                <input id="mdp" type="password" th:value="*{mdp}" th:field="*{mdp}"  maxlength="20"/>
                             </td>
                         </tr>
                         <tr>

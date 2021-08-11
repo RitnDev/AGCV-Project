@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+    <div th:fragment="type-tube" class="std-table">
+        <table>
+            <thead>
+                <tr>
+                    <th class="table-label" colspan="5" th:text="#{texte.page.superAdmin.table.typetube.label}"/>
+                </tr>
+                <tr>
+                    <th th:text="#{texte.page.superAdmin.table.typetube.id}"/>
+                    <th th:text="#{texte.page.superAdmin.table.typetube.horodatage}"/>
+                    <th th:text="#{texte.page.superAdmin.table.typetube.nom}"/>
+                    <th th:text="#{texte.page.superAdmin.table.typetube.commande}"/>
+                    <th class="table-action" th:text="#{texte.global.page.action}"/>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${typeTubeList.empty}">
+                    <td colspan="5" th:text="#{texte.page.superAdmin.table.typetube.noTypetube}"/>
+                </tr>
+                <tr th:each="typeTube : ${typeTubeList}">
+                    <td th:text="${typeTube.id}"/>
+                    <td th:text="${typeTube.horodatage}"/>
+                    <td th:text="${typeTube.nom}"/>
+                    <td th:text="${typeTube.commande}"/>
+                    <td class="table-action">
+                        <table class="action-input">
+                            <tr>
+                                <td class="action-input">
+                                    <form action="#" th:action="@{/typetube/{id}(id=${typeTube.id})}" th:method="post">
+                                        <input type="hidden" name="_method" value="delete"/>
+                                        <input id="action-input" type="submit" value="Suppr"/>
+                                    </form>
+                                </td><td class="action-input">|</td>
+                                <td class="action-input">
+                                    <form action="#" th:action="@{/typetube/{id}(id=${typeTube.id})}" th:method="post">
+                                        <input id="action-input" type="submit" value="Edit"/>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</html>

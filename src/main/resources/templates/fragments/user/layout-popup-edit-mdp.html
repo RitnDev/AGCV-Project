@@ -37,7 +37,7 @@
                                 <label for="mdp" th:text="#{texte.pop.edit.mdp.mdp}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="mdp" type="password" th:value="*{mdp}" th:field="*{mdp}" />
+                                <input id="mdp" type="password" th:value="*{mdp}" th:field="*{mdp}" maxlength="20"/>
                             </td>
                         </tr>
                         <tr>
@@ -45,7 +45,7 @@
                                 <label for="newMdp" th:text="#{texte.pop.edit.mdp.newMdp}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="newMdp" type="password" th:value="*{newMdp}" th:field="*{newMdp}" />
+                                <input id="newMdp" type="password" th:value="*{newMdp}" th:field="*{newMdp}" maxlength="20"/>
                             </td>
                         </tr>
                         <tr>
@@ -53,7 +53,7 @@
                                 <label for="confirmMdp" th:text="#{texte.pop.edit.mdp.confirmMdp}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="confirmMdp" type="password" th:value="*{confirmMdp}" th:field="*{confirmMdp}" />
+                                <input id="confirmMdp" type="password" th:value="*{confirmMdp}" th:field="*{confirmMdp}" maxlength="20"/>
                             </td>
                         </tr>
                         <tr>

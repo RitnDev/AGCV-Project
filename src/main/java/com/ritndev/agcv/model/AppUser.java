@@ -37,6 +37,21 @@ public class AppUser implements Serializable {
         this.enabled = true;
     }
  
+    /*
+        Méthodes
+    */
+    
+    public String getActif() {
+        String strResult = "Non";
+        if(enabled) strResult = "Oui";
+        return strResult;
+    }
  
- 
+    //renvoie la class html en fonction si l'utilisateur est actif ou non
+    public String getIdH() {
+        String strClass = "user-actif-on";
+        if(!enabled) strClass = "user-actif-off";
+        return strClass;
+    }
+    
 }

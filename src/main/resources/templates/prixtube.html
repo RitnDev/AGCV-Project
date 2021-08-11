@@ -53,8 +53,12 @@
                         <tr th:each="prixTube : ${listPrixTubes}" th:if="${!prixTube.defaut}">
                             <td th:id="${prixTube.getIdH}" th:text="${prixTube.idTypeTube}" class="table-pt-typetube"/>
                             <td th:id="${prixTube.getIdH}" th:text="${prixTube.marque}" class="table-pt-marque"/>
-                            <td th:id="${prixTube.getIdH}" th:text="${prixTube.prix}" class="table-pt-prixAchat"/>
-                            <td th:id="${prixTube.getIdH}" th:text="${prixTube.prixMembre}" class="table-pt-prixMembre"/>
+                            <td th:id="${prixTube.getIdH}" 
+                                th:text="${prixTube.getPrixString} + #{texte.global.devise}" 
+                                class="table-pt-prixAchat"/>
+                            <td th:id="${prixTube.getIdH}" 
+                                th:text="${prixTube.prixMembreString} + #{texte.global.devise}" 
+                                class="table-pt-prixMembre"/>
                             <td th:id="${prixTube.getIdH}" th:text="${prixTube.getActif}" class="table-pt-actif"/>
                             <td th:id="${prixTube.getIdH}" class="table-action">
                                 <table class="action-input">

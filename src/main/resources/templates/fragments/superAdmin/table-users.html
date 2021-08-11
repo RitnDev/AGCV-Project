@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+    <div th:fragment="user" class="std-table">
+        <table class="table-users">
+            <thead>
+                <tr>
+                    <th class="table-label" colspan="5" th:text="#{texte.page.users.table.users.label}"/>
+                </tr>
+                <tr>
+                    <th th:text="#{texte.page.users.table.users.id}" class="table-user-id"/>
+                    <th th:text="#{texte.page.users.table.users.identifiant}" class="table-user-identifiant"/>
+                    <th th:text="#{texte.page.users.table.users.role}" class="table-user-role"/>
+                    <th th:text="#{texte.page.users.table.users.actif}" class="table-user-actif"/>
+                    <th class="table-action" th:text="#{texte.global.page.action}"/>
+                </tr>
+            </thead>
+            <tbody class="table-users">
+                <tr th:if="${userList.empty}">
+                    <td colspan="5" th:text="#{texte.page.users.table.users.noUser}"/>
+                </tr>
+                <tr th:each="user : ${userList}">
+                    <td th:id="${user.getIdH}" th:text="${user.userId}" class="table-user-id"/>
+                    <td th:id="${user.getIdH}" th:text="${user.userName}" class="table-user-identifiant"/>
+                    <td th:id="${user.getIdH}" th:text="${userRoleList.get(user.userId)}" class="table-user-role"/>
+                    <td th:id="${user.getIdH}" th:text="${user.getActif}" class="table-user-actif"/>
+                    <td th:id="${user.getIdH}" class="table-action">
+                        <table class="action-input">
+                        <tbody class="action-input">
+                            <tr>
+                                <td th:id="${user.getIdH}" class="action-input">
+                                    <form action="#" th:action="@{/superAdmin/user/{id}(id=${user.userId})}" th:method="post">
+                                        <input type="hidden" name="_method" value="delete"/>
+                                        <input id="action-input" type="submit" value="Suppr"/>
+                                    </form>
+                                </td><td th:id="${user.getIdH}" class="action-input">|</td>
+                                <td th:id="${user.getIdH}" class="action-input">
+                                    <form action="#" th:action="@{/superAdmin/user/{id}(id=${user.userId})}" th:method="post">
+                                        <input id="action-input" type="submit" value="Edit"/>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</html>

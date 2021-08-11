@@ -30,6 +30,7 @@ import com.ritndev.agcv.model.TypeTube;
 
 import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.pages.PageSuperAdmin;
+import com.ritndev.agcv.pages.PageUsers;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,15 +56,7 @@ public class SuperAdminController {
     public String superAdmin(Model model, Principal principal){     
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
         
-        Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
-        }
-        
         model.addAttribute("mainData", dataService.listMainData());
-        model.addAttribute("userList", userService.listUser());
-        model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
@@ -82,15 +75,7 @@ public class SuperAdminController {
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
         pageSuperAdmin.addReponse("data", "create", result);
         
-        Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
-        }
-        
         model.addAttribute("mainData", dataService.listMainData());
-        model.addAttribute("userList", userService.listUser());
-        model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
@@ -104,15 +89,7 @@ public class SuperAdminController {
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
         pageSuperAdmin.addReponse("data", "remove", result);
         
-        Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
-        }
-        
         model.addAttribute("mainData", dataService.listMainData());
-        model.addAttribute("userList", userService.listUser());
-        model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
@@ -147,19 +124,10 @@ public class SuperAdminController {
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
         pageSuperAdmin.addReponse("data", "edit", result);
         
-        Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
-        }
-        
         model.addAttribute("mainData", dataService.listMainData());
-        model.addAttribute("userList", userService.listUser());
-        model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
-
     }
     
     
@@ -175,15 +143,7 @@ public class SuperAdminController {
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
         pageSuperAdmin.addReponse("typetube", "create", result);
         
-        Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
-        }
-        
         model.addAttribute("mainData", dataService.listMainData());
-        model.addAttribute("userList", userService.listUser());
-        model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
@@ -199,15 +159,7 @@ public class SuperAdminController {
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
         pageSuperAdmin.addReponse("typetube", "remove", result);
         
-        Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
-        }
-        
         model.addAttribute("mainData", dataService.listMainData());
-        model.addAttribute("userList", userService.listUser());
-        model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
@@ -241,15 +193,7 @@ public class SuperAdminController {
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);     
         pageSuperAdmin.addReponse("typetube", "remove", result);
         
-        Map<Long,String> userRoleList = new HashMap<>();
-        for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
-        }
-        
         model.addAttribute("mainData", dataService.listMainData());
-        model.addAttribute("userList", userService.listUser());
-        model.addAttribute("userRoleList", userRoleList);
-        model.addAttribute("roleList", userService.listRole());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
         return pageSuperAdmin.getPage();
@@ -259,9 +203,26 @@ public class SuperAdminController {
     
 // ---------------------------- UTILISATEURS ------------------------------------- 
     
+    //--------------------   Page Super Admin   ---------------------------- 
+    @GetMapping("/superAdmin/users")
+    public String getUsers(Model model, Principal principal){     
+        PageUsers pageUsers = new PageUsers(model, principal, messageSource);
+        
+        Map<Long,String> userRoleList = new HashMap<>();
+        for (AppUser user : userService.listUser()){
+           userRoleList.put(user.getUserId(), pageUsers.formatRole(userService.findRoleByUsername(user.getUserName())));
+        }
+
+        model.addAttribute("userList", userService.listUser());
+        model.addAttribute("userRoleList", userRoleList);
+        model.addAttribute("roleList", userService.listRole());
+        
+        return pageUsers.getPage();
+    }
+    
     
     //Creation d'un nouvel Utilisateur
-    @PostMapping("/newUser")
+    @PostMapping("/superAdmin/newUser")
     public String newUser(@ModelAttribute FormUser newUser, Model model, Principal principal) {
         
         System.out.println(">> --------------- POST -----------------");
@@ -272,30 +233,28 @@ public class SuperAdminController {
         
         int result = userService.saveUser(newUser);
 
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);    
-        pageSuperAdmin.addReponse("user", "create", result);
+        PageUsers pageUsers = new PageUsers(model, principal, messageSource);    
+        pageUsers.addReponse("user", "create", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+           userRoleList.put(user.getUserId(), pageUsers.formatRole(userService.findRoleByUsername(user.getUserName())));
         }
-        
-        model.addAttribute("mainData", dataService.listMainData());
+
         model.addAttribute("userList", userService.listUser());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
-        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
-        return pageSuperAdmin.getPage();
+        return pageUsers.getPage();
     }
     
     
     //Supprimer un utilisateur
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/superAdmin/user/{id}")
     public String supprUser(@PathVariable(value = "id") Long id, Model model, Principal principal) {
 
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
-        String userNameLog = pageSuperAdmin.returnUser(principal);
+        PageUsers pageUsers = new PageUsers(model, principal, messageSource);
+        String userNameLog = pageUsers.returnUser(principal);
         
         int result = 3;
         
@@ -304,32 +263,30 @@ public class SuperAdminController {
             result = userService.supprUser(id);
         }
         
-        pageSuperAdmin.addReponse("user", "remove", result);
+        pageUsers.addReponse("user", "remove", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+           userRoleList.put(user.getUserId(), pageUsers.formatRole(userService.findRoleByUsername(user.getUserName())));
         }
-        
-        model.addAttribute("mainData", dataService.listMainData());
+
         model.addAttribute("userList", userService.listUser());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
-        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
-        return pageSuperAdmin.getPage();
+        return pageUsers.getPage();
     }
     
     
     
     //Lancer la modification d'une main-data
-    @PostMapping("/user/{id}")
+    @PostMapping("/superAdmin/user/{id}")
     public String getUser(@PathVariable Long id, Model model, Principal principal) {
         
         System.out.println(">> POST - EDIT USER");
         System.out.println(">> ID : " + id);
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
-        String userNameLog = pageSuperAdmin.returnUser(principal);
+        PageUsers pageUsers = new PageUsers(model, principal, messageSource);
+        String userNameLog = pageUsers.returnUser(principal);
         
         //Recupération du user à modifier :
         AppUser editUser = userService.findByIdUser(id);
@@ -348,48 +305,44 @@ public class SuperAdminController {
 
             return pageAction.returnPage();
             }else{
-                pageSuperAdmin.addReponse("ritn", "edit", 3);
+                pageUsers.addReponse("ritn", "edit", 3);
             }
         }else{
-            pageSuperAdmin.addReponse("user", "edit", 3);
+            pageUsers.addReponse("user", "edit", 3);
         }
         
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+           userRoleList.put(user.getUserId(), pageUsers.formatRole(userService.findRoleByUsername(user.getUserName())));
         }
-        
-        model.addAttribute("mainData", dataService.listMainData());
+
         model.addAttribute("userList", userService.listUser());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
-        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
-        return pageSuperAdmin.getPage();
+        return pageUsers.getPage();
     }
     
     
         //Modifier une Main-Data
-    @PutMapping("/user/{id}")
+    @PutMapping("/superAdmin/user/{id}")
     public String editUser(@ModelAttribute FormUser putUser, Model model, Principal principal) {
         int result = userService.updateUser(putUser);
                 
-        PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
-        pageSuperAdmin.addReponse("user", "edit", result);
+        PageUsers pageUsers = new PageUsers(model, principal, messageSource);
+        pageUsers.addReponse("user", "edit", result);
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
-           userRoleList.put(user.getUserId(), pageSuperAdmin.formatRole(userService.findRoleByUsername(user.getUserName())));
+           userRoleList.put(user.getUserId(), pageUsers.formatRole(userService.findRoleByUsername(user.getUserName())));
         }
-        
-        model.addAttribute("mainData", dataService.listMainData());
+
         model.addAttribute("userList", userService.listUser());
         model.addAttribute("userRoleList", userRoleList);
         model.addAttribute("roleList", userService.listRole());
-        model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
         
-        return pageSuperAdmin.getPage();
+        return pageUsers.getPage();
     }
     
     

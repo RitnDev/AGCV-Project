@@ -29,13 +29,13 @@ public class PageSuperAdmin extends Page {
         super.addLinks(returnLink("index"));
        
         Link newData = new Link("Nouvelle MAIN-DATA", "/newData", "topnav-menu-data");
-        Link newUser = new Link("Nouvel utilisateur", "#", "topnav-menu-user");
+        Link Users = new Link("Utilisateurs", "/superAdmin/users", "topnav-menu-user");
         Link newTypeTube = new Link("Nouveau Type de tube", "#", "topnav-menu-typetube");
         
         Link[] menu = new Link[] {
             newData,
-            newUser,
             newTypeTube,
+            Users,
         };
         super.setMenu(menu);
         
@@ -47,7 +47,7 @@ public class PageSuperAdmin extends Page {
         // Add Attribute :
         getPageGenerique();
        
-        super.getModel().addAttribute("newUser", new FormUser());
+        
         super.getModel().addAttribute("newTypeTube", new FormTypeTube());
         super.getModel().addAttribute("newTypeVolant", new FormTypeVolant());
         super.getModel().addAttribute("newConsoMois", new FormConsoMois());
@@ -56,16 +56,5 @@ public class PageSuperAdmin extends Page {
         
         return returnPage();
     }
-    
-    
-    //Formalise le nom du role
-    public String formatRole(String role) {
-        String result;
-        switch(role){
-            case "ROLE_ADMIN" -> result = "Admin";
-            case "ROLE_SUPADMIN" -> result = "Super Admin";
-            default -> result = "User";
-        }
-        return result;
-    }
+
 }

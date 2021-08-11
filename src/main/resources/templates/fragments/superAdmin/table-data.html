@@ -1,0 +1,62 @@
+<html>
+
+    <div th:fragment="data" class="std-table">
+        <table>
+            <thead>
+                <tr>
+                    <th class="table-label" colspan="10" th:text="#{texte.page.superAdmin.table.data.label}"/>
+                </tr>
+                <tr>
+                    <th th:text="#{texte.page.superAdmin.table.data.id}"/>
+                    <th th:title="#{texte.page.superAdmin.table.data.title.saison}"
+                        th:text="#{texte.page.superAdmin.table.data.saison}"/>
+                    <th th:text="#{texte.page.superAdmin.table.data.stock}"/>
+                    <th th:text="#{texte.page.superAdmin.table.data.budget}"/>
+                    <th th:text="#{texte.page.superAdmin.table.data.seuilBas}"/>
+                    <th th:title="#{texte.page.superAdmin.table.data.title.plastique}"
+                        th:text="#{texte.page.superAdmin.table.data.plastique}"/>
+                    <th th:title="#{texte.page.superAdmin.table.data.title.entrainement}"
+                        th:text="#{texte.page.superAdmin.table.data.entrainement}"/>
+                    <th th:title="#{texte.page.superAdmin.table.data.title.competition}"
+                        th:text="#{texte.page.superAdmin.table.data.competition}"/>
+                    <th th:text="#{texte.page.superAdmin.table.data.actif}"/>
+                    <th class="table-action" th:text="#{texte.global.page.action}"/>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${mainData.empty}">
+                    <td colspan="10" th:text="#{texte.page.superAdmin.table.data.noData}"/>
+                </tr>
+                <tr th:each="data : ${mainData}">
+                    <td><span th:text="${data.id}"/>
+                    <td th:text="${data.idSaison.toString()}" th:title="${'id='+data.idSaison.id}"/>
+                    <td th:text="${data.showStock}"/>
+                    <td th:text="${data.budgetDefault}"/>
+                    <td th:text="${data.seuilBas}"/>
+                    <td th:text="${data.idTTPlastique}" th:title="${'id='+data.idTTPlastique.id}"/>
+                    <td th:text="${data.idTTEntrainement}" th:title="${'id='+data.idTTEntrainement.id}"/>
+                    <td th:text="${data.idTTCompetition}" th:title="${'id='+data.idTTCompetition.id}"/>
+                    <td th:text="${data.actif}"/>
+                    <td class="table-action">
+                        <table class="action-input">
+                            <tr>
+                                <td class="action-input">
+                                    <form action="#" th:action="@{/data/{id}(id=${data.id})}" th:method="post">
+                                        <input type="hidden" name="_method" value="delete"/>
+                                        <input id="action-input" type="submit" value="Suppr"/>
+                                    </form>
+                                </td><td class="action-input">|</td>
+                                <td class="action-input">
+                                    <form action="#" th:action="@{/data/{id}(id=${data.id})}" th:method="post">
+                                        <input id="action-input" type="submit" value="Edit"/>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</html>
