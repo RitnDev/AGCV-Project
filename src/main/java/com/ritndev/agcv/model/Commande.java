@@ -98,6 +98,12 @@ public class Commande implements Serializable {
         Methodes
     */
     
+    public String getIdH() {
+        String strResult = "commande-regler-oui";
+        if(!regler) strResult = "membre-regler-non";
+        return strResult;
+    }
+    
     public String getRegler() {
         String strResult = "Non";
         if(regler) strResult = "Oui";
@@ -140,13 +146,6 @@ public class Commande implements Serializable {
     public String getStringMontantRestant() {
         return String.format("%.2f", getMontantRestant());
     }
-    
-    //renvoie la class html en fonction si la commande est réglée ou non
-    public String getClassRegler() {
-        String strClass = "td-regler";
-        if(!regler) strClass = "td-non-regler";
-        return strClass;
-    }
-    
+       
     
 }

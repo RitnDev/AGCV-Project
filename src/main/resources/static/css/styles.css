@@ -187,20 +187,6 @@ color: black;
 margin: auto;
 }
 
-table.table-commande{
-  margin-left: 400px;
-}
-td.table-commande{
-padding: 0px;
-vertical-align : top;
-}
-td.table-commande-resume{
-padding: 0px;
-padding-left: 10px;
-vertical-align : top;
-}
-
-
 
 .std-table th, td {
 text-align: center;

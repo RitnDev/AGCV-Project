@@ -66,4 +66,15 @@ td.admin-form-label {
 .admin-form-input input{
   width: 75px;
   font-size: 14px;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 20px 1px #356adeb0;
+}
+
+#admin-form-input-budget:hover,
+#admin-form-input-seuil:hover,
+#admin-form-input-stock-Plastique:hover,
+#admin-form-input-stock-Entrainement:hover,
+#admin-form-input-stock-Compétition:hover {
+    box-shadow: 0 0 20px 1px #1b4cb8;
 }

@@ -116,7 +116,7 @@ public class PrixTube implements Serializable {
     
     //Pour les commentaire de tableau
     public String getPrixComment(){
-        return prix + " | " + prixMembre;
+        return getPrixString() + "€ | " + getPrixMembreString() + "€";
     }
     
     public String getPrixtubeDevise(String devise) {

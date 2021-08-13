@@ -83,7 +83,6 @@ td.popup-form-submit {
 
 /* FORM Commande (suite) */
 
-
 input#nbTubeCommande {
   height: 20px;
   width: 45px;
@@ -106,6 +105,53 @@ input#regler:hover {
   box-shadow: 0 0 20px 4px #1b4cb8;
 }
 
+
+/* FORM Competition / Membre */
+
+input#nom,
+input#prenom,
+input#nbTubesUtilises{
+  height: 22px;
+  width: 100%;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 10px 1px #356adeb0;
+}
+
+input#nbTubesUtilises{
+  width: 30%;
+}
+
+input#nom:hover,
+input#prenom:hover,
+input#nbTubesUtilises:hover {
+  box-shadow: 0 0 20px 1px #1b4cb8;
+}
+
+input#actif {
+  margin-left: 0;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 20px 1px #356ade;
+}
+input#actif:hover {
+  box-shadow: 0 0 20px 4px #1b4cb8;
+}
+
+
+/* FORM Saison */
+
+input#budget{
+  height: 22px;
+  width: 50%;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 10px 1px #356adeb0;
+}
+
+input#budget:hover {
+  box-shadow: 0 0 20px 1px #1b4cb8;
+}
 
 
 

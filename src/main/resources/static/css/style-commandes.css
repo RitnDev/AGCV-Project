@@ -1,0 +1,103 @@
+/*
+style-compet.css
+---------
+*/
+
+img.table-commande-nbTubes {
+  width:30px;
+}
+
+td#membre-regler-non {
+    background-color: #f1262687;
+}
+
+table.table-commande{
+  margin-left: 300px;
+}
+td.table-commande{
+padding: 0px;
+vertical-align : top;
+}
+td.table-commande-resume{
+padding: 0px;
+padding-left: 10px;
+vertical-align : top;
+}
+
+th.table-commande-date,
+td.table-commande-date {
+    width: 90px;
+    height: 15px;
+}
+
+th.table-commande-membre,
+td.table-commande-membre {
+    width: 400px;
+    height: 15px;
+}
+th.table-commande-nbTubes,
+td.table-commande-nbTubes {
+    width: 60px;
+    height: 15px;
+    padding:0px;
+}
+th.table-commande-prixtube,
+td.table-commande-prixtube{
+    width: 120px;
+    height: 15px;
+}
+th.table-commande-prix,
+td.table-commande-prix{
+    width: 90px;
+    height: 15px;
+}
+th.table-commande-regler,
+td.table-commande-regler{
+    width: 80px;
+    height: 15px;
+}
+
+
+th.table-action,
+td.table-action {
+    width:110px;
+    height: 15px;
+}
+
+
+.std-table thead{
+    display: block;
+}
+.std-table tbody{
+    display: block;
+    height: 628px;
+    overflow-y:overlay;
+}
+
+.table-action tbody{
+    overflow-y:hidden;
+    height: 15px;
+}
+
+td.table-commandes-label-resume {
+  font-family: 'Montserrat Alternates', sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #d5d5d5;
+  color: black;
+  text-align:right;
+  width: 150px;
+}
+
+td.table-commande-resume-club,
+td.table-commande-resume-membre,
+td.table-commande-resume-restant,
+td.table-commande-resume-deduit{
+  width: 70px;
+}
+
+th.table-commandes-label-resume{
+  width: 220px;
+  padding-left: 16px;
+  padding-right: 16px;
+}

@@ -14,14 +14,16 @@
                     <th class="table-label" colspan="7" th:text="#{texte.page.commandesMembres.table.titre}"/>
                 </tr>
                 <tr>
-                    <th th:text="#{texte.page.commandesMembres.table.date}"/>
-                    <th th:text="#{texte.page.commandesMembres.table.membre}"/>
+                    <th th:text="#{texte.page.commandesMembres.table.date}" class="table-commande-date"/>
+                    <th th:text="#{texte.page.commandesMembres.table.membre}" class="table-commande-membre"/>
                     <th th:title="#{texte.page.commandesMembres.title.prixtube}"
-                        th:text="#{texte.page.commandesMembres.table.prixtube}"/>
-                    <th th:text="#{texte.page.commandesMembres.table.nbtube}"/>
+                        th:text="#{texte.page.commandesMembres.table.prixtube}" class="table-commande-prixtube"/>
+                    <th class="table-commande-nbTubes">
+                        <img class="table-commande-nbTubes" src="/images/TubesCommandes.png"/>
+                    </th>
                     <th th:title="#{texte.page.commandesMembres.title.prix}" 
-                        th:text="#{texte.page.commandesMembres.table.prix}"/>
-                    <th th:text="#{texte.page.commandesMembres.table.regler}"/>
+                        th:text="#{texte.page.commandesMembres.table.prix}" class="table-commande-prix"/>
+                    <th th:text="#{texte.page.commandesMembres.table.regler}" class="table-commande-regler"/>
                     <th class="table-action" th:text="#{texte.global.page.action}"/>
                 </tr>
             </thead>
@@ -30,39 +32,31 @@
                     <td colspan="7" th:text="#{texte.page.commandesMembres.table.noCommande}"/>
                 </tr>
                 <tr th:each="commande : ${saison.commandes}">
-                    <td>
-                        <span th:text="${commande.getDateCommande}"/>
-                    </td>
-                    <td>
-                        <span th:text="${commande.idMembre}"/>
-                    </td>
-                    <td title="prix club | prix membre">
-                        <span th:text="${commande.idPrixTube.getPrixComment}"/>
-                    </td>
-                    <td>
-                        <span th:text="${commande.nbTubeCommande}"/>
-                    </td>
-                    <td th:title="${commande.nbTubeCommande + ' x ' + commande.idPrixTube.getPrixMembreString}">
-                        <span th:text="${commande.getStringPrixCommandeMembre} + #{texte.global.devise}"/>
-                    </td>
-                    <td th:class="${commande.getClassRegler}">
-                        <span th:text="${commande.getRegler}"/>
-                    </td>
-                    <td class="table-action">
+                    <td th:id="${commande.getIdH}" th:text="${commande.getDateCommande}" class="table-commande-date"/>
+                    <td th:id="${commande.getIdH}" th:text="${commande.idMembre}" class="table-commande-membre"/>
+                    <td th:id="${commande.getIdH}" title="prix club | prix membre"
+                        th:text="${commande.idPrixTube.getPrixComment}" class="table-commande-prixtube"/>
+                    <td th:id="${commande.getIdH}" th:text="${commande.nbTubeCommande}" class="table-commande-nbTubes"/>
+                    <td th:id="${commande.getIdH}" th:title="${commande.nbTubeCommande + ' x ' + commande.idPrixTube.getPrixMembreString}"
+                        th:text="${commande.getStringPrixCommandeMembre} + #{texte.global.devise}" class="table-commande-prix"/>
+                    <td th:id="${commande.getIdH}" th:text="${commande.getRegler}" class="table-commande-regler"/>
+                    <td th:id="${commande.getIdH}" class="table-action">
                         <table class="action-input">
+                        <tbody class="action-input">
                             <tr>
-                                <td class="action-input">
+                                <td th:id="${commande.getIdH}" class="action-input">
                                     <form action="#" th:action="@{/commande/{id}(id=${commande.id})}" th:method="post">
                                         <input type="hidden" name="_method" value="delete"/>
                                         <input id="action-input" type="submit" value="Suppr"/>
                                     </form>
-                                </td><td class="action-input">|</td>
-                                <td class="action-input">
+                                </td><td th:id="${commande.getIdH}" class="action-input">|</td>
+                                <td th:id="${commande.getIdH}" class="action-input">
                                     <form action="#" th:action="@{/commande/{id}(id=${commande.id})}" th:method="post">
                                         <input id="action-input" type="submit" value="Edit"/>
                                     </form>
                                 </td>
                             </tr>
+                        </tbody>
                         </table>
                     </td>
                 </tr>

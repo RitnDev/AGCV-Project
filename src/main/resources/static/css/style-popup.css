@@ -107,16 +107,55 @@ select#mois:hover {
 }
 
 
+/* FORM Competition / Membre */
 
+input#nom,
+input#prenom,
+input#nbTubesUtilises{
+  height: 22px;
+  width: 100%;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 10px 1px #356adeb0;
+}
 
+input#nbTubesUtilises{
+  width: 30%;
+}
 
+input#nom:hover,
+input#prenom:hover,
+input#nbTubesUtilises:hover {
+  box-shadow: 0 0 20px 1px #1b4cb8;
+}
 
+/* FORM Saison */
 
+input#anneeDebut,
+input#budget{
+  height: 22px;
+  width: 50%;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 10px 1px #356adeb0;
+}
+input#anneeDebut{
+    width: 30%;
+}
+input#actuelle {
+  margin-left: 0;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 20px 1px #356ade;
+}
 
-
-
-
-
+input#anneeDebut:hover,
+input#budget:hover {
+  box-shadow: 0 0 20px 1px #1b4cb8;
+}
+input#actuelle:hover {
+  box-shadow: 0 0 20px 4px #1b4cb8;
+}
 
 
 
@@ -253,7 +292,7 @@ select#mois:hover {
 }
 .popup-content-saison {
     width: 500px;
-    height: 255px;
+    height: 260px;
 }
 .popup-content-stock {
     width: 400px;
