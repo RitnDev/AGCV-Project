@@ -153,6 +153,28 @@ input#budget:hover {
   box-shadow: 0 0 20px 1px #1b4cb8;
 }
 
+/* FORM PrixTube */
+
+input#marque,
+input#prix,
+input#prixMembre {
+  height: 22px;
+  width: 100%;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 10px 1px #356adeb0;
+}
+input#prix,
+input#prixMembre{
+    width: 30%;
+}
+
+input#marque:hover,
+input#prix:hover,
+input#prixMembre:hover {
+  box-shadow: 0 0 20px 1px #1b4cb8;
+}
+
 
 
 /* Fond de page */
@@ -245,7 +267,7 @@ input#budget:hover {
 }
 .popup-content-edit-prixtube {
     width: 500px;
-    height: 295px;
+    height: 300px;
 }
 .popup-content-edit-user {
     width: 380px;
@@ -257,7 +279,7 @@ input#budget:hover {
 }
 .popup-content-edit-membre {
     width: 380px;
-    height: 255px;
+    height: 260px;
 }
 .popup-content-edit-data {
     width: 450px;

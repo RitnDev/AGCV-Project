@@ -1,5 +1,6 @@
 package com.ritndev.agcv.InterfaceService;
 
+import com.ritndev.agcv.classes.Reponse;
 import com.ritndev.agcv.form.FormUser;
 import com.ritndev.agcv.model.AppRole;
 import com.ritndev.agcv.model.AppUser;
@@ -12,13 +13,13 @@ import java.util.List;
 public interface IUserService {
     
     //Methode AppUser :
-    public int saveUser(FormUser newUser);
+    public Reponse saveUser(FormUser newUser);
     public List<AppUser> listUser();
     public AppUser findByIdUser(Long id);
     public AppUser findByUsernameUser(String User);
-    public int supprUser(Long id);
-    public int updateUser(FormUser editUser);
-    public int updateMdpUser(FormUser editUser);
+    public Reponse supprUser(Long id);
+    public Reponse updateUser(FormUser editUser);
+    public Reponse updateMdpUser(FormUser editUser);
 
     
     //Methode AppRole :

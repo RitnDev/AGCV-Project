@@ -63,10 +63,8 @@ public class ConsoMoisController {
     //Modifier une Prix-Tube
     @PutMapping("/mois/prix/{id}")
     public String editConsoMoisPrix(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
-        int result = consoMoisService.updateConsoMoisPrixtube(putConsoMois);
-        
         PageIndex pageIndex = new PageIndex(model, principal, messageSource);   
-        pageIndex.addReponse("prixtube", "edit", result);
+        pageIndex.addReponse(consoMoisService.updateConsoMoisPrixtube(putConsoMois));
         
         return pageIndex.getPage(dataService);
     } 
@@ -79,7 +77,6 @@ public class ConsoMoisController {
     //Changement du nombres de tubes utilisés sur le mois
     @PostMapping(value = "/mois/nbu/{id}")
     public String changeNbTubeUtilises(@PathVariable Long id, Model model, Principal principal) {
-        
         //Recupération de la DATA à modifier :
         ConsoMois editConsoMois = consoMoisService.findByIdConsoMois(id);
         FormConsoMois formConsoMois = new FormConsoMois(id,
@@ -97,10 +94,8 @@ public class ConsoMoisController {
     //Modifier nbTubeUtilises du consoMois
     @PutMapping("/mois/nbu/{id}")
     public String editConsoMoisNbUtilises(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
-        int result = consoMoisService.updateConsoMoisNbUtilises(putConsoMois);
-        
         PageIndex pageIndex = new PageIndex(model, principal, messageSource);   
-        pageIndex.addReponse("nbutilises", "edit", result);
+        pageIndex.addReponse(consoMoisService.updateConsoMoisNbUtilises(putConsoMois));
         
         return pageIndex.getPage(dataService);
     } 
@@ -114,7 +109,6 @@ public class ConsoMoisController {
     //Changement du nombres de tubes commandés sur le mois
     @PostMapping(value = "/mois/nbc/{id}")
     public String changeNbTubeCommandes(@PathVariable Long id, Model model, Principal principal) {
-        
         //Recupération de la DATA à modifier :
         ConsoMois editConsoMois = consoMoisService.findByIdConsoMois(id);
         FormConsoMois formConsoMois = new FormConsoMois(id,
@@ -132,10 +126,8 @@ public class ConsoMoisController {
     //Modifier nbTubeCommande du consoMois
     @PutMapping("/mois/nbc/{id}")
     public String editConsoMoisNbCommandes(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
-        int result = consoMoisService.updateConsoMoisNbCommandes(putConsoMois);
-        
         PageIndex pageIndex = new PageIndex(model, principal, messageSource);   
-        pageIndex.addReponse("nbcommandes", "edit", result);
+        pageIndex.addReponse(consoMoisService.updateConsoMoisNbCommandes(putConsoMois));
         
         return pageIndex.getPage(dataService);
     } 

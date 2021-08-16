@@ -158,7 +158,38 @@ input#actuelle:hover {
 }
 
 
+/* FORM PrixTube */
 
+select#TypeTube {
+  height: 22px;
+  width: 100%;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 10px 1px #356adeb0;
+}
+select#TypeTube:hover {
+  box-shadow: 0 0 20px 1px #1b4cb8;
+}
+
+input#marque,
+input#prix,
+input#prixMembre {
+  height: 22px;
+  width: 100%;
+  border: none;
+  border-radius: 1px;
+  box-shadow: 0 0 10px 1px #356adeb0;
+}
+input#prix,
+input#prixMembre{
+    width: 30%;
+}
+
+input#marque:hover,
+input#prix:hover,
+input#prixMembre:hover {
+  box-shadow: 0 0 20px 1px #1b4cb8;
+}
 
 
 
@@ -260,7 +291,7 @@ input#actuelle:hover {
 
 .popup-content-commande {
     width: 650px;
-    height: 250px;
+    height: 255px;
 }
 .popup-content-competition {
     width: 440px;
@@ -280,7 +311,7 @@ input#actuelle:hover {
 }
 .popup-content-prixtube {
     width: 500px;
-    height: 295px;
+    height: 310px;
 }
 .popup-content-user {
     width: 500px;
@@ -288,7 +319,7 @@ input#actuelle:hover {
 }
 .popup-content-membre {
     width: 380px;
-    height: 215px;
+    height: 220px;
 }
 .popup-content-saison {
     width: 500px;

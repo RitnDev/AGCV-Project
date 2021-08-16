@@ -47,6 +47,7 @@
                             </td>
                             <td class="popup-form-input">
                                 <input id="prix" type="number" th:value="*{prix}" th:field="*{prix}" step="0.01" min="0.01" max="1000.00"/>
+                                <span th:text="#{texte.global.devise}"/>
                             </td>
                         </tr>
                         <tr>
@@ -55,6 +56,7 @@
                             </td>
                             <td class="popup-form-input">
                                 <input id="prixMembre" type="number" th:value="*{prixMembre}" th:field="*{prixMembre}" step="0.01" min="0.00" />
+                                <span th:text="#{texte.global.devise}"/>
                             </td>
                         </tr>
                         

@@ -10,6 +10,7 @@ import com.ritndev.agcv.InterfaceService.IConsoMoisService;
 import com.ritndev.agcv.InterfaceService.ICommandeService;
 import com.ritndev.agcv.InterfaceService.IMembreService;
 import com.ritndev.agcv.InterfaceService.IRestockService;
+import com.ritndev.agcv.classes.Reponse;
 import com.ritndev.agcv.form.*;
 import com.ritndev.agcv.model.*;
 import com.ritndev.agcv.model.enumeration.NomMois;
@@ -43,11 +44,11 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
 
     
     // -------------------   FONCTIONS MEMBRES ---------------------
-    @Override public int saveMembre(FormMembre newMembre) {
+    @Override public Reponse saveMembre(FormMembre newMembre) {
         int resultVal = 0;
         Membre m = membreRep.save(new Membre(newMembre.getPrenom(), newMembre.getNom()));
         if (m!=null) resultVal = 2;
-        return resultVal;
+        return new Reponse("membre", "create", resultVal);
     }
     @Override public List<Membre> listMembre() {return membreRep.findAll();}
     @Override public List<Membre> listMembreActif() {return membreRep.findByActifTrue();}
@@ -58,7 +59,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             return null;
         }
     }
-    @Override public int supprMembre(Long id) {
+    @Override public Reponse supprMembre(Long id) {
         int resultVal = 0;
         if (membreRep.existsById(id)){
             Membre m = membreRep.getOne(id);
@@ -70,9 +71,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("membre", "remove", resultVal);
     }
-    @Override public int updateMembre(FormMembre editMembre) {
+    @Override public Reponse updateMembre(FormMembre editMembre) {
         int resultVal = 0;
         if (membreRep.existsById(editMembre.getId())){
             Membre m = membreRep.getOne(editMembre.getId());
@@ -84,12 +85,12 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("membre", "edit", resultVal);
     }
     
     
     // -------------------   FONCTIONS PRIX-TUBES ---------------------
-    @Override public int savePrixTube (FormPrixTube newPrixTube) {
+    @Override public Reponse savePrixTube (FormPrixTube newPrixTube) {
         int resultVal = 0;
         if (newPrixTube != null
         && newPrixTube.getIdTypeTube()>0
@@ -103,7 +104,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                                 true)); // Actif par défaut à la création
             resultVal = 2;
         }
-        return resultVal;
+        return new Reponse("prixtube", "create", resultVal);
     }
     @Override public List<PrixTube> listPrixTube() {return prixTubeRep.findAll();}
     @Override public List<PrixTube> ListPrixTubeName(String nom){
@@ -126,7 +127,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             return null;
         }   
     }
-    @Override public int supprPrixTube(Long id) {
+    @Override public Reponse supprPrixTube(Long id) {
         int resultVal = 0;
         if (prixTubeRep.existsById(id)){
             PrixTube pt = prixTubeRep.getOne(id);
@@ -139,9 +140,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         } 
-        return resultVal;
+        return new Reponse("prixtube", "remove", resultVal);
     }
-    @Override public int updatePrixTube(FormPrixTube editPrixTube) {
+    @Override public Reponse updatePrixTube(FormPrixTube editPrixTube) {
         int resultVal = 0;// erreur de modification
         if (prixTubeRep.existsById(editPrixTube.getId())){
             
@@ -157,13 +158,13 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("prixtube", "edit", resultVal);
     }
     
     
     
     // -------------------   FONCTIONS COMMANDES ---------------------
-    @Override public int saveCommande(FormCommande newCommande) {
+    @Override public Reponse saveCommande(FormCommande newCommande) {
         int resultVal = 0;
         Commande c = commandeRep.save(new Commande(
                                         membreRep.getOne(newCommande.getIdMembre()),
@@ -174,7 +175,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                                         prixTubeRep.getOne(newCommande.getIdPrixTube())));
         if(c!=null) resultVal = 2;
         
-        return resultVal;
+        return new Reponse("commande", "create", resultVal);
     }
     @Override public List<Commande> listCommande() {return commandeRep.findAll();}
     @Override public Commande findByIdCommande(Long id) {
@@ -184,7 +185,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             return null;
         }
     }
-    @Override public int supprCommande(Long id) {
+    @Override public Reponse supprCommande(Long id) {
         int resultVal = 0;
         if (commandeRep.existsById(id)){
             commandeRep.deleteById(id);
@@ -192,9 +193,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("commande", "remove", resultVal);
     }
-    @Override public int updateCommande(FormCommande editCommande) {
+    @Override public Reponse updateCommande(FormCommande editCommande) {
         int resultVal = 0;
         if (commandeRep.existsById(editCommande.getId())){
             Commande c = commandeRep.getOne(editCommande.getId());
@@ -206,12 +207,12 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("commande", "edit", resultVal);
     }
  
     
     // -------------------   FONCTIONS COMPETITION ---------------------
-    @Override public int saveCompetition(FormCompet newCompet) {
+    @Override public Reponse saveCompetition(FormCompet newCompet) {
         int resultVal = 0;
         //Récupération de la Main-Data active (md)
         MainData md = returnMainData();
@@ -231,7 +232,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1; // Pas de main-data créée.
         }
-        return resultVal;
+        return new Reponse("compet", "create", resultVal);
     }
     @Override public Competition findByIdCompetition(Long id) {
         if(competitionRep.existsById(id)){
@@ -240,7 +241,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             return null;
         }
     }
-    @Override public int supprCompetition(Long id) {
+    @Override public Reponse supprCompetition(Long id) {
         int resultVal = 0;
         if(competitionRep.existsById(id)){
             competitionRep.deleteById(id);
@@ -248,9 +249,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("compet", "remove", resultVal);
     }
-    @Override public int updateCompetition(FormCompet editCompet) {
+    @Override public Reponse updateCompetition(FormCompet editCompet) {
         int resultVal = 0;//erreur lors de la mise à jour
         if(competitionRep.existsById(editCompet.getId())){
             Competition c = competitionRep.getOne(editCompet.getId());
@@ -263,12 +264,12 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             resultVal = 1; //La competition n'existe pas en BDD.
         }
                
-        return resultVal;
+        return new Reponse("compet", "edit", resultVal);
     }
 
     
     // -------------------   FONCTIONS CONSO-MOIS ---------------------
-    @Override public int saveConsoMois(FormConsoMois newConsoMois) {
+    @Override public Reponse saveConsoMois(FormConsoMois newConsoMois) {
         int resultVal = 0;
         if(!newConsoMois.getNom().equals("")
             && newConsoMois.getIdPrixTube()!=0
@@ -281,7 +282,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                     newConsoMois.getNbTubeCommande()));
             if(cm!=null) resultVal = 2;
         }
-        return resultVal;
+        return new Reponse("consomois", "create", resultVal);
     }
     @Override public List<ConsoMois> listConsoMois() {return consoMoisRep.findAll();}
     @Override public ConsoMois findByIdConsoMois(Long id) {
@@ -291,7 +292,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             return null;
         }
     }
-    @Override public int supprConsoMois(Long id) {
+    @Override public Reponse supprConsoMois(Long id) {
         int resultVal = 0;
         if(consoMoisRep.existsById(id)){
             consoMoisRep.deleteById(id);
@@ -299,9 +300,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("consomois", "remove", resultVal);
     }
-    @Override public int updateConsoMoisPrixtube(FormConsoMois editConsoMois){
+    @Override public Reponse updateConsoMoisPrixtube(FormConsoMois editConsoMois){
         int resultVal = 0;
         if(consoMoisRep.existsById(editConsoMois.getId())){
             //Recup du conso mois
@@ -328,9 +329,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 3;
         }
-        return resultVal;
+        return new Reponse("prixtube", "edit", resultVal);
     }
-    @Override public int updateConsoMoisNbUtilises(FormConsoMois editConsoMois){
+    @Override public Reponse updateConsoMoisNbUtilises(FormConsoMois editConsoMois){
         int resultVal = 0;
         if(consoMoisRep.existsById(editConsoMois.getId())){
             //Recup du conso mois
@@ -342,9 +343,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("nbutilises", "edit", resultVal);
     }
-    @Override public int updateConsoMoisNbCommandes(FormConsoMois editConsoMois){
+    @Override public Reponse updateConsoMoisNbCommandes(FormConsoMois editConsoMois){
         int resultVal = 0;
         if(consoMoisRep.existsById(editConsoMois.getId())){
             //Recup du conso mois
@@ -356,9 +357,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("nbcommandes", "edit", resultVal);
     }
-    @Override public int updateConsoMois(FormConsoMois editConsoMois) {
+    @Override public Reponse updateConsoMois(FormConsoMois editConsoMois) {
         int resultVal = 0;
         if(consoMoisRep.existsById(editConsoMois.getId())){
             ConsoMois cm = consoMoisRep.getOne(editConsoMois.getId());
@@ -370,7 +371,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("consomois", "edit", resultVal);
     }
 
     
@@ -384,7 +385,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 3 = Cette saison existe déjà ! (année de début)
                 4 = Saison créée avec succès. Cette saison devient la nouvelle saison active !
     */
-    @Override public int saveSaison(FormSaison newSaison) {
+    @Override public Reponse saveSaison(FormSaison newSaison) {
         int resultVal = 0;
         long idSaison = 0;
         
@@ -446,7 +447,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         if(resultVal==4 || resultVal ==2){
             createTypeVolant(idSaison);
         }
-        return resultVal;
+        return new Reponse("saison", "create", resultVal);
     }
     @Override public List<Saison> listSaison() {return saisonRep.findAll();}
     @Override public Saison findByIdSaison(Long id) {
@@ -473,7 +474,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     @Override public List<Saison> listSaisonHisto() {
         return saisonRep.findByActuelleFalseOrderByAnneeDebutDesc();
     }
-    @Override public int supprSaison(Long id) {
+    @Override public Reponse supprSaison(Long id) {
         int resultVal = 0;
         
         if(id!=1){
@@ -498,7 +499,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 resultVal = 1; //Cette saison n'existe pas en BDD.
             }
         }       
-        return resultVal;
+        return new Reponse("saison", "remove", resultVal);
     }
     
 /*
@@ -508,7 +509,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 3 = Saison mise à jour et désactivation de la saison dans main-data
                 4 = Saison mise à jour et activation de la saison dans main-data
 */
-    @Override public int updateSaison(FormSaison editSaison) {
+    @Override public Reponse updateSaison(FormSaison editSaison) {
         int resultVal = 0; //mise à jour non effectuée
         
         if(editSaison != null 
@@ -568,11 +569,11 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 }
             }
         }
-        return resultVal;
+        return new Reponse("saison", "edit", resultVal);
     }
     
     
-    @Override public int saveRestock(FormRestock newRestock) {
+    @Override public Reponse saveRestock(FormRestock newRestock) {
         int resultVal = 0;
         if(newRestock.getValeur()!=0){
             Restock rs = restockRep.save(new Restock(
@@ -582,7 +583,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                                 consoMoisRep.getOne(newRestock.getIdConsoMois())));
             if(rs!=null) resultVal = 2;
         }
-        return resultVal;
+        return new Reponse("stock", "create", resultVal);
     }
     @Override public List<Restock> listRestock() {return restockRep.findAll();}
     @Override public Restock findByIdRestock(Long id) {
@@ -592,7 +593,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             return null;
         }
     }
-    @Override public int supprRestock(Long id) {
+    @Override public Reponse supprRestock(Long id) {
         int resultVal = 0;
         if (restockRep.existsById(id)){
             restockRep.deleteById(id);
@@ -600,10 +601,10 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1; //N'existe pas dans la BDD.
         }     
-        return resultVal;
+        return new Reponse("stock", "remove", resultVal);
     }
 
-    @Override public int updateRestock(FormRestock editRestock) {
+    @Override public Reponse updateRestock(FormRestock editRestock) {
         int resultVal = 0;
         if(restockRep.existsById(editRestock.getId())){
             Restock rs = restockRep.getOne(editRestock.getId());
@@ -615,14 +616,14 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("stock", "edit", resultVal);
     }
     
     
     
     
     // -------------------   FONCTIONS TYPE-VOLANT ---------------------
-    @Override public int saveTypeVolant(FormTypeVolant newTypeVolant) {
+    @Override public Reponse saveTypeVolant(FormTypeVolant newTypeVolant) {
         int resultVal = 0;
         //Si Saison = Actuelle, idSaison=0, du coup recuperation depuis MainData
         long idSaison = newTypeVolant.getIdSaison();
@@ -638,7 +639,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 resultVal = 2;
                 createConsoMois(t);
             }
-        return resultVal;
+        return new Reponse("typevolant", "create", resultVal);
     }
     @Override public List<TypeVolant> listTypeVolant() {return typeVolantRep.findAll();}
     @Override public TypeVolant findByIdTypeVolant(Long id) {
@@ -648,7 +649,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             return null;
         }
     }
-    @Override public int supprTypeVolant(Long id) {
+    @Override public Reponse supprTypeVolant(Long id) {
         int resultVal = 0;
         if (typeVolantRep.existsById(id)){     
             typeVolantRep.deleteById(id);
@@ -656,9 +657,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("typevolant", "remove", resultVal);
     }
-    @Override public int updateTypeVolant(FormTypeVolant editTypeVolant) {
+    @Override public Reponse updateTypeVolant(FormTypeVolant editTypeVolant) {
         int resultVal = 0;
         if (typeVolantRep.existsById(editTypeVolant.getId())){  
             TypeVolant ct = typeVolantRep.getOne(editTypeVolant.getId());
@@ -669,12 +670,12 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("typevolant", "edit", resultVal);
     }
 
     
     // -------------------   FONCTIONS MAIN-DATA ---------------------
-    @Override public int newMainData(){
+    @Override public Reponse newMainData(){
         int resultVal = 0;
         if(mainDataRep.findByActifTrue().isEmpty()){
             //Si elles sont toutes inactives ont peut créer une nouvelle MainData
@@ -682,7 +683,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             mainDataRep.save(main);
             resultVal = 2;
         }
-        return resultVal;
+        return new Reponse("data", "create", resultVal);
     }
     @Override public List<MainData> listMainData() {return mainDataRep.findAll();}
     @Override public MainData findByIdMainData(Long id) {
@@ -692,7 +693,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             return null;
         }
     }
-    @Override public int supprMainData(Long id) {
+    @Override public Reponse supprMainData(Long id) {
         int resultVal = 0;
         if(mainDataRep.existsById(id)) {
             resultVal = 3;
@@ -704,9 +705,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("data", "remove", resultVal);
     }
-    @Override public int updateMainData(FormData editMainData) {
+    @Override public Reponse updateMainData(FormData editMainData) {
         int resultVal = 0;//erreur lors de la mise à jour de la main-data
         
         //Vérification que l'ID de la data à modifier existe en BDD
@@ -752,9 +753,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("data", "edit", resultVal);
     }
-    @Override public int updateBudget(FormData editMainData) {
+    @Override public Reponse updateBudget(FormData editMainData) {
         int resultVal = 0;
         
         MainData md = returnMainData();
@@ -766,9 +767,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             resultVal = 1;
         }
         
-        return resultVal;
+        return new Reponse("budget", "edit", resultVal);
     }
-    @Override public int updateSeuil(FormData editMainData) {
+    @Override public Reponse updateSeuil(FormData editMainData) {
         int resultVal = 0;
         
         MainData md = returnMainData();
@@ -780,7 +781,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             resultVal = 1;
         }
         
-        return resultVal;
+        return new Reponse("seuil", "edit", resultVal);
     }
     @Override public MainData returnMainData() {
         List<MainData> data = mainDataRep.findAll();
@@ -799,7 +800,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
 
     
     // -------------------   FONCTIONS TYPE-TUBES ---------------------
-    @Override public int saveTypeTube(FormTypeTube formTypeTube) {
+    @Override public Reponse saveTypeTube(FormTypeTube formTypeTube) {
         int resultVal = 0;
         if(formTypeTube != null
         && !formTypeTube.getNom().equals("")) {
@@ -818,7 +819,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 3; //Champs incorrect !
         }
-        return resultVal;
+        return new Reponse("typetube", "create", resultVal);
     }
     @Override public List<TypeTube> listTypeTube() {return typeTubeRep.findAll();}
     
@@ -846,7 +847,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             return null;
         }
     }
-    @Override public int supprTypeTube(Long id) {
+    @Override public Reponse supprTypeTube(Long id) {
         int resultVal = 0; //Suppression non OK
         if(typeTubeRep.existsById(id)){ //Verification que l'id existe en BDD
             
@@ -884,9 +885,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1; //Le Type-Tube ne se trouve pas en BDD
         }     
-        return resultVal;
+        return new Reponse("typetube", "remove", resultVal);
     }
-    @Override public int updateTypeTube(FormTypeTube editTypeTube) {
+    @Override public Reponse updateTypeTube(FormTypeTube editTypeTube) {
         int resultVal = 0; //Modification non OK
         if(typeTubeRep.existsById(editTypeTube.getId())){ //Verification que l'id existe en BDD
             
@@ -903,7 +904,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }else{
             resultVal = 1;
         }
-        return resultVal;
+        return new Reponse("typetube", "edit", resultVal);
     }
 
     

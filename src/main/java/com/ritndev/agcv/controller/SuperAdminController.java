@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import com.ritndev.agcv.classes.ActionsTypes;
+import com.ritndev.agcv.classes.Reponse;
 
 import com.ritndev.agcv.form.FormData;
 import com.ritndev.agcv.form.FormTypeTube;
@@ -70,10 +71,8 @@ public class SuperAdminController {
     //Creation d'une nouvelle Main-Data
     @GetMapping("/newData")
     public String newData(Model model, Principal principal) {
-        int result = dataService.newMainData();
-        
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
-        pageSuperAdmin.addReponse("data", "create", result);
+        pageSuperAdmin.addReponse(dataService.newMainData());
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -84,10 +83,8 @@ public class SuperAdminController {
     //Supprimer une main-data
     @DeleteMapping("/data/{id}")
     public String supprData(@PathVariable(value = "id") Long id, Model model, Principal principal) {      
-        int result = dataService.supprMainData(id);
-       
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
-        pageSuperAdmin.addReponse("data", "remove", result);
+        pageSuperAdmin.addReponse(dataService.supprMainData(id));
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -99,10 +96,7 @@ public class SuperAdminController {
     //Lancer la modification d'une main-data
     @PostMapping("/data/{id}")
     public String getData(@PathVariable Long id, Model model, Principal principal) {
-        
-        System.out.println(">> POST - EDIT DATA");
-        System.out.println(">> ID : " + id);
-        
+       
         //Recupération de la DATA à modifier :
         MainData editData = dataService.findByIdMainData(id);
         FormData formData = new FormData(id, editData.getIdSaison().getId(), editData.isActif());
@@ -119,10 +113,8 @@ public class SuperAdminController {
     //Modifier une Main-Data
     @PutMapping("/data/{id}")
     public String editData(@ModelAttribute FormData putData, Model model, Principal principal) {
-        int result = dataService.updateMainData(putData);
-        
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
-        pageSuperAdmin.addReponse("data", "edit", result);
+        pageSuperAdmin.addReponse(dataService.updateMainData(putData));
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -138,10 +130,8 @@ public class SuperAdminController {
     //Creation d'une nouvelle Type-Tube
     @PostMapping("/newTypeTube")
     public String newTypeTube(@ModelAttribute FormTypeTube newTypeTube, Model model, Principal principal) {
-        int result = typeTubeService.saveTypeTube(newTypeTube);
-        
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
-        pageSuperAdmin.addReponse("typetube", "create", result);
+        pageSuperAdmin.addReponse(typeTubeService.saveTypeTube(newTypeTube));
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -154,10 +144,8 @@ public class SuperAdminController {
     //Supprimer une Type-Tube
     @DeleteMapping("/typetube/{id}")
     public String supprTypeTube(@PathVariable(value = "id") Long id, Model model, Principal principal) {
-        int result = typeTubeService.supprTypeTube(id);
-        
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);
-        pageSuperAdmin.addReponse("typetube", "remove", result);
+        pageSuperAdmin.addReponse(typeTubeService.supprTypeTube(id));
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -169,9 +157,6 @@ public class SuperAdminController {
     //Lancer la modification d'une Type-Tube
     @PostMapping("/typetube/{id}")
     public String getTypeTube(@PathVariable Long id, Model model, Principal principal) {
-        
-        System.out.println(">> POST - EDIT STOCK");
-        System.out.println(">> ID : " + id);
         
         //Recupération de la DATA à modifier :
         TypeTube editTypeTube = typeTubeService.findByIdTypeTube(id);
@@ -188,10 +173,8 @@ public class SuperAdminController {
     //Modifier une Type-Tube
     @PutMapping("/typetube/{id}")
     public String editTypeTube(@ModelAttribute FormTypeTube putTypeTube, Model model, Principal principal) {
-        int result = typeTubeService.updateTypeTube(putTypeTube);
-        
         PageSuperAdmin pageSuperAdmin = new PageSuperAdmin(model, principal, messageSource);     
-        pageSuperAdmin.addReponse("typetube", "remove", result);
+        pageSuperAdmin.addReponse(typeTubeService.updateTypeTube(putTypeTube));
         
         model.addAttribute("mainData", dataService.listMainData());
         model.addAttribute("typeTubeList", typeTubeService.listDataTypeTube());
@@ -230,11 +213,9 @@ public class SuperAdminController {
         System.out.println(">> Mot de passe : " + newUser.getMdp());
         System.out.println(">> Role ID : " + newUser.getRoleId());
         System.out.println(">> --------------------------------------");
-        
-        int result = userService.saveUser(newUser);
-
+ 
         PageUsers pageUsers = new PageUsers(model, principal, messageSource);    
-        pageUsers.addReponse("user", "create", result);
+        pageUsers.addReponse(userService.saveUser(newUser));
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -256,14 +237,14 @@ public class SuperAdminController {
         PageUsers pageUsers = new PageUsers(model, principal, messageSource);
         String userNameLog = pageUsers.returnUser(principal);
         
-        int result = 3;
-        
         // L'utilisateur ne peut pas se supprimer soit même.
         if (!userNameLog.equals(userService.findByIdUser(id).getUserName())) {            
-            result = userService.supprUser(id);
+            pageUsers.addReponse(userService.supprUser(id));
+        }else{
+            pageUsers.addReponse(new Reponse("user", "remove", 3));
         }
         
-        pageUsers.addReponse("user", "remove", result);
+        
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
@@ -305,10 +286,10 @@ public class SuperAdminController {
 
             return pageAction.returnPage();
             }else{
-                pageUsers.addReponse("ritn", "edit", 3);
+                pageUsers.addReponse(new Reponse("ritn", "edit", 3));
             }
         }else{
-            pageUsers.addReponse("user", "edit", 3);
+            pageUsers.addReponse(new Reponse("user", "edit", 3));
         }
         
         
@@ -327,11 +308,9 @@ public class SuperAdminController {
     
         //Modifier une Main-Data
     @PutMapping("/superAdmin/user/{id}")
-    public String editUser(@ModelAttribute FormUser putUser, Model model, Principal principal) {
-        int result = userService.updateUser(putUser);
-                
+    public String editUser(@ModelAttribute FormUser putUser, Model model, Principal principal) {        
         PageUsers pageUsers = new PageUsers(model, principal, messageSource);
-        pageUsers.addReponse("user", "edit", result);
+        pageUsers.addReponse(userService.updateUser(putUser));
         
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){

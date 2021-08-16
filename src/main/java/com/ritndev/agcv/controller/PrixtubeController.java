@@ -59,11 +59,8 @@ public class PrixtubeController {
     //Création d'un nouveau prix-tube
     @PostMapping("/admin/newPrixTube")
     public String newPrixTube(@ModelAttribute FormPrixTube newPrixTube, Model model, Principal principal) {
-        
-        int result = prixTubeService.savePrixTube(newPrixTube);
-        
         PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
-        pagePrixtube.addReponse("prixtube", "create", result);
+        pagePrixtube.addReponse(prixTubeService.savePrixTube(newPrixTube));
         
         model.addAttribute("listPrixTubes", prixTubeService.listPrixTube());
         model.addAttribute("prixPlastiques", prixTubeService.ListPrixTubeName(NomTypeTube.PLASTIQUE.toString()));
@@ -80,10 +77,8 @@ public class PrixtubeController {
     //Supprimer un prix-tube
     @DeleteMapping("/admin/prixtube/{id}")
     public String supprPrixTube(@PathVariable(value = "id") Long id, Model model, Principal principal) {  
-        
         PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
-        int result = prixTubeService.supprPrixTube(id);
-        pagePrixtube.addReponse("prixtube", "remove", result);
+        pagePrixtube.addReponse(prixTubeService.supprPrixTube(id));
         
         model.addAttribute("listPrixTubes", prixTubeService.listPrixTube());
         model.addAttribute("prixPlastiques", prixTubeService.ListPrixTubeName(NomTypeTube.PLASTIQUE.toString()));
@@ -100,9 +95,6 @@ public class PrixtubeController {
     //Lancer la modification d'un prix-tube
     @PostMapping("/admin/prixtube/{id}")
     public String postPrixTube(@PathVariable Long id, Model model, Principal principal) {     
-        System.out.println(">> POST - EDIT PRIX-TUBE");
-        System.out.println(">> ID : " + id);
-        
         //Recupération du membre à modifier :        
         model.addAttribute("editPrixTube", prixTubeService.findByIdPrixTube(id));
         model.addAttribute("numAction", ActionsTypes.EDIT_PRIXTUBE.toString());
@@ -115,10 +107,8 @@ public class PrixtubeController {
     //Modifier un prix-tube
     @PutMapping("/admin/prixtube/{id}")
     public String editPrixTube(@ModelAttribute FormPrixTube putPrixTube, Model model, Principal principal) {
-        
         PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
-        int result = prixTubeService.updatePrixTube(putPrixTube);
-        pagePrixtube.addReponse("prixtube", "edit", result);
+        pagePrixtube.addReponse(prixTubeService.updatePrixTube(putPrixTube));
         
         model.addAttribute("listPrixTubes", prixTubeService.listPrixTube());
         model.addAttribute("prixPlastiques", prixTubeService.ListPrixTubeName(NomTypeTube.PLASTIQUE.toString()));
@@ -130,5 +120,5 @@ public class PrixtubeController {
 
         return pagePrixtube.getPage(connect);
     }
-    
+        
 }

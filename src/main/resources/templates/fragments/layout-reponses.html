@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    
+    <div th:fragment="reponse" th:if="${!reponses.empty}">
+        
+        <table class="table-reponse">
+            <tbody>
+                <tr th:each="rep : ${reponses}" class="table-reponse">
+                    <td th:class="${'td-icon-' + rep.key}">
+                        <img class="table-reponse" th:src="${'/images/reponses/' + rep.key + '.png'}"/>
+                    </td>
+                    <td th:class="${'td-rep-' + rep.key}">
+                        <span th:text="${rep.value}"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </div>
+    
+</html>

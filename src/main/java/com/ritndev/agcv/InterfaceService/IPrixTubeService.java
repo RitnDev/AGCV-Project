@@ -1,5 +1,6 @@
 package com.ritndev.agcv.InterfaceService;
 
+import com.ritndev.agcv.classes.Reponse;
 import com.ritndev.agcv.form.FormPrixTube;
 import com.ritndev.agcv.model.PrixTube;
 import java.util.List;
@@ -11,12 +12,12 @@ import java.util.List;
 public interface IPrixTubeService {
     
     //Methode PrixTube
-    public int savePrixTube(FormPrixTube newPrixTube);
+    public Reponse savePrixTube(FormPrixTube newPrixTube);
     public List<PrixTube> listPrixTube();
     public List<PrixTube> ListPrixTubeName(String nom);
     public List<PrixTube> ListPrixTubeActif();
     public PrixTube findByIdPrixTube(Long id);
-    public int supprPrixTube(Long id);
-    public int updatePrixTube(FormPrixTube editPrixTube);
+    public Reponse supprPrixTube(Long id);
+    public Reponse updatePrixTube(FormPrixTube editPrixTube);
     
 }

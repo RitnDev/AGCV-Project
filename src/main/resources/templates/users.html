@@ -20,15 +20,8 @@
     
         <!-- content section -->
         <div class="main-content">
-            <div th:if="${!reponses.empty}">
-                <table class="table-reponse">
-                    <tbody>
-                        <tr th:each="rep : ${reponses}">
-                            <td th:class="${'td-rep-'+rep.key}"><span th:text="${rep.value}"/></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <!-- réponse du service suite à une action -->
+            <div th:replace="fragments/layout-reponses :: reponse"/>
             <br/>
             
             <div th:replace="fragments/superAdmin/table-users :: user"/>

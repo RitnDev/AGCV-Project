@@ -43,7 +43,7 @@ public class CompetController {
     
     //--------------   Page Commande de tube des membres   ------------------
     
-    @GetMapping(value = "/competition")
+    @GetMapping(value = {"/competition", "/newCompetition"})
     public String sacCompetition(Model model, Principal principal){
         PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
         
@@ -64,10 +64,8 @@ public class CompetController {
     //Création d'une nouvelle commande de membre
     @PostMapping("/newCompetition")
     public String newCompetition(@ModelAttribute FormCompet newCompetition, Model model, Principal principal) {
-        int result = competitionService.saveCompetition(newCompetition);
-        
         PageCompetition pageCompet = new PageCompetition(model, principal, messageSource); 
-        pageCompet.addReponse("compet", "create", result);
+        pageCompet.addReponse(competitionService.saveCompetition(newCompetition));
         
         int AdminConnect = 0;
         if (!pageCompet.returnUser(principal).equals("")){
@@ -87,10 +85,8 @@ public class CompetController {
     //Supprimer un membre
     @DeleteMapping("/compet/{id}")
     public String supprCompet(@PathVariable(value = "id") Long id, Model model, Principal principal) {
-        int result = competitionService.supprCompetition(id);
-         
         PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
-        pageCompet.addReponse("compet", "remove", result);
+        pageCompet.addReponse(competitionService.supprCompetition(id));
         
         int AdminConnect = 0;
         if (!pageCompet.returnUser(principal).equals("")){
@@ -110,10 +106,8 @@ public class CompetController {
     //Modifier une competition
     @PutMapping("/compet/{id}")
     public String editCompet(@ModelAttribute FormCompet putCompet, Model model, Principal principal) { 
-        int result = competitionService.updateCompetition(putCompet);
-
         PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
-        pageCompet.addReponse("compet", "edit", result);
+        pageCompet.addReponse(competitionService.updateCompetition(putCompet));
         
         int AdminConnect = 0;
         if (!pageCompet.returnUser(principal).equals("")){
@@ -133,10 +127,6 @@ public class CompetController {
     //Lancer la modification d'une competition
     @PostMapping("/compet/{id}")
     public String getCompet(@PathVariable Long id, Model model, Principal principal) {
-        
-        System.out.println(">> POST - EDIT COMPETITION");
-        System.out.println("ID : " + id);
-        
         //Recupération du membre à modifier :
         Competition editCompet = competitionService.findByIdCompetition(id);
         FormCompet formCompet = new FormCompet(id, editCompet.getNbTubesUtilises(), editCompet.getNom());
@@ -159,10 +149,8 @@ public class CompetController {
     //Modifier une stock de competition
     @PostMapping("/newRestock")
     public String editStock(@ModelAttribute FormRestock putStock, Model model, Principal principal) {
-       int result = restockService.saveRestock(putStock);
-        
         PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
-        pageCompet.addReponse("stock", "create", result);
+        pageCompet.addReponse(restockService.saveRestock(putStock));
         
         int AdminConnect = 0;
         if (!pageCompet.returnUser(principal).equals("")){

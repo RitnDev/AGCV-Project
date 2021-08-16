@@ -1,5 +1,6 @@
 package com.ritndev.agcv.InterfaceService;
 
+import com.ritndev.agcv.classes.Reponse;
 import com.ritndev.agcv.form.FormConsoMois;
 import com.ritndev.agcv.model.ConsoMois;
 import java.util.List;
@@ -11,13 +12,13 @@ import java.util.List;
 public interface IConsoMoisService {
     
     //Methode ConsoMois
-    public int saveConsoMois(FormConsoMois newConsoMois);
+    public Reponse saveConsoMois(FormConsoMois newConsoMois);
     public List<ConsoMois> listConsoMois();
     public ConsoMois findByIdConsoMois(Long id);
-    public int supprConsoMois(Long id);
-    public int updateConsoMoisPrixtube(FormConsoMois editConsoMois);
-    public int updateConsoMoisNbUtilises(FormConsoMois editConsoMois);
-    public int updateConsoMoisNbCommandes(FormConsoMois editConsoMois);
-    public int updateConsoMois(FormConsoMois editConsoMois);
+    public Reponse supprConsoMois(Long id);
+    public Reponse updateConsoMoisPrixtube(FormConsoMois editConsoMois);
+    public Reponse updateConsoMoisNbUtilises(FormConsoMois editConsoMois);
+    public Reponse updateConsoMoisNbCommandes(FormConsoMois editConsoMois);
+    public Reponse updateConsoMois(FormConsoMois editConsoMois);
     
 }

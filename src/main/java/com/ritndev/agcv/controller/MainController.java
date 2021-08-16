@@ -67,19 +67,10 @@ public class MainController {
     //Lancer la modification d'un utilisateur
     @PutMapping("/mdp/{id}")
     public String editUsername(@ModelAttribute FormUser putUser, Model model, Principal principal) {
-        
-        System.out.println(">> POST - EDIT USER (MDP)");
-        System.out.println("ID : " + putUser.getId());
-        
-        //Modification du mot de passe utilisateur :
-        int result = userService.updateMdpUser(putUser);
-                
         PageIndex pageIndex = new PageIndex(model, principal, messageSource);
-        pageIndex.addReponse("mdp", "edit", result);
+        pageIndex.addReponse(userService.updateMdpUser(putUser));
         
         return pageIndex.getPage(dataService);
-        
     }
-    
     
 }

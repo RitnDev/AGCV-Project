@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
+
 /**
  *
  * @author Ritn
@@ -51,9 +52,7 @@ public class SaisonController {
     @PostMapping("/admin/newSaison")
     public String newSaison(@ModelAttribute FormSaison newSaison, Model model, Principal principal) {
         PageSaison pageSaison = new PageSaison(model, principal, messageSource); 
-        
-        int result = saisonService.saveSaison(newSaison);
-        pageSaison.addReponse("saison", "create", result);
+        pageSaison.addReponse(saisonService.saveSaison(newSaison));
          
         boolean connect = userService.findRoleByUsername(pageSaison.returnUser(principal)).equals("ROLE_SUPADMIN");
         
@@ -67,9 +66,7 @@ public class SaisonController {
     @DeleteMapping("/admin/saison/{id}")
     public String supprSaison(@PathVariable(value = "id") Long id, Model model, Principal principal) {
         PageSaison pageSaison = new PageSaison(model, principal, messageSource); 
-        
-        int result = saisonService.supprSaison(id);
-        pageSaison.addReponse("saison", "remove", result);
+        pageSaison.addReponse(saisonService.supprSaison(id));
          
         boolean connect = userService.findRoleByUsername(pageSaison.returnUser(principal)).equals("ROLE_SUPADMIN");
         
@@ -83,9 +80,7 @@ public class SaisonController {
     @PutMapping("/admin/saison/{id}")
     public String editSaison(@ModelAttribute FormSaison putSaison, Model model, Principal principal) {
         PageSaison pageSaison = new PageSaison(model, principal, messageSource); 
-        
-        int result = saisonService.updateSaison(putSaison);
-        pageSaison.addReponse("saison", "edit", result);
+        pageSaison.addReponse(saisonService.updateSaison(putSaison));
         boolean connect = userService.findRoleByUsername(pageSaison.returnUser(principal)).equals("ROLE_SUPADMIN");
         
         model.addAttribute("listSaisons", saisonService.listSaison());
@@ -97,10 +92,6 @@ public class SaisonController {
     //Lancer la modification d'une saison
     @PostMapping("/admin/saison/{id}")
     public String postSaison(@PathVariable Long id, Model model, Principal principal) {
-        
-        System.out.println(">> POST - EDIT SAISON");
-        System.out.println(">> ID : " + id);
-        
         //Recupération du membre à modifier :
         Saison editSaison = saisonService.findByIdSaison(id);
         FormSaison formSaison = new FormSaison(id, editSaison.getBudget(), editSaison.isActuelle());
@@ -111,5 +102,5 @@ public class SaisonController {
         return pageAction.returnPage();
     }
     
-    
+        
 }

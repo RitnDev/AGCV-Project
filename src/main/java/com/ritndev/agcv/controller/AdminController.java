@@ -46,14 +46,12 @@ public class AdminController {
     
     @PostMapping(value = {"/admin/stock/{id}"})
     public String editStockVolant(@PathVariable(value = "id") Long id, @ModelAttribute FormTypeVolant putTypeVolant, Model model, Principal principal) {
-       
         putTypeVolant.setId(id);
-        int result = typeVolantService.updateTypeVolant(putTypeVolant);
-                       
+        
         PageAdmin pageAdmin = new PageAdmin(model, principal, messageSource);   
         boolean connect = userService.findRoleByUsername(pageAdmin.returnUser(principal)).equals("ROLE_SUPADMIN");
         
-        pageAdmin.addReponse("typevolant", "edit", result);
+        pageAdmin.addReponse(typeVolantService.updateTypeVolant(putTypeVolant));
         
         return pageAdmin.getPage(connect, dataService);
     }
@@ -61,12 +59,10 @@ public class AdminController {
     
     @PostMapping(value = {"/admin/budget"})
     public String editBudget(@ModelAttribute FormData putData, Model model, Principal principal) {
-        int result = dataService.updateBudget(putData);
-                       
         PageAdmin pageAdmin = new PageAdmin(model, principal, messageSource);   
         boolean connect = userService.findRoleByUsername(pageAdmin.returnUser(principal)).equals("ROLE_SUPADMIN");
         
-        pageAdmin.addReponse("budget", "edit", result);
+        pageAdmin.addReponse(dataService.updateBudget(putData));
         
         return pageAdmin.getPage(connect, dataService);
     }
@@ -74,12 +70,10 @@ public class AdminController {
     
     @PostMapping(value = {"/admin/seuil"})
     public String editSeuil(@ModelAttribute FormData putData, Model model, Principal principal) {
-        int result = dataService.updateSeuil(putData);
-                       
         PageAdmin pageAdmin = new PageAdmin(model, principal, messageSource);   
         boolean connect = userService.findRoleByUsername(pageAdmin.returnUser(principal)).equals("ROLE_SUPADMIN");
         
-        pageAdmin.addReponse("seuil", "edit", result);
+        pageAdmin.addReponse(dataService.updateSeuil(putData));
         
         return pageAdmin.getPage(connect, dataService);
     }

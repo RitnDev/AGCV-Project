@@ -34,10 +34,8 @@ public class MembreController {
     
     @GetMapping("/admin/membre")
     public String getMembre(Model model, Principal principal){    
-        
+        PageMembre pageMembre = new PageMembre(model, principal, messageSource);  
         model.addAttribute("listMembres", membreService.listMembre());
-         
-        PageMembre pageMembre = new PageMembre(model, principal, messageSource);    
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
         
         return pageMembre.getPage(connect);
@@ -51,9 +49,7 @@ public class MembreController {
     @PostMapping("/admin/newMembre")
     public String newMembre(@ModelAttribute FormMembre newMembre, Model model, Principal principal) {
         PageMembre pageMembre = new PageMembre(model, principal, messageSource);
-        
-        int result = membreService.saveMembre(newMembre);
-        pageMembre.addReponse("membre", "create", result);
+        pageMembre.addReponse(membreService.saveMembre(newMembre));
         
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
         
@@ -66,9 +62,7 @@ public class MembreController {
     @DeleteMapping("/admin/membre/{id}")
     public String supprMembre(@PathVariable(value = "id") Long id, Model model, Principal principal) {       
         PageMembre pageMembre = new PageMembre(model, principal, messageSource);
-        
-        int result = membreService.supprMembre(id);
-        pageMembre.addReponse("membre", "remove", result);
+        pageMembre.addReponse(membreService.supprMembre(id));
         
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
 
@@ -80,9 +74,7 @@ public class MembreController {
     @PutMapping("/admin/membre/{id}")
     public String editMembre(@ModelAttribute FormMembre putMembre, Model model, Principal principal) {   
         PageMembre pageMembre = new PageMembre(model, principal, messageSource);
-        
-        int result = membreService.updateMembre(putMembre);
-        pageMembre.addReponse("membre", "edit", result);
+        pageMembre.addReponse(membreService.updateMembre(putMembre));
         
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
 
@@ -95,10 +87,6 @@ public class MembreController {
     //Lancer la modification d'un membre
     @PostMapping("/admin/membre/{id}")
     public String postMembre(@PathVariable Long id, Model model, Principal principal) {
-        
-        System.out.println(">> POST - EDIT MEMBRE");
-        System.out.println("ID : " + id);
-        
         //Recupération du membre à modifier :
         Membre editMembre = membreService.findByIdMembre(id);
         FormMembre formMembre = new FormMembre(id, editMembre.getPrenom(), editMembre.getNom(), editMembre.isActif());
@@ -108,10 +96,5 @@ public class MembreController {
         PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
     }
-    
-   
-    
-    
-    
     
 }

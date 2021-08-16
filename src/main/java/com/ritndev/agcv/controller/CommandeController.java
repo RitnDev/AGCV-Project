@@ -72,10 +72,8 @@ public class CommandeController {
 
     @PostMapping("/commande")
     public String newCommande2(@ModelAttribute FormCommande newCommande, Model model, Principal principal) {
-        int result = commandeService.saveCommande(newCommande);
-        
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
-        pageCommandesMembres.addReponse("commande", "create", result);
+        pageCommandesMembres.addReponse(commandeService.saveCommande(newCommande));
         
         model.addAttribute("Membres", membreService.listMembreActif());
         
@@ -87,10 +85,8 @@ public class CommandeController {
     //Supprimer un membre
     @DeleteMapping("/commande/{id}")
     public String supprCommande(@PathVariable(value = "id") Long id, Model model, Principal principal) {       
-        int result = commandeService.supprCommande(id);
-
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
-        pageCommandesMembres.addReponse("commande", "remove", result);
+        pageCommandesMembres.addReponse(commandeService.supprCommande(id));
         
         model.addAttribute("Membres", membreService.listMembreActif());
         
@@ -100,10 +96,8 @@ public class CommandeController {
     //Modifier un membre
     @PutMapping("/commande/{id}")
     public String editCommande(@ModelAttribute FormCommande putCommande, Model model, Principal principal) {   
-        int result = commandeService.updateCommande(putCommande);
-        
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
-        pageCommandesMembres.addReponse("commande", "edit", result);
+        pageCommandesMembres.addReponse(commandeService.updateCommande(putCommande));
         
         model.addAttribute("Membres", membreService.listMembreActif());
         
@@ -115,17 +109,12 @@ public class CommandeController {
     //Lancer la modification d'un membre
     @PostMapping("/commande/{id}")
     public String getCommande(@PathVariable Long id, Model model, Principal principal) {
-        
-        System.out.println(">> POST - EDIT COMMANDE");
-        System.out.println("ID : " + id);
-        
         //Recupération du membre à modifier :
         Commande editCommande = commandeService.findByIdCommande(id);
         FormCommande formCommande = new FormCommande(id, editCommande.isRegler());
         model.addAttribute("editCommande", formCommande);
         model.addAttribute("numAction", ActionsTypes.EDIT_COMMANDE.toString());
-        
-                
+                        
         PageActions pageAction = new PageActions(model, principal, messageSource);
         return pageAction.returnPage();
     }

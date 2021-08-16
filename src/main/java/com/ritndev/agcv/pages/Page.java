@@ -1,6 +1,7 @@
 package com.ritndev.agcv.pages;
 
 import com.ritndev.agcv.classes.Link;
+import com.ritndev.agcv.classes.Reponse;
 import com.ritndev.agcv.classes.TypeReponse;
 import com.ritndev.agcv.utils.WebUtils;
 import java.security.Principal;
@@ -111,55 +112,11 @@ public class Page {
     
         
     //Ajouter une reponse à la liste des réponses
-    public void addReponse(TypeReponse tr, String reponse){
-        reponses.put(tr, reponse);
+    public void addReponse(Reponse reponse){
+        reponses.put(reponse.getTypeReponse(), messageSource.getMessage(reponse.getStrReponse(), null, Locale.FRENCH));
     }
-    
-    public void addReponse(String modelName, String methodeName, int result) {
-        String strResult = "error";
-        TypeReponse tr = TypeReponse.OTHER;
-        
-        switch (methodeName) {
-            case "create" : tr = TypeReponse.ADD;
-            case "remove" : tr = TypeReponse.REMOVE;
-            case "edit" : tr = TypeReponse.EDIT;
-            case "info" : tr = TypeReponse.INFO;
-        }
-        
-        switch (result) {
-            default : {
-                //Erreur lors de l'execution
-                strResult = "error";
-                tr = TypeReponse.ERROR;
-                break;
-            }
-            case 1 : {
-                //Impossible de créer à cause d'un autre élément qui rentre en conflit.
-                strResult = "error1";
-                tr = TypeReponse.ERROR;
-                break;
-            }
-            case 2 : {
-                strResult = "success";
-                break;
-            } //Reussite !
-            
-            //Autres réponses possible dans certain cas :
-            case 3 : {
-                strResult = "result3";
-                tr = TypeReponse.INFO;
-                break;
-            }          
-            case 4 : {
-                strResult = "result4";
-                break;
-            }
-        }
-        
-        reponses.put(tr, messageSource.getMessage("reponse." + modelName + "." + methodeName + "." + strResult, null, Locale.FRENCH));
-    }
-    
-    
+     
+    //Ajout de lien dans le menu Links de la page
     public void addLinks(Link link) {
         links.add(link);
     }

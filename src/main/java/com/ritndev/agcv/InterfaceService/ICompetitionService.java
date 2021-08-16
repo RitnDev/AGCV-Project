@@ -1,5 +1,6 @@
 package com.ritndev.agcv.InterfaceService;
 
+import com.ritndev.agcv.classes.Reponse;
 import com.ritndev.agcv.form.FormCompet;
 import com.ritndev.agcv.model.Competition;
 
@@ -10,9 +11,9 @@ import com.ritndev.agcv.model.Competition;
 public interface ICompetitionService {
     
     //Methode Competition
-    public int saveCompetition(FormCompet newCompet);
+    public Reponse saveCompetition(FormCompet newCompet);
     public Competition findByIdCompetition(Long id);
-    public int supprCompetition(Long id);
-    public int updateCompetition(FormCompet editCompet);
+    public Reponse supprCompetition(Long id);
+    public Reponse updateCompetition(FormCompet editCompet);
     
 }

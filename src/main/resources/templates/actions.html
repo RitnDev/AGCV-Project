@@ -17,48 +17,73 @@
         <div th:replace="fragments/layout-header :: header">...</div>
         
         <!-- pop-up section -->
+        
+        <!-- Edition Membre -->
         <div th:if="${editMembre != null}" id="bg-popup" class="bg-popup-edit-membre">
             <div th:replace="fragments/membre/layout-popup-edit :: membre"/>
         </div>
+        
+        <!-- Edition Membre -->
         <div th:if="${editData != null}" id="bg-popup" class="bg-popup-edit-data">
             <div th:replace="fragments/data/layout-popup-edit :: data"/>
         </div>
+        
+        <!-- Edition Saison -->
         <div th:if="${editSaison != null}" id="bg-popup" class="bg-popup-edit-saison">
             <div th:replace="fragments/saison/layout-popup-edit :: saison"/>
         </div>
+        
+        <!-- Edition Utilisateur -->
         <div th:if="${editUser != null}" id="bg-popup" class="bg-popup-edit-user">
             <div th:replace="fragments/user/layout-popup-edit :: user"/>
         </div>
+        
+        <!-- Edition mot de passe -->
         <div th:if="${editUser != null}" id="bg-popup" class="bg-popup-edit-mdp">
             <div th:replace="fragments/user/layout-popup-edit-mdp :: mdp"/>
         </div>
-        <div th:if="${editStock != null}" id="bg-popup" class="bg-popup-edit-stock">
-            <div th:replace="fragments/stock/layout-popup-edit :: stock"/>
-        </div>
+                
+        <!-- Edition Compétition -->
         <div th:if="${editCompet != null}" id="bg-popup" class="bg-popup-edit-compet">
             <div th:replace="fragments/competition/layout-popup-edit :: compet"/>
         </div>
+        
+        <!-- Edition TypeTube -->
         <div th:if="${editTypeTube != null}" id="bg-popup" class="bg-popup-edit-typetube">
             <div th:replace="fragments/TypeTube/layout-popup-edit :: typetube"/>
         </div>
+        
+        <!-- Edition Type Volant -->
         <div th:if="${editTypeVolant != null}" id="bg-popup" class="bg-popup-edit-typevolant">
             <div th:replace="fragments/TypeVolant/layout-popup-edit :: typevolant"/>
         </div>
+        
+        <!-- Edition PrixTube -->
         <div th:if="${editPrixTube != null}" id="bg-popup" class="bg-popup-edit-prixtube">
             <div th:replace="fragments/PrixTube/layout-popup-edit :: prixtube"/>
         </div>
+        
+        <!-- Edition Commande -->
         <div th:if="${editCommande != null}" id="bg-popup" class="bg-popup-edit-commande">
             <div th:replace="fragments/commande/layout-popup-edit :: commande"/>
         </div>
+        
+        <!-- Edition Conso Mois (prix) -->
         <div th:if="${editConsoMois != null}" id="bg-popup" class="bg-popup-edit-consomois">
             <div th:replace="fragments/ConsoMois/layout-popup-edit :: consomois-prix"/>
         </div>
+        
+        <!-- Edition Conso Mois (Nombres de tube utilisés) -->
         <div th:if="${editConsoMois != null}" id="bg-popup" class="bg-popup-edit-consomois-nbu">
             <div th:replace="fragments/ConsoMois/layout-popup-edit :: consomois-nbu"/>
         </div>
+        
+        <!-- Edition Conso Mois (Nombres de tube commandés) -->
         <div th:if="${editConsoMois != null}" id="bg-popup" class="bg-popup-edit-consomois-nbc">
             <div th:replace="fragments/ConsoMois/layout-popup-edit :: consomois-nbc"/>
         </div>
+        
+        <!-- 2e pop-up de création d'une commande -->
         <div th:if="${newCommande != null}" id="bg-popup" class="bg-popup-edit-commande-suite">
             <div th:replace="fragments/commande/layout-popup-new :: commande-suite"/>
         </div>
@@ -77,8 +102,6 @@
                     
             /*]]>*/
         </script>
-        
-        
         
     </body>
     

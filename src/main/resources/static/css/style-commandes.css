@@ -12,7 +12,7 @@ td#membre-regler-non {
 }
 
 table.table-commande{
-  margin-left: 300px;
+  margin-left: 250px;
 }
 td.table-commande{
 padding: 0px;
@@ -86,7 +86,7 @@ td.table-commandes-label-resume {
   background-color: #d5d5d5;
   color: black;
   text-align:right;
-  width: 150px;
+  width: 230px;
 }
 
 td.table-commande-resume-club,
@@ -97,7 +97,7 @@ td.table-commande-resume-deduit{
 }
 
 th.table-commandes-label-resume{
-  width: 220px;
+  width: 300px;
   padding-left: 16px;
   padding-right: 16px;
 }

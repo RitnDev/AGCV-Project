@@ -3,6 +3,7 @@ package com.ritndev.agcv.services;
 // Aide : https://devstory.net/11705/creer-une-application-de-connexion-avec-spring-boot-spring-security-jpa
 
 import com.ritndev.agcv.InterfaceService.IUserService;
+import com.ritndev.agcv.classes.Reponse;
 import com.ritndev.agcv.form.FormUser;
 import com.ritndev.agcv.model.AppRole;
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class customUserDetailsService implements UserDetailsService, IUserServic
     }
 
     //Creation d'un nouvel utilisateur
-    @Override public int saveUser(FormUser newUser) {
+    @Override public Reponse saveUser(FormUser newUser) {
         int resultVal = 0; //Utilisateur non enregistré
         if (newUser != null
             && !newUser.getIdentifiant().equals("")
@@ -80,7 +81,7 @@ public class customUserDetailsService implements UserDetailsService, IUserServic
                 userRoleRep.save(new UserRole(au.getUserId(), newUser.getRoleId()));
                 resultVal = 2; //Utilisateur enregistré avec son role
         }
-        return resultVal;
+        return new Reponse("user", "create", resultVal);
     }
     
     //Liste des utilisateurs
@@ -95,7 +96,7 @@ public class customUserDetailsService implements UserDetailsService, IUserServic
     }
     
     //Supprime un utilisateur par son ID
-    @Override public int supprUser(Long id) {
+    @Override public Reponse supprUser(Long id) {
         int resultVal = 0; //error
         if (appUserRep.existsById(id)) {
             resultVal = 1; //cet utilisateur ne peut etre supprimé
@@ -104,11 +105,11 @@ public class customUserDetailsService implements UserDetailsService, IUserServic
               resultVal = 2; //Suppression reussie
             }
         }
-        return resultVal;
+        return new Reponse("user", "remove", resultVal);
     }
     
     //Mise à jour d'un utilisateur ou de son role
-    @Override public int updateUser(FormUser editUser) {
+    @Override public Reponse updateUser(FormUser editUser) {
         int resultVal = 0; //erreur lors de la mise à jour
         if (appUserRep.existsById(editUser.getId())) {
             
@@ -124,12 +125,12 @@ public class customUserDetailsService implements UserDetailsService, IUserServic
                 resultVal = 4; //mise à jour du role utilisateur ok
             }
         }
-        return resultVal;
+        return new Reponse("user", "edit", resultVal);
     }
     
     
     //Mise à jour d'un utilisateur ou de son role
-    @Override public int updateMdpUser(FormUser editUser) {
+    @Override public Reponse updateMdpUser(FormUser editUser) {
         int resultVal = 0; //erreur lors de la mise à jour
         if (appUserRep.existsById(editUser.getId())) {
             AppUser appUser = appUserRep.getOne(editUser.getId());
@@ -148,7 +149,7 @@ public class customUserDetailsService implements UserDetailsService, IUserServic
                 }
             }
         }
-        return resultVal;
+        return new Reponse("mdp", "edit", resultVal);
     }
       
     

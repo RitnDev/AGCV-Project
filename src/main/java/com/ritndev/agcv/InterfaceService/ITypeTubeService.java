@@ -1,5 +1,6 @@
 package com.ritndev.agcv.InterfaceService;
 
+import com.ritndev.agcv.classes.Reponse;
 import com.ritndev.agcv.form.FormTypeTube;
 import com.ritndev.agcv.model.TypeTube;
 import java.util.List;
@@ -11,11 +12,11 @@ import java.util.List;
 public interface ITypeTubeService {
     
     //Methode TypeTube
-    public int saveTypeTube(FormTypeTube formTypeTube);
+    public Reponse saveTypeTube(FormTypeTube formTypeTube);
     public List<TypeTube> listTypeTube();
     public List<TypeTube> listDataTypeTube();
     public TypeTube findByIdTypeTube(Long id);
-    public int supprTypeTube(Long id);
-    public int updateTypeTube(FormTypeTube editTypeTube);
+    public Reponse supprTypeTube(Long id);
+    public Reponse updateTypeTube(FormTypeTube editTypeTube);
     
 }
