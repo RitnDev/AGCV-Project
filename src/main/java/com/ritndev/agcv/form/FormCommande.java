@@ -21,7 +21,7 @@ public class FormCommande {
     @Getter @Setter private long idMembre;
     
     //Nombres de tubes commandés
-    @Getter @Setter private int nbTubeCommande;
+    @Getter @Setter private String nbTubeCommande;
     
     //La facture est-elle déjà réglée ?
     @Getter @Setter private boolean regler;
@@ -48,7 +48,7 @@ public class FormCommande {
         this.idConsoMois = idConsoMois;
     }
     
-    public FormCommande(long idMembre, int nbTubeCommande, boolean regler) {
+    public FormCommande(long idMembre, String nbTubeCommande, boolean regler) {
         this.idMembre = idMembre;
         this.nbTubeCommande = nbTubeCommande;
         this.regler = regler;

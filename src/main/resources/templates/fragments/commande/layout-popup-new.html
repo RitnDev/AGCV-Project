@@ -91,7 +91,12 @@
                                 <label for="nbTubeCommande" th:text="#{texte.pop.new.commande.nbTubeCommande}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="nbTubeCommande" type="number" min="1" th:value="*{nbTubeCommande}" th:field="*{nbTubeCommande}" />
+                                <input id="nbTubeCommande" 
+                                       type="number" 
+                                       min="1"
+                                       th:pattern="#{validation.pattern.integer}"
+                                       th:value="*{nbTubeCommande}" 
+                                       th:field="*{nbTubeCommande}" />
                             </td>
                         </tr>
                         <tr>

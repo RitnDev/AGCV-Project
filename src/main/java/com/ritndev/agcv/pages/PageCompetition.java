@@ -46,8 +46,9 @@ public class PageCompetition extends Page {
         
         // Add Attribute :
         getPageGenerique();
-        super.getModel().addAttribute("newCompetition", new FormCompet());
+        super.getModel().addAttribute("newCompetition", new FormCompet("1"));
         super.getModel().addAttribute("newStock", new FormRestock(
+                                                            "0",
                                                             saisonActuelle.getId(),
                                                             dataService.returnMainData().getId(), 
                                                             consoMoisActu.getId()));

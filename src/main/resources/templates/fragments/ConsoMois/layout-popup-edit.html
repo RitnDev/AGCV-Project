@@ -91,7 +91,12 @@
                                 <label for="nbTubeUtilise" th:text="#{texte.pop.edit.moisNbu.nbTubeUtilise}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="nbTubeUtilise" type="number" th:value="*{nbTubeUtilise}" th:field="*{nbTubeUtilise}" min="0" />
+                                <input  id="nbTubeUtilise" 
+                                        type="number"
+                                        th:pattern="#{validation.pattern.integer0}"
+                                        th:value="*{nbTubeUtilise}" 
+                                        th:field="*{nbTubeUtilise}" 
+                                        min="0" />
                             </td>
                         </tr>
                         
@@ -136,7 +141,12 @@
                                 <label for="nbTubeCommande" th:text="#{texte.pop.edit.moisNbc.nbTubeCommande}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="nbTubeCommande" type="number" th:value="*{nbTubeCommande}" th:field="*{nbTubeCommande}" min="0" />
+                                <input  id="nbTubeCommande" 
+                                        type="number" 
+                                        th:pattern="#{validation.pattern.integer0}"
+                                        th:value="*{nbTubeCommande}" 
+                                        th:field="*{nbTubeCommande}" 
+                                        min="0" />
                             </td>
                         </tr>
                         

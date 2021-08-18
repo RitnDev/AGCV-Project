@@ -43,7 +43,8 @@
                         </tr>
                         <tr th:each="saison : ${listSaisons}" th:if="${saison.id!=1}">
                             <td th:id="${saison.getIdH}" th:text="${saison.toString}" class="table-saison-nom"/>
-                            <td th:id="${saison.getIdH}" th:text="${saison.budget}" class="table-saison-budget"/>
+                            <td th:id="${saison.getIdH}" th:text="${saison.getBudgetString} + #{texte.global.devise}" 
+                                class="table-saison-budget"/>
                             <td th:id="${saison.getIdH}" th:text="${saison.getActif}" class="table-saison-actif"/>
                             <td th:id="${saison.getIdH}" class="table-action">
                                 <table class="action-input">

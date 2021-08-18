@@ -168,7 +168,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         int resultVal = 0;
         Commande c = commandeRep.save(new Commande(
                                         membreRep.getOne(newCommande.getIdMembre()),
-                                        newCommande.getNbTubeCommande(), 
+                                        Integer.parseInt(newCommande.getNbTubeCommande()), 
                                         newCommande.isRegler(),
                                         returnMainData().getIdSaison(),
                                         consoMoisRep.getOne(newCommande.getIdConsoMois()),
@@ -221,9 +221,11 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             if (md.getIdSaison()!=null) {
             //if (md.getIdSaison()>0) {
                 if (newCompet != null
-                && newCompet.getNbTubesUtilises() != 0
                 && !newCompet.getNom().equals("")){
-                    competitionRep.save(new Competition(md.getIdSaison(), md, newCompet.getNbTubesUtilises(), newCompet.getNom()));
+                    competitionRep.save(new Competition(
+                                                md.getIdSaison(), 
+                                                md, Integer.parseInt(newCompet.getNbTubesUtilises()), 
+                                                newCompet.getNom()));
                     resultVal = 2;
                 }
             }else{
@@ -256,7 +258,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         if(competitionRep.existsById(editCompet.getId())){
             Competition c = competitionRep.getOne(editCompet.getId());
             c.setNom(editCompet.getNom());
-            c.setNbTubesUtilises(editCompet.getNbTubesUtilises());
+            c.setNbTubesUtilises(Integer.parseInt(editCompet.getNbTubesUtilises()));
             
             competitionRep.save(c);
             resultVal = 2; //Mise à jour réussie
@@ -278,8 +280,8 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                     newConsoMois.getNom(),
                     prixTubeRep.getOne(newConsoMois.getIdPrixTube()),
                     typeVolantRep.getOne(newConsoMois.getIdTypeVolant()),
-                    newConsoMois.getNbTubeUtilise(),
-                    newConsoMois.getNbTubeCommande()));
+                    Integer.parseInt(newConsoMois.getNbTubeUtilise()),
+                    Integer.parseInt(newConsoMois.getNbTubeCommande())));
             if(cm!=null) resultVal = 2;
         }
         return new Reponse("consomois", "create", resultVal);
@@ -337,7 +339,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             //Recup du conso mois
             ConsoMois cm = consoMoisRep.getOne(editConsoMois.getId());
             //MaJ du nbTubeUtilise
-            cm.setNbTubeUtilise(editConsoMois.getNbTubeUtilise());
+            cm.setNbTubeUtilise(Integer.parseInt(editConsoMois.getNbTubeUtilise()));
             consoMoisRep.save(cm); 
             resultVal = 2;
         }else{
@@ -351,7 +353,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             //Recup du conso mois
             ConsoMois cm = consoMoisRep.getOne(editConsoMois.getId());
             //MaJ du nbTubeCommande
-            cm.setNbTubeCommande(editConsoMois.getNbTubeCommande());
+            cm.setNbTubeCommande(Integer.parseInt(editConsoMois.getNbTubeCommande()));
             consoMoisRep.save(cm); 
             resultVal = 2;
         }else{
@@ -363,8 +365,8 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         int resultVal = 0;
         if(consoMoisRep.existsById(editConsoMois.getId())){
             ConsoMois cm = consoMoisRep.getOne(editConsoMois.getId());
-            cm.setNbTubeCommande(editConsoMois.getNbTubeCommande());
-            cm.setNbTubeUtilise(editConsoMois.getNbTubeUtilise());
+            cm.setNbTubeCommande(Integer.parseInt(editConsoMois.getNbTubeCommande()));
+            cm.setNbTubeUtilise(Integer.parseInt(editConsoMois.getNbTubeUtilise()));
             
             consoMoisRep.save(cm); 
             resultVal = 2;
@@ -575,14 +577,12 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     
     @Override public Reponse saveRestock(FormRestock newRestock) {
         int resultVal = 0;
-        if(newRestock.getValeur()!=0){
-            Restock rs = restockRep.save(new Restock(
-                                newRestock.getValeur(),
+        Restock rs = restockRep.save(new Restock(
+                                Integer.parseInt(newRestock.getValeur()),
                                 saisonRep.getOne(newRestock.getIdSaison()),
                                 returnMainData(),
                                 consoMoisRep.getOne(newRestock.getIdConsoMois())));
-            if(rs!=null) resultVal = 2;
-        }
+        if(rs!=null) resultVal = 2;
         return new Reponse("stock", "create", resultVal);
     }
     @Override public List<Restock> listRestock() {return restockRep.findAll();}
@@ -608,7 +608,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         int resultVal = 0;
         if(restockRep.existsById(editRestock.getId())){
             Restock rs = restockRep.getOne(editRestock.getId());
-            rs.setValeur(editRestock.getValeur());
+            rs.setValeur(Integer.parseInt(editRestock.getValeur()));
             rs.setIdConsoMois(consoMoisRep.getOne(editRestock.getIdConsoMois()));
             
             restockRep.save(rs);

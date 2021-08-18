@@ -33,6 +33,8 @@
                                        type="text" 
                                        th:value="*{prenom}" 
                                        th:field="*{prenom}"
+                                       th:pattern="#{validation.pattern.string1}"
+                                       minlength="2"
                                        maxlength="40"/>
                             </td>
                         </tr>
@@ -44,7 +46,9 @@
                                 <input id="nom" 
                                        type="text" 
                                        th:value="*{nom}" 
-                                       th:field="*{nom}" 
+                                       th:field="*{nom}"
+                                       th:pattern="#{validation.pattern.string1}"
+                                       minlength="2"
                                        maxlength="40"/>
                             </td>
                         </tr>

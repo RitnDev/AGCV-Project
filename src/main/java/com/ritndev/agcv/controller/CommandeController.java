@@ -3,6 +3,7 @@ package com.ritndev.agcv.controller;
 import com.ritndev.agcv.InterfaceService.ICommandeService;
 import com.ritndev.agcv.InterfaceService.IMainDataService;
 import com.ritndev.agcv.InterfaceService.IMembreService;
+import com.ritndev.agcv.Validations.FormCommandeValidation;
 import com.ritndev.agcv.classes.ActionsTypes;
 import com.ritndev.agcv.form.FormCommande;
 import com.ritndev.agcv.model.Commande;
@@ -44,9 +45,7 @@ public class CommandeController {
     @GetMapping(value = {"/commandesMembres"})
     public String commandesMembres(Model model, Principal principal){
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
-        
         model.addAttribute("Membres", membreService.listMembreActif());
-        
         return pageCommandesMembres.getPage(dataService);
     }
     
@@ -72,8 +71,18 @@ public class CommandeController {
 
     @PostMapping("/commande")
     public String newCommande2(@ModelAttribute FormCommande newCommande, Model model, Principal principal) {
+        //Construction de ma page Commande
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
-        pageCommandesMembres.addReponse(commandeService.saveCommande(newCommande));
+        //Validation du FormCommande avant envoie au service
+        FormCommandeValidation validCommande = new FormCommandeValidation(newCommande);
+        
+        //Si non valide, on envoie un message et on revient sur la page Commande
+        if (!validCommande.getValid()){
+            pageCommandesMembres.addReponse(validCommande.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormCommande au service
+            pageCommandesMembres.addReponse(commandeService.saveCommande(newCommande));
+        }
         
         model.addAttribute("Membres", membreService.listMembreActif());
         
@@ -96,7 +105,9 @@ public class CommandeController {
     //Modifier un membre
     @PutMapping("/commande/{id}")
     public String editCommande(@ModelAttribute FormCommande putCommande, Model model, Principal principal) {   
+        //Construction de ma page Membre
         PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
+        //On envoie le FormMembre au service
         pageCommandesMembres.addReponse(commandeService.updateCommande(putCommande));
         
         model.addAttribute("Membres", membreService.listMembreActif());

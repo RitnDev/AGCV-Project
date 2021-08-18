@@ -13,7 +13,7 @@ public class FormCompet {
     @Getter @Setter private Long id;
     
     //Nombre de tubes utilisés pendant la compétition
-    @Getter @Setter private int nbTubesUtilises;
+    @Getter @Setter private String nbTubesUtilises;
     
     //Nom de la competition
     @Getter @Setter private String nom;
@@ -25,18 +25,22 @@ public class FormCompet {
     //Constructeur
     public FormCompet() {}
 
-    public FormCompet(int nbTubesUtilises, String nom) {
+    public FormCompet(String nbTubesUtilises) {
+        this.nbTubesUtilises = nbTubesUtilises;
+    }
+    
+    public FormCompet(String nbTubesUtilises, String nom) {
         this.nbTubesUtilises = nbTubesUtilises;
         this.nom = nom;
     }
 
-    public FormCompet(Long id, int nbTubesUtilises, String nom) {
+    public FormCompet(Long id, String nbTubesUtilises, String nom) {
         this.id = id;
         this.nbTubesUtilises = nbTubesUtilises;
         this.nom = nom;
     }
 
-    public FormCompet(Long id, int nbTubesUtilises, String nom, String nomSaison) {
+    public FormCompet(Long id, String nbTubesUtilises, String nom, String nomSaison) {
         this.id = id;
         this.nbTubesUtilises = nbTubesUtilises;
         this.nom = nom;

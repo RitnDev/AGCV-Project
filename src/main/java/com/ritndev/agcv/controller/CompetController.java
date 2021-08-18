@@ -4,6 +4,8 @@ import com.ritndev.agcv.InterfaceService.ICompetitionService;
 import com.ritndev.agcv.InterfaceService.IMainDataService;
 import com.ritndev.agcv.InterfaceService.IRestockService;
 import com.ritndev.agcv.InterfaceService.IUserService;
+import com.ritndev.agcv.Validations.FormCompetValidation;
+import com.ritndev.agcv.Validations.FormRestockValidation;
 import java.security.Principal;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,9 +66,18 @@ public class CompetController {
     //Création d'une nouvelle commande de membre
     @PostMapping("/newCompetition")
     public String newCompetition(@ModelAttribute FormCompet newCompetition, Model model, Principal principal) {
-        PageCompetition pageCompet = new PageCompetition(model, principal, messageSource); 
-        pageCompet.addReponse(competitionService.saveCompetition(newCompetition));
-        
+        //Construction de ma page Competition
+        PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
+        //Validation du FormCompet avant envoie au service
+        FormCompetValidation validCompet = new FormCompetValidation(newCompetition);
+        //Si non valide, on envoie un message et on revient sur la page Competition
+        if (!validCompet.getValid()){
+            pageCompet.addReponse(validCompet.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormCompet au service
+            pageCompet.addReponse(competitionService.saveCompetition(newCompetition));
+        }
+                
         int AdminConnect = 0;
         if (!pageCompet.returnUser(principal).equals("")){
             switch (userService.findRoleByUsername(pageCompet.returnUser(principal))) {
@@ -106,8 +117,17 @@ public class CompetController {
     //Modifier une competition
     @PutMapping("/compet/{id}")
     public String editCompet(@ModelAttribute FormCompet putCompet, Model model, Principal principal) { 
+        //Construction de ma page Competition
         PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
-        pageCompet.addReponse(competitionService.updateCompetition(putCompet));
+        //Validation du FormCompet avant envoie au service
+        FormCompetValidation validCompet = new FormCompetValidation(putCompet);
+        //Si non valide, on envoie un message et on revient sur la page Competition
+        if (!validCompet.getValid()){
+            pageCompet.addReponse(validCompet.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormCompet au service
+            pageCompet.addReponse(competitionService.updateCompetition(putCompet));
+        }
         
         int AdminConnect = 0;
         if (!pageCompet.returnUser(principal).equals("")){
@@ -129,7 +149,7 @@ public class CompetController {
     public String getCompet(@PathVariable Long id, Model model, Principal principal) {
         //Recupération du membre à modifier :
         Competition editCompet = competitionService.findByIdCompetition(id);
-        FormCompet formCompet = new FormCompet(id, editCompet.getNbTubesUtilises(), editCompet.getNom());
+        FormCompet formCompet = new FormCompet(id, String.valueOf(editCompet.getNbTubesUtilises()), editCompet.getNom());
         model.addAttribute("editCompet", formCompet);
         model.addAttribute("numAction", ActionsTypes.EDIT_COMPETITION.toString());
         
@@ -137,20 +157,25 @@ public class CompetController {
         return pageAction.returnPage();
     }
     
-
-    
-    
     
     
 // ----------------------  GESTION DU STOCK DE COMPETITION --------------------------    
     
     
-    
     //Modifier une stock de competition
     @PostMapping("/newRestock")
     public String editStock(@ModelAttribute FormRestock putStock, Model model, Principal principal) {
+        //Construction de ma page Competition
         PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
-        pageCompet.addReponse(restockService.saveRestock(putStock));
+        //Validation du FormRestock avant envoie au service
+        FormRestockValidation validStock = new FormRestockValidation(putStock);
+        //Si non valide, on envoie un message et on revient sur la page Competition
+        if (!validStock.getValid()){
+            pageCompet.addReponse(validStock.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormRestock au service
+            pageCompet.addReponse(restockService.saveRestock(putStock));
+        }
         
         int AdminConnect = 0;
         if (!pageCompet.returnUser(principal).equals("")){

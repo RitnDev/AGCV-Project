@@ -3,6 +3,7 @@ package com.ritndev.agcv.controller;
 import com.ritndev.agcv.InterfaceService.IConsoMoisService;
 import com.ritndev.agcv.InterfaceService.IMainDataService;
 import com.ritndev.agcv.InterfaceService.IPrixTubeService;
+import com.ritndev.agcv.Validations.FormConsoMoisValidation;
 import com.ritndev.agcv.classes.ActionsTypes;
 import com.ritndev.agcv.form.FormConsoMois;
 import com.ritndev.agcv.model.ConsoMois;
@@ -81,7 +82,7 @@ public class ConsoMoisController {
         ConsoMois editConsoMois = consoMoisService.findByIdConsoMois(id);
         FormConsoMois formConsoMois = new FormConsoMois(id,
                                     editConsoMois.getNom(),
-                                    editConsoMois.getNbTubeUtilise());
+                                    String.valueOf(editConsoMois.getNbTubeUtilise()));
          
         model.addAttribute("editConsoMois", formConsoMois);
         model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS_NBU.toString());
@@ -94,9 +95,18 @@ public class ConsoMoisController {
     //Modifier nbTubeUtilises du consoMois
     @PutMapping("/mois/nbu/{id}")
     public String editConsoMoisNbUtilises(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
-        PageIndex pageIndex = new PageIndex(model, principal, messageSource);   
-        pageIndex.addReponse(consoMoisService.updateConsoMoisNbUtilises(putConsoMois));
-        
+        //Construction de ma page Index
+        PageIndex pageIndex = new PageIndex(model, principal, messageSource); 
+        //Validation du FormConsoMois avant envoie au service
+        FormConsoMoisValidation validConso = new FormConsoMoisValidation(putConsoMois);
+        //Si non valide, on envoie un message et on revient sur la page Index
+        if (!validConso.getValid()){
+            pageIndex.addReponse(validConso.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormConsoMois au service
+            pageIndex.addReponse(consoMoisService.updateConsoMoisNbUtilises(putConsoMois));
+        }
+                
         return pageIndex.getPage(dataService);
     } 
     
@@ -111,9 +121,9 @@ public class ConsoMoisController {
     public String changeNbTubeCommandes(@PathVariable Long id, Model model, Principal principal) {
         //Recupération de la DATA à modifier :
         ConsoMois editConsoMois = consoMoisService.findByIdConsoMois(id);
-        FormConsoMois formConsoMois = new FormConsoMois(id,
-                                    editConsoMois.getNbTubeCommande(),
-                                    editConsoMois.getNom());
+        FormConsoMois formConsoMois = new FormConsoMois(editConsoMois.getNom(),
+                                                    id,
+                                                    String.valueOf(editConsoMois.getNbTubeCommande()));
          
         model.addAttribute("editConsoMois", formConsoMois);
         model.addAttribute("numAction", ActionsTypes.EDIT_CONSOMOIS_NBC.toString());
@@ -126,8 +136,17 @@ public class ConsoMoisController {
     //Modifier nbTubeCommande du consoMois
     @PutMapping("/mois/nbc/{id}")
     public String editConsoMoisNbCommandes(@ModelAttribute FormConsoMois putConsoMois, Model model, Principal principal) {
-        PageIndex pageIndex = new PageIndex(model, principal, messageSource);   
-        pageIndex.addReponse(consoMoisService.updateConsoMoisNbCommandes(putConsoMois));
+        //Construction de ma page Index
+        PageIndex pageIndex = new PageIndex(model, principal, messageSource); 
+        //Validation du FormConsoMois avant envoie au service
+        FormConsoMoisValidation validConso = new FormConsoMoisValidation(putConsoMois);
+        //Si non valide, on envoie un message et on revient sur la page Index
+        if (!validConso.getValid()){
+            pageIndex.addReponse(validConso.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormConsoMois au service
+            pageIndex.addReponse(consoMoisService.updateConsoMoisNbCommandes(putConsoMois));
+        }   
         
         return pageIndex.getPage(dataService);
     } 

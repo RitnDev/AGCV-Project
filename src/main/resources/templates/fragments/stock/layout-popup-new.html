@@ -51,7 +51,12 @@
                                 <label for="ajout" th:text="#{texte.pop.new.stock.valeur}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="ajout" type="number" th:value="*{valeur}" th:field="*{valeur}" min="1" />
+                                <input id="ajout" 
+                                       type="number" 
+                                       th:pattern="#{validation.pattern.integer}"
+                                       th:value="*{valeur}" 
+                                       th:field="*{valeur}" 
+                                       min="1" />
                             </td>
                         </tr>
                         <tr>

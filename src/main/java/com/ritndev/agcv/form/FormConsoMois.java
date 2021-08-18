@@ -29,11 +29,11 @@ public class FormConsoMois {
     
     //Nombre de tubes utilises ce mois-ci
     @Getter @Setter
-    private int nbTubeUtilise;
+    private String nbTubeUtilise;
     
     //Nombre de tubes commandé ce mois-ci
     @Getter @Setter
-    private int nbTubeCommande;
+    private String nbTubeCommande;
     
     //Nombre de tubes commandé ce mois-ci
     @Getter @Setter
@@ -50,13 +50,13 @@ public class FormConsoMois {
         this.typeVolant = typeVolant;
     }
 
-    public FormConsoMois(long id, String nom, int nbTubeUtilise) {
+    public FormConsoMois(long id, String nom, String nbTubeUtilise) {
         this.id = id;
         this.nom = nom;
         this.nbTubeUtilise = nbTubeUtilise;
     }
     
-    public FormConsoMois(long id, int nbTubeCommande, String nom) {
+    public FormConsoMois(String nom, long id, String nbTubeCommande) {
         this.id = id;
         this.nom = nom;
         this.nbTubeCommande = nbTubeCommande;

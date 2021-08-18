@@ -30,7 +30,11 @@
                                 <label for="nom" th:text="#{texte.pop.edit.compet.nom}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="nom" type="text" th:value="*{nom}" th:field="*{nom}" />
+                                <input id="nom" 
+                                       type="text" 
+                                       th:pattern="#{validation.pattern.string2}"
+                                       th:value="*{nom}" 
+                                       th:field="*{nom}" />
                             </td>
                         </tr>
                         <tr>
@@ -38,7 +42,12 @@
                                 <label for="nbTubesUtilises" th:text="#{texte.pop.edit.compet.nbTubesUtilises}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="nbTubesUtilises" type="number" min="1" th:value="*{nbTubesUtilises}" th:field="*{nbTubesUtilises}" />
+                                <input id="nbTubesUtilises" 
+                                       type="number" 
+                                       min="1" 
+                                       th:pattern="#{validation.pattern.integer}"
+                                       th:value="*{nbTubesUtilises}" 
+                                       th:field="*{nbTubesUtilises}"/>
                             </td>
                         </tr>
                         

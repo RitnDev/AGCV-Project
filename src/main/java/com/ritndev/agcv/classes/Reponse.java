@@ -12,6 +12,7 @@ public class Reponse {
     @Getter @Setter private String modelName;
     @Getter @Setter private String methodeName;
     @Getter @Setter private int resultValue;
+    @Getter @Setter private boolean reponseValidation;
     
     @Getter @Setter private TypeReponse typeReponse;
     @Getter @Setter private String strReponse;
@@ -24,6 +25,24 @@ public class Reponse {
         this.resultValue = resultValue;
         setReponse();
     }
+
+    public Reponse(String modelName, String methodeName, int resultValue, boolean reponseValidation) {
+        this.modelName = modelName;
+        this.methodeName = methodeName;
+        this.resultValue = resultValue;
+        this.reponseValidation = reponseValidation;
+        
+        if(reponseValidation){
+            setReponseValidation();
+        }else{
+            setReponse();
+        }
+        
+    }
+    
+    
+    
+    
     
     //Initialise typeReponse et strReponse en fonction du constructeur
     private void setReponse() {
@@ -67,5 +86,57 @@ public class Reponse {
             }
         }  
     }
+    
+    
+    private void setReponseValidation() {
+        strReponse = "validation." + modelName + "." + methodeName + ".";
+        typeReponse = TypeReponse.OTHER;
+        
+        switch (methodeName) {
+            case "create" -> typeReponse = TypeReponse.ADD;
+            case "remove" -> typeReponse = TypeReponse.REMOVE;
+            case "edit" -> typeReponse = TypeReponse.EDIT;
+            case "info" -> typeReponse = TypeReponse.INFO;
+        }
+        
+        
+        switch (resultValue) {
+            default : {
+                //Tout les champs sont correctent
+                strReponse = strReponse + "success";
+                typeReponse = TypeReponse.SUCCESS;
+                break;
+            }
+            case 0 : {
+                //Erreur lors de l'execution
+                strReponse = strReponse + "error";
+                typeReponse = TypeReponse.ERROR;
+                break;
+            }
+            case 1 : {
+                strReponse = strReponse + "champ1";
+                break;
+            }
+            case 3 : {
+                strReponse = strReponse + "champ2";
+                break;
+            }
+            case 5 : {
+                strReponse = strReponse + "champ3";
+                break;
+            }
+            case 7 : {
+                strReponse = strReponse + "champ4";
+                break;
+            }
+            case 9 : {
+                strReponse = strReponse + "champ5";
+                break;
+            }
+        }  
+    }
+    
+    
+    
     
 }

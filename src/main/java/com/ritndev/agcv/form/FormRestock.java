@@ -13,7 +13,7 @@ public class FormRestock {
     @Getter @Setter private long id;
     
     //Valeur de restockage
-    @Getter @Setter private int valeur;
+    @Getter @Setter private String valeur;
     
     //ID de la saison en cours lors du restock
     @Getter @Setter private long idSaison;
@@ -29,14 +29,15 @@ public class FormRestock {
     public FormRestock() {}    
 
     //Creation d'un nouveau restockage
-    public FormRestock(long idSaison, long idStock, long idConsoMois) {
+    public FormRestock(String valeur, long idSaison, long idStock, long idConsoMois) {
+        this.valeur = valeur;
         this.idSaison = idSaison;
         this.idStock = idStock;
         this.idConsoMois = idConsoMois;
     }
 
     //Modification d'un restockage
-    public FormRestock(long id, int valeur, long idConsoMois) {
+    public FormRestock(long id, String valeur, long idConsoMois) {
         this.id = id;
         this.valeur = valeur;
         this.idConsoMois = idConsoMois;

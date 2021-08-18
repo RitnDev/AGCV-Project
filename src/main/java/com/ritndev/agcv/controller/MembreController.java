@@ -2,6 +2,7 @@ package com.ritndev.agcv.controller;
 
 import com.ritndev.agcv.InterfaceService.IMembreService;
 import com.ritndev.agcv.InterfaceService.IUserService;
+import com.ritndev.agcv.Validations.FormMembreValidation;
 import com.ritndev.agcv.classes.ActionsTypes;
 import com.ritndev.agcv.form.FormMembre;
 import com.ritndev.agcv.model.Membre;
@@ -48,8 +49,17 @@ public class MembreController {
     //Création d'un nouveau membre
     @PostMapping("/admin/newMembre")
     public String newMembre(@ModelAttribute FormMembre newMembre, Model model, Principal principal) {
+        //Construction de ma page Membre
         PageMembre pageMembre = new PageMembre(model, principal, messageSource);
-        pageMembre.addReponse(membreService.saveMembre(newMembre));
+        //Validation du FormMembre avant envoie au service
+        FormMembreValidation validMembre = new FormMembreValidation(newMembre);
+        //Si non valide, on envoie un message et on revient sur la page Membre
+        if (!validMembre.getValid()){
+            pageMembre.addReponse(validMembre.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormMembre au service
+            pageMembre.addReponse(membreService.saveMembre(newMembre));
+        }
         
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
         
@@ -73,8 +83,17 @@ public class MembreController {
     //Modifier un membre
     @PutMapping("/admin/membre/{id}")
     public String editMembre(@ModelAttribute FormMembre putMembre, Model model, Principal principal) {   
+        //Construction de ma page Membre
         PageMembre pageMembre = new PageMembre(model, principal, messageSource);
-        pageMembre.addReponse(membreService.updateMembre(putMembre));
+        //Validation du FormMembre avant envoie au service
+        FormMembreValidation validMembre = new FormMembreValidation(putMembre);
+        //Si non valide, on envoie un message et on revient sur la page Membre
+        if (!validMembre.getValid()){
+            pageMembre.addReponse(validMembre.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormMembre au service
+            pageMembre.addReponse(membreService.updateMembre(putMembre));
+        }
         
         boolean connect = userService.findRoleByUsername(pageMembre.returnUser(principal)).equals("ROLE_SUPADMIN");
 
