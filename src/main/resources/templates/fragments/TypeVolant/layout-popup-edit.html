@@ -26,7 +26,12 @@
                                 <label for="initTube" th:text="#{texte.pop.edit.typevolant.initTube}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="initTube" type="number" th:value="*{initTube}" th:field="*{initTube}" min="0" />
+                                <input id="initTube" 
+                                       type="number" 
+                                       th:value="*{initTube}" 
+                                       th:field="*{initTube}" 
+                                       th:pattern = "#{validation.pattern.integer0}"
+                                       min="0" />
                             </td>
                         </tr>
                         

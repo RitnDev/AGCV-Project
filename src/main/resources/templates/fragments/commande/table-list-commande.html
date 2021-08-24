@@ -29,7 +29,7 @@
             </thead>
             <tbody>
                 <tr th:if="${saison.commandes.empty}">
-                    <td colspan="7" th:text="#{texte.page.commandesMembres.table.noCommande}"/>
+                    <td colspan="7" th:text="#{texte.page.commandesMembres.table.noCommande}" class="table-commande-noCommande"/>
                 </tr>
                 <tr th:each="commande : ${saison.commandes}">
                     <td th:id="${commande.getIdH}" th:text="${commande.getDateCommande}" class="table-commande-date"/>

@@ -24,7 +24,7 @@
             </thead>
             <tbody class="table-compet">
                 <tr th:if="${saison.getCompetitions.empty}">
-                    <td colspan="4" th:text="#{texte.page.competition.table.compet.noCompet}"></td>
+                    <td colspan="4" th:text="#{texte.page.competition.table.compet.noCompet}" class="table-compet-noCompet"/>
                 </tr>
                 <tr th:each="compet : ${saison.getCompetitions}">
                     <td th:text="${compet.getDateCompetition}" class="table-compet-date"/>

@@ -1,7 +1,7 @@
 package com.ritndev.agcv.Validations;
 
 import com.ritndev.agcv.classes.Reponse;
-import com.ritndev.agcv.form.FormMembre;
+import com.ritndev.agcv.form.FormTypeVolant;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.Getter;
@@ -13,19 +13,19 @@ import lombok.Setter;
  */
 public class FormTypeVolantValidation {
     
-    private final String regex = "\\p{L}*(-\\p{L}*)*";
+    private final String regex = "^\\d*$";
     
     @Setter private boolean valid;
     public boolean getValid() {return valid;}
     
-    @Getter @Setter private FormMembre fMembre;
+    @Getter @Setter private FormTypeVolant fTypeVolant;
     @Getter @Setter private int resultValue;
     
     private final Reponse reponse;
 
     //Constructeur
-    public FormTypeVolantValidation(FormMembre fMembre) {
-        this.fMembre = fMembre;
+    public FormTypeVolantValidation(FormTypeVolant fTypeVolant) {
+        this.fTypeVolant = fTypeVolant;
         this.resultValue = 0;
         this.valid = isValid();
         this.reponse = getReponse();
@@ -35,32 +35,22 @@ public class FormTypeVolantValidation {
     
     /*
     resultVal :
-           0 = prénom et nom incorrect.
-           1 = nom est incorrect.
-           3 = prénom incorrect.
-           4 = tous les champs sont correct.
+           0 = Champs Stock incorrect.
+           2 = tous les champs sont correct.
     */
     private boolean isValid() {
         boolean result = false;
         Pattern pattern = Pattern.compile(regex);
         
         //Test de validation du prénom :
-        if(!fMembre.getPrenom().isEmpty()) {
-            Matcher matcher = pattern.matcher(fMembre.getPrenom());
+        if(!fTypeVolant.getStock().isEmpty()) {
+            Matcher matcher = pattern.matcher(fTypeVolant.getStock());
             if(matcher.matches()) {
-                resultValue = resultValue + 1;
+                resultValue = resultValue + 2;
             }
         }
         
-        //Test de validation du nom :
-        if(!fMembre.getNom().isEmpty()) {
-            Matcher matcher = pattern.matcher(fMembre.getNom());
-            if(matcher.matches()) {
-                resultValue = resultValue + 3;
-            }
-        }
-        
-        if (resultValue==4){
+        if (resultValue==2){
             result = true;
         }
         return result;
@@ -68,7 +58,7 @@ public class FormTypeVolantValidation {
     
     //Construction de la reponse
     public Reponse getReponse() {
-        return new Reponse("membre", "other", resultValue, true);
+        return new Reponse("typevolant", "other", resultValue, true);
     }
     
 }

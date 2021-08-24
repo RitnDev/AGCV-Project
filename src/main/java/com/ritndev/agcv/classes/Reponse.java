@@ -19,6 +19,8 @@ public class Reponse {
     
 
     //Constructeur
+    public Reponse() {}
+    
     public Reponse(String modelName, String methodeName, int resultValue) {
         this.modelName = modelName;
         this.methodeName = methodeName;
@@ -114,25 +116,34 @@ public class Reponse {
                 break;
             }
             case 1 : {
-                strReponse = strReponse + "champ1";
+                strReponse = strReponse + "result1";
                 break;
             }
             case 3 : {
-                strReponse = strReponse + "champ2";
+                strReponse = strReponse + "result3";
                 break;
             }
-            case 5 : {
-                strReponse = strReponse + "champ3";
+            case 10 : {
+                strReponse = strReponse + "result10";
                 break;
             }
-            case 7 : {
-                strReponse = strReponse + "champ4";
+            case 11 : {
+                strReponse = strReponse + "result11";
                 break;
             }
-            case 9 : {
-                strReponse = strReponse + "champ5";
+            case 20 : {
+                strReponse = strReponse + "result20";
                 break;
             }
+            case 21 : {
+                strReponse = strReponse + "result21";
+                break;
+            }
+            case 30 : {
+                strReponse = strReponse + "result30";
+                break;
+            }
+            
         }  
     }
     

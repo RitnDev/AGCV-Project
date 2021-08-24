@@ -11,6 +11,10 @@ td#membre-regler-non {
     background-color: #f1262687;
 }
 
+td.table-commande-noCommande{
+    width: 1035px;
+}
+
 table.table-commande{
   margin-left: 250px;
 }

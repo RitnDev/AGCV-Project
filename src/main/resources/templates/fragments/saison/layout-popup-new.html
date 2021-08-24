@@ -24,7 +24,13 @@
                                 <label for="anneeDebut" th:text="#{texte.pop.new.saison.anneeDebut}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="anneeDebut" type="number" th:value="*{annee_debut}" th:field="*{annee_debut}" />
+                                <input id="anneeDebut" 
+                                       type="number" 
+                                       min="2000"
+                                       step="1"
+                                       th:pattern="#{validation.pattern.integer}"
+                                       th:value="*{annee_debut}" 
+                                       th:field="*{annee_debut}"/>
                             </td>
                         </tr>
                         <tr>
@@ -32,7 +38,13 @@
                                 <label for="budget" th:text="#{texte.pop.new.saison.budget}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="budget" type="number" th:value="*{budget}" th:field="*{budget}" step="0.01" />
+                                <input id="budget"
+                                       type="number"
+                                       min="100,00"
+                                       step="0.01"
+                                       th:pattern="#{validation.pattern.double}"
+                                       th:value="*{budget}"
+                                       th:field="*{budget}" />
                                 <span th:text="#{texte.global.devise}"/>
                             </td>
                         </tr>

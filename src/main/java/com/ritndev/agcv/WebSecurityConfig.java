@@ -69,11 +69,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/index");
         
         // Config Remember Me.
+
         http
             .authorizeRequests().and() //
             .rememberMe().tokenRepository(this.persistentTokenRepository()) //
             .tokenValiditySeconds(1 * 2 * 60 * 60); // 2h
-        
+
 	}
 
     

@@ -1,5 +1,6 @@
 package com.ritndev.agcv.form;
 
+import com.ritndev.agcv.model.enumeration.NomTypeTube;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +26,10 @@ public class FormTypeTube {
         this.id = id;
         this.nom = nom;
         this.commande = commande;
+    }
+
+    public FormTypeTube(int i, NomTypeTube nomTypeTube, boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

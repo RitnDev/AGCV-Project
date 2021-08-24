@@ -38,7 +38,13 @@
                                 <label for="marque" th:text="#{texte.pop.new.prixtube.marque}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="marque" type="text" th:value="*{marque}" th:field="*{marque}" maxlength="40"/>
+                                <input id="marque" 
+                                       type="text" 
+                                       th:value="*{marque}" 
+                                       th:field="*{marque}"
+                                       th:pattern="#{validation.pattern.string2}"
+                                       minlength="2"
+                                       maxlength="40"/>
                             </td>
                         </tr>
                         <tr>
@@ -46,7 +52,14 @@
                                 <label for="prix" th:text="#{texte.pop.new.prixtube.prix}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="prix" type="number" th:value="*{prix}" th:field="*{prix}" step="0.01" min="0.01" max="1000.00"/>
+                                <input id="prix" 
+                                       type="number" 
+                                       th:value="*{prix}" 
+                                       th:field="*{prix}"
+                                       th:pattern="#{validation.pattern.double}"
+                                       step="0.01" 
+                                       min="0.01"
+                                       max="1000.00"/>
                                 <span th:text="#{texte.global.devise}"/>
                             </td>
                         </tr>
@@ -55,7 +68,13 @@
                                 <label for="prixMembre" th:text="#{texte.pop.new.prixtube.prixMembre}"></label>
                             </td>
                             <td class="popup-form-input">
-                                <input id="prixMembre" type="number" th:value="*{prixMembre}" th:field="*{prixMembre}" step="0.01" min="0.00" />
+                                <input id="prixMembre" 
+                                       type="number" 
+                                       th:value="*{prixMembre}" 
+                                       th:field="*{prixMembre}" 
+                                       th:pattern="#{validation.pattern.double}"
+                                       step="0.01"
+                                       min="0.00" />
                                 <span th:text="#{texte.global.devise}"/>
                             </td>
                         </tr>

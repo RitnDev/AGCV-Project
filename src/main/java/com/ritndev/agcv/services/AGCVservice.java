@@ -106,7 +106,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }
         return new Reponse("prixtube", "create", resultVal);
     }
-    @Override public List<PrixTube> listPrixTube() {return prixTubeRep.findAll();}
+    @Override public List<PrixTube> listPrixTube() {return prixTubeRep.findByDefautFalse();}
     @Override public List<PrixTube> ListPrixTubeName(String nom){
         List<PrixTube> prixTubes = prixTubeRep.findByActifTrue();
         List<PrixTube> prixTubeName = new ArrayList<>();
@@ -280,8 +280,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                     newConsoMois.getNom(),
                     prixTubeRep.getOne(newConsoMois.getIdPrixTube()),
                     typeVolantRep.getOne(newConsoMois.getIdTypeVolant()),
-                    Integer.parseInt(newConsoMois.getNbTubeUtilise()),
-                    Integer.parseInt(newConsoMois.getNbTubeCommande())));
+                    0, 0));
             if(cm!=null) resultVal = 2;
         }
         return new Reponse("consomois", "create", resultVal);
@@ -397,8 +396,8 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 && !"".equals(newSaison.getBudget())
                 ){
             
-            if (!saisonRep.existsByAnneeDebut(newSaison.getAnnee_debut())) {
-                Saison sNew = saisonRep.save(new Saison(newSaison.getAnnee_debut(), newSaison.getBudget(), newSaison.isActuelle()));
+            if (!saisonRep.existsByAnneeDebut(newSaison.getAnneeInteger())) {
+                Saison sNew = saisonRep.save(new Saison(newSaison.getAnneeInteger(), newSaison.getBudgetDouble(), newSaison.isActuelle()));
                 idSaison = sNew.getId(); //recupération de l'id pour la création des TypeVolant
                 resultVal = 2;
                 
@@ -524,7 +523,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
                 //On récupère la saison et modifie les attributs concernés
                 System.out.println(">> (debug) ID Saison edit : " + editSaison.getId());
                 Saison saison = saisonRep.getOne(editSaison.getId());
-                saison.setBudget(editSaison.getBudget());
+                saison.setBudget(editSaison.getBudgetDouble());
 
                 //On save si la saison est l'actuelle avant changement
                 boolean actif = saison.isActuelle(); //La saison modifié est elle active ?
@@ -634,7 +633,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
             TypeVolant t = typeVolantRep.save(new TypeVolant(
                                                 saisonRep.getOne(idSaison), 
                                                 typeTubeRep.getOne(newTypeVolant.getIdTypeTube()), 
-                                                newTypeVolant.getStock()));
+                                                newTypeVolant.getStockInteger()));
             if(t!=null){
                 resultVal = 2;
                 createConsoMois(t);
@@ -663,7 +662,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         int resultVal = 0;
         if (typeVolantRep.existsById(editTypeVolant.getId())){  
             TypeVolant ct = typeVolantRep.getOne(editTypeVolant.getId());
-                ct.setStock(editTypeVolant.getStock());
+                ct.setStock(editTypeVolant.getStockInteger());
 
                 typeVolantRep.save(ct);
             resultVal = 2;
@@ -760,7 +759,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         
         MainData md = returnMainData();
         if(md.getId() != 0){
-            md.setBudgetDefault(editMainData.getBudget());
+            md.setBudgetDefault(editMainData.getBudgetDouble());
             mainDataRep.save(md);
             resultVal = 2;
         }else{
@@ -774,7 +773,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         
         MainData md = returnMainData();
         if(md.getId() != 0){
-            md.setSeuilBas(editMainData.getSeuilBas());
+            md.setSeuilBas(editMainData.getSeuilInteger());
             mainDataRep.save(md);
             resultVal = 2;
         }else{
@@ -921,9 +920,9 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
     //Créer les 3 type Volant
     private int createTypeVolant(long idSaison) {
         int resultVal = 4;
-        saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTPlastique().getId(), idSaison));
-        saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTEntrainement().getId(), idSaison));
-        saveTypeVolant(new FormTypeVolant(0, returnMainData().getIdTTCompetition().getId(), idSaison));
+        saveTypeVolant(new FormTypeVolant(returnMainData().getIdTTPlastique().getId(), idSaison, "0"));
+        saveTypeVolant(new FormTypeVolant(returnMainData().getIdTTEntrainement().getId(), idSaison, "0"));
+        saveTypeVolant(new FormTypeVolant(returnMainData().getIdTTCompetition().getId(), idSaison, "0"));
         return resultVal;
     }
 

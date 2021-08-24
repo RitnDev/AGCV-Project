@@ -88,6 +88,11 @@ public class TypeVolant implements Serializable {
         return idTypeTube.getNom();
     }
     
+    //Renvoie le stock au format String
+    public String getStockString(){
+        return String.valueOf(stock);
+    }
+    
     //Renvoie le consoMois correspondant au nomMois
     public ConsoMois getConsoMoisName(String nomMois){
         for(ConsoMois cm : consommationsMois){

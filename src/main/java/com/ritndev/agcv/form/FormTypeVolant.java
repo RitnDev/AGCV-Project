@@ -23,7 +23,7 @@ public class FormTypeVolant {
     
     //Nombre de tube avant consommation de volant (stock de départ)
     @Getter @Setter
-    private int stock;
+    private String stock;
     
     //id de la saison
     @Getter @Setter
@@ -34,21 +34,38 @@ public class FormTypeVolant {
 
     public FormTypeVolant() {}
 
-    public FormTypeVolant(int stock, long idTypeTube, long idSaison) {
+    public FormTypeVolant(long idTypeTube, long idSaison, String stock) {
         this.idTypeTube = idTypeTube;
         this.stock = stock;
         this.idSaison = idSaison;
     }
     
-    public FormTypeVolant(long id, String nom, int stock) {
+    public FormTypeVolant(long id, String nom, String stock) {
         this.id = id;
         this.nom = nom;
         this.stock = stock;
     }
     
-    public FormTypeVolant(long id, int stock) {
+    public FormTypeVolant(long id, String stock) {
         this.id = id;
         this.stock = stock;
     }
+    
+    
+    /*
+        Methodes
+    */
+    
+    
+    //Renvoie le Stock au format Integer
+    public int getStockInteger(){
+        if (!stock.equals("")){
+            return Integer.parseInt(stock);
+        }else{
+            return 0;
+        }
+    }
+    
+    
     
 }

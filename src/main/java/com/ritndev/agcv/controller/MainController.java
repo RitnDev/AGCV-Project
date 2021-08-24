@@ -2,6 +2,7 @@ package com.ritndev.agcv.controller;
 
 import com.ritndev.agcv.InterfaceService.IMainDataService;
 import com.ritndev.agcv.InterfaceService.IUserService;
+import com.ritndev.agcv.Validations.FormUserValidation;
 import com.ritndev.agcv.classes.ActionsTypes;
 import com.ritndev.agcv.form.FormUser;
 import com.ritndev.agcv.model.AppUser;
@@ -45,13 +46,9 @@ public class MainController {
 //--------------   MODIFICATION DU MOT DE PASSE UTILISATEUR   ------------------    
     
     
-        //Lancer la modification d'un utilisateur
+    //Lancer la modification d'un utilisateur
     @PostMapping("/mdp/{username}")
     public String getUsername(@PathVariable String username, Model model, Principal principal) {
-        
-        System.out.println(">> POST - EDIT USER");
-        System.out.println("Username : " + username);
-        
         //Recupération de l'AppUser à modifier :
         AppUser editUser = userService.findByUsernameUser(username);
         FormUser formUser = new FormUser(editUser.getUserId(), editUser.getUserName());
@@ -67,9 +64,18 @@ public class MainController {
     //Lancer la modification d'un utilisateur
     @PutMapping("/mdp/{id}")
     public String editUsername(@ModelAttribute FormUser putUser, Model model, Principal principal) {
+        //Construction de ma page Index
         PageIndex pageIndex = new PageIndex(model, principal, messageSource);
-        pageIndex.addReponse(userService.updateMdpUser(putUser));
-        
+        //Validation du FormUser avant envoie au service
+        FormUserValidation validUser = new FormUserValidation(putUser, false);
+        //Si non valide, on envoie un message et on revient sur la page Index
+        if (!validUser.getValid()){
+            pageIndex.addReponse(validUser.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormUser au service
+            pageIndex.addReponse(userService.updateMdpUser(putUser));
+        }
+                
         return pageIndex.getPage(dataService);
     }
     

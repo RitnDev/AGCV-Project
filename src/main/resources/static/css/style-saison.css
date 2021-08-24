@@ -8,6 +8,10 @@ td#saison-actif-on {
     background-color: #a1f16d40;
 }
 
+td.table-saison-noSaison{
+    width: 570px;
+}
+
 th.table-saison-nom,
 td.table-saison-nom {
     width: 180px;

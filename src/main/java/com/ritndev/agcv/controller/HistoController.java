@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -40,7 +39,7 @@ public class HistoController {
         if (saisonPreced != null){
             model.addAttribute("saison", saisonPreced);
             model.addAttribute("listSaisons", saisonService.listSaisonHisto());
-            model.addAttribute("selectSaison", new FormSaison(saisonPreced.getId(), saisonPreced.getAnneeDebut()));
+            model.addAttribute("selectSaison", new FormSaison(saisonPreced.getId(), String.valueOf(saisonPreced.getAnneeDebut())));
         }
         
         return pageHistoSaison.getPage(); 
@@ -51,11 +50,11 @@ public class HistoController {
     public String postHistoSaison(@ModelAttribute FormSaison selectSaison, Model model, Principal principal){
         PageHistoSaison pageHistoSaison = new PageHistoSaison(model, principal, messageSource);
 
-        Saison saisonHisto = saisonService.findByAnneeSaison(selectSaison.getAnnee_debut());
+        Saison saisonHisto = saisonService.findByAnneeSaison(selectSaison.getAnneeInteger());
         
         model.addAttribute("saison", saisonHisto);
         model.addAttribute("listSaisons", saisonService.listSaisonHisto());
-        model.addAttribute("selectSaison", new FormSaison(saisonHisto.getId(), saisonHisto.getAnneeDebut()));
+        model.addAttribute("selectSaison", new FormSaison(saisonHisto.getId(), String.valueOf(saisonHisto.getAnneeDebut())));
         
         return pageHistoSaison.getPage();
     }

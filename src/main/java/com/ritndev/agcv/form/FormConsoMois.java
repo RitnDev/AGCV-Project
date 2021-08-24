@@ -48,6 +48,8 @@ public class FormConsoMois {
         this.nom = nom;
         this.idPrixTube = idPrixTube;
         this.typeVolant = typeVolant;
+        this.nbTubeUtilise = "0";
+        this.nbTubeCommande = "0";
     }
 
     public FormConsoMois(long id, String nom, String nbTubeUtilise) {

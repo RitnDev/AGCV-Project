@@ -46,9 +46,11 @@ public class PageIndex extends Page {
             
             //si : Stock Volant <= Seuil Bas
             if (!dataService.returnMainData().getIdSaison().getTypeVolants().isEmpty()) {
-                if(dataService.returnMainData().getIdSaison().getTypeVolantName(volant).getStockTotal()
-                    <= dataService.returnMainData().getSeuilBas()) {
-                    strClass = strClass + "-bas";
+                if(dataService.returnMainData().getIdSaison().getTypeVolantName(volant)!=null){
+                    if(dataService.returnMainData().getIdSaison().getTypeVolantName(volant).getStockTotal()
+                        <= dataService.returnMainData().getSeuilBas()) {
+                        strClass = strClass + "-bas";
+                    }
                 }
                 classStock.add(strClass);
             }

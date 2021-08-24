@@ -215,8 +215,13 @@ public class Saison implements Serializable {
     
     //Renvoie le FormTypeVolant par le nom du typeVolant
     public FormTypeVolant getFormVolantName(String nom) {
-        TypeVolant tv = getTypeVolantName(nom);
-        return new FormTypeVolant(tv.getId(), nom, tv.getStock());
+        if (!nom.isEmpty() && nom!=null){
+            TypeVolant tv = getTypeVolantName(nom);
+            if (tv!=null) {
+                return new FormTypeVolant(tv.getId(), nom, tv.getStockString());
+            }
+        }
+        return null;
     }
     
     //Nombres de tubes utilisés pour des compétitions dans la saison

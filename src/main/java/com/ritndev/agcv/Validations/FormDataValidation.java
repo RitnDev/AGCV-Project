@@ -1,7 +1,7 @@
 package com.ritndev.agcv.Validations;
 
 import com.ritndev.agcv.classes.Reponse;
-import com.ritndev.agcv.form.FormMembre;
+import com.ritndev.agcv.form.FormData;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.Getter;
@@ -13,19 +13,20 @@ import lombok.Setter;
  */
 public class FormDataValidation {
     
-    private final String regex = "\\p{L}*(-\\p{L}*)*";
+    private final String regex1 = "^(0?|[1-9]+\\d*)(.|,)((0{1}|(\\d{1,2})))$";
+    private final String regex2 = "^\\d*$";
     
     @Setter private boolean valid;
     public boolean getValid() {return valid;}
     
-    @Getter @Setter private FormMembre fMembre;
+    @Getter @Setter private FormData fData;
     @Getter @Setter private int resultValue;
     
     private final Reponse reponse;
 
     //Constructeur
-    public FormDataValidation(FormMembre fMembre) {
-        this.fMembre = fMembre;
+    public FormDataValidation(FormData fData) {
+        this.fData = fData;
         this.resultValue = 0;
         this.valid = isValid();
         this.reponse = getReponse();
@@ -35,32 +36,36 @@ public class FormDataValidation {
     
     /*
     resultVal :
-           0 = prénom et nom incorrect.
-           1 = nom est incorrect.
-           3 = prénom incorrect.
-           4 = tous les champs sont correct.
+           0 = tous les champs sont incorrects.
+           2 = tous les champs sont corrects.
     */
     private boolean isValid() {
         boolean result = false;
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern1 = Pattern.compile(regex1);
+        Pattern pattern2 = Pattern.compile(regex2);
         
-        //Test de validation du prénom :
-        if(!fMembre.getPrenom().isEmpty()) {
-            Matcher matcher = pattern.matcher(fMembre.getPrenom());
-            if(matcher.matches()) {
-                resultValue = resultValue + 1;
+        //Test de validation du budget :
+        if(fData.getBudget()!=null){
+            if(!fData.getBudget().isEmpty()) {
+                Matcher matcher = pattern1.matcher(fData.getBudget());
+                if(matcher.matches()) {
+                    resultValue = resultValue + 2;
+                }
             }
         }
         
-        //Test de validation du nom :
-        if(!fMembre.getNom().isEmpty()) {
-            Matcher matcher = pattern.matcher(fMembre.getNom());
-            if(matcher.matches()) {
-                resultValue = resultValue + 3;
+        
+        //Test de validation du seuil bas :
+        if(fData.getSeuilBas()!=null) {
+            if(!fData.getSeuilBas().isEmpty()) {
+                Matcher matcher = pattern2.matcher(fData.getSeuilBas());
+                if(matcher.matches()) {
+                    resultValue = resultValue + 2;
+                }
             }
         }
         
-        if (resultValue==4){
+        if (resultValue==2){
             result = true;
         }
         return result;
@@ -68,7 +73,7 @@ public class FormDataValidation {
     
     //Construction de la reponse
     public Reponse getReponse() {
-        return new Reponse("membre", "other", resultValue, true);
+        return new Reponse("data", "other", resultValue, true);
     }
     
 }

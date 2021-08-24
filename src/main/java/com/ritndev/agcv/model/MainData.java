@@ -93,6 +93,19 @@ public class MainData implements Serializable {
         this.budgetDefault = 3000.00;
         this.actif = actif;
     }
+
+    public MainData(long id, Saison idSaison, double budgetDefault, int seuilBas, TypeTube idTTPlastique, TypeTube idTTEntrainement, TypeTube idTTCompetition) {
+        this.id = id;
+        this.idSaison = idSaison;
+        this.budgetDefault = budgetDefault;
+        this.seuilBas = seuilBas;
+        this.idTTPlastique = idTTPlastique;
+        this.idTTEntrainement = idTTEntrainement;
+        this.idTTCompetition = idTTCompetition;
+    }
+    
+    
+    
     
     
     /*

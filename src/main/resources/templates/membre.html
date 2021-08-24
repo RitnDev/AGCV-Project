@@ -39,7 +39,7 @@
                     </thead>
                     <tbody class="table-membre">
                         <tr th:if="${listMembres.empty}">
-                            <td colspan="4" th:text="texte.page.membre.noMembre"/>
+                            <td colspan="4" th:text="#{texte.page.membre.noMembre}" class="table-membre-noMembre"/>
                         </tr>
                         <tr th:each="membre : ${listMembres}">
                             <td th:id="${membre.getIdH}" th:text="${membre.prenom}" class="table-membre-prenom"/>

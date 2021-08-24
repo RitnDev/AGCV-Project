@@ -8,6 +8,10 @@ td#prixtube-actif-off {
     background-color: #bfbfbf;
 }
 
+td.table-pt-noPrixtube{
+    width: 934px
+}
+
 th.table-pt-typetube,
 td.table-pt-typetube {
     width: 120px;

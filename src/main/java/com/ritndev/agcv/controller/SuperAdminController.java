@@ -4,6 +4,7 @@ import com.ritndev.agcv.InterfaceService.IMainDataService;
 import com.ritndev.agcv.InterfaceService.ISaisonService;
 import com.ritndev.agcv.InterfaceService.ITypeTubeService;
 import com.ritndev.agcv.InterfaceService.IUserService;
+import com.ritndev.agcv.Validations.FormUserValidation;
 import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -207,16 +208,18 @@ public class SuperAdminController {
     //Creation d'un nouvel Utilisateur
     @PostMapping("/superAdmin/newUser")
     public String newUser(@ModelAttribute FormUser newUser, Model model, Principal principal) {
-        
-        System.out.println(">> --------------- POST -----------------");
-        System.out.println(">> Identifiant : " + newUser.getIdentifiant());
-        System.out.println(">> Mot de passe : " + newUser.getMdp());
-        System.out.println(">> Role ID : " + newUser.getRoleId());
-        System.out.println(">> --------------------------------------");
- 
-        PageUsers pageUsers = new PageUsers(model, principal, messageSource);    
-        pageUsers.addReponse(userService.saveUser(newUser));
-        
+        //Construction de ma page Index
+        PageUsers pageUsers = new PageUsers(model, principal, messageSource); 
+        //Validation du FormUser avant envoie au service
+        FormUserValidation validUser = new FormUserValidation(newUser, true);
+        //Si non valide, on envoie un message et on revient sur la page Index
+        if (!validUser.getValid()){
+            pageUsers.addReponse(validUser.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormUser au service
+            pageUsers.addReponse(userService.saveUser(newUser));
+        }
+                
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
            userRoleList.put(user.getUserId(), pageUsers.formatRole(userService.findRoleByUsername(user.getUserName())));
@@ -264,8 +267,6 @@ public class SuperAdminController {
     @PostMapping("/superAdmin/user/{id}")
     public String getUser(@PathVariable Long id, Model model, Principal principal) {
         
-        System.out.println(">> POST - EDIT USER");
-        System.out.println(">> ID : " + id);
         PageUsers pageUsers = new PageUsers(model, principal, messageSource);
         String userNameLog = pageUsers.returnUser(principal);
         
@@ -309,9 +310,18 @@ public class SuperAdminController {
         //Modifier une Main-Data
     @PutMapping("/superAdmin/user/{id}")
     public String editUser(@ModelAttribute FormUser putUser, Model model, Principal principal) {        
-        PageUsers pageUsers = new PageUsers(model, principal, messageSource);
-        pageUsers.addReponse(userService.updateUser(putUser));
-        
+        //Construction de ma page Index
+        PageUsers pageUsers = new PageUsers(model, principal, messageSource); 
+        //Validation du FormUser avant envoie au service
+        FormUserValidation validUser = new FormUserValidation(putUser, true);
+        //Si non valide, on envoie un message et on revient sur la page Index
+        if (!validUser.getValid()){
+            pageUsers.addReponse(validUser.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormUser au service
+            pageUsers.addReponse(userService.updateUser(putUser));
+        }
+                
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
            userRoleList.put(user.getUserId(), pageUsers.formatRole(userService.findRoleByUsername(user.getUserName())));

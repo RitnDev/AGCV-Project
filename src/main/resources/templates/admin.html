@@ -22,15 +22,13 @@
             <!-- réponse du service suite à une action -->
             <div th:replace="fragments/layout-reponses :: reponse"/>
             <br/>
-                        
-            <div class="admin-saison">
-                <span 
-                    th:if="${!saison.toString.isEmpty}"
-                    th:text="#{texte.page.admin.saison} + ${saison.toString}"></span>
+            
+            <div th:if="${!saison.toString.isEmpty}" class="admin-saison">
+                <span th:text="#{texte.page.admin.saison} + ${saison.toString}"/>
             </div>
             <br/>
             
-            <div class="admin-table-option"><table class="admin-table-option"><tr><td>
+            <div th:if="${!saison.toString.isEmpty}" class="admin-table-option"><table class="admin-table-option"><tr><td>
                 <fieldset th:if="${editTVPlastique != null}">
                 
                     <legend th:text="#{texte.page.admin.stock.legend}"></legend>
@@ -50,6 +48,7 @@
                                     th:id="${'admin-form-input-stock-' + editTVPlastique.nom}" 
                                     type="number"
                                     min="0"
+                                    th:pattern="#{validation.pattern.integer0}"
                                     th:value="*{stock}"
                                     th:field="*{stock}" />
                                 </td><td class="admin-form-submit">
@@ -76,6 +75,7 @@
                                     th:id="${'admin-form-input-stock-' + editTVCompetition.nom}" 
                                     type="number"
                                     min="0"
+                                    th:pattern="#{validation.pattern.integer0}"
                                     th:value="*{stock}"
                                     th:field="*{stock}" />
                                 </td><td class="admin-form-submit">
@@ -101,6 +101,7 @@
                                     th:id="${'admin-form-input-stock-' + editTVEntrainement.nom}" 
                                     type="number"
                                     min="0"
+                                    th:pattern="#{validation.pattern.integer0}"
                                     th:value="*{stock}"
                                     th:field="*{stock}" />
                                 </td><td class="admin-form-submit">
@@ -132,13 +133,15 @@
                                 <input 
                                     id="admin-form-input-budget"
                                     type="number"
-                                    min="0"
+                                    min="100,00"
+                                    step="0.01"
+                                    th:pattern="#{validation.pattern.double}"
                                     th:value="*{budget}"
                                     th:field="*{budget}" />
                                 </td><td class="admin-form-submit">
                                 <input 
                                     class="admin-form-submit"
-                                    type="submit" 
+                                    type="submit"
                                     th:value="#{texte.page.admin.budget.submit}"/> 
                             </tr></table>
                         </form>
@@ -166,6 +169,7 @@
                                     id="admin-form-input-budget"
                                     type="number"
                                     min="0"
+                                    th:pattern="#{validation.pattern.integer0}"
                                     th:value="*{seuilBas}"
                                     th:field="*{seuilBas}" />
                                 </td><td class="admin-form-submit">

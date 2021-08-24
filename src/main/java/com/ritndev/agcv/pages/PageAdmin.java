@@ -56,8 +56,8 @@ public class PageAdmin extends Page {
             ftvCompetition = saisonActuelle.getFormVolantName(NomTypeTube.COMPETITION.toString());
             ftvEntrainement = saisonActuelle.getFormVolantName(NomTypeTube.ENTRAINEMENT.toString());
         }
-        double budgetDefault = dataService.returnMainData().getBudgetDefault();
-        int seuilBas = dataService.returnMainData().getSeuilBas();
+        String budgetDefault = String.valueOf(dataService.returnMainData().getBudgetDefault());
+        String seuilBas = String.valueOf(dataService.returnMainData().getSeuilBas());
         
         // Add Attribute :
         getPageGenerique();

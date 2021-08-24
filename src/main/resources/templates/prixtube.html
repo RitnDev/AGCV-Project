@@ -41,7 +41,7 @@
                     </thead>
                     <tbody class="table-prixtube">
                         <tr th:if="${listPrixTubes.empty}">
-                            <td colspan="6" th:text="#{texte.page.prixtube.table.noPrixtube}"/>
+                            <td colspan="6" th:text="#{texte.page.prixtube.table.noPrixtube}" class="table-pt-noPrixtube"/>
                         </tr>
                         <tr th:each="prixTube : ${listPrixTubes}" th:if="${!prixTube.defaut}">
                             <td th:id="${prixTube.getIdH}" th:text="${prixTube.idTypeTube}" class="table-pt-typetube"/>

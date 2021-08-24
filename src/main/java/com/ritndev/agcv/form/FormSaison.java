@@ -18,10 +18,10 @@ public class FormSaison {
     @Getter @Setter private long id;
     
     //Année de début de la saison
-    @Getter @Setter private int annee_debut;
+    @Getter @Setter private String annee_debut;
 
     //budget prévisionnelle de la saison
-    @Getter @Setter private double budget;
+    @Getter @Setter private String budget;
     
     //Est-ce la saison actuelle ?
     @Getter @Setter private boolean actuelle;
@@ -31,19 +31,19 @@ public class FormSaison {
     //Constructeur
     public FormSaison(){}
   
-    public FormSaison(int annee_debut, double budget, boolean actuelle) {
+    public FormSaison(String annee_debut, String budget, boolean actuelle) {
         this.annee_debut = annee_debut;
         this.budget = budget;
         this.actuelle = actuelle;
     }
     
-    public FormSaison(long id, double budget, boolean actuelle) {
+    public FormSaison(long id, String budget, boolean actuelle) {
         this.id = id;
         this.budget = budget;
         this.actuelle = actuelle;
     }
 
-    public FormSaison(long id, int annee_debut) {
+    public FormSaison(long id, String annee_debut) {
         this.id = id;
         this.annee_debut = annee_debut;
     }
@@ -54,13 +54,27 @@ public class FormSaison {
     
     @Override
     public String toString() {
-        return String.valueOf(annee_debut) + " - " + String.valueOf(annee_debut + 1);
+        return annee_debut + " - " + String.valueOf(getAnneeInteger() + 1);
     }
     
-    /*
+    
+    //Renvoie le budget au format double
     public double getBudgetDouble() {
-        return Double.valueOf(budget);
+        if (!budget.equals("")){
+            return Double.parseDouble(budget);
+        }else{
+            return 0.00;
+        }
     }
-    */
+    
+    //Renvoie le seuil au format int
+    public int getAnneeInteger() {
+        if (!annee_debut.equals("")){
+            return Integer.parseInt(annee_debut);
+        }else{
+            return 0;
+        }
+    }
+  
     
 }

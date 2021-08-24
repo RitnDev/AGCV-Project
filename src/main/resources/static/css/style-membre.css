@@ -8,6 +8,10 @@ td#membre-actif-off {
     background-color: #bfbfbf;
 }
 
+td.table-membre-noMembre{
+    width: 840px
+}
+
 th.table-membre-prenom,
 td.table-membre-prenom {
     width:300px;

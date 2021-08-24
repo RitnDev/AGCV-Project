@@ -3,6 +3,7 @@ package com.ritndev.agcv.controller;
 import com.ritndev.agcv.InterfaceService.IPrixTubeService;
 import com.ritndev.agcv.InterfaceService.ITypeTubeService;
 import com.ritndev.agcv.InterfaceService.IUserService;
+import com.ritndev.agcv.Validations.FormPrixTubeValidation;
 import com.ritndev.agcv.classes.ActionsTypes;
 import com.ritndev.agcv.form.FormPrixTube;
 import com.ritndev.agcv.model.enumeration.NomTypeTube;
@@ -59,8 +60,17 @@ public class PrixtubeController {
     //Création d'un nouveau prix-tube
     @PostMapping("/admin/newPrixTube")
     public String newPrixTube(@ModelAttribute FormPrixTube newPrixTube, Model model, Principal principal) {
+        //Construction de ma page Prixtube
         PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
-        pagePrixtube.addReponse(prixTubeService.savePrixTube(newPrixTube));
+        //Validation du FormPrixTube avant envoie au service
+        FormPrixTubeValidation validPrixtube = new FormPrixTubeValidation(newPrixTube);
+        //Si non valide, on envoie un message et on revient sur la page Prixtube
+        if (!validPrixtube.getValid()){
+            pagePrixtube.addReponse(validPrixtube.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormPrixTube au service
+            pagePrixtube.addReponse(prixTubeService.savePrixTube(newPrixTube));
+        }
         
         model.addAttribute("listPrixTubes", prixTubeService.listPrixTube());
         model.addAttribute("prixPlastiques", prixTubeService.ListPrixTubeName(NomTypeTube.PLASTIQUE.toString()));
@@ -107,8 +117,18 @@ public class PrixtubeController {
     //Modifier un prix-tube
     @PutMapping("/admin/prixtube/{id}")
     public String editPrixTube(@ModelAttribute FormPrixTube putPrixTube, Model model, Principal principal) {
+        //Construction de ma page Prixtube
         PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
-        pagePrixtube.addReponse(prixTubeService.updatePrixTube(putPrixTube));
+        //Validation du FormPrixTube avant envoie au service
+        FormPrixTubeValidation validPrixtube = new FormPrixTubeValidation(putPrixTube);
+        //Si non valide, on envoie un message et on revient sur la page Prixtube
+        if (!validPrixtube.getValid()){
+            pagePrixtube.addReponse(validPrixtube.getReponse());
+        }else{
+            //Si c'est valide on envoie le FormPrixTube au service
+            pagePrixtube.addReponse(prixTubeService.updatePrixTube(putPrixTube));
+        } 
+        
         
         model.addAttribute("listPrixTubes", prixTubeService.listPrixTube());
         model.addAttribute("prixPlastiques", prixTubeService.ListPrixTubeName(NomTypeTube.PLASTIQUE.toString()));

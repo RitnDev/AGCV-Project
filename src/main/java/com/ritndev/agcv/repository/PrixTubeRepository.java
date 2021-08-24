@@ -13,6 +13,7 @@ public interface PrixTubeRepository extends JpaRepository<PrixTube, Long> {
     public List<PrixTube> findByIdTypeTube(long idTypeTube);
     public List<PrixTube> findByActifTrue();
     public List<PrixTube> findByDefautTrue();
+    public List<PrixTube> findByDefautFalse();
     public List<PrixTube> findByMarque(String marque);
     
 }

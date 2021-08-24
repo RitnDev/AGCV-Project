@@ -20,5 +20,16 @@ public class AppRole {
  
     @Column(name = "ROLE_NAME", length = 30, nullable = false)
     @Getter @Setter private String roleName;
+
+    
+    //Constructeur
+    public AppRole() {}
+
+    public AppRole(String roleName) {
+        this.roleName = roleName;
+    }
+    
+    
+    
       
 }
