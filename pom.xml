@@ -11,6 +11,7 @@
 	<groupId>com.ritndev</groupId>
 	<artifactId>AGCV</artifactId>
 	<version>0.4.0-SNAPSHOT</version>
+        <packaging>war</packaging>
 	<name>AGCV</name>
 	<description>Application web de Gestion de Consommation des Volants d'un club de Badminton </description>
 	
@@ -20,6 +21,7 @@
             <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
             <java.version>15</java.version>
             <jacoco.version>0.8.6</jacoco.version>
+            <tomcat.version>9.0.30</tomcat.version>
 	</properties>
         
         
@@ -29,6 +31,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+                        <exclusions>
+                            <exclusion>
+                               <groupId>org.springframework.boot</groupId>
+                               <artifactId>spring-boot-starter-tomcat</artifactId>
+                            </exclusion>
+                        </exclusions>
 		</dependency>
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
@@ -44,8 +52,8 @@
         
         <!-- Server d'application --> 
                 <dependency>
-                    <groupId>org.apache.tomcat.embed</groupId>
-                    <artifactId>tomcat-embed-jasper</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
                 </dependency>
         
         <!-- Thymeleaf -->        
@@ -121,34 +129,36 @@
 	</dependencies>
 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-                        
-                        
-                        <plugin>
-                            <groupId>org.jacoco</groupId>
-                            <artifactId>jacoco-maven-plugin</artifactId>
-                            <version>${jacoco.version}</version>
-                            <executions>
-                                <execution>
-                                    <goals>
-                                        <goal>prepare-agent</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>report</id>
-                                    <phase>test</phase>
-                                    <goals>
-                                        <goal>report</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        
-		</plugins>
+            <finalName>${project.artifactId}</finalName>
+            
+            <plugins>
+                    <plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                    </plugin>
+
+
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${jacoco.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>report</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+            </plugins>
 	</build>
 
 </project>

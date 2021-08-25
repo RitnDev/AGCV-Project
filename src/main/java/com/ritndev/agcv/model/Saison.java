@@ -192,6 +192,16 @@ public class Saison implements Serializable {
         return String.format("%.2f", getMontantDeduit());
     }
     
+    //Nombres de tubes utilisés pour des compétitions dans la saison
+    public int getNbTubesCommandes() {
+        int total = 0;
+        for (Commande c : commandes){
+            total = total + c.getNbTubeCommande();
+        }
+        return total;
+    }
+    
+    
     
     //Renvoie le TypeVolant par son nom
     public TypeVolant getTypeVolantName(String nom){

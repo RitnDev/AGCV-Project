@@ -47,6 +47,9 @@ class AgcvApplicationTests {
             Assert.isTrue(testSaison.isActuelle(), "SaisonInit.isActuelle() doit être à : true");
             Assert.isTrue(testSaison.getAnneeDebut() == 0, "SaisonInit.getAnneeDebut() doit égale à : 0");
             Assert.isTrue(testSaison.getAnneeFin() == 0, "SaisonInit.getAnneeFin() doit égale à : 0");
+            Assert.isTrue(testSaison.getBudget()==0.0, "SaisonInit.getBudget() doit égale à : 0.0 ( -> " + testSaison.getBudget() + ")");
+            Assert.isTrue(testSaison.getBudgetString().equals("0,00"), "SaisonInit.getBudgetString() doit égale à : '0,00' ( -> " + testSaison.getBudgetString() + ")");
+            Assert.isTrue(testSaison.toString().equals(""), "SaisonInit.toString() doit égale à : ''");
             
         }
            

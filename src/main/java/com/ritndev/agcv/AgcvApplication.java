@@ -9,11 +9,13 @@ import com.ritndev.agcv.repository.AppRoleRepository;
 import com.ritndev.agcv.repository.AppUserRepository;
 import com.ritndev.agcv.repository.PrixTubeRepository;
 import com.ritndev.agcv.repository.UserRoleRepository;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+
+
 
 @SpringBootApplication
 public class AgcvApplication {
@@ -29,18 +31,17 @@ public class AgcvApplication {
     
         //Démmarage de l'application
         public static void main(String[] args) {
-            SpringApplication.run(AgcvApplication.class, args);
+            //Lancement de l'application et création du context :
+            ApplicationContext ctx = SpringApplication.run(AgcvApplication.class, args);
+            
+            //Initialisation de l'application
+            Initialisation init = ctx.getBean("initApp", Initialisation.class);
+            init.initDatabase();
 	}
+             
         
-        
-        @Bean
-        InitializingBean sendDatabase() {
-            return () -> {
-                init();
-            };
-        }
-        
-        private void init() {
+        @Bean("initApp")
+        public Initialisation initApp() {
             //Creation de l'initialisation
             Initialisation init = new Initialisation();
             //Init des repository necessaire
@@ -51,7 +52,8 @@ public class AgcvApplication {
             init.setSaisonRep(saisonRep);
             init.setTypeTubeRep(typeTubeRep);
             init.setUserRoleRepository(userRoleRep);
-            //Init Database
-            init.initDatabase();
+            
+            return init;
         }
+        
 }
