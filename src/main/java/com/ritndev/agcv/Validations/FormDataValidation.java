@@ -14,7 +14,6 @@ import lombok.Setter;
 public class FormDataValidation {
     
     private final String regex1 = "^(0?|[1-9]+\\d*)(.|,)((0{1}|(\\d{1,2})))$";
-    private final String regex2 = "^\\d*$";
     
     @Setter private boolean valid;
     public boolean getValid() {return valid;}
@@ -42,29 +41,15 @@ public class FormDataValidation {
     private boolean isValid() {
         boolean result = false;
         Pattern pattern1 = Pattern.compile(regex1);
-        Pattern pattern2 = Pattern.compile(regex2);
         
         //Test de validation du budget :
-        if(fData.getBudget()!=null){
-            if(!fData.getBudget().isEmpty()) {
-                Matcher matcher = pattern1.matcher(fData.getBudget());
-                if(matcher.matches()) {
-                    resultValue = resultValue + 2;
-                }
+        if(!fData.getBudget().isEmpty()) {
+            Matcher matcher = pattern1.matcher(fData.getBudget());
+            if(matcher.matches()) {
+                resultValue = resultValue + 2;
             }
         }
-        
-        
-        //Test de validation du seuil bas :
-        if(fData.getSeuilBas()!=null) {
-            if(!fData.getSeuilBas().isEmpty()) {
-                Matcher matcher = pattern2.matcher(fData.getSeuilBas());
-                if(matcher.matches()) {
-                    resultValue = resultValue + 2;
-                }
-            }
-        }
-        
+                
         if (resultValue==2){
             result = true;
         }

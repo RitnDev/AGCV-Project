@@ -23,6 +23,13 @@
                 <!-- Montant commandes club -->
                 <tr>
                     <td class="table-commandes-label-resume"
+                        th:text="#{texte.page.commandesMembres.resume.nbTubes}"/>
+                    <td class="table-commande-resume-tubes"
+                        th:text="${saison.getNbTubesCommandes}"/>
+                </tr>
+                <!-- Montant commandes club -->
+                <tr>
+                    <td class="table-commandes-label-resume"
                         th:text="#{texte.page.commandesMembres.resume.commandeClub}"/>
                     <td class="table-commande-resume-club"
                         th:text="${saison.getStringMontantCommandesClub} + #{texte.global.devise}"/>
@@ -39,6 +46,10 @@
                     <td class="table-commandes-label-resume"
                         th:text="#{texte.page.commandesMembres.resume.restant}"/>
                     <td class="table-commande-resume-restant"
+                        th:if="${saison.getMontantRestant==0.0}"
+                        th:text="${saison.getStringMontantRestant} + #{texte.global.devise}"/>
+                    <td class="table-commande-resume-restant-1"
+                        th:if="${saison.getMontantRestant>0.0}"
                         th:text="${saison.getStringMontantRestant} + #{texte.global.devise}"/>
                 </tr>
                 <!-- Montant payé par le club apres déduction des membres-->

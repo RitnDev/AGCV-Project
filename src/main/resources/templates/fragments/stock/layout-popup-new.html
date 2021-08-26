@@ -53,10 +53,9 @@
                             <td class="popup-form-input">
                                 <input id="ajout" 
                                        type="number" 
-                                       th:pattern="#{validation.pattern.integer}"
+                                       th:pattern="#{validation.pattern.integerNeg}"
                                        th:value="*{valeur}" 
-                                       th:field="*{valeur}" 
-                                       min="1" />
+                                       th:field="*{valeur}" />
                             </td>
                         </tr>
                         <tr>

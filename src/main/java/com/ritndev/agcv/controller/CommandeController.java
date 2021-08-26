@@ -10,6 +10,7 @@ import com.ritndev.agcv.model.Commande;
 import com.ritndev.agcv.model.ConsoMois;
 import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.pages.PageCommandesMembres;
+import com.ritndev.agcv.pages.PageIndex;
 
 import java.security.Principal;
 import java.util.Locale;
@@ -44,9 +45,16 @@ public class CommandeController {
     
     @GetMapping(value = {"/commandesMembres"})
     public String commandesMembres(Model model, Principal principal){
-        PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
-        model.addAttribute("Membres", membreService.listMembreActif());
-        return pageCommandesMembres.getPage(dataService);
+        
+        if (!dataService.returnMainData().getIdSaison().toString().isEmpty()) {
+            PageCommandesMembres pageCommandesMembres = new PageCommandesMembres(model, principal, messageSource);
+            model.addAttribute("Membres", membreService.listMembreActif());
+            return pageCommandesMembres.getPage(dataService);
+        }else{
+            PageIndex pageIndex = new PageIndex(model, principal, messageSource);
+            return pageIndex.getPage(dataService);
+        }
+        
     }
     
     

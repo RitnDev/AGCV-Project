@@ -6,6 +6,7 @@ import com.ritndev.agcv.InterfaceService.IUserService;
 import com.ritndev.agcv.Validations.FormPrixTubeValidation;
 import com.ritndev.agcv.classes.ActionsTypes;
 import com.ritndev.agcv.form.FormPrixTube;
+import com.ritndev.agcv.model.TypeTube;
 import com.ritndev.agcv.model.enumeration.NomTypeTube;
 import com.ritndev.agcv.pages.PageActions;
 import com.ritndev.agcv.pages.PagePrixtube;
@@ -63,7 +64,8 @@ public class PrixtubeController {
         //Construction de ma page Prixtube
         PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
         //Validation du FormPrixTube avant envoie au service
-        FormPrixTubeValidation validPrixtube = new FormPrixTubeValidation(newPrixTube);
+        TypeTube tp = typeTubeService.findByIdTypeTube(newPrixTube.getIdTypeTube());
+        FormPrixTubeValidation validPrixtube = new FormPrixTubeValidation(newPrixTube, tp);
         //Si non valide, on envoie un message et on revient sur la page Prixtube
         if (!validPrixtube.getValid()){
             pagePrixtube.addReponse(validPrixtube.getReponse());
@@ -120,7 +122,8 @@ public class PrixtubeController {
         //Construction de ma page Prixtube
         PagePrixtube pagePrixtube = new PagePrixtube(model, principal, messageSource); 
         //Validation du FormPrixTube avant envoie au service
-        FormPrixTubeValidation validPrixtube = new FormPrixTubeValidation(putPrixTube);
+        TypeTube tp = typeTubeService.findByIdTypeTube(putPrixTube.getIdTypeTube());
+        FormPrixTubeValidation validPrixtube = new FormPrixTubeValidation(putPrixTube, tp);
         //Si non valide, on envoie un message et on revient sur la page Prixtube
         if (!validPrixtube.getValid()){
             pagePrixtube.addReponse(validPrixtube.getReponse());

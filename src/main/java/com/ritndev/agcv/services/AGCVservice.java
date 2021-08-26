@@ -131,7 +131,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         int resultVal = 0;
         if (prixTubeRep.existsById(id)){
             PrixTube pt = prixTubeRep.getOne(id);
-            if (!pt.isActif() || !pt.isDefaut()){
+            if (!pt.isActif() && !pt.isDefaut() && pt.getConsommationsMois().isEmpty()){
                 prixTubeRep.deleteById(id);
                 resultVal = 2;
             }else{
@@ -768,20 +768,7 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         
         return new Reponse("budget", "edit", resultVal);
     }
-    @Override public Reponse updateSeuil(FormData editMainData) {
-        int resultVal = 0;
-        
-        MainData md = returnMainData();
-        if(md.getId() != 0){
-            md.setSeuilBas(editMainData.getSeuilInteger());
-            mainDataRep.save(md);
-            resultVal = 2;
-        }else{
-            resultVal = 1;
-        }
-        
-        return new Reponse("seuil", "edit", resultVal);
-    }
+
     @Override public MainData returnMainData() {
         List<MainData> data = mainDataRep.findAll();
         MainData md = new MainData(0);
@@ -905,7 +892,25 @@ public class AGCVservice implements IMembreService, ICommandeService, ICompetiti
         }
         return new Reponse("typetube", "edit", resultVal);
     }
-
+    @Override public Reponse updateSeuil(FormTypeTube editTypeTube) {
+        int resultVal = 0;
+        
+        MainData md = returnMainData();
+        if(md.getId() != 0){
+            TypeTube tb = md.getTypeTubeName(editTypeTube.getNom());
+            if (tb!=null) {
+                tb.setSeuilBas(editTypeTube.getSeuilInteger());
+                typeTubeRep.save(tb);
+                resultVal = 2;
+            }else{
+                resultVal = 3;
+            }
+        }else{
+            resultVal = 1;
+        }
+        
+        return new Reponse("seuil", "edit", resultVal);
+    }
     
     
     //Change l'ID Type Tube selon le du type Tube

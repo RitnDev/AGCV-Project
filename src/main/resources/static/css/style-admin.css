@@ -72,7 +72,9 @@ td.admin-form-label {
 }
 
 #admin-form-input-budget:hover,
-#admin-form-input-seuil:hover,
+#admin-form-input-seuilP:hover,
+#admin-form-input-seuilC:hover,
+#admin-form-input-seuilE:hover,
 #admin-form-input-stock-Plastique:hover,
 #admin-form-input-stock-Entrainement:hover,
 #admin-form-input-stock-Compétition:hover {

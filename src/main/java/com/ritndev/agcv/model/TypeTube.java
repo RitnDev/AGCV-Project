@@ -28,8 +28,7 @@ public class TypeTube implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    @Getter @Setter
-    private long id;
+    @Getter @Setter private long id;
     
     //Horodatage
     @UpdateTimestamp
@@ -38,13 +37,15 @@ public class TypeTube implements Serializable {
       
     //Nom du type de tube
     @Column(name = "nom", nullable = false)
-    @Getter @Setter
-    private String nom;
+    @Getter @Setter private String nom;
         
     //Est-ce que ce type de tube est commandable pour les membres ?
     @Column(name = "commande", nullable = false)
-    @Getter @Setter
-    private boolean commande;
+    @Getter @Setter private boolean commande;
+    
+    //Seuil bas pour ce type de tube
+    @Column(name = "seuilBas", nullable = false)
+    @Getter @Setter private int seuilBas;
     
     
     //Liste des PrixTube lié à ce TypeTube

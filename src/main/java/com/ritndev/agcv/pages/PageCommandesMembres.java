@@ -33,16 +33,18 @@ public class PageCommandesMembres extends Page{
     
     public String getPage(IMainDataService dataService) {
         
+        FormCommande newCommande = null;
+        
         Saison saisonActuelle = dataService.returnMainData().getIdSaison();
         String strMois = MoisUtils.moisCourant();
 
-        
-        
-        FormCommande newCommande = new FormCommande(
-                            strMois,
-                            saisonActuelle.getConsoMois("Compétition", strMois).getIdPrixTube().getId(),
-                            saisonActuelle.getId(), 
-                            saisonActuelle.getConsoMois("Compétition", strMois).getId());
+        if(saisonActuelle.getConsoMois("Compétition", strMois) != null) {
+            newCommande = new FormCommande(
+                                strMois,
+                                saisonActuelle.getConsoMois("Compétition", strMois).getIdPrixTube().getId(),
+                                saisonActuelle.getId(), 
+                                saisonActuelle.getConsoMois("Compétition", strMois).getId());
+        }
         
         // Add Attribute :
         getPageGenerique();

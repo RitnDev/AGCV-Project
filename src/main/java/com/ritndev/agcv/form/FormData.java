@@ -12,7 +12,6 @@ public class FormData {
     @Getter @Setter private long id;
     @Getter @Setter private long idSaison;
     @Getter @Setter private String budget;
-    @Getter @Setter private String seuilBas;
     @Getter @Setter private boolean actif;
     
     //Construteur
@@ -24,9 +23,8 @@ public class FormData {
         this.actif = actif;
     }
 
-    public FormData(String budget, String seuilBas) {
+    public FormData(String budget) {
         this.budget = budget;
-        this.seuilBas = seuilBas;
     }
     
     
@@ -40,15 +38,6 @@ public class FormData {
             return Double.parseDouble(budget);
         }else{
             return 0.00;
-        }
-    }
-    
-    //Renvoie le seuil au format int
-    public int getSeuilInteger() {
-        if (!seuilBas.equals("")){
-            return Integer.parseInt(seuilBas);
-        }else{
-            return 0;
         }
     }
     

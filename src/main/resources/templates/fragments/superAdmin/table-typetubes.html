@@ -5,24 +5,26 @@
         <table>
             <thead>
                 <tr>
-                    <th class="table-label" colspan="5" th:text="#{texte.page.superAdmin.table.typetube.label}"/>
+                    <th class="table-label" colspan="6" th:text="#{texte.page.superAdmin.table.typetube.label}"/>
                 </tr>
                 <tr>
                     <th th:text="#{texte.page.superAdmin.table.typetube.id}"/>
                     <th th:text="#{texte.page.superAdmin.table.typetube.horodatage}"/>
                     <th th:text="#{texte.page.superAdmin.table.typetube.nom}"/>
+                    <th th:text="#{texte.page.superAdmin.table.data.seuilBas}"/>
                     <th th:text="#{texte.page.superAdmin.table.typetube.commande}"/>
                     <th class="table-action" th:text="#{texte.global.page.action}"/>
                 </tr>
             </thead>
             <tbody>
                 <tr th:if="${typeTubeList.empty}">
-                    <td colspan="5" th:text="#{texte.page.superAdmin.table.typetube.noTypetube}"/>
+                    <td colspan="6" th:text="#{texte.page.superAdmin.table.typetube.noTypetube}"/>
                 </tr>
                 <tr th:each="typeTube : ${typeTubeList}">
                     <td th:text="${typeTube.id}"/>
                     <td th:text="${typeTube.horodatage}"/>
                     <td th:text="${typeTube.nom}"/>
+                    <td th:text="${typeTube.seuilBas}"/>
                     <td th:text="${typeTube.commande}"/>
                     <td class="table-action">
                         <table class="action-input">

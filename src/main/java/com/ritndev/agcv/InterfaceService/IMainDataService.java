@@ -18,7 +18,6 @@ public interface IMainDataService {
     public Reponse supprMainData(Long id);
     public Reponse updateMainData(FormData editMainData);
     public Reponse updateBudget(FormData editMainData);
-    public Reponse updateSeuil(FormData editMainData);
     public MainData returnMainData();
     
 }

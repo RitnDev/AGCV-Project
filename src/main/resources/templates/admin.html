@@ -156,23 +156,81 @@
                     <br/>
                         <form
                             class="admin-form"
-                            th:action="@{/admin/seuil}"
-                            th:object="${editData}" 
+                            th:action="@{/admin/seuilPlastique}"
+                            th:object="${editTypeTubeP}" 
                             method="post">
                             <table class="admin-form"><tr><td class="admin-form-label">
                                 <label 
                                     class="admin-form-label"
-                                    for="admin-form-input-seuil"
-                                    th:text="#{texte.page.admin.seuil.label}" />
+                                    for="admin-form-input-seuilP"
+                                    th:text="#{texte.page.admin.seuilP.label}" />
                                 </td><td class="admin-form-input">
                                 <input 
-                                    id="admin-form-input-budget"
+                                    id="admin-form-input-seuilP"
                                     type="number"
                                     min="0"
                                     th:pattern="#{validation.pattern.integer0}"
                                     th:value="*{seuilBas}"
                                     th:field="*{seuilBas}" />
                                 </td><td class="admin-form-submit">
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" /> 
+                                <input type="hidden" th:value="*{nom}" th:field="*{nom}" />
+                                <input 
+                                    class="admin-form-submit"
+                                    type="submit" 
+                                    th:value="#{texte.page.admin.seuil.submit}"/> 
+                            </tr></table>
+                        </form>
+                        <br/>
+                        <form
+                            class="admin-form"
+                            th:action="@{/admin/seuilCompetition}"
+                            th:object="${editTypeTubeC}" 
+                            method="post">
+                            <table class="admin-form"><tr><td class="admin-form-label">
+                                <label 
+                                    class="admin-form-label"
+                                    for="admin-form-input-seuilC"
+                                    th:text="#{texte.page.admin.seuilC.label}" />
+                                </td><td class="admin-form-input">
+                                <input 
+                                    id="admin-form-input-seuilC"
+                                    type="number"
+                                    min="0"
+                                    th:pattern="#{validation.pattern.integer0}"
+                                    th:value="*{seuilBas}"
+                                    th:field="*{seuilBas}" />
+                                </td><td class="admin-form-submit">
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" /> 
+                                <input type="hidden" th:value="*{nom}" th:field="*{nom}" />
+                                <input 
+                                    class="admin-form-submit"
+                                    type="submit" 
+                                    th:value="#{texte.page.admin.seuil.submit}"/> 
+                            </tr></table>
+                        </form>
+                        <br/>
+                        <form
+                            class="admin-form"
+                            th:action="@{/admin/seuilEntrainement}"
+                            th:object="${editTypeTubeE}"
+                            method="post">
+                            <table class="admin-form"><tr><td class="admin-form-label">
+                                <label 
+                                    class="admin-form-label"
+                                    for="admin-form-input-seuilE"
+                                    th:text="#{texte.page.admin.seuilE.label}" />
+                                </td><td class="admin-form-input">
+                                <input 
+                                    id="admin-form-input-seuilE"
+                                    type="number"
+                                    min="0"
+                                    th:pattern="#{validation.pattern.integer0}"
+                                    th:value="*{seuilBas}"
+                                    th:field="*{seuilBas}" />
+                                </td><td class="admin-form-submit">
+                                <input type="hidden" th:value="*{id}" th:field="*{id}" /> 
+                                <input type="hidden" th:value="*{nom}" th:field="*{nom}" />
                                 <input 
                                     class="admin-form-submit"
                                     type="submit" 

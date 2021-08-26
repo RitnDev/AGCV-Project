@@ -1,6 +1,5 @@
 package com.ritndev.agcv.form;
 
-import com.ritndev.agcv.model.enumeration.NomTypeTube;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +16,9 @@ public class FormTypeTube {
      
     //Est-ce que ce type de tube est commandable pour les membres ?
     @Getter @Setter private boolean commande;
+    
+    //Seuil bas pour ce type de tube
+    @Getter @Setter private String seuilBas;
 
     
     //Constructeur
@@ -28,10 +30,23 @@ public class FormTypeTube {
         this.commande = commande;
     }
 
-    public FormTypeTube(int i, NomTypeTube nomTypeTube, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public FormTypeTube(long id, String nom, String seuilBas) {
+        this.id = id;
+        this.nom = nom;
+        this.seuilBas = seuilBas;
     }
     
+    
+
+    
+    //Renvoie le seuil au format int
+    public int getSeuilInteger() {
+        if (!seuilBas.equals("")){
+            return Integer.parseInt(seuilBas);
+        }else{
+            return 0;
+        }
+    }
     
     
 }

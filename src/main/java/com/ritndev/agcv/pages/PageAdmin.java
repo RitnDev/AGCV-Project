@@ -3,9 +3,12 @@ package com.ritndev.agcv.pages;
 import com.ritndev.agcv.InterfaceService.IMainDataService;
 import com.ritndev.agcv.classes.Link;
 import com.ritndev.agcv.form.FormData;
+import com.ritndev.agcv.form.FormTypeTube;
 import com.ritndev.agcv.form.FormTypeVolant;
+import com.ritndev.agcv.model.ConsoMois;
 import com.ritndev.agcv.model.Saison;
 import com.ritndev.agcv.model.enumeration.NomTypeTube;
+import com.ritndev.agcv.utils.MoisUtils;
 
 import java.security.Principal;
 import org.springframework.context.MessageSource;
@@ -51,23 +54,39 @@ public class PageAdmin extends Page {
         FormTypeVolant ftvCompetition = null;
         FormTypeVolant ftvEntrainement = null;
         
+        FormTypeTube ftbPlastique = null;
+        FormTypeTube ftbCompetition = null;
+        FormTypeTube ftbEntrainement = null;
+        
+        
         if (!saisonActuelle.getTypeVolants().isEmpty()) {
             ftvPlastique = saisonActuelle.getFormVolantName(NomTypeTube.PLASTIQUE.toString());
             ftvCompetition = saisonActuelle.getFormVolantName(NomTypeTube.COMPETITION.toString());
             ftvEntrainement = saisonActuelle.getFormVolantName(NomTypeTube.ENTRAINEMENT.toString());
         }
+        
+        
+        if (dataService.returnMainData().isActif()) {
+            ftbPlastique = dataService.returnMainData().getFormTubeName(NomTypeTube.PLASTIQUE.toString());
+            ftbCompetition = dataService.returnMainData().getFormTubeName(NomTypeTube.COMPETITION.toString());
+            ftbEntrainement = dataService.returnMainData().getFormTubeName(NomTypeTube.ENTRAINEMENT.toString());
+        }
+        
+        
         String budgetDefault = String.valueOf(dataService.returnMainData().getBudgetDefault());
-        String seuilBas = String.valueOf(dataService.returnMainData().getSeuilBas());
         
         // Add Attribute :
         getPageGenerique();
         
         super.getModel().addAttribute("saison", saisonActuelle);
-        super.getModel().addAttribute("editData", new FormData(budgetDefault, seuilBas));
+        super.getModel().addAttribute("editData", new FormData(budgetDefault));
+        super.getModel().addAttribute("editTypeTubeP", ftbPlastique);
+        super.getModel().addAttribute("editTypeTubeC", ftbCompetition);
+        super.getModel().addAttribute("editTypeTubeE", ftbEntrainement);
         super.getModel().addAttribute("editTVPlastique", ftvPlastique);
         super.getModel().addAttribute("editTVCompetition", ftvCompetition);
         super.getModel().addAttribute("editTVEntrainement", ftvEntrainement);
-        
+                
         Link pageSupAdmin = new Link("superAdmin", "Super Admin", "/superAdmin", connect);
         super.addLinks(pageSupAdmin);
         

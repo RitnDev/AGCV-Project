@@ -24,7 +24,7 @@
             <div th:replace="fragments/layout-reponses :: reponse"/>
             <br/>
             
-            <table class="table-compet">
+            <table class="table-compet" th.if="${!saison.toString.isEmpty}">
                 <tr>
                     <td th:replace="fragments/competition/table-stock-compet :: stock" />
                     <td th:replace="fragments/competition/table-list-compet :: list" />

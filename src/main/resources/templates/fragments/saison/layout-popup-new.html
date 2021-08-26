@@ -49,11 +49,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td th:if="${!suConnect}" colspan="2" th:text="#{texte.pop.new.saison.su}">
-                            <td th:if="${suConnect}" class="popup-form-label">
+                            <td class="popup-form-label">
                                 <label for="actuelle" th:text="#{texte.pop.new.saison.actuelle}"></label>
                             </td>
-                            <td th:if="${suConnect}" class="popup-form-input">
+                            <td class="popup-form-input">
                                 <input id="actuelle" name="actuelle" type="checkbox" th:checked="*{actuelle}"/>
                             </td>
                         </tr>

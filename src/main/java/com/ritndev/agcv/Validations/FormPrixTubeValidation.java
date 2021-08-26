@@ -2,6 +2,7 @@ package com.ritndev.agcv.Validations;
 
 import com.ritndev.agcv.classes.Reponse;
 import com.ritndev.agcv.form.FormPrixTube;
+import com.ritndev.agcv.model.TypeTube;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.Getter;
@@ -21,12 +22,14 @@ public class FormPrixTubeValidation {
     
     @Getter @Setter private FormPrixTube fprixtube;
     @Getter @Setter private int resultValue;
+    @Getter @Setter private TypeTube typeTube;
     
     private final Reponse reponse;
 
     //Constructeur
-    public FormPrixTubeValidation(FormPrixTube fprixtube) {
+    public FormPrixTubeValidation(FormPrixTube fprixtube, TypeTube typeTube) {
         this.fprixtube = fprixtube;
+        this.typeTube = typeTube;
         this.resultValue = 0;
         this.valid = isValid();
         this.reponse = getReponse();
@@ -69,14 +72,21 @@ public class FormPrixTubeValidation {
         }
         
         //Test de validation du Prix Membre :
-        if(!fprixtube.getPrixMembre().isEmpty()) {
-            Matcher matcher = patternPrix.matcher(fprixtube.getPrixMembre());
-            if(matcher.matches()) {
-                if(fprixtube.getPrixMembreDouble() >= 0.00 && fprixtube.getPrixMembreDouble() <= fprixtube.getPrixDouble()){
-                    resultValue = resultValue + 20;
+        if(typeTube.isCommande()){
+            System.out.println(">> prix membre : " + fprixtube.getPrixMembre());
+            if(!fprixtube.getPrixMembre().isEmpty()) {
+                Matcher matcher = patternPrix.matcher(fprixtube.getPrixMembre());
+                if(matcher.matches()) {
+                    if(fprixtube.getPrixMembreDouble() > 0.00 && fprixtube.getPrixMembreDouble() <= fprixtube.getPrixDouble()){
+                        resultValue = resultValue + 20;
+                    }
                 }
             }
+        }else{
+            //Valider automatiquement
+            resultValue = resultValue + 20;
         }
+        
         
         if (resultValue==31){
             result = true;

@@ -18,5 +18,6 @@ public interface ITypeTubeService {
     public TypeTube findByIdTypeTube(Long id);
     public Reponse supprTypeTube(Long id);
     public Reponse updateTypeTube(FormTypeTube editTypeTube);
+    public Reponse updateSeuil(FormTypeTube editTypeTube);
     
 }

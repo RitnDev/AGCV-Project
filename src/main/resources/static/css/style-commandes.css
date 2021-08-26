@@ -93,12 +93,20 @@ td.table-commandes-label-resume {
   width: 230px;
 }
 
+table-commande-resume-tubes,
 td.table-commande-resume-club,
 td.table-commande-resume-membre,
 td.table-commande-resume-restant,
+td.table-commande-resume-restant-1,
 td.table-commande-resume-deduit{
   width: 70px;
 }
+
+td.table-commande-resume-restant-1{
+    font-weight: bold;
+    background-color: #f1262687; 
+}
+
 
 th.table-commandes-label-resume{
   width: 300px;

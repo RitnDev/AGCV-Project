@@ -40,18 +40,23 @@ public class PageCompetition extends Page {
     
     public String getPage(IMainDataService dataService) {       
         
+        FormRestock newStock = new FormRestock();
+       
         String strMois = MoisUtils.moisCourant();
         Saison saisonActuelle = dataService.returnMainData().getIdSaison();
         ConsoMois consoMoisActu = saisonActuelle.getConsoMois(NomTypeTube.COMPETITION.toString(), strMois);
+        if(consoMoisActu != null) {
+            newStock = new FormRestock("0",
+                                        saisonActuelle.getId(),
+                                        dataService.returnMainData().getId(), 
+                                        consoMoisActu.getId());
+        }
+              
         
         // Add Attribute :
         getPageGenerique();
         super.getModel().addAttribute("newCompetition", new FormCompet("1"));
-        super.getModel().addAttribute("newStock", new FormRestock(
-                                                            "0",
-                                                            saisonActuelle.getId(),
-                                                            dataService.returnMainData().getId(), 
-                                                            consoMoisActu.getId()));
+        super.getModel().addAttribute("newStock", newStock);
         super.getModel().addAttribute("saison", saisonActuelle);
         super.getModel().addAttribute("stock", dataService.returnMainData().showStock());
                 

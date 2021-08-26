@@ -79,7 +79,6 @@ public class Initialisation {
         dataInit.setIdTTCompetition(ttCompet);
         dataInit.setIdTTEntrainement(ttEntrainement);
         dataInit.setIdTTPlastique(ttPlastique);
-        dataInit.setSeuilBas(0);
         dataInit.setBudgetDefault(3000.0);
         dataInit.setActif(true);
 

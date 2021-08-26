@@ -20,6 +20,7 @@ import com.ritndev.agcv.form.FormCompet;
 import com.ritndev.agcv.form.FormRestock;
 import com.ritndev.agcv.model.Competition;
 import com.ritndev.agcv.pages.PageCompetition;
+import com.ritndev.agcv.pages.PageIndex;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,19 +48,26 @@ public class CompetController {
     
     @GetMapping(value = {"/competition", "/newCompetition"})
     public String sacCompetition(Model model, Principal principal){
-        PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
         
-        int AdminConnect = 0;
-        if (!pageCompet.returnUser(principal).equals("")){
-            switch (userService.findRoleByUsername(pageCompet.returnUser(principal))) {
-                case "ROLE_ADMIN" -> AdminConnect = 1;
-                case "ROLE_SUPADMIN" -> AdminConnect = 2;
+        if (!dataService.returnMainData().getIdSaison().toString().isEmpty()) {
+            PageCompetition pageCompet = new PageCompetition(model, principal, messageSource);
+        
+            int AdminConnect = 0;
+            if (!pageCompet.returnUser(principal).equals("")){
+                switch (userService.findRoleByUsername(pageCompet.returnUser(principal))) {
+                    case "ROLE_ADMIN" -> AdminConnect = 1;
+                    case "ROLE_SUPADMIN" -> AdminConnect = 2;
+                }
             }
+
+            model.addAttribute("AdminConnect", AdminConnect);
+
+            return pageCompet.getPage(dataService);
+            
+        }else{
+            PageIndex pageIndex = new PageIndex(model, principal, messageSource);
+            return pageIndex.getPage(dataService);
         }
-        
-        model.addAttribute("AdminConnect", AdminConnect);
-               
-        return pageCompet.getPage(dataService); 
     }
     
     

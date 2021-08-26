@@ -1,11 +1,14 @@
 package com.ritndev.agcv.controller;
 
 import com.ritndev.agcv.InterfaceService.IMainDataService;
+import com.ritndev.agcv.InterfaceService.ITypeTubeService;
 import com.ritndev.agcv.InterfaceService.ITypeVolantService;
 import com.ritndev.agcv.InterfaceService.IUserService;
 import com.ritndev.agcv.Validations.FormDataValidation;
+import com.ritndev.agcv.Validations.FormTypeTubeValidation;
 import com.ritndev.agcv.Validations.FormTypeVolantValidation;
 import com.ritndev.agcv.form.FormData;
+import com.ritndev.agcv.form.FormTypeTube;
 import com.ritndev.agcv.form.FormTypeVolant;
 import com.ritndev.agcv.pages.PageAdmin;
 import java.security.Principal;
@@ -28,6 +31,7 @@ public class AdminController {
     @Autowired private ITypeVolantService typeVolantService;
     @Autowired private IUserService userService;
     @Autowired private IMainDataService dataService;
+    @Autowired private ITypeTubeService typeTubeService;
     
     @Autowired private MessageSource messageSource;
     
@@ -87,18 +91,18 @@ public class AdminController {
     }
     
     
-    @PostMapping(value = {"/admin/seuil"})
-    public String editSeuil(@ModelAttribute FormData putData, Model model, Principal principal) {
+    @PostMapping(value = {"/admin/seuilPlastique", "/admin/seuilCompetition", "/admin/seuilEntrainement"})
+    public String editSeuil(@ModelAttribute FormTypeTube putTypeTube, Model model, Principal principal) {
         //Construction de ma page Admin
         PageAdmin pageAdmin = new PageAdmin(model, principal, messageSource);
         //Validation du FormData avant envoie au service
-        FormDataValidation validData = new FormDataValidation(putData);
+        FormTypeTubeValidation validSeuil = new FormTypeTubeValidation(putTypeTube);
         //Si non valide, on envoie un message et on revient sur la page Admin
-        if (!validData.getValid()){
-            pageAdmin.addReponse(validData.getReponse());
+        if (!validSeuil.getValid()){
+            pageAdmin.addReponse(validSeuil.getReponse());
         }else{
             //Si c'est valide on envoie le FormData au service
-            pageAdmin.addReponse(dataService.updateSeuil(putData));
+            pageAdmin.addReponse(typeTubeService.updateSeuil(putTypeTube));
         }
         
         boolean connect = userService.findRoleByUsername(pageAdmin.returnUser(principal)).equals("ROLE_SUPADMIN");

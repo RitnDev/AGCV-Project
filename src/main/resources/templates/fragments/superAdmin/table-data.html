@@ -4,7 +4,7 @@
         <table>
             <thead>
                 <tr>
-                    <th class="table-label" colspan="10" th:text="#{texte.page.superAdmin.table.data.label}"/>
+                    <th class="table-label" colspan="9" th:text="#{texte.page.superAdmin.table.data.label}"/>
                 </tr>
                 <tr>
                     <th th:text="#{texte.page.superAdmin.table.data.id}"/>
@@ -12,7 +12,7 @@
                         th:text="#{texte.page.superAdmin.table.data.saison}"/>
                     <th th:text="#{texte.page.superAdmin.table.data.stock}"/>
                     <th th:text="#{texte.page.superAdmin.table.data.budget}"/>
-                    <th th:text="#{texte.page.superAdmin.table.data.seuilBas}"/>
+                    
                     <th th:title="#{texte.page.superAdmin.table.data.title.plastique}"
                         th:text="#{texte.page.superAdmin.table.data.plastique}"/>
                     <th th:title="#{texte.page.superAdmin.table.data.title.entrainement}"
@@ -25,14 +25,13 @@
             </thead>
             <tbody>
                 <tr th:if="${mainData.empty}">
-                    <td colspan="10" th:text="#{texte.page.superAdmin.table.data.noData}"/>
+                    <td colspan="9" th:text="#{texte.page.superAdmin.table.data.noData}"/>
                 </tr>
                 <tr th:each="data : ${mainData}">
                     <td><span th:text="${data.id}"/>
                     <td th:text="${data.idSaison.toString()}" th:title="${'id='+data.idSaison.id}"/>
                     <td th:text="${data.showStock}"/>
                     <td th:text="${data.budgetDefault}"/>
-                    <td th:text="${data.seuilBas}"/>
                     <td th:text="${data.idTTPlastique}" th:title="${'id='+data.idTTPlastique.id}"/>
                     <td th:text="${data.idTTEntrainement}" th:title="${'id='+data.idTTEntrainement.id}"/>
                     <td th:text="${data.idTTCompetition}" th:title="${'id='+data.idTTCompetition.id}"/>

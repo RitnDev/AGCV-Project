@@ -215,7 +215,10 @@ public class Saison implements Serializable {
     
     //Renvoie un Consomois selon le nom du mois d'un type de volant particulier (nomVolant)
     public ConsoMois getConsoMois(String nomVolant, String mois){
-        return getTypeVolantName(nomVolant).getConsoMoisName(mois);
+        if (getTypeVolantName(nomVolant)!=null){
+            return getTypeVolantName(nomVolant).getConsoMoisName(mois);
+        }
+        return null;
     }
     
     //Renvoie Le PrixTube associé à un TypeVolant et un ConsoMois particulier (mois)

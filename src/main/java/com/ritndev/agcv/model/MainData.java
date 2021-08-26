@@ -1,5 +1,6 @@
 package com.ritndev.agcv.model;
 
+import com.ritndev.agcv.form.FormTypeTube;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -46,11 +47,7 @@ public class MainData implements Serializable {
     //Valeur du budget previsionnel par défaut
     @Column(name = "budgetDefault", nullable = false)
     @Getter @Setter private double budgetDefault;
-    
-    //Valeur du seuil bas avant avertissement de restockage (commande club)
-    @Column(name = "seuilBas", nullable = false)
-    @Getter @Setter private int seuilBas;
-    
+        
     //TypeTube Plastique actif
     @OneToOne
     @JoinColumn(name = "idTTPlastique", nullable = false)
@@ -94,11 +91,10 @@ public class MainData implements Serializable {
         this.actif = actif;
     }
 
-    public MainData(long id, Saison idSaison, double budgetDefault, int seuilBas, TypeTube idTTPlastique, TypeTube idTTEntrainement, TypeTube idTTCompetition) {
+    public MainData(long id, Saison idSaison, double budgetDefault, TypeTube idTTPlastique, TypeTube idTTEntrainement, TypeTube idTTCompetition) {
         this.id = id;
         this.idSaison = idSaison;
         this.budgetDefault = budgetDefault;
-        this.seuilBas = seuilBas;
         this.idTTPlastique = idTTPlastique;
         this.idTTEntrainement = idTTEntrainement;
         this.idTTCompetition = idTTCompetition;
@@ -118,10 +114,10 @@ public class MainData implements Serializable {
                 return idTTPlastique;
             }
             case "Entrainement" -> {
-                return idTTPlastique;
+                return idTTEntrainement;
             }
             case "Compétition" -> {
-                return idTTPlastique;
+                return idTTCompetition;
             }
         }
         return null;
@@ -139,5 +135,20 @@ public class MainData implements Serializable {
         }
         return 0 - moins + plus ;
     }
+    
+    
+    //Renvoie le FormTypeVolant par le nom du typeVolant
+    public FormTypeTube getFormTubeName(String nom) {
+        if (!nom.isEmpty() && nom!=null){
+            TypeTube tb = getTypeTubeName(nom);
+            if (tb!=null) {
+                return new FormTypeTube(tb.getId(), nom, String.valueOf(tb.getSeuilBas()));
+            }
+        }
+        return null;
+    }
+    
+    
+    
     
 }
