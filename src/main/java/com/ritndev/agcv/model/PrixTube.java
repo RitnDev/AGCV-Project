@@ -25,6 +25,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "PRIX_TUBE")
 public class PrixTube implements Serializable {
     
+    private static final String ID_PT_ACTIF_ON = "prixtube-actif-on";
+    private static final String ID_PT_ACTIF_OFF = "prixtube-actif-off";
+    
+    
     //ID
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -99,8 +103,8 @@ public class PrixTube implements Serializable {
     */
     
     public String getIdH() {
-        String strResult = "prixtube-actif-on";
-        if(!actif) strResult = "prixtube-actif-off";
+        String strResult = ID_PT_ACTIF_ON;
+        if(!actif) strResult = ID_PT_ACTIF_OFF;
         return strResult;
     }
     

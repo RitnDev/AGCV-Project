@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -74,7 +75,7 @@ public class TypeTube implements Serializable {
     public String toString() {
         return nom;
     }
-    
+   
     
     /*
         Methodes

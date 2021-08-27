@@ -14,6 +14,10 @@ import lombok.Setter;
 @Table(name = "APP_USER")
 public class AppUser implements Serializable {
  
+    private static final String ID_USER_ACTIF_ON = "user-actif-on";
+    private static final String ID_USER_ACTIF_OFF = "user-actif-off";
+    
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID", nullable = false)
@@ -50,8 +54,8 @@ public class AppUser implements Serializable {
  
     //renvoie la class html en fonction si l'utilisateur est actif ou non
     public String getIdH() {
-        String strClass = "user-actif-on";
-        if(!enabled) strClass = "user-actif-off";
+        String strClass = ID_USER_ACTIF_ON;
+        if(!enabled) strClass = ID_USER_ACTIF_OFF;
         return strClass;
     }
     
