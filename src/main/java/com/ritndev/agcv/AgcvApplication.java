@@ -1,7 +1,6 @@
-package com.ritndev.AGCV;
+package com.ritndev.agcv;
 
 
-import com.ritndev.agcv.Initialisation;
 import com.ritndev.agcv.repository.MainDataRepository;
 import com.ritndev.agcv.repository.SaisonRepository;
 import com.ritndev.agcv.repository.TypeTubeRepository;
@@ -12,13 +11,15 @@ import com.ritndev.agcv.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 
 
 @SpringBootApplication
-public class AgcvApplication {
+public class AgcvApplication extends SpringBootServletInitializer {
 
 	@Autowired private MainDataRepository mainDataRep;
         @Autowired private SaisonRepository saisonRep;
@@ -28,7 +29,13 @@ public class AgcvApplication {
         @Autowired private AppUserRepository userRep;
         @Autowired private UserRoleRepository userRoleRep;
        
+        
+        @Override
+        protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+            return builder.sources(AgcvApplication.class);
+        }
     
+        
         //Démmarage de l'application
         public static void main(String[] args) {
             //Lancement de l'application et création du context :
@@ -55,5 +62,5 @@ public class AgcvApplication {
             
             return init;
         }
-        
+    
 }

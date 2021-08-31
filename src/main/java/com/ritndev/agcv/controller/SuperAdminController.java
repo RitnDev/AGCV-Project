@@ -263,7 +263,7 @@ public class SuperAdminController {
     
     
     
-    //Lancer la modification d'une main-data
+    //Lancer la modification d'un utilisateur
     @PostMapping("/superAdmin/user/{id}")
     public String getUser(@PathVariable Long id, Model model, Principal principal) {
         
@@ -275,7 +275,7 @@ public class SuperAdminController {
         
         // L'utilisateur ne peut pas se modifier soit même.
         if (!userNameLog.equals(editUser.getUserName())) {
-            if (!userNameLog.equals("ritn")) {
+            if (!editUser.getUserName().equals("ritn")) {
                 FormUser formUser = new FormUser(id, editUser.getUserName(), userService.findRoleIdByUserId(id), editUser.isEnabled());
 
             List<AppRole> roleList = userService.listRole();
@@ -307,20 +307,14 @@ public class SuperAdminController {
     }
     
     
-        //Modifier une Main-Data
+    //Modifier un utilisateur
     @PutMapping("/superAdmin/user/{id}")
     public String editUser(@ModelAttribute FormUser putUser, Model model, Principal principal) {        
         //Construction de ma page Index
         PageUsers pageUsers = new PageUsers(model, principal, messageSource); 
-        //Validation du FormUser avant envoie au service
-        FormUserValidation validUser = new FormUserValidation(putUser, true);
-        //Si non valide, on envoie un message et on revient sur la page Index
-        if (!validUser.getValid()){
-            pageUsers.addReponse(validUser.getReponse());
-        }else{
-            //Si c'est valide on envoie le FormUser au service
-            pageUsers.addReponse(userService.updateUser(putUser));
-        }
+        //on envoie le FormUser au service
+        pageUsers.addReponse(userService.updateUser(putUser));
+
                 
         Map<Long,String> userRoleList = new HashMap<>();
         for (AppUser user : userService.listUser()){
