@@ -36,7 +36,7 @@ public class MainController {
      
 //--------------------   Page Index   ----------------------------
     
-    @GetMapping(value = { "/", "/index"})
+    @GetMapping({ "/", "/index"})
     public String index(Model model, Principal principal){
         PageIndex pageIndex = new PageIndex(model, principal, messageSource);
         return pageIndex.getPage(dataService);

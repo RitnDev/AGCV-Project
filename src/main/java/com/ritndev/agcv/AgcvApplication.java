@@ -37,7 +37,7 @@ public class AgcvApplication extends SpringBootServletInitializer {
     
         
         //Démmarage de l'application
-        public static void main(String[] args) {
+        public static void main(String[] args) throws Exception {
             //Lancement de l'application et création du context :
             ApplicationContext ctx = SpringApplication.run(AgcvApplication.class, args);
             

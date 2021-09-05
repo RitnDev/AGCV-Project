@@ -128,7 +128,8 @@ public class Page {
     
     //Renvoie vers la Page
     public String returnPage() {
-        return "/" + nom;
+        //return "/" + nom;
+        return nom;
     }
     
     //Renvoie vers la Page

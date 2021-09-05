@@ -17,7 +17,7 @@
       
         <div class="main-content">
             <!-- réponse du service suite à une action -->
-            <div th:replace="fragments/layout-reponses :: reponse"/>
+            <div th:if="${!reponses.empty}" th:replace="fragments/layout-reponses :: reponse"/>
             <br/>
             
             <!-- pas de saison en cours -->
