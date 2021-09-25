@@ -4,7 +4,7 @@
     </head>
     <body>
         <span th:fragment="footer">
-            <img class="img-background" src="/images/fond/homme-bad.png"/>
+            <!--img class="img-background" src="/images/fond/homme-bad.png"/-->
             <span class="footer" th:text="#{texte.global.page.footer}"></span>
             
             <form action="#" th:if="${connect}" th:action="@{/mdp/{username}(username=${userActif})}" th:method="post">
