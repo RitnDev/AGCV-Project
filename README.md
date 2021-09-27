@@ -14,7 +14,7 @@ La donnée entrante fournit est un fichier Excel « VolantV3Conso.xlsm ».
 
 Ce projet doit incorporer également des nouveautés tel que :
 -	Un moyen simple d’enregistrer les commandes de tubes (volants) pour la consommation joueur.
--	Un résumé sur une saison (ou +) de leur consommation.
+-	Un résumé sur une saison de leur consommation.
 
 ## 2. Application Web
 
