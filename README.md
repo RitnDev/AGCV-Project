@@ -5,6 +5,7 @@ https://imgur.com/a/jwIRFjp
 
 ## 1. Présentation
 
+Le projet Java AGCV est un petit projet pour mon père qui va lui permettre de gérer la consommation de volants sur une saison, afin d'avoir une visibilité sur le nombre de tube de volants utilisés par les membres en compétition ou pour l'entrainement. Pour le club de Badminton dont il fait partie.
 Le projet Java AGCV (**A**pplication web de **G**estion de la **C**onsommation de **V**olants) a pour but de remplir la même tâche que le fichier fournit en incorporant une base de données pour faciliter la mémorisation/persistance des données.
 Cela permettra également de proposer un historique.
 
